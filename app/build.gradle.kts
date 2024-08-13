@@ -1,6 +1,7 @@
 plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
+    id ("maven-publish")
 }
 
 android {
@@ -56,4 +57,21 @@ dependencies {
     implementation("androidx.compose.foundation:foundation:1.6.8")
     implementation("androidx.activity:activity-compose:1.9.1")
     implementation("androidx.navigation:navigation-compose:2.7.7")
+}
+
+publishing {
+    publications {
+        create<MavenPublication>("release") {
+            artifact("$buildDir/outputs/aar/app-release.aar")
+
+            groupId = "pro.progr"
+            artifactId = "owlgame"
+            version = "0.0.1-alpha"
+        }
+    }
+    repositories {
+        maven {
+            url = uri("file://${buildDir}/repo")
+        }
+    }
 }
