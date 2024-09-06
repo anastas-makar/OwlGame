@@ -8,7 +8,7 @@ import androidx.navigation.NavHostController
 @Composable
 fun WidgetScreen(navController: NavHostController) {
     Button(onClick = {
-        navController.navigate("module_main")
+        navController.navigate("owl_navigation")
     }) {
         Text("К спасению совы")
     }
