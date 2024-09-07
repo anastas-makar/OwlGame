@@ -12,8 +12,7 @@ fun OwlNavigation() {
 
     NavHost(navController = navController, startDestination = "towns") {
         composable("towns") {
-            TownsListScreen()
+            TownsListScreen(navController)
         }
-        // Другие маршруты модуля
     }
 }
