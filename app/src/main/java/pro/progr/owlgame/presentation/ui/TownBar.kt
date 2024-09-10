@@ -10,12 +10,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import pro.progr.owlgame.presentation.viewmodel.TownViewModel
 
 @Composable
-fun TownsListBar(navController: NavHostController) {
+fun TownBar(navController: NavHostController, townViewModel: TownViewModel) {
     TopAppBar(
         title = {
-            Text(text = "Мои города")
+            Text(text = townViewModel.getTownName())
         },
         navigationIcon = {
             IconButton(onClick = { navController.popBackStack() }) {
