@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import pro.progr.owlgame.presentation.ui.TownScreen
 import pro.progr.owlgame.presentation.ui.TownsListScreen
 
 @Composable
@@ -13,6 +14,9 @@ fun OwlNavigation() {
     NavHost(navController = navController, startDestination = "towns") {
         composable("towns") {
             TownsListScreen(navController)
+        }
+        composable("town") {
+            //todo: TownScreen(navController, townViewModel)
         }
     }
 }
