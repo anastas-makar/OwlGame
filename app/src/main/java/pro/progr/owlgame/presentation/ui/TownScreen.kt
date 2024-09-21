@@ -10,9 +10,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import pro.progr.owlgame.presentation.viewmodel.TownViewModel
+import pro.progr.owlgame.presentation.viewmodel.dagger.DaggerViewModel
 
 @Composable
-fun TownScreen(navController: NavHostController, townViewModel: TownViewModel) {
+fun TownScreen(navController: NavHostController,
+               townViewModel: TownViewModel = DaggerViewModel()) {
     Scaffold(
         topBar = {
             Box(modifier = Modifier.statusBarsPadding()) {
@@ -20,7 +22,9 @@ fun TownScreen(navController: NavHostController, townViewModel: TownViewModel) {
             }
         },
         content = { innerPadding ->
-            Box(modifier = Modifier.padding(innerPadding).fillMaxSize()) {
+            Box(modifier = Modifier
+                .padding(innerPadding)
+                .fillMaxSize()) {
 
                 Text("Map of town")
             }
