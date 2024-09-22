@@ -16,7 +16,7 @@ fun OwlNavigation() {
             TownsListScreen(navController)
         }
         composable("town") {
-            //todo: TownScreen(navController, townViewModel)
+            TownScreen(navController)
         }
     }
 }
