@@ -13,11 +13,12 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 
 @Composable
-fun TownsListScreen(navController : NavHostController) {
+fun TownsListScreen(backToMain : () -> Unit,
+                    navController : NavHostController) {
     Scaffold(
         topBar = {
             Box(modifier = Modifier.statusBarsPadding()) {
-                TownsListBar(navController)
+                TownsListBar(backToMain)
             }
         },
         content = { innerPadding ->
