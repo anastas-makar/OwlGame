@@ -5,5 +5,5 @@ import pro.progr.owlgame.presentation.viewmodel.dagger.TownViewModelFactory
 
 @Component(modules = [TownModule::class])
 interface AppComponent {
-    fun viewModelFactory(): TownViewModelFactory
+    fun viewModelFactory(id : String): TownViewModelFactory
 }
