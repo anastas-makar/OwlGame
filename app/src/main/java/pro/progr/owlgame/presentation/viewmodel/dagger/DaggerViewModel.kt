@@ -7,6 +7,7 @@ import pro.progr.owlgame.dagger.DaggerAppComponent
 
 @Composable
 inline fun <reified VM : ViewModel> DaggerViewModel(id: String) : VM {
-    val factory = DaggerAppComponent.create().viewModelFactory(id)
+    val factory = DaggerAppComponent.create().viewModelFactory()
+    factory.id = id
     return viewModel(factory = factory)
 }

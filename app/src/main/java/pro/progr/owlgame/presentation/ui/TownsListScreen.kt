@@ -28,8 +28,12 @@ fun TownsListScreen(backToMain : () -> Unit,
 
                 Text("List of towns")
 
-                TextButton(onClick = { navController.navigate("town") }) {
+                TextButton(onClick = { navController.navigate("town/1") }) {
                     Text(text = "Кубинка 1")
+                }
+
+                TextButton(onClick = { navController.navigate("town/2") }) {
+                    Text(text = "Кубинка 2")
                 }
             }
 
