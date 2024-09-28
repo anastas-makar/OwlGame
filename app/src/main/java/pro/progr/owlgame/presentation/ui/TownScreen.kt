@@ -14,7 +14,8 @@ import pro.progr.owlgame.presentation.viewmodel.dagger.DaggerViewModel
 
 @Composable
 fun TownScreen(navController: NavHostController,
-               townViewModel: TownViewModel = DaggerViewModel()) {
+               id: String,
+               townViewModel: TownViewModel = DaggerViewModel(id)) {
     Scaffold(
         topBar = {
             Box(modifier = Modifier.statusBarsPadding()) {

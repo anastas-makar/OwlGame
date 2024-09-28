@@ -15,8 +15,12 @@ fun OwlNavigation(backToMain : () -> Unit) {
         composable("towns") {
             TownsListScreen(backToMain, navController)
         }
-        composable("town") {
-            TownScreen(navController)
+        composable("town/{id}") {backStackEntry ->
+            val id = backStackEntry.arguments?.getString("id")
+
+            id?.let {
+                TownScreen(navController, id)
+            }
         }
     }
 }
