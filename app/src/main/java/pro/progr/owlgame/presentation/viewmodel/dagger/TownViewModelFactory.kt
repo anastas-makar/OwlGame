@@ -13,7 +13,7 @@ class TownViewModelFactory @Inject constructor(
 
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(TownViewModel::class.java)) {
-            return TownViewModel(townRepository) as T
+            return TownViewModel(townRepository, id) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }

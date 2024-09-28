@@ -5,9 +5,10 @@ import pro.progr.owlgame.data.repository.TownRepository
 import javax.inject.Inject
 
 class TownViewModel @Inject constructor(
-    private val townRepository: TownRepository
+    private val townRepository: TownRepository,
+    private val townId: String
 ) : ViewModel() {
     fun getTownName() : String {
-        return townRepository.getName()
+        return townRepository.getName() + " ${townId}"
     }
 }
