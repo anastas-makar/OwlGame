@@ -11,7 +11,13 @@ class TownRepository @Inject constructor() {
         return MutableStateFlow(Town(id, "Кубинка ${id}"))
     }
 
-    fun getName() : String {
-        return "test"
+    fun getTownsList() : Flow<List<Town>> {
+        return MutableStateFlow(
+            listOf(
+                Town("1", "Кубинка 1"),
+                Town("2", "Кубинка 2"),
+                Town("3", "Кубинка 3"),
+            )
+        )
     }
 }

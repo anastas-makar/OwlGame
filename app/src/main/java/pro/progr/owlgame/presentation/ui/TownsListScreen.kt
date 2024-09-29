@@ -5,16 +5,24 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.navigation.NavHostController
+import pro.progr.owlgame.presentation.viewmodel.TownsViewModel
+import pro.progr.owlgame.presentation.viewmodel.dagger.DaggerViewModel
 
 @Composable
 fun TownsListScreen(backToMain : () -> Unit,
-                    navController : NavHostController) {
+                    navController : NavHostController,
+                    townsViewModel: TownsViewModel = DaggerViewModel()) {
+    val townsList = townsViewModel.townsList.collectAsState(initial = emptyList())
+
     Scaffold(
         topBar = {
             Box(modifier = Modifier.statusBarsPadding()) {
@@ -28,12 +36,13 @@ fun TownsListScreen(backToMain : () -> Unit,
 
                 Text("List of towns")
 
-                TextButton(onClick = { navController.navigate("town/1") }) {
-                    Text(text = "Кубинка 1")
-                }
+                LazyColumn {
+                    itemsIndexed(townsList.value) { _, town ->
+                        TextButton(onClick = { navController.navigate("town/${town.id}") }) {
+                            Text(text = town.name)
+                        }
+                    }
 
-                TextButton(onClick = { navController.navigate("town/2") }) {
-                    Text(text = "Кубинка 2")
                 }
             }
 
