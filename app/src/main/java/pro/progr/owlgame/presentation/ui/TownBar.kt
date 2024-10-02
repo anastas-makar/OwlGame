@@ -13,7 +13,7 @@ import pro.progr.owlgame.presentation.viewmodel.TownViewModel
 @Composable
 fun TownBar(navController: NavHostController, townViewModel: TownViewModel) {
 
-    val townState = townViewModel.town.collectAsState(initial = Town("", ""))
+    val townState = townViewModel.town.collectAsState(initial = Town(0, ""))
 
     TopAppBar(
         title = {

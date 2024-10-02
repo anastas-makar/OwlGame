@@ -6,7 +6,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import pro.progr.owlgame.dagger.DaggerAppComponent
 
 @Composable
-inline fun <reified VM : ViewModel> DaggerTownViewModel(id: String) : VM {
+inline fun <reified VM : ViewModel> DaggerTownViewModel(id: Int) : VM {
     val factory = DaggerAppComponent.create().townViewModelFactory()
     factory.id = id
     return viewModel(factory = factory)

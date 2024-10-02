@@ -6,7 +6,7 @@ import javax.inject.Inject
 
 class TownViewModel @Inject constructor(
     private val townRepository: TownRepository,
-    private val townId: String
+    private val townId: Int
 ) : ViewModel() {
 
     var town = townRepository.getTownById(townId)
