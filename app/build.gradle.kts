@@ -68,13 +68,13 @@ dependencies {
 
     implementation("com.squareup.retrofit2:retrofit:2.11.0")
 
-    implementation("androidx.compose.ui:ui:1.7.2")
-    implementation("androidx.compose.ui:ui-tooling:1.7.2")
-    implementation("androidx.compose.material:material:1.7.2")
-    implementation("androidx.compose.material:material-icons-extended:1.7.2")
-    implementation("androidx.compose.foundation:foundation:1.7.2")
+    implementation("androidx.compose.ui:ui:1.7.3")
+    implementation("androidx.compose.ui:ui-tooling:1.7.3")
+    implementation("androidx.compose.material:material:1.7.3")
+    implementation("androidx.compose.material:material-icons-extended:1.7.3")
+    implementation("androidx.compose.foundation:foundation:1.7.3")
     implementation("androidx.activity:activity-compose:1.9.2")
-    implementation("androidx.navigation:navigation-compose:2.8.1")
+    implementation("androidx.navigation:navigation-compose:2.8.2")
 
     implementation("androidx.work:work-runtime-ktx:2.9.1")
     implementation("com.google.dagger:dagger:2.48")
