@@ -38,6 +38,14 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+
+            buildConfigField("String", "API_BASE_URL", "\"${localProperties["API_BASE_URL"]}\"")
+            buildConfigField("String", "API_KEY", "\"${localProperties["API_KEY"]}\"")
+
+        }
+        debug {
+            buildConfigField("String", "API_BASE_URL", "\"${localProperties["API_BASE_URL"]}\"")
+            buildConfigField("String", "API_KEY", "\"${localProperties["API_KEY"]}\"")
         }
     }
     compileOptions {
