@@ -3,7 +3,7 @@ package pro.progr.owlgame.data.repository
 import pro.progr.owlgame.data.web.MapApiService
 import pro.progr.owlgame.data.web.Map
 
-class MapRepository(private val apiService: MapApiService) {
+class MapsRepository(private val apiService: MapApiService) {
 
     suspend fun getMaps(): Result<List<Map>> {
         return try {

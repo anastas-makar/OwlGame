@@ -3,7 +3,7 @@ package pro.progr.owlgame.data.dagger
 import dagger.Module
 import dagger.Provides
 import pro.progr.owlgame.BuildConfig
-import pro.progr.owlgame.data.repository.MapRepository
+import pro.progr.owlgame.data.repository.MapsRepository
 import pro.progr.owlgame.data.web.MapApiService
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -37,7 +37,7 @@ class NetworkModule {
 
     @Provides
     @Singleton
-    fun provideMapRepository(apiService: MapApiService): MapRepository {
-        return MapRepository(apiService)
+    fun provideMapRepository(apiService: MapApiService): MapsRepository {
+        return MapsRepository(apiService)
     }
 }
