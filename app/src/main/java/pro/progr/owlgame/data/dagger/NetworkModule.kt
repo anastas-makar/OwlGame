@@ -7,6 +7,7 @@ import pro.progr.owlgame.data.repository.MapsRepository
 import pro.progr.owlgame.data.web.MapApiService
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import javax.inject.Named
 import javax.inject.Singleton
 
 @Module
@@ -14,15 +15,17 @@ class NetworkModule {
 
     @Provides
     @Singleton
+    @Named("baseUrl")
     fun provideBaseUrl(): String = BuildConfig.API_BASE_URL
 
     @Provides
     @Singleton
+    @Named("apiKey")
     fun provideApiKey(): String = BuildConfig.API_KEY
 
     @Provides
     @Singleton
-    fun provideRetrofit(baseUrl: String): Retrofit {
+    fun provideRetrofit(@Named("baseUrl") baseUrl: String): Retrofit {
         return Retrofit.Builder()
             .baseUrl(baseUrl)
             .addConverterFactory(GsonConverterFactory.create())

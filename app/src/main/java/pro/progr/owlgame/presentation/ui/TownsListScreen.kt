@@ -2,17 +2,20 @@ package pro.progr.owlgame.presentation.ui
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
-import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
-import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import pro.progr.owlgame.presentation.viewmodel.TownsViewModel
 import pro.progr.owlgame.presentation.viewmodel.dagger.DaggerViewModel
@@ -36,7 +39,11 @@ fun TownsListScreen(backToMain : () -> Unit,
 
                 Text("List of towns")
 
-                LazyColumn {
+                LazyVerticalGrid(
+                    columns = GridCells.Fixed(2),
+                    contentPadding = PaddingValues(8.dp),
+                    modifier = Modifier.fillMaxSize()
+                ) {
                     itemsIndexed(townsList.value) { _, town ->
                         TextButton(onClick = { navController.navigate("town/${town.id}") }) {
                             Text(text = town.name)
