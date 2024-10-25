@@ -2,10 +2,13 @@ package pro.progr.owlgame.data.repository
 
 import pro.progr.owlgame.data.web.MapApiService
 import pro.progr.owlgame.data.web.Map
+import javax.inject.Inject
 import javax.inject.Named
+import javax.inject.Singleton
 
-class MapsRepository(private val apiService: MapApiService,
-                     @Named("apiKey") private val apiKey: String) {
+@Singleton
+class MapsRepository @Inject constructor(private val apiService: MapApiService,
+                                         @Named("apiKey") private val apiKey: String) {
 
     suspend fun getMaps(): Result<List<Map>> {
         return try {
