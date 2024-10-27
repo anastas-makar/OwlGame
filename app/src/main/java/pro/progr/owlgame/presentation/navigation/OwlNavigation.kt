@@ -1,9 +1,11 @@
 package pro.progr.owlgame.presentation.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import pro.progr.owlgame.presentation.ui.TownScreen
 import pro.progr.owlgame.presentation.ui.TownsListScreen
 
@@ -15,7 +17,9 @@ fun OwlNavigation(backToMain : () -> Unit) {
         composable("towns") {
             TownsListScreen(backToMain, navController)
         }
-        composable("town/{id}") {backStackEntry ->
+        composable(
+            route = "town/{id}",
+            arguments = listOf(navArgument("id") { type = NavType.IntType })) { backStackEntry ->
             val id = backStackEntry.arguments?.getInt("id")
 
             id?.let {
