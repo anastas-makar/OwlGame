@@ -8,5 +8,5 @@ data class Town (
     @PrimaryKey(autoGenerate = true)
     val id : Int,
     val name : String, 
-    val imageUri : String
+    val mapId : String
 )
