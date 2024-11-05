@@ -44,6 +44,7 @@ android {
 
         }
         debug {
+            isMinifyEnabled = false
             buildConfigField("String", "API_BASE_URL", "\"${localProperties["API_BASE_URL"]}\"")
             buildConfigField("String", "API_KEY", "\"${localProperties["API_KEY"]}\"")
         }

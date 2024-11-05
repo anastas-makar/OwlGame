@@ -5,6 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
+import pro.progr.owlgame.BuildConfig
 import pro.progr.owlgame.data.repository.MapsRepository
 import pro.progr.owlgame.data.repository.TownRepository
 import pro.progr.owlgame.data.web.Map
@@ -25,6 +26,8 @@ class TownsViewModel @Inject constructor(
             result.onSuccess { mapsList ->
                 maps.value = mapsList
             }.onFailure {
+                Log.wtf("NetworkModule", "Base URL: ${BuildConfig.API_BASE_URL}")
+                Log.wtf("ERROR RESULT:", it.toString())
                 Log.wtf("TownsViewModel", "failed to load maps")
             }
         }

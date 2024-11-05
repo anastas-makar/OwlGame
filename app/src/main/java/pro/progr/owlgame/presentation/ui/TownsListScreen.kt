@@ -26,6 +26,8 @@ fun TownsListScreen(backToMain : () -> Unit,
                     townsViewModel: TownsViewModel = DaggerViewModel()) {
     val townsList = townsViewModel.townsList.collectAsState(initial = emptyList())
 
+    townsViewModel.loadMaps()
+
     Scaffold(
         topBar = {
             Box(modifier = Modifier.statusBarsPadding()) {

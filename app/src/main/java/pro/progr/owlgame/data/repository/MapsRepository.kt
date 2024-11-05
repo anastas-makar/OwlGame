@@ -14,7 +14,8 @@ class MapsRepository @Inject constructor(private val apiService: MapApiService,
         return try {
             val response = apiService.getMaps(apiKey)
             if (response.isSuccessful) {
-                val maps = response.body() ?: emptyList()
+                val mapUrls = response.body() ?: emptyList()
+                val maps = mapUrls.map { mapUrl -> Map("", "", mapUrl) }
                 Result.success(maps)
             } else {
                 Result.failure(Exception("Failed to load maps: ${response.errorBody()?.string()}"))

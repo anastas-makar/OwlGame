@@ -2,6 +2,7 @@ package pro.progr.owlgame.data.dagger
 
 import dagger.Module
 import dagger.Provides
+import okhttp3.OkHttpClient
 import pro.progr.owlgame.BuildConfig
 import pro.progr.owlgame.data.repository.MapsRepository
 import pro.progr.owlgame.data.web.MapApiService
@@ -26,8 +27,12 @@ class NetworkModule {
     @Provides
     @Singleton
     fun provideRetrofit(@Named("baseUrl") baseUrl: String): Retrofit {
+        val client = OkHttpClient.Builder()
+            .followSslRedirects(false)
+            .build()
         return Retrofit.Builder()
             .baseUrl(baseUrl)
+            .client(client)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
     }
