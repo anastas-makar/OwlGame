@@ -9,10 +9,12 @@ import pro.progr.owlgame.data.repository.MapsRepository
 import pro.progr.owlgame.data.repository.TownRepository
 import pro.progr.owlgame.data.web.Map
 import javax.inject.Inject
+import javax.inject.Named
 
 class TownsViewModel @Inject constructor(
     private val townRepository: TownRepository,
-    private val mapsRepository: MapsRepository
+    private val mapsRepository: MapsRepository,
+    @Named("baseUrl") private val baseUrl: String
 ) : ViewModel() {
 
     var townsList = townRepository.getTownsList()
@@ -23,7 +25,7 @@ class TownsViewModel @Inject constructor(
             val result = mapsRepository.getMaps()
 
             result.onSuccess { mapsList ->
-                maps.value = mapsList
+                maps.value = mapsList.map { m -> Map("1", "map", baseUrl + m.imageUrl) }
             }.onFailure {
                 Log.e("TownsViewModel", "Failed to load maps. ERROR RESULT: $it")
             }

@@ -1,5 +1,6 @@
 package pro.progr.owlgame.presentation.ui
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -11,20 +12,24 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
-import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import coil.compose.AsyncImage
 import pro.progr.owlgame.presentation.viewmodel.TownsViewModel
 import pro.progr.owlgame.presentation.viewmodel.dagger.DaggerViewModel
 
 @Composable
-fun TownsListScreen(backToMain : () -> Unit,
-                    navController : NavHostController,
-                    townsViewModel: TownsViewModel = DaggerViewModel()) {
+fun TownsListScreen(
+    backToMain: () -> Unit,
+    navController: NavHostController,
+    townsViewModel: TownsViewModel = DaggerViewModel()
+) {
     val townsList = townsViewModel.townsList.collectAsState(initial = emptyList())
+    val mapsList = townsViewModel.maps.value ?: emptyList()
 
     townsViewModel.loadMaps()
 
@@ -35,10 +40,11 @@ fun TownsListScreen(backToMain : () -> Unit,
             }
         },
         content = { innerPadding ->
-            Column(modifier = Modifier
-                .padding(innerPadding)
-                .fillMaxSize()) {
-
+            Column(
+                modifier = Modifier
+                    .padding(innerPadding)
+                    .fillMaxSize()
+            ) {
                 Text("List of towns")
 
                 LazyVerticalGrid(
@@ -46,16 +52,28 @@ fun TownsListScreen(backToMain : () -> Unit,
                     contentPadding = PaddingValues(8.dp),
                     modifier = Modifier.fillMaxSize()
                 ) {
-                    itemsIndexed(townsList.value) { _, town ->
-                        TextButton(onClick = { navController.navigate("town/${town.id}") }) {
-                            Text(text = town.name)
+                    itemsIndexed(mapsList) { _, map ->
+                        Box(
+                            modifier = Modifier
+                                .padding(8.dp)
+                                .fillMaxSize()
+                        ) {
+                            AsyncImage(
+                                model = map.imageUrl, // предполагается, что map содержит URL изображения
+                                contentDescription = null,
+                                contentScale = ContentScale.Crop,
+                                modifier = Modifier
+                                    .fillMaxSize()
+                                    .clickable {
+                                        // Замените на нужное действие
+                                        //navController.navigate("map/${map.id}")
+                                        //Log.wtf("map image: ", map.imageUrl)
+                                    }
+                            )
                         }
                     }
-
                 }
             }
-
-
         }
     )
 }
