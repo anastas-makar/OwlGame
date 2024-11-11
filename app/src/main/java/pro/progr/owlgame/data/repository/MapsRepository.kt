@@ -24,5 +24,9 @@ class MapsRepository @Inject constructor(private val apiService: MapApiService,
             Result.failure(e)
         }
     }
+
+    fun getMapById(mapId: String): Map {
+        TODO("Not yet implemented")
+    }
 }
 
