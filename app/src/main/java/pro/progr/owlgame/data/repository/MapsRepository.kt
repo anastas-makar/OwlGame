@@ -1,7 +1,10 @@
 package pro.progr.owlgame.data.repository
 
-import pro.progr.owlgame.data.web.MapApiService
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import pro.progr.owlgame.data.web.Map
+import pro.progr.owlgame.data.web.MapApiService
 import javax.inject.Inject
 import javax.inject.Named
 import javax.inject.Singleton
@@ -25,8 +28,13 @@ class MapsRepository @Inject constructor(private val apiService: MapApiService,
         }
     }
 
-    fun getMapById(mapId: String): Map {
-        TODO("Not yet implemented")
+    fun getMapById(imageUrl: String): Flow<Map> {
+        //временное решение, тут url вместо id
+        return MutableStateFlow(Map(
+            "",
+            "",
+            imageUrl
+        ))
     }
 }
 

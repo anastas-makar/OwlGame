@@ -59,15 +59,13 @@ fun TownsListScreen(
                                 .fillMaxSize()
                         ) {
                             AsyncImage(
-                                model = map.imageUrl, // предполагается, что map содержит URL изображения
+                                model = map.imageUrl,
                                 contentDescription = null,
                                 contentScale = ContentScale.Crop,
                                 modifier = Modifier
                                     .fillMaxSize()
                                     .clickable {
-                                        // Замените на нужное действие
-                                        //navController.navigate("map/${map.id}")
-                                        //Log.wtf("map image: ", map.imageUrl)
+                                        navController.navigate("map/${map.id}")
                                     }
                             )
                         }
