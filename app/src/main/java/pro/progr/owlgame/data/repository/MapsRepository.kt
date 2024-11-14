@@ -1,8 +1,8 @@
 package pro.progr.owlgame.data.repository
 
+import android.net.Uri
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import pro.progr.owlgame.data.web.Map
 import pro.progr.owlgame.data.web.MapApiService
 import javax.inject.Inject
@@ -33,7 +33,7 @@ class MapsRepository @Inject constructor(private val apiService: MapApiService,
         return MutableStateFlow(Map(
             "",
             "",
-            imageUrl
+            Uri.decode(imageUrl)
         ))
     }
 }

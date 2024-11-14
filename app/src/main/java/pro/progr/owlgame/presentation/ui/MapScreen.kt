@@ -25,7 +25,7 @@ fun MapScreen(navController: NavHostController,
     Scaffold(
         topBar = {
             Box(modifier = Modifier.statusBarsPadding()) {
-                //TownBar(navController, mapViewModel)
+                MapBar(navController, mapViewModel)
             }
         },
         content = { innerPadding ->
@@ -36,7 +36,7 @@ fun MapScreen(navController: NavHostController,
                 AsyncImage(
                     model = map.value.imageUrl,
                     contentDescription = null,
-                    contentScale = ContentScale.Crop,
+                    contentScale = ContentScale.FillWidth,
                     modifier = Modifier
                         .fillMaxSize()
                 )

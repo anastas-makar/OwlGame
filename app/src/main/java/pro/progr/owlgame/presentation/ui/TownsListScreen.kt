@@ -1,5 +1,6 @@
 package pro.progr.owlgame.presentation.ui
 
+import android.net.Uri
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -61,11 +62,11 @@ fun TownsListScreen(
                             AsyncImage(
                                 model = map.imageUrl,
                                 contentDescription = null,
-                                contentScale = ContentScale.Crop,
+                                contentScale = ContentScale.FillWidth,
                                 modifier = Modifier
                                     .fillMaxSize()
                                     .clickable {
-                                        navController.navigate("map/${map.id}")
+                                        navController.navigate("map/${Uri.encode(map.imageUrl)}")
                                     }
                             )
                         }
