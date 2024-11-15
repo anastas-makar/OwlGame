@@ -16,7 +16,7 @@ fun MapBar(navController: NavHostController, mapViewModel: MapViewModel) {
 
     TopAppBar(
         title = {
-            Text(text = mapState.value.toString())
+            Text(text = mapState.value.name)
         },
         navigationIcon = {
             NavIcon(navController)

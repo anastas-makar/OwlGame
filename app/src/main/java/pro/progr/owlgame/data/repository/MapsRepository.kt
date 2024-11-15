@@ -18,7 +18,7 @@ class MapsRepository @Inject constructor(private val apiService: MapApiService,
             val response = apiService.getMaps(apiKey)
             if (response.isSuccessful) {
                 val mapUrls = response.body() ?: emptyList()
-                val maps = mapUrls.map { mapUrl -> Map("", "", mapUrl) }
+                val maps = mapUrls.map { mapUrl -> Map("", "Холмистая местность", mapUrl) }
                 Result.success(maps)
             } else {
                 Result.failure(Exception("Failed to load maps: ${response.errorBody()?.string()}"))
@@ -32,7 +32,7 @@ class MapsRepository @Inject constructor(private val apiService: MapApiService,
         //временное решение, тут url вместо id
         return MutableStateFlow(Map(
             "",
-            "",
+            "Холмистая местность",
             Uri.decode(imageUrl)
         ))
     }
