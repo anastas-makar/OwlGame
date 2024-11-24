@@ -38,7 +38,9 @@ fun MapScreen(navController: NavHostController,
                 .padding(innerPadding)
                 .fillMaxWidth()) {
 
-                TextButton(onClick = { /*TODO*/ }, modifier = Modifier.align(CenterHorizontally)) {
+                TextButton(onClick = {
+                                     mapViewModel.foundTown(map.value, "Кубинка 1")
+                }, modifier = Modifier.align(CenterHorizontally)) {
                     Text(text = "Основать город")
                 }
 

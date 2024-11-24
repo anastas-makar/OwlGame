@@ -1,5 +1,7 @@
 package pro.progr.owlgame.dagger
 
+import android.app.Application
+import dagger.BindsInstance
 import dagger.Component
 import pro.progr.owlgame.data.dagger.DatabaseModule
 import pro.progr.owlgame.data.dagger.NetworkModule
@@ -20,4 +22,16 @@ interface AppComponent {
     fun mapViewModelFactory(): MapViewModelFactory
 
     fun viewModelFactory() : ViewModelFactory
+
+
+
+    @Component.Builder
+    interface Builder {
+        @BindsInstance
+        fun application(application: Application): Builder
+
+        fun appModule(appModule: AppModule): Builder
+
+        fun build(): AppComponent
+    }
 }
