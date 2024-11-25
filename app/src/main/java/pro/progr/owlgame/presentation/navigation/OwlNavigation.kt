@@ -27,6 +27,9 @@ fun OwlNavigation(backToMain : () -> Unit) {
                 TownScreen(navController, id)
             }
         }
+        composable(route = "found_town/{mapId}") {
+
+        }
         composable(
             route = "map/{id}",
             arguments = listOf(navArgument("id") { type = NavType.StringType })) { backStackEntry ->
