@@ -59,8 +59,8 @@ fun MapScreen(navController: NavHostController,
                 }
 
                 Box(modifier = Modifier
-                    .fillMaxWidth()
-                    .background(color = Color.White)
+                    .fillMaxSize()
+                    .background(color = Color.White.copy(alpha = 0.8f))
                 ) {
 
                 }
