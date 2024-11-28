@@ -1,5 +1,6 @@
 package pro.progr.owlgame.presentation.ui
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -13,6 +14,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
@@ -34,23 +36,35 @@ fun MapScreen(navController: NavHostController,
             }
         },
         content = { innerPadding ->
-            Column(modifier = Modifier
+            Box(modifier = Modifier
                 .padding(innerPadding)
                 .fillMaxWidth()) {
 
-                TextButton(onClick = {
-                                     mapViewModel.foundTown(map.value, "Кубинка 1")
-                }, modifier = Modifier.align(CenterHorizontally)) {
-                    Text(text = "Основать город")
+                Column(modifier = Modifier
+                    .fillMaxWidth()) {
+
+                    TextButton(onClick = {
+                        mapViewModel.foundTown(map.value, "Кубинка 1")
+                    }, modifier = Modifier.align(CenterHorizontally)) {
+                        Text(text = "Основать город")
+                    }
+
+                    AsyncImage(
+                        model = map.value.imageUrl,
+                        contentDescription = null,
+                        contentScale = ContentScale.FillWidth,
+                        modifier = Modifier
+                            .fillMaxSize()
+                    )
                 }
 
-                AsyncImage(
-                    model = map.value.imageUrl,
-                    contentDescription = null,
-                    contentScale = ContentScale.FillWidth,
-                    modifier = Modifier
-                        .fillMaxSize()
-                )
+                Box(modifier = Modifier
+                    .fillMaxWidth()
+                    .background(color = Color.White)
+                ) {
+
+                }
+
             }
 
 
