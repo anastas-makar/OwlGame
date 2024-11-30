@@ -28,6 +28,7 @@ fun MapScreen(navController: NavHostController,
               mapViewModel: MapViewModel = DaggerMapViewModel(id)
 ) {
     val map = mapViewModel.map.collectAsState(initial = Map("", "", ""))
+    val foundTown = mapViewModel.foundTown.collectAsState(initial = false)
 
     Scaffold(
         topBar = {
@@ -43,10 +44,12 @@ fun MapScreen(navController: NavHostController,
                 Column(modifier = Modifier
                     .fillMaxWidth()) {
 
-                    TextButton(onClick = {
-                        mapViewModel.foundTown(map.value, "Кубинка 1")
-                    }, modifier = Modifier.align(CenterHorizontally)) {
-                        Text(text = "Основать город")
+                    if (!foundTown.value) {
+                        TextButton(onClick = {
+                            mapViewModel.foundTown(map.value, "Кубинка 1")
+                        }, modifier = Modifier.align(CenterHorizontally)) {
+                            Text(text = "Основать город")
+                        }
                     }
 
                     AsyncImage(
@@ -58,10 +61,13 @@ fun MapScreen(navController: NavHostController,
                     )
                 }
 
-                Box(modifier = Modifier
-                    .fillMaxSize()
-                    .background(color = Color.White.copy(alpha = 0.8f))
-                ) {
+                if (foundTown.value) {
+                    Box(modifier = Modifier
+                        .fillMaxSize()
+                        .background(color = Color.White.copy(alpha = 0.8f))
+                    ) {
+
+                    }
 
                 }
 
