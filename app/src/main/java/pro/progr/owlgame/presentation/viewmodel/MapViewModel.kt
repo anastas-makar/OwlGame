@@ -22,11 +22,18 @@ class MapViewModel @Inject constructor(
 
     val foundTown = MutableStateFlow(false)
 
-    fun foundTown(map: Map, townName: String ) {
+    fun startToFoundTown() {
         viewModelScope.launch (Dispatchers.Default) {
             foundTown.update { _ -> true }
+        }
+    }
+
+    fun foundTown(map: Map, townName: String) {
+        viewModelScope.launch (Dispatchers.Default) {
+            foundTown.update { _ -> false }
             foundTownUseCase.invoke(map, townName)
         }
+
     }
 
 }
