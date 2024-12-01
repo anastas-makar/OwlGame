@@ -64,7 +64,7 @@ fun MapScreen(navController: NavHostController,
                 if (foundTown.value) {
                     Box(modifier = Modifier
                         .fillMaxSize()
-                        .background(color = Color.White.copy(alpha = 0.8f))
+                        .background(color = Color.White.copy(alpha = 0.9f))
                     ) {
 
                     }
