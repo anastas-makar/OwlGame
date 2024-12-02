@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.material.Button
+import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
@@ -109,6 +110,10 @@ fun MapScreen(
                             )
 
                             Button(
+                                colors = ButtonDefaults.buttonColors(
+                                    backgroundColor = Color.DarkGray,
+                                    contentColor = Color.White
+                                ),
                                 onClick = {
                                     mapViewModel.foundTown(map.value, cityName.value)
                                 }
