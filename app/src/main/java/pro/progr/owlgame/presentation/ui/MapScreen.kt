@@ -12,7 +12,6 @@ import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
-import androidx.compose.material.TextButton
 import androidx.compose.material.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -59,7 +58,11 @@ fun MapScreen(
                         .padding(horizontal = 16.dp, vertical = 8.dp)
                 ) {
                     if (!foundTown.value) {
-                        TextButton(
+                        Button(
+                            colors = ButtonDefaults.buttonColors(
+                                backgroundColor = Color.DarkGray,
+                                contentColor = Color.White
+                            ),
                             onClick = {
                                 mapViewModel.startToFoundTown()
                             },
