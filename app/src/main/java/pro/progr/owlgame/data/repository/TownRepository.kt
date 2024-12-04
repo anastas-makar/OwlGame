@@ -8,7 +8,7 @@ import javax.inject.Inject
 
 class TownRepository @Inject constructor(val townsDao: TownsDao) {
 
-    fun getTownById(id : Int) : Flow<Town> {
+    fun getTownById(id : Long) : Flow<Town> {
         return MutableStateFlow(Town(id, "Кубинка ${id}", ""))
     }
 
@@ -22,7 +22,9 @@ class TownRepository @Inject constructor(val townsDao: TownsDao) {
         )
     }
 
-    fun insertTown(town : Town) {
-        townsDao.insert(town)
+    fun insertTown(town : Town) : Town {
+        val id = townsDao.insert(town)
+
+        return town.copy(id = id)
     }
 }

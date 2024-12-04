@@ -9,7 +9,7 @@ import javax.inject.Inject
 class TownViewModelFactory @Inject constructor(
     private val townRepository: TownRepository
 ) : ViewModelProvider.Factory {
-    var id : Int = 0
+    var id : Long = 0
 
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(TownViewModel::class.java)) {
