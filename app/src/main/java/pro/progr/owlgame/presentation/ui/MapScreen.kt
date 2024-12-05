@@ -57,7 +57,7 @@ fun MapScreen(
                         .fillMaxWidth()
                         .padding(horizontal = 16.dp, vertical = 8.dp)
                 ) {
-                    if (!foundTown.value) {
+                    if (!foundTown.value && mapViewModel.townState.value == null) {
                         Button(
                             colors = ButtonDefaults.buttonColors(
                                 backgroundColor = Color.DarkGray,
