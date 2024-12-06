@@ -3,6 +3,7 @@ package pro.progr.owlgame.presentation.ui
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -69,6 +70,32 @@ fun MapScreen(
                             modifier = Modifier.align(CenterHorizontally)
                         ) {
                             Text(text = "Основать город")
+                        }
+                    } else if (mapViewModel.townState.value != null) {
+                        Row(modifier = Modifier.fillMaxWidth()) {
+                            Button(
+                                colors = ButtonDefaults.buttonColors(
+                                    backgroundColor = Color.DarkGray,
+                                    contentColor = Color.White
+                                ),
+                                onClick = {
+
+                                }
+                            ) {
+                                Text(text = "Построить дом")
+                            }
+
+                            Button(
+                                colors = ButtonDefaults.buttonColors(
+                                    backgroundColor = Color.DarkGray,
+                                    contentColor = Color.White
+                                ),
+                                onClick = {
+                                    mapViewModel.startToFoundTown()
+                                }
+                            ) {
+                                Text(text = "Построить замок")
+                            }
                         }
                     }
 
