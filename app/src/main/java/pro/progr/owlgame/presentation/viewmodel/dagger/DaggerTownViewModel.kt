@@ -9,10 +9,10 @@ import pro.progr.owlgame.dagger.AppModule
 import pro.progr.owlgame.dagger.DaggerAppComponent
 
 @Composable
-inline fun <reified VM : ViewModel> DaggerTownViewModel(id: Int) : VM {
+inline fun <reified VM : ViewModel> DaggerTownViewModel(id: Long) : VM {
     val application = LocalContext.current.applicationContext as Application
 
-    val factory = DaggerAppComponent.builder()
+    val factory : TownViewModelFactory = DaggerAppComponent.builder()
         .application(application)
         .appModule(AppModule(application))
         .build()
