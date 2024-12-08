@@ -127,7 +127,7 @@ fun MapScreen(
                                 onValueChange = { cityName.value = it },
                                 label = { Text(text = "Название города",
                                     color = Color.Gray,
-                                    modifier = Modifier.background(color = Color.White)) },
+                                    modifier = Modifier.background(color = Color.White).padding(1.dp)) },
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .padding(16.dp),
