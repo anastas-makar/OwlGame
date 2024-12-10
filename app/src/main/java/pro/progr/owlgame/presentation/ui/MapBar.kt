@@ -16,7 +16,11 @@ fun MapBar(navController: NavHostController, mapViewModel: MapViewModel) {
 
     TopAppBar(
         title = {
-            Text(text = mapState.value.name)
+            mapViewModel.townState.value?.let {town ->
+                Text(text = town.name)
+            } ?: run {
+                Text(text = mapState.value.name)
+            }
         },
         navigationIcon = {
             NavIcon(navController)
