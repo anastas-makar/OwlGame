@@ -27,4 +27,8 @@ class TownRepository @Inject constructor(val townsDao: TownsDao) {
 
         return town.copy(id = id)
     }
+
+    fun insertSlot(id: Long, slotNum: Int): Town {
+        TODO("Not yet implemented")
+    }
 }
