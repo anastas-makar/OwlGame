@@ -2,11 +2,14 @@ package pro.progr.owlgame.data.repository
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
+import pro.progr.owlgame.data.db.Slot
+import pro.progr.owlgame.data.db.SlotsDao
 import pro.progr.owlgame.data.db.Town
 import pro.progr.owlgame.data.db.TownsDao
 import javax.inject.Inject
 
-class TownRepository @Inject constructor(val townsDao: TownsDao) {
+class TownRepository @Inject constructor(val townsDao: TownsDao,
+    val slotsDao: SlotsDao) {
 
     fun getTownById(id : Long) : Flow<Town> {
         return MutableStateFlow(Town(id, "Кубинка ${id}", ""))
@@ -28,7 +31,10 @@ class TownRepository @Inject constructor(val townsDao: TownsDao) {
         return town.copy(id = id)
     }
 
-    fun insertSlot(id: Long, slotNum: Int): Town {
-        TODO("Not yet implemented")
+    fun insertSlot(town: Town, slotNum: Int, buildingId : Int): Town {
+        slotsDao.insert(Slot(0, slotNum = slotNum, buildingId = buildingId, townId = town.id))
+
+        //todo:
+        return town
     }
 }

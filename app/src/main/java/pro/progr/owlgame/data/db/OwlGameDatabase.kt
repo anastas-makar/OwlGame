@@ -9,6 +9,7 @@ import androidx.room.RoomDatabase
     version = 1, exportSchema = false)
 abstract class OwlGameDatabase : RoomDatabase() {
     abstract fun townsDao(): TownsDao
+    abstract fun slotsDao(): SlotsDao
 
     companion object {
         @Volatile

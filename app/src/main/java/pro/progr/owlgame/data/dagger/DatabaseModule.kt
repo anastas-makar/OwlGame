@@ -5,6 +5,7 @@ import androidx.room.Room
 import dagger.Module
 import dagger.Provides
 import pro.progr.owlgame.data.db.OwlGameDatabase
+import pro.progr.owlgame.data.db.SlotsDao
 import pro.progr.owlgame.data.db.TownsDao
 import javax.inject.Singleton
 
@@ -24,5 +25,10 @@ object DatabaseModule {
     @Provides
     fun provideTownsDao(database: OwlGameDatabase): TownsDao {
         return database.townsDao()
+    }
+
+    @Provides
+    fun provideSlotsDao(database: OwlGameDatabase): SlotsDao {
+        return database.slotsDao()
     }
 }

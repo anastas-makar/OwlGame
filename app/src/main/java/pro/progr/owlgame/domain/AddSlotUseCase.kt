@@ -7,6 +7,6 @@ import javax.inject.Inject
 class AddSlotUseCase @Inject constructor(val townRepository: TownRepository) {
     operator fun invoke(town: Town, slotNum :Int) : Town {
 
-        return townRepository.insertSlot(town.id, slotNum)
+        return townRepository.insertSlot(town, slotNum = slotNum, buildingId = 0)
     }
 }
