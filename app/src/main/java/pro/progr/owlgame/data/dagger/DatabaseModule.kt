@@ -6,6 +6,7 @@ import dagger.Module
 import dagger.Provides
 import pro.progr.owlgame.data.db.OwlGameDatabase
 import pro.progr.owlgame.data.db.SlotsDao
+import pro.progr.owlgame.data.db.TownWithDataDao
 import pro.progr.owlgame.data.db.TownsDao
 import javax.inject.Singleton
 
@@ -25,6 +26,11 @@ object DatabaseModule {
     @Provides
     fun provideTownsDao(database: OwlGameDatabase): TownsDao {
         return database.townsDao()
+    }
+
+    @Provides
+    fun provideTownWithDataDao(database: OwlGameDatabase): TownWithDataDao {
+        return database.townWithDataDao()
     }
 
     @Provides
