@@ -34,7 +34,7 @@ class TownRepository @Inject constructor(val townsDao: TownsDao,
         return town.copy(id = id)
     }
 
-    fun insertSlot(town: Town, slotNum: Int, buildingId : Int): TownWithData {
+    fun insertSlot(town: Town, slotNum: Int, buildingId : Int): Flow<TownWithData> {
         slotsDao.insert(Slot(0, slotNum = slotNum, buildingId = buildingId, townId = town.id))
 
         //todo:
