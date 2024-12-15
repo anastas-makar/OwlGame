@@ -1,5 +1,6 @@
 package pro.progr.owlgame.presentation.ui
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -23,9 +24,11 @@ import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
+import pro.progr.owlgame.R
 import pro.progr.owlgame.data.web.Map
 import pro.progr.owlgame.presentation.viewmodel.MapViewModel
 import pro.progr.owlgame.presentation.viewmodel.dagger.DaggerMapViewModel
@@ -99,14 +102,23 @@ fun MapScreen(
                         }
                     }
 
-                    AsyncImage(
-                        model = map.value.imageUrl,
-                        contentDescription = null,
-                        contentScale = ContentScale.FillWidth,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(top = 16.dp)
-                    )
+                    Box(modifier = Modifier.fillMaxWidth()) {
+                        AsyncImage(
+                            model = map.value.imageUrl,
+                            contentDescription = null,
+                            contentScale = ContentScale.FillWidth,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(top = 16.dp)
+                        )
+
+                        Image(
+                            painter = painterResource(R.drawable.map_icon_house),
+                            contentDescription = "Полупрозрачное изображение",
+                            modifier = Modifier.padding(top = 16.dp, start = 10.dp)
+                        )
+
+                    }
                 }
 
                 if (foundTown.value) {
@@ -127,7 +139,9 @@ fun MapScreen(
                                 onValueChange = { cityName.value = it },
                                 label = { Text(text = "Название города",
                                     color = Color.Gray,
-                                    modifier = Modifier.background(color = Color.White).padding(1.dp)) },
+                                    modifier = Modifier
+                                        .background(color = Color.White)
+                                        .padding(1.dp)) },
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .padding(16.dp),
