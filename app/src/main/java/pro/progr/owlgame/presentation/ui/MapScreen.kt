@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.OutlinedTextField
@@ -23,6 +24,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
@@ -115,7 +117,13 @@ fun MapScreen(
                         Image(
                             painter = painterResource(R.drawable.map_icon_house),
                             contentDescription = "Полупрозрачное изображение",
-                            modifier = Modifier.padding(top = 16.dp, start = 10.dp)
+                            modifier = Modifier
+                                .padding(top = 56.dp, start = 50.dp)
+                                .graphicsLayer {
+                                    shadowElevation = 8f // Высота тени
+                                    shape = RoundedCornerShape(8.dp) // Форма объекта
+                                    clip = true // Учитывать форму при добавлении тени
+                                }
                         )
 
                     }
