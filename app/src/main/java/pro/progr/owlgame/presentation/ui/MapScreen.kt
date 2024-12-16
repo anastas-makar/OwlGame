@@ -126,6 +126,17 @@ fun MapScreen(
                                 }
                         )
 
+                        Image(
+                            painter = painterResource(R.drawable.map_icon_fortress),
+                            contentDescription = "Полупрозрачное изображение",
+                            modifier = Modifier
+                                .padding(top = 56.dp, start = 250.dp)
+                                .graphicsLayer {
+                                    shadowElevation = 8f // Высота тени
+                                    shape = RoundedCornerShape(8.dp) // Форма объекта
+                                    clip = true // Учитывать форму при добавлении тени
+                                }
+                        )
                     }
                 }
 
