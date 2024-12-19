@@ -26,6 +26,10 @@ class MapViewModel @Inject constructor(
 
     val townState = mutableStateOf<Town?>(null)
 
+    val newHouseState = mutableStateOf(false)
+
+    val newFortressState = mutableStateOf(false)
+
     fun startToFoundTown() {
         viewModelScope.launch (Dispatchers.Default) {
             foundTown.update { _ -> true }
