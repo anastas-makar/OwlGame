@@ -91,7 +91,7 @@ fun MapScreen(
                                     contentColor = Color.White
                                 ),
                                 onClick = {
-
+                                    mapViewModel.newHouseState.value = true
                                 }
                             ) {
                                 Text(text = "Построить дом")
@@ -103,7 +103,7 @@ fun MapScreen(
                                     contentColor = Color.White
                                 ),
                                 onClick = {
-                                    mapViewModel.startToFoundTown()
+                                    mapViewModel.newFortressState.value = true
                                 }
                             ) {
                                 Text(text = "Построить замок")
@@ -111,7 +111,7 @@ fun MapScreen(
                         }
                     }
 
-                    DraggableImages(map)
+                    DraggableImages(map, mapViewModel)
                 }
 
                 if (foundTown.value) {
@@ -166,15 +166,15 @@ fun MapScreen(
 }
 
 @Composable
-fun DraggableImages(map: State<Map>) {
+fun DraggableImages(map: State<Map>, mapViewModel: MapViewModel) {
     // Состояния для координат первого и второго изображения
-    var houseOffset = remember { mutableStateOf(Offset(50f, 56f)) }
-    var fortressOffset = remember { mutableStateOf(Offset(250f, 56f)) }
+    val houseOffset = remember { mutableStateOf(Offset(50f, 56f)) }
+    val fortressOffset = remember { mutableStateOf(Offset(250f, 56f)) }
 
     Box(modifier = Modifier.fillMaxWidth()) {
         // Основное изображение на фоне
         AsyncImage(
-            model =                     Box(modifier = Modifier.fillMaxWidth()) {
+            model = Box(modifier = Modifier.fillMaxWidth()) {
                 AsyncImage(
                     model = map.value.imageUrl,
                     contentDescription = null,
@@ -193,45 +193,49 @@ fun DraggableImages(map: State<Map>) {
         )
 
         // Первое изображение (драгаемое)
-        Image(
-            painter = painterResource(R.drawable.map_icon_house),
-            contentDescription = "Полупрозрачное изображение",
-            modifier = Modifier
-                .offset { IntOffset(houseOffset.value.x.roundToInt(), houseOffset.value.y.roundToInt()) }
-                .pointerInput(Unit) {
-                    detectDragGestures { _, dragAmount ->
-                        houseOffset.value = Offset(
-                            x = houseOffset.value.x + dragAmount.x,
-                            y = houseOffset.value.y + dragAmount.y
-                        )
+        if (mapViewModel.newHouseState.value) {
+            Image(
+                painter = painterResource(R.drawable.map_icon_house),
+                contentDescription = "Полупрозрачное изображение",
+                modifier = Modifier
+                    .offset { IntOffset(houseOffset.value.x.roundToInt(), houseOffset.value.y.roundToInt()) }
+                    .pointerInput(Unit) {
+                        detectDragGestures { _, dragAmount ->
+                            houseOffset.value = Offset(
+                                x = houseOffset.value.x + dragAmount.x,
+                                y = houseOffset.value.y + dragAmount.y
+                            )
+                        }
                     }
-                }
-                .graphicsLayer {
-                    shadowElevation = 8f
-                    shape = RoundedCornerShape(8.dp)
-                    clip = true
-                }
-        )
+                    .graphicsLayer {
+                        shadowElevation = 8f
+                        shape = RoundedCornerShape(8.dp)
+                        clip = true
+                    }
+            )
+        }
 
         // Второе изображение (драгаемое)
-        Image(
-            painter = painterResource(R.drawable.map_icon_fortress),
-            contentDescription = "Полупрозрачное изображение",
-            modifier = Modifier
-                .offset { IntOffset(fortressOffset.value.x.roundToInt(), fortressOffset.value.y.roundToInt()) }
-                .pointerInput(Unit) {
-                    detectDragGestures { _, dragAmount ->
-                        fortressOffset.value = Offset(
-                            x = fortressOffset.value.x + dragAmount.x,
-                            y = fortressOffset.value.y + dragAmount.y
-                        )
+        if (mapViewModel.newFortressState.value) {
+            Image(
+                painter = painterResource(R.drawable.map_icon_fortress),
+                contentDescription = "Полупрозрачное изображение",
+                modifier = Modifier
+                    .offset { IntOffset(fortressOffset.value.x.roundToInt(), fortressOffset.value.y.roundToInt()) }
+                    .pointerInput(Unit) {
+                        detectDragGestures { _, dragAmount ->
+                            fortressOffset.value = Offset(
+                                x = fortressOffset.value.x + dragAmount.x,
+                                y = fortressOffset.value.y + dragAmount.y
+                            )
+                        }
                     }
-                }
-                .graphicsLayer {
-                    shadowElevation = 8f
-                    shape = RoundedCornerShape(8.dp)
-                    clip = true
-                }
-        )
+                    .graphicsLayer {
+                        shadowElevation = 8f
+                        shape = RoundedCornerShape(8.dp)
+                        clip = true
+                    }
+            )
+        }
     }
 }
