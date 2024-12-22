@@ -28,7 +28,7 @@ class NetworkModule {
     @Singleton
     fun provideRetrofit(@Named("baseUrl") baseUrl: String): Retrofit {
         val client = OkHttpClient.Builder()
-            .followSslRedirects(false)
+            //.followSslRedirects(false)
             .build()
         return Retrofit.Builder()
             .baseUrl(baseUrl)
