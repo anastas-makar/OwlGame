@@ -2,6 +2,7 @@ package pro.progr.owlgame.presentation.ui
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -91,7 +92,7 @@ fun MapScreen(
                                     contentColor = Color.White
                                 ),
                                 onClick = {
-                                    mapViewModel.newHouseState.value = true
+                                    mapViewModel.selectHouseState.value = true
                                 }
                             ) {
                                 Text(text = "Построить дом")
@@ -103,7 +104,7 @@ fun MapScreen(
                                     contentColor = Color.White
                                 ),
                                 onClick = {
-                                    mapViewModel.newFortressState.value = true
+                                    mapViewModel.selectFortressState.value = true
                                 }
                             ) {
                                 Text(text = "Построить замок")
@@ -158,6 +159,32 @@ fun MapScreen(
                                 Text(text = "Сохранить")
                             }
                         }
+                    }
+                }
+
+                if (mapViewModel.selectHouseState.value) {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .background(color = Color.White.copy(alpha = 0.5f))
+                            .clickable {
+                                mapViewModel.selectHouseState.value = false
+                            }
+                    ) {
+
+                    }
+                }
+
+                if (mapViewModel.selectFortressState.value) {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .background(color = Color.White.copy(alpha = 0.5f))
+                            .clickable {
+                                mapViewModel.selectFortressState.value = false
+                            }
+                    ) {
+
                     }
                 }
             }
