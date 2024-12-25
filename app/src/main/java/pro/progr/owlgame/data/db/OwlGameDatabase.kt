@@ -13,6 +13,8 @@ abstract class OwlGameDatabase : RoomDatabase() {
 
     abstract fun townWithDataDao(): TownWithDataDao
 
+    abstract fun buildingsDao(): BuildingsDao
+
     companion object {
         @Volatile
         private var INSTANCE: OwlGameDatabase? = null
