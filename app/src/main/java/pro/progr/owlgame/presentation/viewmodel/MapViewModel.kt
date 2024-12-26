@@ -9,6 +9,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import pro.progr.owlgame.data.db.Town
+import pro.progr.owlgame.data.repository.BuildingsRepository
 import pro.progr.owlgame.data.repository.MapsRepository
 import pro.progr.owlgame.data.web.Map
 import pro.progr.owlgame.domain.FoundTownUseCase
@@ -16,6 +17,7 @@ import javax.inject.Inject
 
 class MapViewModel @Inject constructor(
     private val mapsRepository: MapsRepository,
+    private val buildingsRepository: BuildingsRepository,
     private val mapId: String,
     private val foundTownUseCase: FoundTownUseCase
 ) : ViewModel() {
