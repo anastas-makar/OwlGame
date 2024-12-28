@@ -6,8 +6,10 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import pro.progr.owlgame.data.db.Building
 import pro.progr.owlgame.data.db.Town
 import pro.progr.owlgame.data.repository.BuildingsRepository
 import pro.progr.owlgame.data.repository.MapsRepository
@@ -48,6 +50,11 @@ class MapViewModel @Inject constructor(
             townState.value = foundTownUseCase.invoke(map, townName)
         }
 
+    }
+
+    fun getAvailableBuildings() : Flow<List<Building>> {
+        //todo:
+        return flowOf(listOf(Building(1, "какое-то", "")))
     }
 
 }
