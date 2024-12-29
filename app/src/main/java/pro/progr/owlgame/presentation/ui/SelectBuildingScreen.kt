@@ -37,14 +37,14 @@ fun SelectBuildingScreen(mapViewModel: MapViewModel) {
             verticalArrangement = Arrangement.spacedBy(8.dp),
             horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            itemsIndexed(buildingsState.value) { _, map ->
+            itemsIndexed(buildingsState.value) { _, building ->
                 Box(
                     modifier = Modifier
-                        .padding(8.dp)
+                        .padding(30.dp)
                         .fillMaxSize()
                 ) {
                     AsyncImage(
-                        model = map.imageUrl,
+                        model = building.imageUrl,
                         contentDescription = null,
                         contentScale = ContentScale.FillWidth,
                         modifier = Modifier

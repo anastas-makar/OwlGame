@@ -54,7 +54,7 @@ class MapViewModel @Inject constructor(
 
     fun getAvailableBuildings() : Flow<List<Building>> {
         //todo:
-        return flowOf(listOf(Building(1, "какое-то", "")))
+        return flowOf(listOf(Building(1, "какое-то", "https://progr.pro//api//owl//maps//img//f250800d-6224-4e1c-a6ea-472c1796bb8b.webp")))
     }
 
 }
