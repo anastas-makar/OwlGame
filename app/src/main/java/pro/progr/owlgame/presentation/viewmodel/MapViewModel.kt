@@ -9,12 +9,13 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import pro.progr.owlgame.data.db.Building
+import pro.progr.owlgame.R
 import pro.progr.owlgame.data.db.Town
 import pro.progr.owlgame.data.repository.BuildingsRepository
 import pro.progr.owlgame.data.repository.MapsRepository
 import pro.progr.owlgame.data.web.Map
 import pro.progr.owlgame.domain.FoundTownUseCase
+import pro.progr.owlgame.presentation.ui.model.BuildingModel
 import javax.inject.Inject
 
 class MapViewModel @Inject constructor(
@@ -52,9 +53,19 @@ class MapViewModel @Inject constructor(
 
     }
 
-    fun getAvailableBuildings() : Flow<List<Building>> {
+    fun getAvailableBuildings() : Flow<List<BuildingModel>> {
         //todo:
-        return flowOf(listOf(Building(1, "какое-то", "https://progr.pro//api//owl//maps//img//f250800d-6224-4e1c-a6ea-472c1796bb8b.webp")))
+        return flowOf(listOf(
+            BuildingModel(1,
+                "какое-то",
+                R.drawable.test1),
+            BuildingModel(2,
+                "какое-то",
+                R.drawable.test2),
+            BuildingModel(3,
+                "какое-то",
+                R.drawable.test3
+        )))
     }
 
 }

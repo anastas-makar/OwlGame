@@ -15,8 +15,10 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
+import coil.request.ImageRequest
 import pro.progr.owlgame.presentation.viewmodel.MapViewModel
 
 @Composable
@@ -31,7 +33,7 @@ fun SelectBuildingScreen(mapViewModel: MapViewModel) {
             }
     ) {
         LazyVerticalGrid(
-            columns = GridCells.Fixed(2), // Указываем 2 колонки
+            columns = GridCells.Fixed(2),
             modifier = Modifier.fillMaxSize(),
             contentPadding = PaddingValues(8.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp),
@@ -44,7 +46,9 @@ fun SelectBuildingScreen(mapViewModel: MapViewModel) {
                         .fillMaxSize()
                 ) {
                     AsyncImage(
-                        model = building.imageUrl,
+                        model = ImageRequest.Builder(LocalContext.current)
+                            .data(building.imageResource)
+                            .build(),
                         contentDescription = null,
                         contentScale = ContentScale.FillWidth,
                         modifier = Modifier
