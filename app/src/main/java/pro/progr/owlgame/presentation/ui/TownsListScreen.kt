@@ -46,7 +46,6 @@ fun TownsListScreen(
                     .padding(innerPadding)
                     .fillMaxSize()
             ) {
-                Text("List of towns")
 
                 LazyVerticalGrid(
                     columns = GridCells.Fixed(2),
