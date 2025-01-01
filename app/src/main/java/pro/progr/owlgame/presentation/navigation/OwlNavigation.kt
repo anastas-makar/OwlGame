@@ -12,10 +12,10 @@ import pro.progr.owlgame.presentation.ui.TownScreen
 import pro.progr.owlgame.presentation.ui.TownsListScreen
 
 @Composable
-fun OwlNavigation(backToMain : () -> Unit) {
+fun OwlNavigation(startDestination : String = "towns", backToMain : () -> Unit) {
     val navController = rememberNavController()
 
-    NavHost(navController = navController, startDestination = "towns") {
+    NavHost(navController = navController, startDestination = startDestination) {
         composable("towns") {
             TownsListScreen(backToMain, navController)
         }

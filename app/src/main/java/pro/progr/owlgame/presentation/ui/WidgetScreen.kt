@@ -32,8 +32,8 @@ fun WidgetScreen(navController: NavHostController) {
         ),
         OwlMenuModel(
             text = "Открыть мешочек",
-            navigateTo = "owl_navigation", //todo:
-            imageResource = R.drawable.test2
+            navigateTo = "owl_navigation/pouch",
+            imageResource = R.drawable.pouch
         )
     )
 
