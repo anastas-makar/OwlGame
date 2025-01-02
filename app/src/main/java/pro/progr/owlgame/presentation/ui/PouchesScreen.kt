@@ -14,13 +14,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import pro.progr.owlgame.presentation.viewmodel.PouchesViewModel
-import pro.progr.owlgame.presentation.viewmodel.dagger.DaggerViewModel
+import pro.progr.owlgame.presentation.viewmodel.dagger.DaggerPouchViewModel
 
 @Composable
 fun PouchesScreen(
     backToMain: () -> Unit,
     navController: NavHostController,
-    pouchesViewModel: PouchesViewModel = DaggerViewModel()
+    pouchesViewModel: PouchesViewModel = DaggerPouchViewModel()
 ) {
 
     Scaffold(
