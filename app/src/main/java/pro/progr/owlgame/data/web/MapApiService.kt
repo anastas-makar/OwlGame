@@ -9,4 +9,8 @@ interface MapApiService {
     suspend fun getMaps(
         @Query("apiKey") apiKey: String
     ): Response<List<String>>
+    @GET("pouches")
+    suspend fun getPouches(
+        @Query("apiKey") apiKey: String
+    ): Response<List<String>>
 }

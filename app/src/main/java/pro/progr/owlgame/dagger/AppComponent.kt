@@ -6,18 +6,22 @@ import dagger.Component
 import pro.progr.owlgame.data.dagger.DatabaseModule
 import pro.progr.owlgame.data.dagger.NetworkModule
 import pro.progr.owlgame.presentation.viewmodel.dagger.MapViewModelFactory
+import pro.progr.owlgame.presentation.viewmodel.dagger.PouchViewModelFactory
 import pro.progr.owlgame.presentation.viewmodel.dagger.TownViewModelFactory
 import pro.progr.owlgame.presentation.viewmodel.dagger.ViewModelFactory
 import javax.inject.Singleton
 
 @Singleton
 @Component(modules = [TownModule::class,
+    PouchModule::class,
     NetworkModule::class,
     AppModule::class,
     DatabaseModule::class
 ])
 interface AppComponent {
     fun townViewModelFactory(): TownViewModelFactory
+
+    fun pouchViewModelFactory(): PouchViewModelFactory
 
     fun mapViewModelFactory(): MapViewModelFactory
 
