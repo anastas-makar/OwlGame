@@ -13,7 +13,7 @@ class PouchesViewModel @Inject constructor(
     private val pouchesRepository: PouchesRepository
 ) : ViewModel() {
 
-    var pouches = mutableStateOf<List<Pouch>?>(emptyList())
+    var pouches = mutableStateOf<List<Pouch>>(emptyList())
 
     fun loadPouches() {
         viewModelScope.launch {
