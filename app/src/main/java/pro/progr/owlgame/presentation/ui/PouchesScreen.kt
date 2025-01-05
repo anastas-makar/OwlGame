@@ -31,7 +31,7 @@ fun PouchesScreen(
     Scaffold(
         topBar = {
             Box(modifier = Modifier.statusBarsPadding()) {
-                TownsListBar(backToMain)
+                PouchesBar(backToMain)
             }
         },
         content = { innerPadding ->
