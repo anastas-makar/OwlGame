@@ -38,7 +38,7 @@ fun PouchesScreen(
 ) {
     pouchesViewModel.loadPouches()
 
-    val pouches = pouchesViewModel.pouches.value
+    val pouches = PouchesList(pouchesViewModel.pouches.value)
     if (pouches.isEmpty()) return // Отображение загрузки, если данные ещё не загружены
 
     Scaffold(
@@ -89,7 +89,7 @@ fun AnimatedPouchesColumn(
     val scrollOffset = offsetY * directionMultiplier * 200
 
     Box(modifier = modifier) {
-        LazyColumn {
+        LazyColumn(reverseLayout = direction == Direction.DOWN) {
             itemsIndexed(pouches) { _, pouch ->
                 Box(
                     modifier = Modifier
