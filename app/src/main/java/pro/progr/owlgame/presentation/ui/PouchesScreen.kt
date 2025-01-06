@@ -18,8 +18,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
@@ -75,40 +77,44 @@ fun AnimatedPouchesColumn(
     pouches: List<Pouch>,
     direction: Direction
 ) {
-    val infiniteTransition = rememberInfiniteTransition()
-    val offsetY by infiniteTransition.animateFloat(
-        initialValue = 0f,
-        targetValue = 1f,
-        animationSpec = infiniteRepeatable(
-            animation = tween(5000, easing = LinearEasing),
-            repeatMode = RepeatMode.Restart
-        )
-    )
+    // Состояние списка
+    val listState = rememberLazyListState()
 
-    val directionMultiplier = if (direction == Direction.DOWN) 1 else -1
-    val scrollOffset = offsetY * directionMultiplier * 200
+    // Запускаем анимацию скролла
+    LaunchedEffect(direction, pouches) {
+        while (true) {
+            // Прокрутка по всем элементам
+            for (index in pouches.indices) {
+                listState.animateScrollToItem(
+                    index = index
+                )
+            }
+        }
+    }
 
-    Box(modifier = modifier) {
-        LazyColumn(reverseLayout = direction == Direction.DOWN) {
-            itemsIndexed(pouches) { _, pouch ->
-                Box(
+    // Колонка с прокруткой
+    LazyColumn(
+        state = listState,
+        modifier = modifier,
+        reverseLayout = direction == Direction.DOWN // Обратное направление для DOWN
+    ) {
+        itemsIndexed(pouches) { _, pouch ->
+            Box(
+                modifier = Modifier
+                    .padding(8.dp)
+                    .fillMaxWidth()
+            ) {
+                AsyncImage(
+                    model = pouch.imageUrl,
+                    contentDescription = null,
+                    contentScale = ContentScale.Crop,
                     modifier = Modifier
-                        .offset(y = scrollOffset.dp)
-                        .padding(8.dp)
                         .fillMaxWidth()
-                ) {
-                    AsyncImage(
-                        model = pouch.imageUrl,
-                        contentDescription = null,
-                        contentScale = ContentScale.Crop,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .aspectRatio(1f) // Квадратные изображения
-                            .clickable {
+                        .aspectRatio(1f) // Квадратные изображения
+                        .clickable {
 
-                            }
-                    )
-                }
+                        }
+                )
             }
         }
     }
