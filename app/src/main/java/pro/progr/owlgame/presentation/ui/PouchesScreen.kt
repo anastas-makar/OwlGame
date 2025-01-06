@@ -89,12 +89,11 @@ fun AnimatedPouchesColumn(
     val scrollOffset = offsetY * directionMultiplier * 200
 
     Box(modifier = modifier) {
-        LazyColumn(
-            modifier = Modifier.offset(y = scrollOffset.dp)
-        ) {
+        LazyColumn {
             itemsIndexed(pouches) { _, pouch ->
                 Box(
                     modifier = Modifier
+                        .offset(y = scrollOffset.dp)
                         .padding(8.dp)
                         .fillMaxWidth()
                 ) {
