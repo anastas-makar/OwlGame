@@ -1,19 +1,13 @@
 package pro.progr.owlgame.presentation.ui
 
-import androidx.compose.animation.core.LinearEasing
-import androidx.compose.animation.core.RepeatMode
-import androidx.compose.animation.core.animateFloat
-import androidx.compose.animation.core.infiniteRepeatable
-import androidx.compose.animation.core.rememberInfiniteTransition
-import androidx.compose.animation.core.tween
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.gestures.scrollBy
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -22,12 +16,13 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
+import kotlinx.coroutines.delay
 import pro.progr.owlgame.data.web.Pouch
 import pro.progr.owlgame.presentation.viewmodel.PouchesViewModel
 import pro.progr.owlgame.presentation.viewmodel.dagger.DaggerPouchViewModel
@@ -40,8 +35,16 @@ fun PouchesScreen(
 ) {
     pouchesViewModel.loadPouches()
 
-    val pouches = PouchesList(pouchesViewModel.pouches.value)
+    val pouches = pouchesViewModel.pouches.value
     if (pouches.isEmpty()) return // Отображение загрузки, если данные ещё не загружены
+
+    val pouchesRows = remember {
+        listOf(
+            PouchesList(pouches.shuffled()),
+            PouchesList(pouches.shuffled()),
+            PouchesList(pouches.shuffled())
+        )
+    }
 
     Scaffold(
         topBar = {
@@ -60,7 +63,7 @@ fun PouchesScreen(
                         modifier = Modifier
                             .weight(1f)
                             .fillMaxHeight(),
-                        pouches = pouches,
+                        pouches = pouchesRows[index],
                         direction = if (index % 2 == 0) Direction.DOWN else Direction.UP
                     )
                 }
@@ -77,18 +80,16 @@ fun AnimatedPouchesColumn(
     pouches: List<Pouch>,
     direction: Direction
 ) {
-    // Состояние списка
     val listState = rememberLazyListState()
 
-    // Запускаем анимацию скролла
+    // Скорость прокрутки (в пикселях)
+    val scrollSpeed = 4f // Подберите оптимальное значение для скорости
+
+    // Анимация скролла
     LaunchedEffect(direction, pouches) {
         while (true) {
-            // Прокрутка по всем элементам
-            for (index in pouches.indices) {
-                listState.animateScrollToItem(
-                    index = index
-                )
-            }
+            listState.scrollBy(scrollSpeed)
+            delay(16L) // ~60 кадров в секунду
         }
     }
 
