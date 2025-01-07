@@ -96,6 +96,7 @@ fun AnimatedPouchesColumn(
     // Колонка с прокруткой
     LazyColumn(
         state = listState,
+        userScrollEnabled = false,
         modifier = modifier,
         reverseLayout = direction == Direction.DOWN // Обратное направление для DOWN
     ) {
