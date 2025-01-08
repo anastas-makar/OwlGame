@@ -15,7 +15,7 @@ class PouchesRepository @Inject constructor(private val apiService: MapApiServic
             val response = apiService.getPouches(apiKey)
             if (response.isSuccessful) {
                 val mapUrls = response.body() ?: emptyList()
-                val maps = mapUrls.map { pouchUrl -> Pouch("", pouchUrl) }
+                val maps = mapUrls.map { pouchUrl -> Pouch("todo", pouchUrl) }
                 Result.success(maps)
             } else {
                 Result.failure(Exception("Failed to load pouches: ${response.errorBody()?.string()}"))

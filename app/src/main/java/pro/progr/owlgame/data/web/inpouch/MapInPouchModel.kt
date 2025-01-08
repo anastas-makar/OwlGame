@@ -1,4 +1,7 @@
 package pro.progr.owlgame.data.web.inpouch
 
-class MapInPouchModel {
-}
+data class MapInPouchModel(
+    val id: String,
+    val name: String,
+    val imageUrl: String
+)

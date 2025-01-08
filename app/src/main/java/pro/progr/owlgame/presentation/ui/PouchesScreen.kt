@@ -64,7 +64,8 @@ fun PouchesScreen(
                             .weight(1f)
                             .fillMaxHeight(),
                         pouches = pouchesRows[index],
-                        direction = if (index % 2 == 0) Direction.DOWN else Direction.UP
+                        direction = if (index % 2 == 0) Direction.DOWN else Direction.UP,
+                        navController = navController
                     )
                 }
             }
@@ -78,7 +79,8 @@ enum class Direction { UP, DOWN }
 fun AnimatedPouchesColumn(
     modifier: Modifier = Modifier,
     pouches: List<Pouch>,
-    direction: Direction
+    direction: Direction,
+    navController: NavHostController
 ) {
     val listState = rememberLazyListState()
 
@@ -114,7 +116,7 @@ fun AnimatedPouchesColumn(
                         .fillMaxWidth()
                         .aspectRatio(1f) // Квадратные изображения
                         .clickable {
-
+                            navController.navigate("inPouch/${pouch.id}")
                         }
                 )
             }
