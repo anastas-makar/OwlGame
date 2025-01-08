@@ -62,9 +62,6 @@ fun WidgetScreen(navController: NavHostController) {
                         contentScale = ContentScale.FillWidth,
                         modifier = Modifier
                             .fillMaxSize()
-                            .clickable {
-
-                            }
                     )
 
                     Text(text = menuItem.text)
