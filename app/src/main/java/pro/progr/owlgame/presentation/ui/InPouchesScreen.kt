@@ -22,22 +22,26 @@ fun InPouchesScreen(
     navController: NavHostController,
     pouchId: String,
     inPouchViewModel: InPouchViewModel = DaggerPouchViewModel()
-    ) {
+) {
 
     inPouchViewModel.loadInPouch(pouchId)
 
-    Scaffold(
-        topBar = {
-            Box(modifier = Modifier.statusBarsPadding()) {
-                PouchesBar(backToMain)
-            }
-        },
-        content = { innerPadding ->
+    inPouchViewModel.inPouch.value?.let { inPouch ->
 
-            Column(modifier = Modifier
-                .padding(innerPadding)
-                .fillMaxSize()) {
-                inPouchViewModel.inPouch.value?.let {inPouch ->
+        Scaffold(
+            topBar = {
+                Box(modifier = Modifier.statusBarsPadding()) {
+                    InPouchBar(backToMain, inPouch)
+                }
+            },
+            content = { innerPadding ->
+
+                Column(
+                    modifier = Modifier
+                        .padding(innerPadding)
+                        .fillMaxSize()
+                ) {
+
                     for (map in inPouch.maps) {
                         Box(modifier = Modifier.fillMaxWidth()) {
                             AsyncImage(
@@ -50,22 +54,21 @@ fun InPouchesScreen(
                                             .fillMaxWidth()
                                             .padding(top = 16.dp)
                                     )
-                                }
-                                ,
+                                },
                                 contentDescription = null,
                                 contentScale = ContentScale.FillWidth,
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .padding(top = 16.dp)
                             )
+
+
                         }
-
                     }
+
                 }
-
             }
-        }
-    )
-
+        )
+    }
 
 }
