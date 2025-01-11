@@ -7,12 +7,14 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.material.Scaffold
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
+import pro.progr.owlgame.presentation.ui.model.RuCountable
 import pro.progr.owlgame.presentation.viewmodel.InPouchViewModel
 import pro.progr.owlgame.presentation.viewmodel.dagger.DaggerPouchViewModel
 
@@ -41,6 +43,13 @@ fun InPouchScreen(
                         .padding(innerPadding)
                         .fillMaxSize()
                 ) {
+                    if (inPouch.diamonds != null) {
+                        Text("+ ${inPouch.diamonds.amount} " +
+                                RuCountable("бриллиантов", "бриллиант", "бриллианта")
+                                    .getForNum(inPouch.diamonds.amount),
+                            modifier = Modifier.fillMaxWidth()
+                                .padding(16.dp))
+                    }
 
                     for (map in inPouch.maps) {
                         Box(modifier = Modifier.fillMaxWidth()) {
@@ -52,7 +61,7 @@ fun InPouchScreen(
                                         contentScale = ContentScale.FillWidth,
                                         modifier = Modifier
                                             .fillMaxWidth()
-                                            .padding(top = 16.dp)
+                                            .padding(16.dp)
                                     )
                                 },
                                 contentDescription = null,
@@ -64,6 +73,31 @@ fun InPouchScreen(
 
 
                         }
+                    }
+
+                    for (building in inPouch.buildings) {
+                        Box(modifier = Modifier.fillMaxWidth()) {
+                            AsyncImage(
+                                model = Box(modifier = Modifier.fillMaxWidth()) {
+                                    AsyncImage(
+                                        model = building.imageUrl,
+                                        contentDescription = null,
+                                        contentScale = ContentScale.FillWidth,
+                                        modifier = Modifier
+                                            .fillMaxWidth()
+                                            .padding(16.dp)
+                                    )
+                                },
+                                contentDescription = null,
+                                contentScale = ContentScale.FillWidth,
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(top = 16.dp)
+                            )
+
+
+                        }
+
                     }
 
                 }
