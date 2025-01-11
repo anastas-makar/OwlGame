@@ -1,4 +1,5 @@
 package pro.progr.owlgame.data.web.inpouch
 
-class DiamondsInPouchModel {
-}
+data class DiamondsInPouchModel (
+    val amount : Int
+)

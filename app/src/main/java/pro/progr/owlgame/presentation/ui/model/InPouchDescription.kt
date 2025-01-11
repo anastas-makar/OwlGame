@@ -14,23 +14,23 @@ class InPouchDescription constructor(val inPouch : InPouch) {
     }
 
     private fun addDiamonds() {
-        if (inPouch.diamonds.isNotEmpty()) {
-            content.add("${inPouch.diamonds.size} " +
+        inPouch.diamonds?.let {
+            content.add("${it.amount} " +
                     RuCountable(
                 "бриллиантов",
                 "бриллиант",
-                "бриллианта").getForNum(inPouch.diamonds.size)
+                "бриллианта").getForNum(it.amount)
             )
         }
     }
 
     private fun addMaps() {
         if (inPouch.maps.isNotEmpty()) {
-            content.add("${inPouch.diamonds.size} " +
+            content.add("${inPouch.maps.size} " +
                     RuCountable(
                         "карт",
                         "карта",
-                        "карты").getForNum(inPouch.diamonds.size)
+                        "карты").getForNum(inPouch.maps.size)
             )
         }
     }
