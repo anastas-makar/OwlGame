@@ -1,5 +1,7 @@
 package pro.progr.owlgame.presentation.ui.model
 
+import java.lang.Math.abs
+
 /**
  * Конструктор принимает три формы слова : для количества 0, 1 и 2
  * Метод getForNum возвращает подходящую форму слова для любого целого числа
@@ -13,10 +15,11 @@ data class RuCountable(private val zero : String,
                        private val one : String,
                        private val two : String) {
     fun getForNum(num : Int) : String {
+        val absNum = abs(num)
         return when {
-            num % 100 in 10 .. 20 -> zero
-            num % 10 == 1 -> one
-            num % 10 in 2 .. 4 -> two
+            absNum % 100 in 10 .. 20 -> zero
+            absNum % 10 == 1 -> one
+            absNum % 10 in 2 .. 4 -> two
             else -> zero
         }
     }
