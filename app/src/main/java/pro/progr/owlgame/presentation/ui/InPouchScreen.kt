@@ -17,7 +17,7 @@ import pro.progr.owlgame.presentation.viewmodel.InPouchViewModel
 import pro.progr.owlgame.presentation.viewmodel.dagger.DaggerPouchViewModel
 
 @Composable
-fun InPouchesScreen(
+fun InPouchScreen(
     backToMain: () -> Unit,
     navController: NavHostController,
     pouchId: String,
