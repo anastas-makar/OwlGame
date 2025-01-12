@@ -17,7 +17,7 @@ fun InPouchBar(backToMain : () -> Unit,
                inPouch: InPouch) {
     TopAppBar(
         title = {
-            Text(text = InPouchDescription(inPouch).get())
+            Text(text = InPouchDescription(inPouch).compile())
         },
         navigationIcon = {
             IconButton(onClick = { backToMain() }) {

@@ -1,0 +1,26 @@
+<resources>
+    <plurals name="word_diamond">
+        <item quantity="one">бриллиант</item>
+        <item quantity="few">бриллианта</item>
+        <item quantity="many">бриллиантов</item>
+        <item quantity="other">бриллиантов</item>
+    </plurals>
+    <plurals name="word_map">
+        <item quantity="one">карта</item>
+        <item quantity="few">карты</item>
+        <item quantity="many">карт</item>
+        <item quantity="other">карт</item>
+    </plurals>
+    <plurals name="word_house">
+        <item quantity="one">домик</item>
+        <item quantity="few">домика</item>
+        <item quantity="many">домиков</item>
+        <item quantity="other">домиков</item>
+    </plurals>
+    <plurals name="word_fortress">
+        <item quantity="one">замок</item>
+        <item quantity="few">замка</item>
+        <item quantity="many">замков</item>
+        <item quantity="other">замков</item>
+    </plurals>
+</resources>

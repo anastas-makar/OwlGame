@@ -148,11 +148,11 @@ fun MapScreen(
                 }
 
                 if (mapViewModel.selectHouseState.value) {
-                    SelectBuildingScreen(mapViewModel = mapViewModel)
+                    SelectHouseScreen(mapViewModel = mapViewModel)
                 }
 
                 if (mapViewModel.selectFortressState.value) {
-                    SelectBuildingScreen(mapViewModel = mapViewModel)
+                    SelectHouseScreen(mapViewModel = mapViewModel)
                 }
             }
         }

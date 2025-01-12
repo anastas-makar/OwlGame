@@ -53,7 +53,7 @@ class MapViewModel @Inject constructor(
 
     }
 
-    fun getAvailableBuildings() : Flow<List<BuildingModel>> {
+    fun getAvailableHouses() : Flow<List<BuildingModel>> {
         //todo:
         return flowOf(listOf(
             BuildingModel(1,

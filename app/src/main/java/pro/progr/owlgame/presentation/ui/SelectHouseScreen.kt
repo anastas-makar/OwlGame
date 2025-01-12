@@ -22,8 +22,8 @@ import coil.request.ImageRequest
 import pro.progr.owlgame.presentation.viewmodel.MapViewModel
 
 @Composable
-fun SelectBuildingScreen(mapViewModel: MapViewModel) {
-    val buildingsState = mapViewModel.getAvailableBuildings().collectAsState(initial = emptyList())
+fun SelectHouseScreen(mapViewModel: MapViewModel) {
+    val buildingsState = mapViewModel.getAvailableHouses().collectAsState(initial = emptyList())
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -32,6 +32,7 @@ fun SelectBuildingScreen(mapViewModel: MapViewModel) {
                 mapViewModel.selectHouseState.value = false
             }
     ) {
+
         LazyVerticalGrid(
             columns = GridCells.Fixed(2),
             modifier = Modifier.fillMaxSize(),
