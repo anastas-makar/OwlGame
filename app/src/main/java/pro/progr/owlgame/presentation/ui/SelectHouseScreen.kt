@@ -56,6 +56,7 @@ fun SelectHouseScreen(mapViewModel: MapViewModel) {
                             .fillMaxSize()
                             .clickable {
                                 mapViewModel.selectHouseState.value = false
+                                mapViewModel.selectedBuilding.value = building
                                 mapViewModel.newHouseState.value = true
                             }
                     )
