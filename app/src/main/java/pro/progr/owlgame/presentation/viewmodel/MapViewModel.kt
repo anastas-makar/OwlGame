@@ -1,5 +1,6 @@
 package pro.progr.owlgame.presentation.viewmodel
 
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -7,6 +8,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import pro.progr.owlgame.R
@@ -56,18 +58,27 @@ class MapViewModel @Inject constructor(
     }
 
     fun getAvailableHouses() : Flow<List<BuildingModel>> {
-        //todo:
-        return flowOf(listOf(
-            BuildingModel(1,
-                "какое-то",
-                R.drawable.test1),
-            BuildingModel(2,
-                "какое-то",
-                R.drawable.test2),
-            BuildingModel(3,
-                "какое-то",
-                R.drawable.test3
-        )))
+        return buildingsRepository.getAvailableHouses().map {buildingList ->
+            buildingList.map { building ->
+                BuildingModel(
+                    building.id,
+                    building.name,
+                    R.drawable.test1
+                )
+            }
+        }
+    }
+
+    fun getBuildingsOnMap() : Flow<List<BuildingModel>> {
+        return buildingsRepository.getBuildingsOnMap().map {buildingList ->
+            buildingList.map { building ->
+                BuildingModel(
+                    building.id,
+                    building.name,
+                    R.drawable.test1
+                )
+            }
+        }
     }
 
 }

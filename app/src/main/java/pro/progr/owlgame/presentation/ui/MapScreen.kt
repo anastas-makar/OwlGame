@@ -35,6 +35,7 @@ import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import pro.progr.owlgame.data.web.Map
+import pro.progr.owlgame.presentation.ui.model.BuildingModel
 import pro.progr.owlgame.presentation.viewmodel.MapViewModel
 import pro.progr.owlgame.presentation.viewmodel.dagger.DaggerMapViewModel
 
@@ -109,39 +110,25 @@ fun MapScreen(
 
                     DraggableImages(map, mapViewModel)
 
+                    val buildingsOnMapsState = mapViewModel.getBuildingsOnMap().collectAsState(
+                        initial = emptyList()
+                    )
+
                     mapViewModel.selectedBuilding.value?.let {newHouse ->
-                        LazyVerticalGrid(
-                            columns = GridCells.Fixed(2),
-                            modifier = Modifier.fillMaxSize(),
-                            contentPadding = PaddingValues(8.dp),
-                            verticalArrangement = Arrangement.spacedBy(8.dp),
-                            horizontalArrangement = Arrangement.spacedBy(8.dp)
-                        ) {
-                            itemsIndexed(listOf(newHouse)) { _, building ->
-                                Box(
-                                    modifier = Modifier
-                                        .padding(30.dp)
-                                        .fillMaxSize()
-                                ) {
-                                    AsyncImage(
-                                        model = ImageRequest.Builder(LocalContext.current)
-                                            .data(building.imageResource)
-                                            .build(),
-                                        contentDescription = null,
-                                        contentScale = ContentScale.FillWidth,
-                                        modifier = Modifier
-                                            .fillMaxSize()
-                                            .clickable {
-                                                mapViewModel.selectHouseState.value = false
-                                                mapViewModel.selectedBuilding.value = building
-                                                mapViewModel.newHouseState.value = true
-                                            }
-                                    )
-                                }
-                            }
-                        }
+                        BuildingsGrid(
+                            buildingsList = buildingsOnMapsState.value.plusElement(
+                                newHouse
+                            ), mapViewModel = mapViewModel
+                        )
+                    }?: kotlin.run {
+                        BuildingsGrid(
+                            buildingsList = buildingsOnMapsState.value,
+                            mapViewModel = mapViewModel
+                        )
                     }
-                }
+
+
+                    }
 
                 if (foundTown.value) {
                     Box(
@@ -200,4 +187,38 @@ fun MapScreen(
             }
         }
     )
+}
+
+@Composable
+fun BuildingsGrid(buildingsList : List<BuildingModel>, mapViewModel: MapViewModel) {
+    LazyVerticalGrid(
+        columns = GridCells.Fixed(2),
+        modifier = Modifier.fillMaxSize(),
+        contentPadding = PaddingValues(8.dp),
+        verticalArrangement = Arrangement.spacedBy(8.dp),
+        horizontalArrangement = Arrangement.spacedBy(8.dp)
+    ) {
+        itemsIndexed(buildingsList) { _, building ->
+            Box(
+                modifier = Modifier
+                    .padding(30.dp)
+                    .fillMaxSize()
+            ) {
+                AsyncImage(
+                    model = ImageRequest.Builder(LocalContext.current)
+                        .data(building.imageResource)
+                        .build(),
+                    contentDescription = null,
+                    contentScale = ContentScale.FillWidth,
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .clickable {
+                            mapViewModel.selectHouseState.value = false
+                            mapViewModel.selectedBuilding.value = building
+                            mapViewModel.newHouseState.value = true
+                        }
+                )
+            }
+        }
+    }
 }
