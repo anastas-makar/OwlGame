@@ -114,20 +114,19 @@ fun MapScreen(
                         initial = emptyList()
                     )
 
-                    mapViewModel.selectedBuilding.value?.let {newHouse ->
-                        BuildingsGrid(
-                            buildingsList = buildingsOnMapsState.value.plusElement(
-                                newHouse
-                            ), mapViewModel = mapViewModel
-                        )
-                    }?: kotlin.run {
-                        BuildingsGrid(
-                            buildingsList = buildingsOnMapsState.value,
-                            mapViewModel = mapViewModel
-                        )
-                    }
-
-
+                    mapViewModel.selectedBuilding.value?.let {
+                            newHouse ->
+                            BuildingsGrid(
+                                buildingsList = buildingsOnMapsState.value.plusElement(
+                                    newHouse
+                                ), mapViewModel = mapViewModel
+                            )
+                        }?: kotlin.run {
+                            BuildingsGrid(
+                                buildingsList = buildingsOnMapsState.value,
+                                mapViewModel = mapViewModel
+                            )
+                        }
                     }
 
                 if (foundTown.value) {

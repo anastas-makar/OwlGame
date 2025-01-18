@@ -19,6 +19,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
+import pro.progr.owlgame.presentation.ui.model.BuildingModel
 import pro.progr.owlgame.presentation.viewmodel.MapViewModel
 
 @Composable
@@ -42,6 +43,11 @@ fun SelectHouseScreen(mapViewModel: MapViewModel) {
             horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             itemsIndexed(buildingsState.value) { _, building ->
+                val imageId = LocalContext
+                    .current.resources
+                    .getIdentifier(building.imageUrl,
+                        "drawable",
+                        LocalContext.current.packageName)
                 Box(
                     modifier = Modifier
                         .padding(30.dp)
@@ -49,7 +55,7 @@ fun SelectHouseScreen(mapViewModel: MapViewModel) {
                 ) {
                     AsyncImage(
                         model = ImageRequest.Builder(LocalContext.current)
-                            .data(building.imageResource)
+                            .data(imageId)
                             .build(),
                         contentDescription = null,
                         contentScale = ContentScale.FillWidth,
@@ -57,7 +63,11 @@ fun SelectHouseScreen(mapViewModel: MapViewModel) {
                             .fillMaxSize()
                             .clickable {
                                 mapViewModel.selectHouseState.value = false
-                                mapViewModel.selectedBuilding.value = building
+                                mapViewModel.selectedBuilding.value = BuildingModel(
+                                    building.id,
+                                    building.name,
+                                    imageId
+                                )
                                 mapViewModel.newHouseState.value = true
                             }
                     )
