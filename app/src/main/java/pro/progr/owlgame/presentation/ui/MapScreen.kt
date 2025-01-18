@@ -117,13 +117,32 @@ fun MapScreen(
                     mapViewModel.selectedBuilding.value?.let {
                             newHouse ->
                             BuildingsGrid(
-                                buildingsList = buildingsOnMapsState.value.plusElement(
-                                    newHouse
-                                ), mapViewModel = mapViewModel
+                                buildingsList = buildingsOnMapsState.value.map { building ->
+                                         BuildingModel(
+                                             building.id,
+                                             building.name,
+                                             LocalContext
+                                                 .current.resources
+                                                 .getIdentifier(building.imageUrl,
+                                                     "drawable",
+                                                     LocalContext.current.packageName)
+                                         )
+                                }, mapViewModel = mapViewModel
                             )
                         }?: kotlin.run {
                             BuildingsGrid(
-                                buildingsList = buildingsOnMapsState.value,
+                                buildingsList = buildingsOnMapsState
+                                    .value.map { building ->
+                                        BuildingModel(
+                                            building.id,
+                                            building.name,
+                                            LocalContext
+                                                .current.resources
+                                                .getIdentifier(building.imageUrl,
+                                                    "drawable",
+                                                    LocalContext.current.packageName)
+                                        )
+                                    },
                                 mapViewModel = mapViewModel
                             )
                         }
