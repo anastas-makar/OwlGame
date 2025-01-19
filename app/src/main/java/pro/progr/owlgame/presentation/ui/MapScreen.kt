@@ -30,6 +30,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
@@ -89,7 +90,8 @@ fun MapScreen(
                                 ),
                                 onClick = {
                                     mapViewModel.selectHouseState.value = true
-                                }
+                                },
+                                modifier = Modifier.padding(horizontal = 7.dp)
                             ) {
                                 Text(text = "Построить дом")
                             }
@@ -101,7 +103,8 @@ fun MapScreen(
                                 ),
                                 onClick = {
                                     mapViewModel.selectFortressState.value = true
-                                }
+                                },
+                                modifier = Modifier.padding(horizontal = 7.dp)
                             ) {
                                 Text(text = "Построить замок")
                             }
@@ -113,6 +116,8 @@ fun MapScreen(
                     val buildingsOnMapsState = mapViewModel.getBuildingsOnMap().collectAsState(
                         initial = emptyList()
                     )
+
+                    Text(text = "Улица Главная", modifier = Modifier.padding(16.dp), fontWeight = FontWeight.Bold)
 
                     mapViewModel.selectedBuilding.value?.let {
                             newHouse ->
@@ -209,34 +214,36 @@ fun MapScreen(
 
 @Composable
 fun BuildingsGrid(buildingsList : List<BuildingModel>, mapViewModel: MapViewModel) {
-    LazyVerticalGrid(
-        columns = GridCells.Fixed(2),
-        modifier = Modifier.fillMaxSize(),
-        contentPadding = PaddingValues(8.dp),
-        verticalArrangement = Arrangement.spacedBy(8.dp),
-        horizontalArrangement = Arrangement.spacedBy(8.dp)
-    ) {
-        itemsIndexed(buildingsList) { _, building ->
-            Box(
-                modifier = Modifier
-                    .padding(30.dp)
-                    .fillMaxSize()
-            ) {
-                AsyncImage(
-                    model = ImageRequest.Builder(LocalContext.current)
-                        .data(building.imageResource)
-                        .build(),
-                    contentDescription = null,
-                    contentScale = ContentScale.FillWidth,
+    Box(modifier = Modifier.fillMaxSize()) {
+        LazyVerticalGrid(
+            columns = GridCells.Fixed(3),
+            modifier = Modifier.fillMaxSize(),
+            contentPadding = PaddingValues(8.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp),
+            horizontalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            itemsIndexed(buildingsList) { _, building ->
+                Box(
                     modifier = Modifier
                         .fillMaxSize()
-                        .clickable {
-                            mapViewModel.selectHouseState.value = false
-                            mapViewModel.selectedBuilding.value = building
-                            mapViewModel.newHouseState.value = true
-                        }
-                )
+                ) {
+                    AsyncImage(
+                        model = ImageRequest.Builder(LocalContext.current)
+                            .data(building.imageResource)
+                            .build(),
+                        contentDescription = null,
+                        contentScale = ContentScale.FillWidth,
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .clickable {
+                                mapViewModel.selectHouseState.value = false
+                                mapViewModel.selectedBuilding.value = building
+                                mapViewModel.newHouseState.value = true
+                            }
+                    )
+                }
             }
         }
+
     }
 }

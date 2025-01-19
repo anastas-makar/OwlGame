@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
@@ -31,20 +32,10 @@ fun DraggableImages(map: State<Map>, mapViewModel: MapViewModel) {
     val houseOffset = remember { mutableStateOf(Offset(50f, 56f)) }
     val fortressOffset = remember { mutableStateOf(Offset(250f, 56f)) }
 
-    Box(modifier = Modifier.fillMaxWidth()) {
+    Box(modifier = Modifier.fillMaxWidth().wrapContentHeight()) {
         // Основное изображение на фоне
         AsyncImage(
-            model = Box(modifier = Modifier.fillMaxWidth()) {
-                AsyncImage(
-                    model = map.value.imageUrl,
-                    contentDescription = null,
-                    contentScale = ContentScale.FillWidth,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(top = 16.dp)
-                )
-            }
-            ,
+            model = map.value.imageUrl,
             contentDescription = null,
             contentScale = ContentScale.FillWidth,
             modifier = Modifier
