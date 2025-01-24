@@ -73,6 +73,8 @@ fun InPouchScreen(
                                     .padding(top = 16.dp)
                             )
 
+                            inPouchViewModel.saveMap(map)
+
 
                         }
                     }

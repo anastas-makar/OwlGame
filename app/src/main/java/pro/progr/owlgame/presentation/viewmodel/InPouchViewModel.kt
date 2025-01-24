@@ -26,7 +26,11 @@ class InPouchViewModel @Inject constructor(
         ))
     }
 
-    fun saveMap(map : Map) {
-        saveMapUseCase.invoke(map)
+    fun saveMap(map : MapInPouchModel) {
+        saveMapUseCase.invoke(Map(
+            map.id,
+            map.name,
+            map.imageUrl
+        ))
     }
 }

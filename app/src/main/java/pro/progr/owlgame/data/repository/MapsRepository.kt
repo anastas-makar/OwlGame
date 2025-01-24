@@ -14,6 +14,9 @@ class MapsRepository @Inject constructor(private val apiService: MapApiService,
                                          @Named("apiKey") private val apiKey: String) {
 
     suspend fun getMaps(): Result<List<Map>> {
+        //todo: будут сохраняться в хранилище и получаться из локальных файлов
+        //либо по сети, если нет локальных файлов?
+        //либо сверять то, что локально, и то, что по сети?
         return try {
             val response = apiService.getMaps(apiKey)
             if (response.isSuccessful) {
@@ -35,6 +38,10 @@ class MapsRepository @Inject constructor(private val apiService: MapApiService,
             "Болотистая местность",
             Uri.decode(imageUrl)
         ))
+    }
+
+    fun saveMap(map: Map) {
+
     }
 }
 
