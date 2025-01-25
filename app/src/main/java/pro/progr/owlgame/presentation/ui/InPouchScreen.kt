@@ -12,6 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
@@ -49,12 +50,17 @@ fun InPouchScreen(
                             + LocalContext.current.resources
                                 .getQuantityString(R.plurals.word_diamond,
                                     inPouch.diamonds.amount),
-                            modifier = Modifier.fillMaxWidth()
+                            modifier = Modifier
+                                .fillMaxWidth()
                                 .padding(16.dp))
                     }
 
                     for (map in inPouch.maps) {
-                        Box(modifier = Modifier.fillMaxWidth()) {
+                        Column(modifier = Modifier.fillMaxWidth()) {
+                            Text(text = "+ ${map.name}", fontWeight = FontWeight.Bold,
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(top = 16.dp, start = 16.dp, end = 16.dp))
                             AsyncImage(
                                 model = Box(modifier = Modifier.fillMaxWidth()) {
                                     AsyncImage(
