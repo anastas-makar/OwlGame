@@ -40,7 +40,7 @@ class MapsRepository @Inject constructor(private val apiService: MapApiService,
         ))
     }
 
-    fun saveMap(map: Map) {
+    fun saveMaps(maps: List<Map>) {
 
     }
 }

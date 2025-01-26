@@ -9,16 +9,16 @@ import pro.progr.owlgame.data.web.inpouch.InPouch
 import javax.inject.Inject
 
 import pro.progr.owlgame.data.web.inpouch.MapInPouchModel
-import pro.progr.owlgame.domain.SaveMapUseCase
+import pro.progr.owlgame.domain.SaveMapsUseCase
 
 class InPouchViewModel @Inject constructor(
     private val pouchesRepository: PouchesRepository,
-    private val saveMapUseCase: SaveMapUseCase
+    private val saveMapsUseCase: SaveMapsUseCase
 ) : ViewModel() {
     val inPouch = mutableStateOf<InPouch?>(null)
     fun loadInPouch(pouchId : String) {
         //todo:
-        inPouch.value = InPouch(maps = listOf(
+        val inPouchTemp = InPouch(maps = listOf(
             MapInPouchModel(
             id = "",
             name = "Карта болотистой местности",
@@ -26,13 +26,19 @@ class InPouchViewModel @Inject constructor(
         )
         ), diamonds = DiamondsInPouchModel(25)
         )
+
+        saveMaps(inPouchTemp.maps)
+
+        inPouch.value = inPouchTemp
     }
 
-    fun saveMap(map : MapInPouchModel) {
-        saveMapUseCase.invoke(Map(
-            map.id,
-            map.name,
-            map.imageUrl
-        ))
+    private fun saveMaps(maps : List<MapInPouchModel>) {
+        saveMapsUseCase.invoke(maps.map {
+            Map(
+                it.id,
+                it.name,
+                it.imageUrl
+            )
+        })
     }
 }
