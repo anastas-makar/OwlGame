@@ -1,9 +1,11 @@
 package pro.progr.owlgame.data.dagger
 
+import android.content.Context
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient
 import pro.progr.owlgame.BuildConfig
+import pro.progr.owlgame.data.db.MapDao
 import pro.progr.owlgame.data.repository.MapsRepository
 import pro.progr.owlgame.data.web.MapApiService
 import retrofit2.Retrofit
@@ -45,7 +47,7 @@ class NetworkModule {
 
     @Provides
     @Singleton
-    fun provideMapRepository(apiService: MapApiService, @Named("apiKey") apiKey: String): MapsRepository {
-        return MapsRepository(apiService, apiKey)
+    fun provideMapRepository(apiService: MapApiService, mapDao: MapDao, context: Context, @Named("apiKey") apiKey: String): MapsRepository {
+        return MapsRepository(apiService, mapDao, context, apiKey)
     }
 }

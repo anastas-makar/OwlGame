@@ -5,6 +5,7 @@ import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
 import coil.imageLoader
 import coil.request.ImageRequest
+import kotlinx.coroutines.flow.Flow
 import pro.progr.owlgame.data.db.MapDao
 import pro.progr.owlgame.data.db.MapEntity
 import pro.progr.owlgame.data.web.Map
@@ -42,13 +43,8 @@ class MapsRepository @Inject constructor(
         }
     }
 
-    suspend fun getMapById(id: String): Result<MapEntity> {
-        val mapEntity = mapDao.getMapById(id)
-        return if (mapEntity != null) {
-            Result.success(mapEntity)
-        } else {
-            Result.failure(Exception("Map not found"))
-        }
+    fun getMapById(id: String): Flow<MapEntity?> {
+        return mapDao.getMapById(id)
     }
 
     suspend fun saveImageLocally(imageUrl: String): String {

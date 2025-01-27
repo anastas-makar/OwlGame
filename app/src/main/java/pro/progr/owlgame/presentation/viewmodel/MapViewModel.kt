@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import pro.progr.owlgame.data.db.Building
@@ -20,11 +21,21 @@ import javax.inject.Inject
 class MapViewModel @Inject constructor(
     private val mapsRepository: MapsRepository,
     private val buildingsRepository: BuildingsRepository,
-    private val mapId: String,
+    mapId: String,
     private val foundTownUseCase: FoundTownUseCase,
 ) : ViewModel() {
 
-    var map : Flow<Map> = mapsRepository.getMapById(mapId)
+    val map : Flow<Map> = mapsRepository.getMapById(mapId).map {mapEntity ->
+        if (mapEntity != null)  {
+            Map(
+                mapEntity.id,
+                mapEntity.name,
+                mapEntity.imagePath
+            )
+        } else {
+            Map("", "", "")
+        }
+    }
 
     val foundTown = MutableStateFlow(false)
 
