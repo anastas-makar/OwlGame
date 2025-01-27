@@ -2,9 +2,10 @@ package pro.progr.owlgame.presentation.viewmodel
 
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import pro.progr.owlgame.data.repository.PouchesRepository
-import pro.progr.owlgame.data.web.Map
-import pro.progr.owlgame.data.web.inpouch.DiamondsInPouchModel
 import pro.progr.owlgame.data.web.inpouch.InPouch
 import javax.inject.Inject
 
@@ -17,28 +18,21 @@ class InPouchViewModel @Inject constructor(
 ) : ViewModel() {
     val inPouch = mutableStateOf<InPouch?>(null)
     fun loadInPouch(pouchId : String) {
-        //todo:
-        val inPouchTemp = InPouch(maps = listOf(
-            MapInPouchModel(
-            id = "",
-            name = "Карта болотистой местности",
-            imageUrl = "https://progr.pro//api//owl//maps//img//f250800d-6224-4e1c-a6ea-472c1796bb8b.webp"
-        )
-        ), diamonds = DiamondsInPouchModel(25)
-        )
+        viewModelScope.launch (Dispatchers.IO) {
+            inPouch.value = pouchesRepository.getInPouch(pouchId).getOrNull()
 
-        saveMaps(inPouchTemp.maps)
+            inPouch.value?.let {
+                saveMaps(it.maps)
+            }
 
-        inPouch.value = inPouchTemp
+        }
+
+
     }
 
     private fun saveMaps(maps : List<MapInPouchModel>) {
-        saveMapsUseCase.invoke(maps.map {
-            Map(
-                it.id,
-                it.name,
-                it.imageUrl
-            )
-        })
+        viewModelScope.launch(Dispatchers.IO) {
+            saveMapsUseCase.invoke(maps)
+        }
     }
 }

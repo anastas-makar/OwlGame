@@ -1,17 +1,28 @@
 package pro.progr.owlgame.data.repository
 
-import android.net.Uri
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
+import android.content.Context
+import android.graphics.Bitmap
+import android.graphics.drawable.BitmapDrawable
+import coil.imageLoader
+import coil.request.ImageRequest
+import pro.progr.owlgame.data.db.MapDao
+import pro.progr.owlgame.data.db.MapEntity
 import pro.progr.owlgame.data.web.Map
 import pro.progr.owlgame.data.web.MapApiService
+import pro.progr.owlgame.data.web.inpouch.MapInPouchModel
+import java.io.File
+import java.io.OutputStream
 import javax.inject.Inject
 import javax.inject.Named
 import javax.inject.Singleton
 
 @Singleton
-class MapsRepository @Inject constructor(private val apiService: MapApiService,
-                                         @Named("apiKey") private val apiKey: String) {
+class MapsRepository @Inject constructor(
+    private val apiService: MapApiService,
+    private val mapDao: MapDao,
+    private val context: Context,
+    @Named("apiKey") private val apiKey: String
+) {
 
     suspend fun getMaps(): Result<List<Map>> {
         //todo: будут сохраняться в хранилище и получаться из локальных файлов
@@ -31,17 +42,51 @@ class MapsRepository @Inject constructor(private val apiService: MapApiService,
         }
     }
 
-    fun getMapById(imageUrl: String): Flow<Map> {
-        //временное решение, тут url вместо id
-        return MutableStateFlow(Map(
-            "",
-            "Болотистая местность",
-            Uri.decode(imageUrl)
-        ))
+    suspend fun getMapById(id: String): Result<MapEntity> {
+        val mapEntity = mapDao.getMapById(id)
+        return if (mapEntity != null) {
+            Result.success(mapEntity)
+        } else {
+            Result.failure(Exception("Map not found"))
+        }
     }
 
-    fun saveMaps(maps: List<Map>) {
+    suspend fun saveImageLocally(imageUrl: String): String {
+        val fileName = imageUrl.substringAfterLast("/")
+        val file = File(context.filesDir, fileName)
 
+        if (!file.exists()) {
+            try {
+                val request = ImageRequest.Builder(context)
+                    .data(imageUrl)
+                    .build()
+
+                // Выполняем запрос через imageLoader
+                val result = context.imageLoader.execute(request)
+
+                // Проверяем результат
+                val drawable = when (result) {
+                    is coil.request.SuccessResult -> result.drawable
+                    is coil.request.ErrorResult -> throw Exception("Failed to load image: ${result.throwable.message}")
+                    else -> throw Exception("Unexpected result from image request")
+                }
+
+                // Сохраняем изображение локально
+                val bitmap = (drawable as BitmapDrawable).bitmap
+                file.outputStream().use { outputStream: OutputStream ->
+                    bitmap.compress(Bitmap.CompressFormat.WEBP, 100, outputStream)
+                }
+            } catch (e: Exception) {
+                throw Exception("Error saving image locally: ${e.message}", e)
+            }
+        }
+
+        return file.absolutePath
     }
+
+    suspend fun saveMaps(maps: List<MapEntity>) {
+        mapDao.insertMaps(maps)
+    }
+
 }
 
