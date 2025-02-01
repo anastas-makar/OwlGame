@@ -25,7 +25,7 @@ class MapViewModel @Inject constructor(
     private val foundTownUseCase: FoundTownUseCase,
 ) : ViewModel() {
 
-    val map : Flow<Map> = mapsRepository.getMapById(mapId).map {mapEntity ->
+    val map : Flow<Map> = mapsRepository.getMapById(mapId).map { mapEntity ->
         if (mapEntity != null)  {
             Map(
                 mapEntity.id,

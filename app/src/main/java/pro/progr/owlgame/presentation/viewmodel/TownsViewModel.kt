@@ -20,13 +20,15 @@ class TownsViewModel @Inject constructor(
 
     fun loadMaps() {
         viewModelScope.launch {
-            val result = mapsRepository.getMaps()
+//            val result = mapsRepository.getMaps()
+//
+//            result.onSuccess { mapsList ->
+//                maps.value = mapsList.map { m -> Map("1", "map", m.imageUrl) }
+//            }.onFailure {
+//                Log.e("TownsViewModel", "Failed to load maps. ERROR RESULT: $it")
+//            }
 
-            result.onSuccess { mapsList ->
-                maps.value = mapsList.map { m -> Map("1", "map", m.imageUrl) }
-            }.onFailure {
-                Log.e("TownsViewModel", "Failed to load maps. ERROR RESULT: $it")
-            }
+            maps.value = mapsRepository.getMaps()
         }
     }
 }

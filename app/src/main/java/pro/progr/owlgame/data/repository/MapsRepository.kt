@@ -3,6 +3,7 @@ package pro.progr.owlgame.data.repository
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
+import android.util.Log
 import coil.imageLoader
 import coil.request.ImageRequest
 import kotlinx.coroutines.flow.Flow
@@ -10,7 +11,6 @@ import pro.progr.owlgame.data.db.MapDao
 import pro.progr.owlgame.data.db.MapEntity
 import pro.progr.owlgame.data.web.Map
 import pro.progr.owlgame.data.web.MapApiService
-import pro.progr.owlgame.data.web.inpouch.MapInPouchModel
 import java.io.File
 import java.io.OutputStream
 import javax.inject.Inject
@@ -25,11 +25,22 @@ class MapsRepository @Inject constructor(
     @Named("apiKey") private val apiKey: String
 ) {
 
-    suspend fun getMaps(): Result<List<Map>> {
+    suspend fun getMaps(): List<Map> {
         //todo: будут сохраняться в хранилище и получаться из локальных файлов
         //либо по сети, если нет локальных файлов?
         //либо сверять то, что локально, и то, что по сети?
-        return try {
+
+        return mapDao.getAllMaps().map { mapEntity ->
+            Map(
+               mapEntity.id,
+                mapEntity.name,
+                mapEntity.imagePath
+            )
+        }
+    }
+
+    suspend fun updateMapsFromServer() {
+        var result = try {
             val response = apiService.getMaps(apiKey)
             if (response.isSuccessful) {
                 val maps = response.body() ?: emptyList()
@@ -40,9 +51,15 @@ class MapsRepository @Inject constructor(
         } catch (e: Exception) {
             Result.failure(e)
         }
+
+        if (result.isSuccess) {
+
+            //сохранение в базе?
+        }
     }
 
     fun getMapById(id: String): Flow<MapEntity?> {
+        Log.wtf("Map id: ", id)
         return mapDao.getMapById(id)
     }
 
