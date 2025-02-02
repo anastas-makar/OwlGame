@@ -22,7 +22,8 @@ class MapsRepository @Inject constructor(
     private val apiService: MapApiService,
     private val mapDao: MapDao,
     private val context: Context,
-    @Named("apiKey") private val apiKey: String
+    @Named("apiKey") private val apiKey: String,
+    @Named("baseUrl") private val baseUrl: String
 ) {
 
     suspend fun getMaps(): List<Map> {
@@ -67,10 +68,11 @@ class MapsRepository @Inject constructor(
         val fileName = imageUrl.substringAfterLast("/")
         val file = File(context.filesDir, fileName)
 
+        Log.wtf("baseUrl + imageUrl", baseUrl + imageUrl)
         if (!file.exists()) {
             try {
                 val request = ImageRequest.Builder(context)
-                    .data(imageUrl)
+                    .data(baseUrl + imageUrl)
                     .build()
 
                 // Выполняем запрос через imageLoader

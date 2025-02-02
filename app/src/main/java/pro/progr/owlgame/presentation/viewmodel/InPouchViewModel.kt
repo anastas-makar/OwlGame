@@ -7,10 +7,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import pro.progr.owlgame.data.repository.PouchesRepository
 import pro.progr.owlgame.data.web.inpouch.InPouch
-import javax.inject.Inject
-
 import pro.progr.owlgame.data.web.inpouch.MapInPouchModel
 import pro.progr.owlgame.domain.SaveMapsUseCase
+import javax.inject.Inject
 
 class InPouchViewModel @Inject constructor(
     private val pouchesRepository: PouchesRepository,
@@ -19,20 +18,38 @@ class InPouchViewModel @Inject constructor(
     val inPouch = mutableStateOf<InPouch?>(null)
     fun loadInPouch(pouchId : String) {
         viewModelScope.launch (Dispatchers.IO) {
-            inPouch.value = pouchesRepository.getInPouch(pouchId).getOrNull()
+            val inPouchresult = pouchesRepository.getInPouch(pouchId).getOrNull()
 
-            inPouch.value?.let {
-                saveMaps(it.maps)
+            if (inPouchresult != null && inPouchresult.maps.isNotEmpty()) {
+                saveInPouch(inPouchresult)
             }
 
         }
-
-
     }
 
-    private fun saveMaps(maps : List<MapInPouchModel>) {
-        viewModelScope.launch(Dispatchers.IO) {
-            saveMapsUseCase.invoke(maps)
+    //Вот это в отдельный юзкейс
+    //saveMapsUseCase, видимо, надо переименовать и переделать
+    private fun saveInPouch(webPouch: InPouch) {
+        if (webPouch.maps.isNotEmpty()) {
+            viewModelScope.launch(Dispatchers.IO) {
+                val mapsWithLocalUrls = saveMapsUseCase
+                    .invoke(webPouch.maps)
+                    .map { ent ->
+
+                        MapInPouchModel(
+                            ent.id,
+                            ent.name,
+                            ent.imagePath
+                        )
+                    }
+
+                inPouch.value = InPouch(
+                    buildings = webPouch.buildings,
+                    maps = mapsWithLocalUrls,
+                    diamonds = webPouch.diamonds
+                )
+            }
+
         }
     }
 }

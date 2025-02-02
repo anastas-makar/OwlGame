@@ -65,7 +65,7 @@ fun TownsListScreen(
                                 modifier = Modifier
                                     .fillMaxSize()
                                     .clickable {
-                                        navController.navigate("map/${Uri.encode(map.imageUrl)}")
+                                        navController.navigate("map/${map.id}")
                                     }
                             )
                         }

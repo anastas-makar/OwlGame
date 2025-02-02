@@ -28,8 +28,6 @@ fun InPouchScreen(
     inPouchViewModel: InPouchViewModel = DaggerPouchViewModel()
 ) {
 
-    inPouchViewModel.loadInPouch(pouchId)
-
     inPouchViewModel.inPouch.value?.let { inPouch ->
 
         Scaffold(
@@ -110,6 +108,8 @@ fun InPouchScreen(
                 }
             }
         )
+    }?: run {
+        inPouchViewModel.loadInPouch(pouchId)
     }
 
 }
