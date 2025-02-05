@@ -11,7 +11,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun TownsListBar(backToMain : () -> Unit) {
+fun MapsListBar(backToMain : () -> Unit) {
     TopAppBar(
         title = {
             Text(text = "Мои города")

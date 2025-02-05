@@ -10,7 +10,7 @@ import pro.progr.owlgame.presentation.ui.InPouchScreen
 import pro.progr.owlgame.presentation.ui.MapScreen
 import pro.progr.owlgame.presentation.ui.PouchesScreen
 import pro.progr.owlgame.presentation.ui.TownScreen
-import pro.progr.owlgame.presentation.ui.TownsListScreen
+import pro.progr.owlgame.presentation.ui.MapsListScreen
 
 @Composable
 fun OwlNavigation(startDestination : String = "towns", backToMain : () -> Unit) {
@@ -18,7 +18,7 @@ fun OwlNavigation(startDestination : String = "towns", backToMain : () -> Unit) 
 
     NavHost(navController = navController, startDestination = startDestination) {
         composable("towns") {
-            TownsListScreen(backToMain, navController)
+            MapsListScreen(backToMain, navController)
         }
         composable("pouch") {
             PouchesScreen(backToMain, navController)

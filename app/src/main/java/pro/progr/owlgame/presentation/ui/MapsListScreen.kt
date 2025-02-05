@@ -1,6 +1,5 @@
 package pro.progr.owlgame.presentation.ui
 
-import android.net.Uri
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -12,9 +11,7 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
@@ -24,12 +21,11 @@ import pro.progr.owlgame.presentation.viewmodel.TownsViewModel
 import pro.progr.owlgame.presentation.viewmodel.dagger.DaggerViewModel
 
 @Composable
-fun TownsListScreen(
+fun MapsListScreen(
     backToMain: () -> Unit,
     navController: NavHostController,
     townsViewModel: TownsViewModel = DaggerViewModel()
 ) {
-    val townsList = townsViewModel.townsList.collectAsState(initial = emptyList())
     val mapsList = townsViewModel.maps.value ?: emptyList()
 
     townsViewModel.loadMaps()
@@ -37,7 +33,7 @@ fun TownsListScreen(
     Scaffold(
         topBar = {
             Box(modifier = Modifier.statusBarsPadding()) {
-                TownsListBar(backToMain)
+                MapsListBar(backToMain)
             }
         },
         content = { innerPadding ->
