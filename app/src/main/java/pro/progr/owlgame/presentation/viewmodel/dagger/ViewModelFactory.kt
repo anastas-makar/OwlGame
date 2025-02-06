@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import pro.progr.owlgame.data.repository.MapsRepository
 import pro.progr.owlgame.data.repository.TownRepository
-import pro.progr.owlgame.presentation.viewmodel.TownsViewModel
+import pro.progr.owlgame.presentation.viewmodel.MapsViewModel
 import javax.inject.Inject
 
 class ViewModelFactory @Inject constructor(
@@ -13,8 +13,8 @@ class ViewModelFactory @Inject constructor(
 ) : ViewModelProvider.Factory {
 
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(TownsViewModel::class.java)) {
-            return TownsViewModel(townRepository, mapsRepository) as T
+        if (modelClass.isAssignableFrom(MapsViewModel::class.java)) {
+            return MapsViewModel(townRepository, mapsRepository) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }

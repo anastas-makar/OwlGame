@@ -3,13 +3,19 @@ package pro.progr.owlgame.data.db
 import androidx.room.Embedded
 import androidx.room.Relation
 
-data class TownWithData (
+data class MapWithData (
     @Embedded
-    val town: Town,
+    val mapEntity: MapEntity,
+    @Relation(
+        parentColumn = "id",
+        entity = Town::class,
+        entityColumn = "mapId"
+    )
+    val town: Town?,
     @Relation(
         parentColumn = "id",
         entity = Slot::class,
-        entityColumn = "townId"
+        entityColumn = "mapId"
     )
     val slots : List<Slot>
 )

@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey
 data class Slot (
     @PrimaryKey
     val id : Int,
-    val townId : Long,
+    val mapId : String,
     val slotNum : Int, 
     val buildingId : Int
 )

@@ -7,10 +7,13 @@ import android.util.Log
 import coil.imageLoader
 import coil.request.ImageRequest
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import pro.progr.owlgame.data.db.MapDao
 import pro.progr.owlgame.data.db.MapEntity
+import pro.progr.owlgame.data.db.MapWithDataDao
 import pro.progr.owlgame.data.web.Map
 import pro.progr.owlgame.data.web.MapApiService
+import pro.progr.owlgame.presentation.ui.model.MapData
 import java.io.File
 import java.io.OutputStream
 import javax.inject.Inject
@@ -21,22 +24,27 @@ import javax.inject.Singleton
 class MapsRepository @Inject constructor(
     private val apiService: MapApiService,
     private val mapDao: MapDao,
+    private val mapsWithDataDao: MapWithDataDao,
     private val context: Context,
     @Named("apiKey") private val apiKey: String,
     @Named("baseUrl") private val baseUrl: String
 ) {
 
-    suspend fun getMaps(): List<Map> {
+    fun getMaps(): Flow<List<MapData>> {
         //todo: будут сохраняться в хранилище и получаться из локальных файлов
         //либо по сети, если нет локальных файлов?
         //либо сверять то, что локально, и то, что по сети?
 
-        return mapDao.getAllMaps().map { mapEntity ->
-            Map(
-               mapEntity.id,
-                mapEntity.name,
-                mapEntity.imagePath
-            )
+        return mapsWithDataDao.getMapsWithData().map { mapsList ->
+            mapsList.map {mapWithData ->
+                MapData(
+                    mapWithData.mapEntity.id,
+                    mapWithData.mapEntity.name,
+                    mapWithData.mapEntity.imagePath,
+                    town = mapWithData.town,
+                    slots = mapWithData.slots
+                )
+            }
         }
     }
 

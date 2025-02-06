@@ -12,23 +12,23 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
-import pro.progr.owlgame.presentation.viewmodel.TownsViewModel
+import pro.progr.owlgame.presentation.viewmodel.MapsViewModel
 import pro.progr.owlgame.presentation.viewmodel.dagger.DaggerViewModel
 
 @Composable
 fun MapsListScreen(
     backToMain: () -> Unit,
     navController: NavHostController,
-    townsViewModel: TownsViewModel = DaggerViewModel()
+    mapsViewModel: MapsViewModel = DaggerViewModel()
 ) {
-    val mapsList = townsViewModel.maps.value ?: emptyList()
-
-    townsViewModel.loadMaps()
+    val mapsList = mapsViewModel.loadMaps().collectAsState(initial = emptyList())
 
     Scaffold(
         topBar = {
@@ -48,7 +48,7 @@ fun MapsListScreen(
                     contentPadding = PaddingValues(8.dp),
                     modifier = Modifier.fillMaxSize()
                 ) {
-                    itemsIndexed(mapsList) { _, map ->
+                    itemsIndexed(mapsList.value) { _, map ->
                         Box(
                             modifier = Modifier
                                 .padding(8.dp)

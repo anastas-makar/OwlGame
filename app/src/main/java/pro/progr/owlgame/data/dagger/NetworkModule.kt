@@ -6,6 +6,7 @@ import dagger.Provides
 import okhttp3.OkHttpClient
 import pro.progr.owlgame.BuildConfig
 import pro.progr.owlgame.data.db.MapDao
+import pro.progr.owlgame.data.db.MapWithDataDao
 import pro.progr.owlgame.data.repository.MapsRepository
 import pro.progr.owlgame.data.web.MapApiService
 import retrofit2.Retrofit
@@ -49,9 +50,10 @@ class NetworkModule {
     @Singleton
     fun provideMapRepository(apiService: MapApiService,
                              mapDao: MapDao,
+                             mapsWithDataDao: MapWithDataDao,
                              context: Context,
                              @Named("apiKey") apiKey: String,
                              @Named("baseUrl") baseUrl: String): MapsRepository {
-        return MapsRepository(apiService, mapDao, context, apiKey, baseUrl)
+        return MapsRepository(apiService, mapDao, mapsWithDataDao, context, apiKey, baseUrl)
     }
 }

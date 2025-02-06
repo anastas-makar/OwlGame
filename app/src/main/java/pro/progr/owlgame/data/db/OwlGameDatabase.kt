@@ -11,7 +11,7 @@ abstract class OwlGameDatabase : RoomDatabase() {
     abstract fun townsDao(): TownsDao
     abstract fun slotsDao(): SlotsDao
 
-    abstract fun townWithDataDao(): TownWithDataDao
+    abstract fun townWithDataDao(): MapWithDataDao
 
     abstract fun buildingsDao(): BuildingsDao
     abstract fun mapDao(): MapDao

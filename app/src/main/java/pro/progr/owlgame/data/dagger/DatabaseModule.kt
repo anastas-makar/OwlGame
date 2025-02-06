@@ -8,7 +8,7 @@ import pro.progr.owlgame.data.db.BuildingsDao
 import pro.progr.owlgame.data.db.MapDao
 import pro.progr.owlgame.data.db.OwlGameDatabase
 import pro.progr.owlgame.data.db.SlotsDao
-import pro.progr.owlgame.data.db.TownWithDataDao
+import pro.progr.owlgame.data.db.MapWithDataDao
 import pro.progr.owlgame.data.db.TownsDao
 import javax.inject.Singleton
 
@@ -31,7 +31,7 @@ object DatabaseModule {
     }
 
     @Provides
-    fun provideTownWithDataDao(database: OwlGameDatabase): TownWithDataDao {
+    fun provideTownWithDataDao(database: OwlGameDatabase): MapWithDataDao {
         return database.townWithDataDao()
     }
 
