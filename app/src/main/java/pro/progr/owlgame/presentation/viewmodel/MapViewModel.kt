@@ -41,8 +41,6 @@ class MapViewModel @Inject constructor(
 
     val foundTown = MutableStateFlow(false)
 
-    val townState = mutableStateOf<Town?>(null)
-
     val newHouseState = mutableStateOf(false)
 
     val newFortressState = mutableStateOf(false)
