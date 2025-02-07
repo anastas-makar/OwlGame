@@ -68,7 +68,7 @@ fun MapScreen(
                         .fillMaxWidth()
                         .padding(horizontal = 16.dp, vertical = 8.dp)
                 ) {
-                    if (!foundTown.value && mapViewModel.townState.value == null) {
+                    if (!foundTown.value && map.value.town == null) {
                         Button(
                             colors = ButtonDefaults.buttonColors(
                                 backgroundColor = Color.DarkGray,
@@ -81,7 +81,7 @@ fun MapScreen(
                         ) {
                             Text(text = "Основать город")
                         }
-                    } else if (mapViewModel.townState.value != null) {
+                    } else if (map.value.town != null) {
                         Row(modifier = Modifier.fillMaxWidth()) {
                             Button(
                                 colors = ButtonDefaults.buttonColors(
