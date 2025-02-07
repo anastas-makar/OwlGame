@@ -35,8 +35,8 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
-import pro.progr.owlgame.data.web.Map
 import pro.progr.owlgame.presentation.ui.model.BuildingModel
+import pro.progr.owlgame.presentation.ui.model.MapData
 import pro.progr.owlgame.presentation.viewmodel.MapViewModel
 import pro.progr.owlgame.presentation.viewmodel.dagger.DaggerMapViewModel
 
@@ -46,7 +46,7 @@ fun MapScreen(
     id: String,
     mapViewModel: MapViewModel = DaggerMapViewModel(id)
 ) {
-    val map = mapViewModel.map.collectAsState(initial = Map("", "", ""))
+    val map = mapViewModel.map.collectAsState(initial = MapData("", "", ""))
     val foundTown = mapViewModel.foundTown.collectAsState(initial = false)
     val cityName = remember { mutableStateOf("") }
 

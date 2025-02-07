@@ -13,9 +13,9 @@ import pro.progr.owlgame.data.db.Building
 import pro.progr.owlgame.data.db.Town
 import pro.progr.owlgame.data.repository.BuildingsRepository
 import pro.progr.owlgame.data.repository.MapsRepository
-import pro.progr.owlgame.data.web.Map
 import pro.progr.owlgame.domain.FoundTownUseCase
 import pro.progr.owlgame.presentation.ui.model.BuildingModel
+import pro.progr.owlgame.presentation.ui.model.MapData
 import javax.inject.Inject
 
 class MapViewModel @Inject constructor(
@@ -25,15 +25,17 @@ class MapViewModel @Inject constructor(
     private val foundTownUseCase: FoundTownUseCase,
 ) : ViewModel() {
 
-    val map : Flow<Map> = mapsRepository.getMapById(mapId).map { mapEntity ->
-        if (mapEntity != null)  {
-            Map(
-                mapEntity.id,
-                mapEntity.name,
-                mapEntity.imagePath
+    val map : Flow<MapData> = mapsRepository.getMapById(mapId).map { mapWithData ->
+        if (mapWithData != null)  {
+            MapData(
+                id = mapWithData.mapEntity.id,
+                name = mapWithData.mapEntity.name,
+                imageUrl = mapWithData.mapEntity.imagePath,
+                town = mapWithData.town,
+                slots = mapWithData.slots
             )
         } else {
-            Map("", "", "")
+            MapData("", "", "")
         }
     }
 
@@ -57,7 +59,7 @@ class MapViewModel @Inject constructor(
         }
     }
 
-    fun foundTown(map: Map, townName: String) {
+    fun foundTown(map: MapData, townName: String) {
         viewModelScope.launch (Dispatchers.Default) {
             foundTown.update { _ -> false }
             townState.value = foundTownUseCase.invoke(map, townName)

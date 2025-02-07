@@ -22,12 +22,12 @@ import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import pro.progr.owlgame.R
-import pro.progr.owlgame.data.web.Map
+import pro.progr.owlgame.presentation.ui.model.MapData
 import pro.progr.owlgame.presentation.viewmodel.MapViewModel
 import kotlin.math.roundToInt
 
 @Composable
-fun DraggableImages(map: State<Map>, mapViewModel: MapViewModel) {
+fun DraggableImages(map: State<MapData>, mapViewModel: MapViewModel) {
     // Состояния для координат первого и второго изображения
     val houseOffset = remember { mutableStateOf(Offset(50f, 56f)) }
     val fortressOffset = remember { mutableStateOf(Offset(250f, 56f)) }

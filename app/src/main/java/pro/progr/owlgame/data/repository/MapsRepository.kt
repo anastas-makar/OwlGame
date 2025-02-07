@@ -10,6 +10,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import pro.progr.owlgame.data.db.MapDao
 import pro.progr.owlgame.data.db.MapEntity
+import pro.progr.owlgame.data.db.MapWithData
 import pro.progr.owlgame.data.db.MapWithDataDao
 import pro.progr.owlgame.data.web.Map
 import pro.progr.owlgame.data.web.MapApiService
@@ -67,9 +68,9 @@ class MapsRepository @Inject constructor(
         }
     }
 
-    fun getMapById(id: String): Flow<MapEntity?> {
+    fun getMapById(id: String): Flow<MapWithData?> {
         Log.wtf("Map id: ", id)
-        return mapDao.getMapById(id)
+        return mapsWithDataDao.getMapWithData(id)
     }
 
     suspend fun saveImageLocally(imageUrl: String): String {
