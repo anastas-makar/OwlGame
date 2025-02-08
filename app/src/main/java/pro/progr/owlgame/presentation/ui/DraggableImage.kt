@@ -5,7 +5,6 @@ import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -17,7 +16,6 @@ import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import pro.progr.owlgame.R
 import pro.progr.owlgame.data.db.Slot
-import pro.progr.owlgame.presentation.ui.model.MapData
 import pro.progr.owlgame.presentation.viewmodel.MapViewModel
 import kotlin.math.roundToInt
 
@@ -53,7 +51,10 @@ fun DraggableImage(slot: Slot, mapViewModel: MapViewModel) {
                                 slot.buildingId
                             )
                         } else {
-                            mapViewModel.updateSlot(slot)
+                            mapViewModel.updateSlot(
+                                slot.copy(
+                                    x = houseOffset.value.x,
+                                    y = houseOffset.value.y))
                         }
                     })
             }
