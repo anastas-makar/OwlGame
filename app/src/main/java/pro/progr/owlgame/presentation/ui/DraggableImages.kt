@@ -35,14 +35,13 @@ fun DraggableImages(map: State<MapData>,
             mapViewModel.selectedBuilding.value?.let {
                 DraggableImage(
                     slot = Slot(x = 50f, y = 56f, mapId = map.value.id, buildingId = it.id),
-                    mapViewModel = mapViewModel,
-                    map = map)
+                    mapViewModel = mapViewModel)
 
             }
         }
 
         for (slot in map.value.slots) {
-            DraggableImage(slot = slot, mapViewModel = mapViewModel, map = map)
+            DraggableImage(slot = slot, mapViewModel = mapViewModel)
         }
 
     }

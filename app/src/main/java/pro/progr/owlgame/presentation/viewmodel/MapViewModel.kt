@@ -11,6 +11,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import pro.progr.owlgame.data.db.Building
+import pro.progr.owlgame.data.db.Slot
 import pro.progr.owlgame.data.repository.BuildingsRepository
 import pro.progr.owlgame.data.repository.MapsRepository
 import pro.progr.owlgame.data.repository.SlotsRepository
@@ -76,11 +77,17 @@ class MapViewModel @Inject constructor(
         return buildingsRepository.getBuildingsOnMap()
     }
 
-    fun saveSlot(x: Float, y: Float, mapId: String) {
-        selectedBuilding.value?.let {
-            viewModelScope.launch (Dispatchers.IO) {
-                slotsRepository.saveSlot(x, y, mapId, it.id)
-            }
+    fun saveSlot(x: Float, y: Float, mapId: String, buildingId: Int) {
+        viewModelScope.launch(Dispatchers.IO) {
+            slotsRepository.saveSlot(x, y, mapId, buildingId)
+            newHouseState.value = false
+            selectedBuilding.value = null
+        }
+    }
+
+    fun updateSlot(slot: Slot) {
+        viewModelScope.launch (Dispatchers.IO) {
+            slotsRepository.updateSlot(slot)
         }
     }
 

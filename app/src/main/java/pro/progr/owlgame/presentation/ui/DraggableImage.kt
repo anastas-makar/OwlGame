@@ -22,7 +22,7 @@ import pro.progr.owlgame.presentation.viewmodel.MapViewModel
 import kotlin.math.roundToInt
 
 @Composable
-fun DraggableImage(slot: Slot, mapViewModel: MapViewModel, map: State<MapData>) {
+fun DraggableImage(slot: Slot, mapViewModel: MapViewModel) {
     // Состояния для координат первого и второго изображения
     val houseOffset = remember { mutableStateOf(Offset(slot.x, slot.y)) }
     Image(
@@ -43,11 +43,18 @@ fun DraggableImage(slot: Slot, mapViewModel: MapViewModel, map: State<MapData>) 
                             y = houseOffset.value.y + dragAmount.y
                         )
                     }, onDragEnd = {
-                        mapViewModel.saveSlot(
-                            houseOffset.value.x,
-                            houseOffset.value.y,
-                            map.value.id
-                        )
+                        if (slot.id == 0) {
+                            mapViewModel.newHouseState.value = false
+
+                            mapViewModel.saveSlot(
+                                houseOffset.value.x,
+                                houseOffset.value.y,
+                                slot.mapId,
+                                slot.buildingId
+                            )
+                        } else {
+                            mapViewModel.updateSlot(slot)
+                        }
                     })
             }
             .graphicsLayer {

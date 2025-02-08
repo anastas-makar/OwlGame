@@ -16,4 +16,8 @@ class SlotsRepository @Inject constructor(private val slotsDao: SlotsDao) {
             )
         )
     }
+
+    fun updateSlot(slot: Slot) {
+        slotsDao.update(slot)
+    }
 }
