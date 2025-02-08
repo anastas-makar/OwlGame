@@ -51,12 +51,15 @@ fun DraggableImages(map: State<MapData>, mapViewModel: MapViewModel) {
                 modifier = Modifier
                     .offset { IntOffset(houseOffset.value.x.roundToInt(), houseOffset.value.y.roundToInt()) }
                     .pointerInput(Unit) {
-                        detectDragGestures { _, dragAmount ->
+                        detectDragGestures (
+                            onDrag = { _, dragAmount ->
                             houseOffset.value = Offset(
                                 x = houseOffset.value.x + dragAmount.x,
                                 y = houseOffset.value.y + dragAmount.y
                             )
-                        }
+                        }, onDragEnd = {
+                                mapViewModel.saveSlot(houseOffset.value.x, houseOffset.value.y, map.value.id)
+                            })
                     }
                     .graphicsLayer {
                         shadowElevation = 8f
