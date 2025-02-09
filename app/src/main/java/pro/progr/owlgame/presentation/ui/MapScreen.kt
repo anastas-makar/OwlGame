@@ -113,45 +113,31 @@ fun MapScreen(
 
                     DraggableImages(map, mapViewModel)
 
-                    val buildingsOnMapsState = mapViewModel.getBuildingsOnMap().collectAsState(
+                    val buildingsOnMapsState = mapViewModel.getBuildingsOnMap(map.value.id).collectAsState(
                         initial = emptyList()
                     )
 
-                    Text(text = "Улица Главная", modifier = Modifier.padding(16.dp), fontWeight = FontWeight.Bold)
+                    map.value.town?.let { town ->
+                        Text(text = "Улица Главная", modifier = Modifier.padding(16.dp), fontWeight = FontWeight.Bold)
 
-                    mapViewModel.selectedBuilding.value?.let {
-                            newHouse ->
-                            BuildingsGrid(
-                                buildingsList = buildingsOnMapsState.value.map { building ->
-                                         BuildingModel(
-                                             building.id,
-                                             building.name,
-                                             LocalContext
-                                                 .current.resources
-                                                 .getIdentifier(building.imageUrl,
-                                                     "drawable",
-                                                     LocalContext.current.packageName)
-                                         )
-                                }, mapViewModel = mapViewModel
-                            )
-                        }?: kotlin.run {
-                            BuildingsGrid(
-                                buildingsList = buildingsOnMapsState
-                                    .value.map { building ->
-                                        BuildingModel(
-                                            building.id,
-                                            building.name,
-                                            LocalContext
-                                                .current.resources
-                                                .getIdentifier(building.imageUrl,
-                                                    "drawable",
-                                                    LocalContext.current.packageName)
-                                        )
-                                    },
-                                mapViewModel = mapViewModel
-                            )
-                        }
+                        BuildingsGrid(
+                            buildingsList = buildingsOnMapsState
+                                .value.map { building ->
+                                    BuildingModel(
+                                        building.id,
+                                        building.name,
+                                        LocalContext
+                                            .current.resources
+                                            .getIdentifier(building.imageUrl,
+                                                "drawable",
+                                                LocalContext.current.packageName)
+                                    )
+                                },
+                            mapViewModel = mapViewModel
+                        )
                     }
+
+                }
 
                 if (foundTown.value) {
                     Box(
@@ -164,7 +150,7 @@ fun MapScreen(
                                 .fillMaxWidth()
                                 .background(color = Color.Transparent)
                                 .padding(16.dp),
-                            horizontalAlignment = Alignment.CenterHorizontally
+                            horizontalAlignment = CenterHorizontally
                         ) {
                             OutlinedTextField(
                                 value = cityName.value,

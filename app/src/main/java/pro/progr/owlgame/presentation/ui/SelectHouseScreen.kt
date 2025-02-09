@@ -25,7 +25,7 @@ import pro.progr.owlgame.presentation.viewmodel.MapViewModel
 @Composable
 fun SelectHouseScreen(mapViewModel: MapViewModel) {
     val buildingsState = mapViewModel.getAvailableHouses().collectAsState(initial = emptyList())
-    val buildingsOnMapState = mapViewModel.getBuildingsOnMap().collectAsState(initial = emptyList())
+
     Box(
         modifier = Modifier
             .fillMaxSize()

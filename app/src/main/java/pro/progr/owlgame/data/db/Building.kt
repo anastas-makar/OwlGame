@@ -8,5 +8,6 @@ data class Building (
     @PrimaryKey(autoGenerate = true)
     val id : Int,
     val name : String,
-    val imageUrl : String
+    val imageUrl : String,
+    val mapId : String? = null
 )
