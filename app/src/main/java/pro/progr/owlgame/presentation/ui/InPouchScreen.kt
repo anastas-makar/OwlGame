@@ -1,5 +1,6 @@
 package pro.progr.owlgame.presentation.ui
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -68,6 +69,7 @@ fun InPouchScreen(
                                         modifier = Modifier
                                             .fillMaxWidth()
                                             .padding(16.dp)
+                                            .clickable { navController.navigate("map/${map.id}") }
                                     )
                                 },
                                 contentDescription = null,
