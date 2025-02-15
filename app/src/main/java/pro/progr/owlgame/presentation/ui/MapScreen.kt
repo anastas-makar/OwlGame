@@ -24,7 +24,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -68,7 +67,9 @@ fun MapScreen(
                         .fillMaxWidth()
                         .padding(horizontal = 16.dp, vertical = 8.dp)
                 ) {
-                    if (!foundTown.value && map.value.town == null) {
+                    if (map.value.id == "") {
+                        Text(text = "Загрузка...")
+                    } else if (!foundTown.value && map.value.town == null) {
                         Button(
                             colors = ButtonDefaults.buttonColors(
                                 backgroundColor = Color.DarkGray,
