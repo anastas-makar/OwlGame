@@ -12,8 +12,12 @@ import pro.progr.owlgame.presentation.ui.PouchesScreen
 import pro.progr.owlgame.presentation.ui.TownScreen
 import pro.progr.owlgame.presentation.ui.MapsListScreen
 
+import pro.progr.diamondapi.DiamondInterface
+
 @Composable
-fun OwlNavigation(startDestination : String = "towns", backToMain : () -> Unit) {
+fun OwlNavigation(startDestination : String = "towns",
+                  backToMain : () -> Unit,
+                  diamondDao: DiamondInterface) {
     val navController = rememberNavController()
 
     NavHost(navController = navController, startDestination = startDestination) {
@@ -44,7 +48,7 @@ fun OwlNavigation(startDestination : String = "towns", backToMain : () -> Unit) 
             val id = backStackEntry.arguments?.getString("id")
 
             id?.let {
-                MapScreen(navController, id)
+                MapScreen(navController, id, diamondDao)
             }
         }
     }
