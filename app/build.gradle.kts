@@ -96,6 +96,8 @@ dependencies {
     ksp("androidx.room:room-compiler:2.6.1")
 
     implementation("io.coil-kt:coil-compose:2.7.0")
+
+    implementation("pro.progr:diamond-api:0.0.1-alpha")
 }
 
 publishing {
