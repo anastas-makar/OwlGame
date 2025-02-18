@@ -73,6 +73,7 @@ class MapsRepository @Inject constructor(
         return mapsWithDataDao.getMapWithData(id)
     }
 
+    //todo: это не принадлежит сюда
     suspend fun saveImageLocally(imageUrl: String): String {
         val fileName = imageUrl.substringAfterLast("/")
         val file = File(context.filesDir, fileName)

@@ -7,7 +7,7 @@ import javax.inject.Inject
 
 class SaveMapsUseCase @Inject constructor(private val mapsRepository: MapsRepository) {
     suspend operator fun invoke(maps: List<MapInPouchModel>): List<MapEntity> {
-        var mapsForLocal = maps.map {
+        val mapsForLocal = maps.map {
             MapEntity(
                 id = it.id,
                 name = it.name,

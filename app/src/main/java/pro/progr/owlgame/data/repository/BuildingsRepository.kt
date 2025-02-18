@@ -35,4 +35,8 @@ class BuildingsRepository @Inject constructor(private val buildingsDao : Buildin
    fun getAvailableFortresses() : Flow<Building> {
        TODO()
    }
+
+    suspend fun saveBuildings(buildings: List<Building>) {
+        buildingsDao.insert(buildings)
+    }
 }
