@@ -14,13 +14,13 @@ class BuildingsRepository @Inject constructor(private val buildingsDao : Buildin
     suspend fun insertForTest() {
         //todo: Это для теста
         buildingsDao.insert(listOf(
-            Building(1,
+            Building("1",
                 "какое-то",
                 "test1"),
-            Building(2,
+            Building("2",
                 "какое-то",
                 "test2"),
-            Building(3,
+            Building("3",
                 "какое-то",
                 "test3"
             )

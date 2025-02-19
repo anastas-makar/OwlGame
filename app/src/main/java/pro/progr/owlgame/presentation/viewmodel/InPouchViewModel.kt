@@ -6,21 +6,25 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import pro.progr.owlgame.data.repository.PouchesRepository
+import pro.progr.owlgame.data.web.inpouch.BuildingInPouch
+import pro.progr.owlgame.data.web.inpouch.BuildingType
 import pro.progr.owlgame.data.web.inpouch.InPouch
 import pro.progr.owlgame.data.web.inpouch.MapInPouchModel
+import pro.progr.owlgame.domain.SaveBuildingsUseCase
 import pro.progr.owlgame.domain.SaveMapsUseCase
 import javax.inject.Inject
 
 class InPouchViewModel @Inject constructor(
     private val pouchesRepository: PouchesRepository,
-    private val saveMapsUseCase: SaveMapsUseCase
+    private val saveMapsUseCase: SaveMapsUseCase,
+    private val saveBuildingsUseCase: SaveBuildingsUseCase
 ) : ViewModel() {
     val inPouch = mutableStateOf<InPouch?>(null)
     fun loadInPouch(pouchId : String) {
         viewModelScope.launch (Dispatchers.IO) {
             val inPouchresult = pouchesRepository.getInPouch(pouchId).getOrNull()
 
-            if (inPouchresult != null && inPouchresult.maps.isNotEmpty()) {
+            if (inPouchresult != null) {
                 saveInPouch(inPouchresult)
             }
 
@@ -50,6 +54,25 @@ class InPouchViewModel @Inject constructor(
                 )
             }
 
+        }
+
+        if (webPouch.buildings.isNotEmpty()) {
+            viewModelScope.launch(Dispatchers.IO) {
+                val mapsWithLocalUrls = saveBuildingsUseCase
+                    .invoke(webPouch.buildings)
+                    .map { ent ->
+
+                        BuildingInPouch(
+                            ent.id,
+                            BuildingType.HOUSE,
+                            5000,
+                            ent.name,
+                            ent.imageUrl
+                        )
+                    }
+
+                inPouch.value = inPouch.value?.copy(buildings = mapsWithLocalUrls)
+            }
         }
     }
 }
