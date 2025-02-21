@@ -51,9 +51,7 @@ class NetworkModule {
     fun provideMapRepository(apiService: MapApiService,
                              mapDao: MapDao,
                              mapsWithDataDao: MapWithDataDao,
-                             context: Context,
-                             @Named("apiKey") apiKey: String,
-                             @Named("baseUrl") baseUrl: String): MapsRepository {
-        return MapsRepository(apiService, mapDao, mapsWithDataDao, context, apiKey, baseUrl)
+                             @Named("apiKey") apiKey: String): MapsRepository {
+        return MapsRepository(apiService, mapDao, mapsWithDataDao, apiKey)
     }
 }

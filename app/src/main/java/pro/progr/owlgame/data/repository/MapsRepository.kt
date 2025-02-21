@@ -26,9 +26,7 @@ class MapsRepository @Inject constructor(
     private val apiService: MapApiService,
     private val mapDao: MapDao,
     private val mapsWithDataDao: MapWithDataDao,
-    private val context: Context,
-    @Named("apiKey") private val apiKey: String,
-    @Named("baseUrl") private val baseUrl: String
+    @Named("apiKey") private val apiKey: String
 ) {
 
     fun getMaps(): Flow<List<MapData>> {
@@ -71,41 +69,6 @@ class MapsRepository @Inject constructor(
     fun getMapById(id: String): Flow<MapWithData?> {
         Log.wtf("Map id: ", id)
         return mapsWithDataDao.getMapWithData(id)
-    }
-
-    //todo: это не принадлежит сюда
-    suspend fun saveImageLocally(imageUrl: String): String {
-        val fileName = imageUrl.substringAfterLast("/")
-        val file = File(context.filesDir, fileName)
-
-        Log.wtf("baseUrl + imageUrl", baseUrl + imageUrl)
-        if (!file.exists()) {
-            try {
-                val request = ImageRequest.Builder(context)
-                    .data(baseUrl + imageUrl)
-                    .build()
-
-                // Выполняем запрос через imageLoader
-                val result = context.imageLoader.execute(request)
-
-                // Проверяем результат
-                val drawable = when (result) {
-                    is coil.request.SuccessResult -> result.drawable
-                    is coil.request.ErrorResult -> throw Exception("Failed to load image: ${result.throwable.message}")
-                    else -> throw Exception("Unexpected result from image request")
-                }
-
-                // Сохраняем изображение локально
-                val bitmap = (drawable as BitmapDrawable).bitmap
-                file.outputStream().use { outputStream: OutputStream ->
-                    bitmap.compress(Bitmap.CompressFormat.WEBP, 100, outputStream)
-                }
-            } catch (e: Exception) {
-                throw Exception("Error saving image locally: ${e.message}", e)
-            }
-        }
-
-        return file.absolutePath
     }
 
     suspend fun saveMaps(maps: List<MapEntity>) {
