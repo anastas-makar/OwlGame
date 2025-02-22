@@ -11,7 +11,7 @@ class SlotsRepository @Inject constructor(
     private val buildingsDao: BuildingsDao) {
 
     @Transaction
-    fun saveSlot(x : Float, y : Float, mapId : String, buildingId : Int) {
+    fun saveSlot(x : Float, y : Float, mapId : String, buildingId : String) {
         slotsDao.insert(
             Slot(
                 x = x,

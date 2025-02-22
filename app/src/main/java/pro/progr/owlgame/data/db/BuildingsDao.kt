@@ -12,7 +12,7 @@ public interface BuildingsDao {
     fun insert(buildings: List<Building>): List<Long>
 
     @Query("UPDATE buildings SET mapId=:mapId WHERE id=:buildingId")
-    fun updateMapId(buildingId: Int, mapId: String): Int
+    fun updateMapId(buildingId: String, mapId: String): Int
 
     @Query("SELECT * FROM buildings WHERE mapId IS NULL")
     fun getAvailable() : Flow<List<Building>>

@@ -79,7 +79,7 @@ class MapViewModel @Inject constructor(
         return buildingsRepository.getBuildingsOnMap(mapId)
     }
 
-    fun saveSlot(x: Float, y: Float, mapId: String, buildingId: Int) {
+    fun saveSlot(x: Float, y: Float, mapId: String, buildingId: String) {
         viewModelScope.launch(Dispatchers.IO) {
             slotsRepository.saveSlot(x, y, mapId, buildingId)
             newHouseState.value = false

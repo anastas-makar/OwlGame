@@ -12,5 +12,5 @@ data class Slot (
     val x : Float,
     val y : Float,
     val mapId : String,
-    val buildingId : Int
+    val buildingId : String
 )
