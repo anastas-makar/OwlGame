@@ -1,6 +1,5 @@
 package pro.progr.owlgame.presentation.viewmodel
 
-import android.util.Log
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -30,7 +29,6 @@ class MapViewModel @Inject constructor(
 
     val map : Flow<MapData> = mapsRepository.getMapById(mapId).map { mapWithData ->
         if (mapWithData != null)  {
-            Log.wtf("SLOTS: ", mapWithData.slots.toString())
             MapData(
                 id = mapWithData.mapEntity.id,
                 name = mapWithData.mapEntity.name,
@@ -68,10 +66,6 @@ class MapViewModel @Inject constructor(
     }
 
     fun getAvailableHouses() : Flow<List<Building>> {
-        //todo: это для теста, убрать
-        viewModelScope.launch(Dispatchers.IO) {
-            buildingsRepository.insertForTest()
-        }
         return buildingsRepository.getAvailableHouses()
     }
 

@@ -52,8 +52,10 @@ class InPouchDescription constructor(val inPouch : InPouch) {
         val housesAmount = inPouch.buildings.filter { it.type == BuildingType.HOUSE }.size
 
         if (housesAmount > 0) {
-            "$housesAmount " +
-            content.add(LocalContext.current.resources
+
+            content.add(
+                "$housesAmount " +
+                LocalContext.current.resources
                 .getQuantityString(R.plurals.word_house, housesAmount))
         }
     }
@@ -67,8 +69,9 @@ class InPouchDescription constructor(val inPouch : InPouch) {
         val fortressesAmount = inPouch.buildings.filter { it.type == BuildingType.FORTRESS }.size
 
         if (fortressesAmount > 0) {
-            "$fortressesAmount " +
-            content.add(LocalContext.current.resources
+            content.add(
+                "$fortressesAmount " +
+                LocalContext.current.resources
                 .getQuantityString(R.plurals.word_house, fortressesAmount))
         }
     }
