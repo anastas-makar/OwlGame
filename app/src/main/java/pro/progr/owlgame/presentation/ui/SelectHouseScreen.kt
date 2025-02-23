@@ -43,20 +43,14 @@ fun SelectHouseScreen(mapViewModel: MapViewModel) {
             horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             itemsIndexed(buildingsState.value) { _, building ->
-                val imageId = LocalContext
-                    .current.resources
-                    .getIdentifier(building.imageUrl,
-                        "drawable",
-                        LocalContext.current.packageName)
+
                 Box(
                     modifier = Modifier
                         .padding(30.dp)
                         .fillMaxSize()
                 ) {
                     AsyncImage(
-                        model = ImageRequest.Builder(LocalContext.current)
-                            .data(imageId)
-                            .build(),
+                        model = building.imageUrl,
                         contentDescription = null,
                         contentScale = ContentScale.FillWidth,
                         modifier = Modifier
@@ -66,7 +60,7 @@ fun SelectHouseScreen(mapViewModel: MapViewModel) {
                                 mapViewModel.selectedBuilding.value = BuildingModel(
                                     building.id,
                                     building.name,
-                                    imageId
+                                    building.imageUrl
                                 )
                                 mapViewModel.newHouseState.value = true
                             }

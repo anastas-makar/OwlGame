@@ -134,11 +134,7 @@ fun MapScreen(
                                     BuildingModel(
                                         building.id,
                                         building.name,
-                                        LocalContext
-                                            .current.resources
-                                            .getIdentifier(building.imageUrl,
-                                                "drawable",
-                                                LocalContext.current.packageName)
+                                        building.imageUrl
                                     )
                                 },
                             mapViewModel = mapViewModel
