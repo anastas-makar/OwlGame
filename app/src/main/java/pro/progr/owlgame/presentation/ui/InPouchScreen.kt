@@ -83,7 +83,6 @@ fun InPouchScreen(
                     }
 
                     for (building in inPouch.buildings) {
-                        Box(modifier = Modifier.fillMaxWidth()) {
                             AsyncImage(
                                 model = Box(modifier = Modifier.fillMaxWidth()) {
                                     AsyncImage(
@@ -101,9 +100,6 @@ fun InPouchScreen(
                                     .fillMaxWidth()
                                     .padding(top = 16.dp)
                             )
-
-
-                        }
 
                     }
 
