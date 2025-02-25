@@ -7,6 +7,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -28,86 +30,99 @@ fun InPouchScreen(
     pouchId: String,
     inPouchViewModel: InPouchViewModel = DaggerPouchViewModel()
 ) {
-
     inPouchViewModel.inPouch.value?.let { inPouch ->
-
         Scaffold(
             topBar = {
                 Box(modifier = Modifier.statusBarsPadding()) {
                     InPouchBar(backToMain, inPouch)
                 }
             },
-            content = { innerPadding ->
+        ) { innerPadding ->
 
-                Column(
-                    modifier = Modifier
-                        .padding(innerPadding)
-                        .fillMaxSize()
-                ) {
-                    if (inPouch.diamonds != null) {
-                        Text("+${inPouch.diamonds.amount} "
-                            + LocalContext.current.resources
-                                .getQuantityString(R.plurals.word_diamond,
-                                    inPouch.diamonds.amount),
+            LazyColumn(
+                modifier = Modifier
+                    .padding(innerPadding)
+                    .fillMaxSize()
+            ) {
+                // Если есть бриллианты
+                inPouch.diamonds?.let { diamondsData ->
+                    item {
+                        Text(
+                            text = "+${diamondsData.amount} " + LocalContext.current.resources
+                                .getQuantityString(
+                                    R.plurals.word_diamond,
+                                    diamondsData.amount
+                                ),
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(16.dp))
+                                .padding(16.dp)
+                        )
                     }
+                }
 
-                    for (map in inPouch.maps) {
-                        Column(modifier = Modifier.fillMaxWidth()) {
-                            Text(text = "+ ${map.name}", fontWeight = FontWeight.Bold,
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(top = 16.dp, start = 16.dp, end = 16.dp))
+                // Список карт
+                itemsIndexed(inPouch.maps) { _, map ->
+                    Column(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(top = 16.dp)
+                    ) {
+                        Text(
+                            text = "+ ${map.name}",
+                            fontWeight = FontWeight.Bold,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = 16.dp)
+                        )
+                        Box(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(16.dp)
+                                .clickable {
+                                    navController.navigate("map/${map.id}")
+                                }
+                        ) {
                             AsyncImage(
-                                model = Box(modifier = Modifier.fillMaxWidth()) {
-                                    AsyncImage(
-                                        model = map.imageUrl,
-                                        contentDescription = null,
-                                        contentScale = ContentScale.FillWidth,
-                                        modifier = Modifier
-                                            .fillMaxWidth()
-                                            .padding(16.dp)
-                                            .clickable { navController.navigate("map/${map.id}") }
-                                    )
-                                },
+                                model = map.imageUrl,
                                 contentDescription = null,
                                 contentScale = ContentScale.FillWidth,
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(top = 16.dp)
+                                modifier = Modifier.fillMaxWidth()
                             )
-
                         }
                     }
+                }
 
-                    for (building in inPouch.buildings) {
+                // Список зданий
+                itemsIndexed(inPouch.buildings) { _, building ->
+                    Column(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(top = 16.dp)
+                    ) {
+                        Text(
+                            text = building.name,
+                            fontWeight = FontWeight.Bold,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = 16.dp)
+                        )
+                        Box(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(16.dp)
+                        ) {
                             AsyncImage(
-                                model = Box(modifier = Modifier.fillMaxWidth()) {
-                                    AsyncImage(
-                                        model = building.imageUrl,
-                                        contentDescription = null,
-                                        contentScale = ContentScale.FillWidth,
-                                        modifier = Modifier
-                                            .fillMaxWidth()
-                                            .padding(16.dp)
-                                    )
-                                },
+                                model = building.imageUrl,
                                 contentDescription = null,
                                 contentScale = ContentScale.FillWidth,
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(top = 16.dp)
+                                modifier = Modifier.fillMaxWidth()
                             )
-
+                        }
                     }
-
                 }
             }
-        )
-    }?: run {
+        }
+    } ?: run {
         inPouchViewModel.loadInPouch(pouchId)
     }
-
 }
