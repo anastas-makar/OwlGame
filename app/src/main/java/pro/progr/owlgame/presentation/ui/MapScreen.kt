@@ -191,11 +191,11 @@ fun MapScreen(
                 }
 
                 if (mapViewModel.selectHouseState.value) {
-                    SelectHouseScreen(mapViewModel = mapViewModel)
+                    SelectHouseScreen(mapViewModel = mapViewModel, diamondBalance = diamondBalance)
                 }
 
                 if (mapViewModel.selectFortressState.value) {
-                    SelectHouseScreen(mapViewModel = mapViewModel)
+                    SelectHouseScreen(mapViewModel = mapViewModel, diamondBalance = diamondBalance)
                 }
             }
         }

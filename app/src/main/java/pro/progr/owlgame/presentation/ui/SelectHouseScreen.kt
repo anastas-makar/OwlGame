@@ -11,19 +11,19 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
-import coil.request.ImageRequest
 import pro.progr.owlgame.presentation.ui.model.BuildingModel
 import pro.progr.owlgame.presentation.viewmodel.MapViewModel
 
 @Composable
-fun SelectHouseScreen(mapViewModel: MapViewModel) {
+fun SelectHouseScreen(mapViewModel: MapViewModel, diamondBalance : State<Int>) {
     val buildingsState = mapViewModel.getAvailableHouses().collectAsState(initial = emptyList())
 
     Box(
@@ -63,7 +63,8 @@ fun SelectHouseScreen(mapViewModel: MapViewModel) {
                                     building.imageUrl
                                 )
                                 mapViewModel.newHouseState.value = true
-                            }
+                            },
+                        colorFilter = if (diamondBalance.value < building.price) ColorFilter.tint(Color.Gray) else null
                     )
                 }
             }
