@@ -10,12 +10,13 @@ class SaveBuildingsUseCase @Inject constructor(private val imageRepository: Imag
     private val buildingsRepository: BuildingsRepository) {
 
     //todo: тут, наверное, другие модели, как с картами
-    suspend operator fun invoke(maps: List<BuildingInPouch>): List<Building> {
-        val buildingsForLocal = maps.map {
+    suspend operator fun invoke(buildings: List<BuildingInPouch>): List<Building> {
+        val buildingsForLocal = buildings.map {
             Building(
                 id = it.id,
                 name = it.name,
-                imageUrl = imageRepository.saveImageLocally(it.imageUrl)
+                imageUrl = imageRepository.saveImageLocally(it.imageUrl),
+                price = it.cost
             )
         }
 
