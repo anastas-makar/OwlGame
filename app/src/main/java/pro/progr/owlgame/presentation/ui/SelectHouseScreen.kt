@@ -15,6 +15,7 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Card
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
@@ -55,7 +56,7 @@ fun SelectHouseScreen(mapViewModel: MapViewModel, diamondBalance : State<Int>) {
         ) {
             itemsIndexed(buildingsState.value) { _, building ->
 
-                Column(
+                Card(
                     modifier = Modifier
                         .padding(30.dp)
                         .clickable {
@@ -71,34 +72,35 @@ fun SelectHouseScreen(mapViewModel: MapViewModel, diamondBalance : State<Int>) {
                         }.background(color = Color.White, shape = RoundedCornerShape(2.dp))
                         .fillMaxSize()
                 ) {
-                    AsyncImage(
-                        model = building.imageUrl,
-                        contentDescription = null,
-                        contentScale = ContentScale.FillWidth,
-                        modifier = Modifier
-                            .fillMaxSize(),
-                        //todo: он здесь не нужен, просто прикольно смотрится, надо убрать
-                        colorFilter = if (diamondBalance.value < building.price) ColorFilter.lighting(Color.White, Color.DarkGray) else null
-                    )
+                    Column {
+                        AsyncImage(
+                            model = building.imageUrl,
+                            contentDescription = null,
+                            contentScale = ContentScale.FillWidth,
+                            modifier = Modifier
+                                .fillMaxSize()
+                        )
 
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                        modifier = Modifier
-                            .padding(10.dp)
-                            .wrapContentHeight()
-                            .align(Alignment.CenterHorizontally)
-                    ) {
-                        Text(
-                            text = " ◆ ${building.price} ",
-                            style = MaterialTheme.typography.body1
-                        )
-                        Icon(
-                            painter = painterResource(id = R.drawable.ic_diamond_bright),
-                            contentDescription = "Diamond",
-                            tint = if (diamondBalance.value < building.price) Color.DarkGray
-                                        else Color.Unspecified,
-                            modifier = Modifier.height(12.dp)
-                        )
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            modifier = Modifier
+                                .padding(10.dp)
+                                .wrapContentHeight()
+                                .align(Alignment.CenterHorizontally)
+                        ) {
+                            Text(
+                                text = " ◆ ${building.price} ",
+                                style = MaterialTheme.typography.body1
+                            )
+                            Icon(
+                                painter = painterResource(id = R.drawable.ic_diamond_bright),
+                                contentDescription = "Diamond",
+                                tint = if (diamondBalance.value < building.price) Color.DarkGray
+                                else Color.Unspecified,
+                                modifier = Modifier.height(12.dp)
+                            )
+                        }
+
                     }
 
                 }
