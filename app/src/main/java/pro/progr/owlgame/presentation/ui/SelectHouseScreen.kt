@@ -30,12 +30,15 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
+import pro.progr.diamondapi.DiamondInterface
 import pro.progr.owlgame.R
 import pro.progr.owlgame.presentation.ui.model.BuildingModel
 import pro.progr.owlgame.presentation.viewmodel.MapViewModel
 
 @Composable
-fun SelectHouseScreen(mapViewModel: MapViewModel, diamondBalance : State<Int>) {
+fun SelectHouseScreen(mapViewModel: MapViewModel,
+                      diamondBalance : State<Int>,
+                      diamondDao : DiamondInterface) {
     val buildingsState = mapViewModel.getAvailableHouses().collectAsState(initial = emptyList())
 
     Box(
@@ -61,13 +64,7 @@ fun SelectHouseScreen(mapViewModel: MapViewModel, diamondBalance : State<Int>) {
                         .padding(30.dp)
                         .clickable {
                             if (diamondBalance.value >= building.price) {
-                                mapViewModel.selectHouseState.value = false
-                                mapViewModel.selectedBuilding.value = BuildingModel(
-                                    building.id,
-                                    building.name,
-                                    building.imageUrl
-                                )
-                                mapViewModel.newHouseState.value = true
+                                mapViewModel.purchase(diamondDao, building)
                             }
                         }.background(color = Color.White, shape = RoundedCornerShape(2.dp))
                         .fillMaxSize()

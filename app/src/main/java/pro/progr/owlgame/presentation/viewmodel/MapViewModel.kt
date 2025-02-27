@@ -9,6 +9,8 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import pro.progr.diamondapi.DiamondInterface
 import pro.progr.owlgame.data.db.Building
 import pro.progr.owlgame.data.db.Slot
 import pro.progr.owlgame.data.repository.BuildingsRepository
@@ -84,6 +86,24 @@ class MapViewModel @Inject constructor(
     fun updateSlot(slot: Slot) {
         viewModelScope.launch (Dispatchers.IO) {
             slotsRepository.updateSlot(slot)
+        }
+    }
+
+    fun purchase(diamondDao: DiamondInterface, building: Building) {
+        viewModelScope.launch {
+            val result = withContext(Dispatchers.IO) {
+                diamondDao.purchase(building.price)
+            }
+
+            if (result.isSuccess) {
+                selectHouseState.value = false
+                selectedBuilding.value = BuildingModel(
+                    building.id,
+                    building.name,
+                    building.imageUrl
+                )
+                newHouseState.value = true
+            }
         }
     }
 
