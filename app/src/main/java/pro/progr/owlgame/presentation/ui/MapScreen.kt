@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -19,12 +20,15 @@ import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Scaffold
+import androidx.compose.material.SnackbarHost
+import androidx.compose.material.SnackbarHostState
 import androidx.compose.material.Text
 import androidx.compose.material.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -52,11 +56,16 @@ fun MapScreen(
     val foundTown = mapViewModel.foundTown.collectAsState(initial = false)
     val cityName = remember { mutableStateOf("") }
 
+    val snackbarHostState = remember { SnackbarHostState() }
+    val scope = rememberCoroutineScope()
+
     val diamondBalance = diamondDao.getDiamondsCount().collectAsState(initial = 0)
 
     Log.wtf("Diamond balance: ", diamondBalance.value.toString())
 
     Scaffold(
+        snackbarHost = { SnackbarHost(snackbarHostState,
+            modifier = Modifier.navigationBarsPadding()) },
         topBar = {
             Box(modifier = Modifier.statusBarsPadding()) {
                 MapBar(navController, mapViewModel)
@@ -193,13 +202,18 @@ fun MapScreen(
                 if (mapViewModel.selectHouseState.value) {
                     SelectHouseScreen(mapViewModel = mapViewModel,
                         diamondBalance = diamondBalance,
-                        diamondDao = diamondDao)
+                        diamondDao = diamondDao,
+                        scope = scope,
+                        snackbarHostState = snackbarHostState
+                        )
                 }
 
                 if (mapViewModel.selectFortressState.value) {
                     SelectHouseScreen(mapViewModel = mapViewModel,
                         diamondBalance = diamondBalance,
-                        diamondDao = diamondDao)
+                        diamondDao = diamondDao,
+                        scope = scope,
+                        snackbarHostState = snackbarHostState)
                 }
             }
         }
