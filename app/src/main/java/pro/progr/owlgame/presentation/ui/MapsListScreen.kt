@@ -10,10 +10,13 @@ import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.itemsIndexed
+import androidx.compose.material.Card
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
@@ -49,21 +52,29 @@ fun MapsListScreen(
                     modifier = Modifier.fillMaxSize()
                 ) {
                     itemsIndexed(mapsList.value) { _, map ->
-                        Box(
+                        Card(
                             modifier = Modifier
                                 .padding(8.dp)
                                 .fillMaxSize()
                         ) {
-                            AsyncImage(
-                                model = map.imageUrl,
-                                contentDescription = null,
-                                contentScale = ContentScale.FillWidth,
-                                modifier = Modifier
-                                    .fillMaxSize()
-                                    .clickable {
-                                        navController.navigate("map/${map.id}")
-                                    }
-                            )
+                            Column {
+                                AsyncImage(
+                                    model = map.imageUrl,
+                                    contentDescription = null,
+                                    contentScale = ContentScale.FillWidth,
+                                    modifier = Modifier
+                                        .fillMaxSize()
+                                        .clickable {
+                                            navController.navigate("map/${map.id}")
+                                        }
+                                )
+
+                                Text(text = if (map.town != null) map.town.name else map.name,
+                                    style = MaterialTheme.typography.body1,
+                                    modifier = Modifier.padding(10.dp)
+                                        .align(Alignment.CenterHorizontally))
+
+                            }
                         }
                     }
                 }
