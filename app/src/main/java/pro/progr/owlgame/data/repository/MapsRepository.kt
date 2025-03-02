@@ -1,22 +1,14 @@
 package pro.progr.owlgame.data.repository
 
-import android.content.Context
-import android.graphics.Bitmap
-import android.graphics.drawable.BitmapDrawable
 import android.util.Log
-import coil.imageLoader
-import coil.request.ImageRequest
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import pro.progr.owlgame.data.db.MapDao
 import pro.progr.owlgame.data.db.MapEntity
 import pro.progr.owlgame.data.db.MapWithData
 import pro.progr.owlgame.data.db.MapWithDataDao
-import pro.progr.owlgame.data.web.Map
 import pro.progr.owlgame.data.web.MapApiService
 import pro.progr.owlgame.presentation.ui.model.MapData
-import java.io.File
-import java.io.OutputStream
 import javax.inject.Inject
 import javax.inject.Named
 import javax.inject.Singleton

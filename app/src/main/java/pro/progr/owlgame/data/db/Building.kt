@@ -10,5 +10,6 @@ data class Building (
     val name : String,
     val imageUrl : String,
     val mapId : String? = null,
-    val price : Int = 500
+    val price : Int = 500,
+    var animalId: String? = null
 )
