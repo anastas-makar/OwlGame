@@ -22,9 +22,7 @@ class MapsRepository @Inject constructor(
 ) {
 
     fun getMaps(): Flow<List<MapData>> {
-        //todo: будут сохраняться в хранилище и получаться из локальных файлов
-        //либо по сети, если нет локальных файлов?
-        //либо сверять то, что локально, и то, что по сети?
+        //todo: синхронизация с данными пользователя на сервере, когда данные о картах пользователя будут там сохраняться
 
         return mapsWithDataDao.getMapsWithData().map { mapsList ->
             mapsList.map {mapWithData ->
