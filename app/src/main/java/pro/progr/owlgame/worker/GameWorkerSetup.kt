@@ -11,9 +11,6 @@ import java.util.concurrent.TimeUnit
 
 object GameWorkerSetup {
     fun scheduleWork(context: Context) {
-        val config = Configuration.Builder()
-            .build()
-        WorkManager.initialize(context, config)
 
         val constraints = Constraints.Builder()
             .setRequiredNetworkType(NetworkType.CONNECTED)
