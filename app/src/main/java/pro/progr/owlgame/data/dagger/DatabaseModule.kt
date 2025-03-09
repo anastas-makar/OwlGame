@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.Room
 import dagger.Module
 import dagger.Provides
+import pro.progr.owlgame.data.db.AnimalDao
 import pro.progr.owlgame.data.db.BuildingsDao
 import pro.progr.owlgame.data.db.MapDao
 import pro.progr.owlgame.data.db.OwlGameDatabase
@@ -48,5 +49,10 @@ object DatabaseModule {
     @Provides
     fun provideMapDao(database: OwlGameDatabase): MapDao {
         return database.mapDao()
+    }
+
+    @Provides
+    fun provideAnimalDao(database: OwlGameDatabase): AnimalDao {
+        return database.animalDao()
     }
 }

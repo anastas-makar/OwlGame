@@ -5,7 +5,11 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 
-@Database(entities = [Town::class, Slot::class, Building::class, MapEntity::class],
+@Database(entities = [Town::class,
+    Slot::class,
+    Building::class,
+    MapEntity::class,
+    Animal::class],
     version = 1, exportSchema = false)
 abstract class OwlGameDatabase : RoomDatabase() {
     abstract fun townsDao(): TownsDao
@@ -14,7 +18,10 @@ abstract class OwlGameDatabase : RoomDatabase() {
     abstract fun townWithDataDao(): MapWithDataDao
 
     abstract fun buildingsDao(): BuildingsDao
+
     abstract fun mapDao(): MapDao
+
+    abstract fun animalDao(): AnimalDao
 
     companion object {
         @Volatile

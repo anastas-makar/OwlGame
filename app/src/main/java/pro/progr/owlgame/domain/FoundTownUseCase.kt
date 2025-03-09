@@ -7,7 +7,6 @@ import javax.inject.Inject
 
 class FoundTownUseCase @Inject constructor(val townRepository: TownRepository) {
     operator fun invoke(map: MapData, name: String) : Town {
-        //todo: сохранение карты
         val mapId = map.id
 
         return townRepository.insertTown(
