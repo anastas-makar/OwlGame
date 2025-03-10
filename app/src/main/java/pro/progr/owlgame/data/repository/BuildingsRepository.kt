@@ -11,6 +11,10 @@ class BuildingsRepository @Inject constructor(private val buildingsDao : Buildin
        return buildingsDao.getAvailable()
    }
 
+    fun countUninhabited() : Long {
+        return buildingsDao.countUninhabited()
+    }
+
    fun getBuildingsOnMap(mapId: String) : Flow<List<Building>> {
        //todo:
        return buildingsDao.getOnMap(mapId)

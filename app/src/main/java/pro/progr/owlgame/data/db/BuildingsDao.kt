@@ -21,5 +21,5 @@ public interface BuildingsDao {
     fun getOnMap(mapId: String) : Flow<List<Building>>
 
     @Query("SELECT COUNT(*) FROM buildings WHERE animalId IS NULL AND mapId IS NOT NULL")
-    fun countAvailable() : Long
+    fun countUninhabited() : Long
 }
