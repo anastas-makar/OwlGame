@@ -36,8 +36,7 @@ class InPouchViewModel @Inject constructor(
     private fun saveInPouch(webPouch: InPouch) {
         if (webPouch.maps.isNotEmpty()) {
             viewModelScope.launch(Dispatchers.IO) {
-                val mapsWithLocalUrls = saveMapsUseCase
-                    .invoke(webPouch.maps)
+                val mapsWithLocalUrls = saveMapsUseCase(webPouch.maps)
                     .map { ent ->
 
                         MapInPouchModel(
@@ -58,8 +57,7 @@ class InPouchViewModel @Inject constructor(
 
         if (webPouch.buildings.isNotEmpty()) {
             viewModelScope.launch(Dispatchers.IO) {
-                val buildingsWithLocalUrls = saveBuildingsUseCase
-                    .invoke(webPouch.buildings)
+                val buildingsWithLocalUrls = saveBuildingsUseCase(webPouch.buildings)
                     .map { ent ->
 
                         BuildingInPouch(

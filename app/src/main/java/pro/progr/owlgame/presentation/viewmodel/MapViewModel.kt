@@ -62,7 +62,7 @@ class MapViewModel @Inject constructor(
     fun foundTown(map: MapData, townName: String) {
         viewModelScope.launch (Dispatchers.Default) {
             foundTown.update { _ -> false }
-            foundTownUseCase.invoke(map, townName)
+            foundTownUseCase(map, townName)
         }
 
     }
