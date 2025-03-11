@@ -1,6 +1,13 @@
 package pro.progr.owlgame.domain
 
-class SearchAnimalsUseCase {
+import pro.progr.owlgame.data.repository.AnimalsRepository
+import pro.progr.owlgame.data.repository.BuildingsRepository
+import javax.inject.Inject
+
+class SearchAnimalsUseCase @Inject constructor(
+    private val animalsRepository: AnimalsRepository,
+    private val buildingsRepository: BuildingsRepository
+) {
     fun invoke() {
 
     }
