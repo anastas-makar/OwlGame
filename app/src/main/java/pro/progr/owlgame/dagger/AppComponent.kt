@@ -9,6 +9,7 @@ import pro.progr.owlgame.presentation.viewmodel.dagger.MapViewModelFactory
 import pro.progr.owlgame.presentation.viewmodel.dagger.PouchViewModelFactory
 import pro.progr.owlgame.presentation.viewmodel.dagger.TownViewModelFactory
 import pro.progr.owlgame.presentation.viewmodel.dagger.ViewModelFactory
+import pro.progr.owlgame.worker.GameWorkerFactory
 import javax.inject.Singleton
 
 @Singleton
@@ -28,7 +29,7 @@ interface AppComponent {
 
     fun viewModelFactory() : ViewModelFactory
 
-
+    fun gameWorkerFactory() : GameWorkerFactory
 
     @Component.Builder
     interface Builder {
