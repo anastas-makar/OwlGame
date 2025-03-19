@@ -98,6 +98,9 @@ dependencies {
     implementation("io.coil-kt:coil-compose:2.7.0")
 
     implementation("pro.progr:diamond-api:0.0.1-alpha")
+
+    implementation("com.squareup.inject:assisted-inject-annotations-dagger2:0.6.0")
+    ksp("com.squareup.inject:assisted-inject-processor-dagger2:0.6.0")
 }
 
 publishing {
