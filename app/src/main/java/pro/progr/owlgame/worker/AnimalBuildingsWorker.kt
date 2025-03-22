@@ -18,8 +18,6 @@ class AnimalBuildingsWorker(
     override suspend fun doWork(): Result {
         Log.wtf("WORKER IS WORKING", LocalDate.now().dayOfWeek.getDisplayName(TextStyle.FULL, Locale.getDefault()))
 
-        searchAnimalsUseCase()
-
         return Result.success()
     }
 }

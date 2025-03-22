@@ -16,8 +16,7 @@ import javax.inject.Singleton
     PouchModule::class,
     NetworkModule::class,
     AppModule::class,
-    DatabaseModule::class,
-    WorkerModule::class
+    DatabaseModule::class
 ])
 interface AppComponent {
     fun townViewModelFactory(): TownViewModelFactory
