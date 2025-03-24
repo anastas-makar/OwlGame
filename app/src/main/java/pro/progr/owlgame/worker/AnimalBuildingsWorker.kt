@@ -11,9 +11,7 @@ import java.util.Locale
 
 class AnimalBuildingsWorker(
     context: Context,
-    workerParams: WorkerParameters,
-    val searchAnimalsUseCase: SearchAnimalsUseCase
-) : CoroutineWorker(context, workerParams) {
+    workerParams: WorkerParameters) : CoroutineWorker(context, workerParams) {
 
     override suspend fun doWork(): Result {
         Log.wtf("WORKER IS WORKING", LocalDate.now().dayOfWeek.getDisplayName(TextStyle.FULL, Locale.getDefault()))
