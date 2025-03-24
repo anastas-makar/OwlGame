@@ -103,22 +103,25 @@ fun InPouchScreen(
                             .fillMaxWidth()
                             .padding(16.dp)
                     ) {
-                        Row {
+                        Box {
                             Text(
                                 text = building.name,
                                 fontWeight = FontWeight.Bold,
                                 modifier = Modifier
                                     .padding(16.dp)
+                                    .align(Alignment.CenterStart)
                             )
                             Box(
                                 modifier = Modifier
-                                    .padding(16.dp)
+                                    .align(Alignment.CenterEnd)
+                                    .padding(2.dp)
                             ) {
                                 AsyncImage(
                                     model = building.imageUrl,
                                     contentDescription = null,
                                     contentScale = ContentScale.FillWidth,
-                                    modifier = Modifier.widthIn(100.dp, 300.dp)
+                                    modifier = Modifier
+                                        .widthIn(100.dp, 300.dp)
                                         .align(Alignment.CenterEnd)
                                 )
                             }
