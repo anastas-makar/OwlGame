@@ -3,15 +3,19 @@ package pro.progr.owlgame.presentation.ui
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.material.Card
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
@@ -94,29 +98,31 @@ fun InPouchScreen(
 
                 // Список зданий
                 itemsIndexed(inPouch.buildings) { _, building ->
-                    Column(
+                    Card(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(top = 16.dp)
+                            .padding(16.dp)
                     ) {
-                        Text(
-                            text = building.name,
-                            fontWeight = FontWeight.Bold,
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(horizontal = 16.dp)
-                        )
-                        Box(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(16.dp)
-                        ) {
-                            AsyncImage(
-                                model = building.imageUrl,
-                                contentDescription = null,
-                                contentScale = ContentScale.FillWidth,
-                                modifier = Modifier.fillMaxWidth()
+                        Row {
+                            Text(
+                                text = building.name,
+                                fontWeight = FontWeight.Bold,
+                                modifier = Modifier
+                                    .padding(16.dp)
                             )
+                            Box(
+                                modifier = Modifier
+                                    .padding(16.dp)
+                            ) {
+                                AsyncImage(
+                                    model = building.imageUrl,
+                                    contentDescription = null,
+                                    contentScale = ContentScale.FillWidth,
+                                    modifier = Modifier.widthIn(100.dp, 300.dp)
+                                        .align(Alignment.CenterEnd)
+                                )
+                            }
+
                         }
                     }
                 }
