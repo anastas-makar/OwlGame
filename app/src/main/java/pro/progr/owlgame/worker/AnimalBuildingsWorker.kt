@@ -4,7 +4,6 @@ import android.content.Context
 import android.util.Log
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
-import pro.progr.owlgame.domain.SearchAnimalsUseCase
 import java.time.LocalDate
 import java.time.format.TextStyle
 import java.util.Locale
