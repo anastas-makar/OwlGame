@@ -2,14 +2,14 @@ package pro.progr.owlgame.data.dagger
 
 import dagger.Module
 import dagger.Provides
-import okhttp3.OkHttpClient
 import pro.progr.owlgame.BuildConfig
 import pro.progr.owlgame.data.db.MapDao
 import pro.progr.owlgame.data.db.MapWithDataDao
 import pro.progr.owlgame.data.repository.MapsRepository
+import pro.progr.owlgame.data.web.AnimalApiService
 import pro.progr.owlgame.data.web.MapApiService
+import pro.progr.owlgame.data.web.RetrofitProvider
 import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Named
 import javax.inject.Singleton
 
@@ -29,20 +29,19 @@ class NetworkModule {
     @Provides
     @Singleton
     fun provideRetrofit(@Named("baseUrl") baseUrl: String): Retrofit {
-        val client = OkHttpClient.Builder()
-            //.followSslRedirects(false)
-            .build()
-        return Retrofit.Builder()
-            .baseUrl(baseUrl)
-            .client(client)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
+        return RetrofitProvider.provideRetrofit(baseUrl)
     }
 
     @Provides
     @Singleton
     fun provideMapApiService(retrofit: Retrofit): MapApiService {
         return retrofit.create(MapApiService::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideAnimalApiService(retrofit: Retrofit): AnimalApiService {
+        return retrofit.create(AnimalApiService::class.java)
     }
 
     @Provides

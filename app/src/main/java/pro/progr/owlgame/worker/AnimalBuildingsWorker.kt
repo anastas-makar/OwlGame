@@ -7,6 +7,7 @@ import androidx.work.WorkerParameters
 import pro.progr.owlgame.data.db.OwlGameDatabase
 import pro.progr.owlgame.data.repository.AnimalsRepository
 import pro.progr.owlgame.data.repository.BuildingsRepository
+import pro.progr.owlgame.data.web.RetrofitProvider
 import pro.progr.owlgame.domain.SearchAnimalsUseCase
 import java.time.LocalDate
 import java.time.format.TextStyle
@@ -24,6 +25,8 @@ class AnimalBuildingsWorker(
         val animalDao = db.animalDao()
 
         Log.wtf("AnimalDao count searching: ", animalDao.countSearching().toString())
+
+        var retrofit = RetrofitProvider.provideRetrofit(BuildConfig.API_BASE_URL)
 
         SearchAnimalsUseCase(
             AnimalsRepository(db.animalDao()),
