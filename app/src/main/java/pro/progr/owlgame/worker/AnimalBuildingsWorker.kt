@@ -13,6 +13,7 @@ import java.time.LocalDate
 import java.time.format.TextStyle
 import java.util.Locale
 import pro.progr.owlgame.BuildConfig
+import pro.progr.owlgame.data.web.AnimalApiService
 
 class AnimalBuildingsWorker(
     context: Context,
@@ -30,7 +31,7 @@ class AnimalBuildingsWorker(
         var retrofit = RetrofitProvider.provideRetrofit(BuildConfig.API_BASE_URL)
 
         SearchAnimalsUseCase(
-            AnimalsRepository(db.animalDao()),
+            AnimalsRepository(db.animalDao(), retrofit.create(AnimalApiService::class.java)),
             BuildingsRepository(db.buildingsDao()))()
 
         return Result.success()
