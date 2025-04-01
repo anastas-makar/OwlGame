@@ -31,7 +31,9 @@ class AnimalBuildingsWorker(
         var retrofit = RetrofitProvider.provideRetrofit(BuildConfig.API_BASE_URL)
 
         SearchAnimalsUseCase(
-            AnimalsRepository(db.animalDao(), retrofit.create(AnimalApiService::class.java)),
+            AnimalsRepository(db.animalDao(),
+                retrofit.create(AnimalApiService::class.java),
+                BuildConfig.API_KEY),
             BuildingsRepository(db.buildingsDao()))()
 
         return Result.success()

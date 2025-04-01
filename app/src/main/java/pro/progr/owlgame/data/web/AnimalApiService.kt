@@ -9,5 +9,5 @@ interface AnimalApiService {
     @GET("animal")
     suspend fun getAnimal(
         @Query("apiKey") apiKey: String
-    ): Response<Animal>
+    ): Response<Animal?>
 }
