@@ -65,33 +65,35 @@ fun InPouchScreen(
 
                 // Список карт
                 itemsIndexed(inPouch.maps) { _, map ->
-                    Column(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(top = 16.dp)
-                    ) {
-                        Text(
-                            text = "+ ${map.name}",
-                            fontWeight = FontWeight.Bold,
+                    Card (modifier = Modifier.padding(16.dp)) {
+                        Column(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(horizontal = 16.dp)
-                        )
-                        Box(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(16.dp)
-                                .clickable {
-                                    navController.navigate("map/${map.id}")
-                                }
                         ) {
-                            AsyncImage(
-                                model = map.imageUrl,
-                                contentDescription = null,
-                                contentScale = ContentScale.FillWidth,
-                                modifier = Modifier.fillMaxWidth()
+                            Text(
+                                text = "+ ${map.name}",
+                                fontWeight = FontWeight.Bold,
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(horizontal = 16.dp)
                             )
+                            Box(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(16.dp)
+                                    .clickable {
+                                        navController.navigate("map/${map.id}")
+                                    }
+                            ) {
+                                AsyncImage(
+                                    model = map.imageUrl,
+                                    contentDescription = null,
+                                    contentScale = ContentScale.FillWidth,
+                                    modifier = Modifier.fillMaxWidth()
+                                )
+                            }
                         }
+
                     }
                 }
 
