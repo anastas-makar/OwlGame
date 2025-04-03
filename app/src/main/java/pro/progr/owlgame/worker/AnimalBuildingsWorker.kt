@@ -28,11 +28,10 @@ class AnimalBuildingsWorker(
 
         Log.wtf("AnimalDao count searching: ", animalDao.countSearching().toString())
 
-        var retrofit = RetrofitProvider.provideRetrofit(BuildConfig.API_BASE_URL)
-
-        SearchAnimalsUseCase(
+        val animal = SearchAnimalsUseCase(
             AnimalsRepository(db.animalDao(),
-                retrofit.create(AnimalApiService::class.java),
+                RetrofitProvider.provideRetrofit(BuildConfig.API_BASE_URL)
+                    .create(AnimalApiService::class.java),
                 BuildConfig.API_KEY),
             BuildingsRepository(db.buildingsDao()))()
 
