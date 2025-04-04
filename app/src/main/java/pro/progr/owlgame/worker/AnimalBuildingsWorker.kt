@@ -35,6 +35,10 @@ class AnimalBuildingsWorker(
                 BuildConfig.API_KEY),
             BuildingsRepository(db.buildingsDao()))()
 
+        if (animal != null) {
+            Log.wtf("Животное ищет дом", animal.name)
+        }
+
         return Result.success()
     }
 }
