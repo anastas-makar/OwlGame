@@ -71,11 +71,11 @@ fun InPouchScreen(
                                 .fillMaxWidth()
                         ) {
                             Text(
-                                text = "+ ${map.name}",
+                                text = map.name,
                                 fontWeight = FontWeight.Bold,
                                 modifier = Modifier
                                     .fillMaxWidth()
-                                    .padding(horizontal = 16.dp)
+                                    .padding(16.dp)
                             )
                             Box(
                                 modifier = Modifier
