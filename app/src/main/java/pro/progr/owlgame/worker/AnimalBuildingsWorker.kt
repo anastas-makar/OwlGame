@@ -28,14 +28,17 @@ class AnimalBuildingsWorker(
 
         Log.wtf("AnimalDao count searching: ", animalDao.countSearching().toString())
 
+        val animalRepository = AnimalsRepository(db.animalDao(),
+            RetrofitProvider.provideRetrofit(BuildConfig.API_BASE_URL)
+                .create(AnimalApiService::class.java),
+            BuildConfig.API_KEY)
+
         val animal = SearchAnimalsUseCase(
-            AnimalsRepository(db.animalDao(),
-                RetrofitProvider.provideRetrofit(BuildConfig.API_BASE_URL)
-                    .create(AnimalApiService::class.java),
-                BuildConfig.API_KEY),
+            animalRepository,
             BuildingsRepository(db.buildingsDao()))()
 
         if (animal != null) {
+            animalRepository.saveAnimal(animal)
             Log.wtf("Животное ищет дом", animal.name)
         }
 

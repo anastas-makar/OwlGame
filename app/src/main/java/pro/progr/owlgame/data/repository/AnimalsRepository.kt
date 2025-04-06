@@ -24,4 +24,8 @@ class AnimalsRepository @Inject constructor(
 
         return null
     }
+
+    fun saveAnimal(animal: Animal) {
+        TODO("Not yet implemented")
+    }
 }
