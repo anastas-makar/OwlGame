@@ -13,6 +13,11 @@ class SearchAnimalsUseCase @Inject constructor(
     suspend operator fun invoke(): Animal? {
         Log.wtf("SEARCH ANIMALS USECASE", "INSIDE")
 
-        return animalsRepository.getAnimal()
+        if (buildingsRepository.countUninhabited() > 0
+            && animalsRepository.countAnimalsSearching() == 0L) {
+            return animalsRepository.getAnimal()
+        }
+
+        return  null
     }
 }
