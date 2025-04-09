@@ -1,7 +1,10 @@
 package pro.progr.owlgame.worker
 
+import android.app.NotificationChannel
+import android.app.NotificationManager
 import android.content.Context
 import android.util.Log
+import androidx.core.app.NotificationCompat
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import pro.progr.owlgame.data.db.OwlGameDatabase
@@ -13,6 +16,7 @@ import java.time.LocalDate
 import java.time.format.TextStyle
 import java.util.Locale
 import pro.progr.owlgame.BuildConfig
+import pro.progr.owlgame.R
 import pro.progr.owlgame.data.web.AnimalApiService
 
 class AnimalBuildingsWorker(
@@ -40,8 +44,33 @@ class AnimalBuildingsWorker(
         if (animal != null) {
             animalRepository.saveAnimal(animal)
             Log.wtf("Животное ищет дом", animal.name)
+
+            showNotification(animal.id, animal.name)
         }
 
         return Result.success()
     }
+
+    private fun showNotification(animalId: String, animalName: String) {
+        val notificationManager = applicationContext.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+
+        val channelId = "animal_channel_id"
+        val channel = NotificationChannel(
+            channelId,
+            "Animal Notifications",
+            NotificationManager.IMPORTANCE_HIGH
+        )
+        notificationManager.createNotificationChannel(channel)
+
+        val notification = NotificationCompat.Builder(applicationContext, channelId)
+            .setSmallIcon(R.drawable.test2)
+            .setContentTitle("$animalName ищет дом")
+            .setContentText("Нажми, чтобы узнать больше")
+            //.setContentIntent(pendingIntent)
+            .setAutoCancel(true)
+            .build()
+
+        notificationManager.notify(animalId.hashCode(), notification)
+    }
+
 }
