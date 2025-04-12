@@ -19,11 +19,7 @@ object DatabaseModule {
     @Provides
     @Singleton
     fun provideDatabase(context: Context): OwlGameDatabase {
-        return Room.databaseBuilder(
-            context.applicationContext,
-            OwlGameDatabase::class.java,
-            "owl_game_database"
-        ).build()
+        return OwlGameDatabase.getDatabase(context)
     }
 
     @Provides
