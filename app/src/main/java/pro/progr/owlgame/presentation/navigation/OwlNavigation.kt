@@ -13,6 +13,7 @@ import pro.progr.owlgame.presentation.ui.TownScreen
 import pro.progr.owlgame.presentation.ui.MapsListScreen
 
 import pro.progr.diamondapi.DiamondInterface
+import pro.progr.owlgame.presentation.ui.AnimalSearchingScreen
 
 @Composable
 fun OwlNavigation(startDestination : String = "towns",
@@ -51,5 +52,16 @@ fun OwlNavigation(startDestination : String = "towns",
                 MapScreen(navController, id, diamondDao)
             }
         }
+        //animal_searching
+        composable(
+            route = "animal_searching/{id}",
+            arguments = listOf(navArgument("id") { type = NavType.StringType })) { backStackEntry ->
+            val id = backStackEntry.arguments?.getString("id")
+
+            id?.let {
+                AnimalSearchingScreen(navController, id)
+            }
+        }
+
     }
 }
