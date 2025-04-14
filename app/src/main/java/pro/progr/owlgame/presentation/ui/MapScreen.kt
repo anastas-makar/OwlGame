@@ -145,8 +145,7 @@ fun MapScreen(
                                         building.name,
                                         building.imageUrl
                                     )
-                                },
-                            mapViewModel = mapViewModel
+                                }
                         )
                     }
 
@@ -221,7 +220,7 @@ fun MapScreen(
 }
 
 @Composable
-fun BuildingsGrid(buildingsList : List<BuildingModel>, mapViewModel: MapViewModel) {
+fun BuildingsGrid(buildingsList : List<BuildingModel>) {
     Box(modifier = Modifier.fillMaxSize()) {
         LazyVerticalGrid(
             columns = GridCells.Fixed(3),
@@ -244,9 +243,7 @@ fun BuildingsGrid(buildingsList : List<BuildingModel>, mapViewModel: MapViewMode
                         modifier = Modifier
                             .fillMaxSize()
                             .clickable {
-                                mapViewModel.selectHouseState.value = false
-                                mapViewModel.selectedBuilding.value = building
-                                mapViewModel.newHouseState.value = true
+
                             }
                     )
                 }
