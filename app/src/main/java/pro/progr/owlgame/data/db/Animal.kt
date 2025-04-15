@@ -8,5 +8,6 @@ data class Animal(
     @PrimaryKey
     val id : String,
     val name: String,
+    val imagePath: String,
     val status: AnimalStatus
 )

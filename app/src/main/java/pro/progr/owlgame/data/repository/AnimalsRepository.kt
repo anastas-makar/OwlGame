@@ -9,6 +9,7 @@ import javax.inject.Named
 class AnimalsRepository @Inject constructor(
     private val animalDao: AnimalDao,
     private val animalApiService: AnimalApiService,
+    private val imageRepository: ImageRepository,
     @Named("apiKey") private val apiKey: String
 ) {
     fun countAnimalsSearching() : Long {
@@ -25,7 +26,9 @@ class AnimalsRepository @Inject constructor(
         return null
     }
 
-    fun saveAnimal(animal: Animal) {
-        animalDao.insert(animal)
+    suspend fun saveAnimal(animal: Animal) {
+        val savedAnimal = animal.copy(
+            imagePath = imageRepository.saveImageLocally(animal.imagePath))
+        animalDao.insert(savedAnimal)
     }
 }

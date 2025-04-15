@@ -20,6 +20,7 @@ import java.time.format.TextStyle
 import java.util.Locale
 import pro.progr.owlgame.BuildConfig
 import pro.progr.owlgame.R
+import pro.progr.owlgame.data.repository.ImageRepository
 import pro.progr.owlgame.data.web.AnimalApiService
 
 class AnimalBuildingsWorker(
@@ -38,6 +39,10 @@ class AnimalBuildingsWorker(
         val animalRepository = AnimalsRepository(db.animalDao(),
             RetrofitProvider.provideRetrofit(BuildConfig.API_BASE_URL)
                 .create(AnimalApiService::class.java),
+            ImageRepository(
+                context = applicationContext,
+                baseUrl = BuildConfig.API_BASE_URL
+            ),
             BuildConfig.API_KEY)
 
         val animal = SearchAnimalsUseCase(
