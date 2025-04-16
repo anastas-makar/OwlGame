@@ -1,5 +1,6 @@
 package pro.progr.owlgame.presentation.navigation
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -29,6 +30,11 @@ fun OwlNavigation(startDestination : String = "towns",
             PouchesScreen(backToMain, navController)
         }
         composable("inPouch/{id}") { backStackEntry ->
+
+            BackHandler {
+                backToMain()
+            }
+
             val pouchId = backStackEntry.arguments?.getString("id")
             pouchId?.let {pId ->
                 InPouchScreen(backToMain, navController, pId)
@@ -56,6 +62,11 @@ fun OwlNavigation(startDestination : String = "towns",
         composable(
             route = "animal_searching/{id}",
             arguments = listOf(navArgument("id") { type = NavType.StringType })) { backStackEntry ->
+
+            BackHandler {
+                backToMain()
+            }
+
             val id = backStackEntry.arguments?.getString("id")
 
             id?.let {
