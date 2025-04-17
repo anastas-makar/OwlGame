@@ -51,10 +51,10 @@ class AnimalBuildingsWorker(
             BuildingsRepository(db.buildingsDao()))()
 
         if (animal != null) {
-            animalRepository.saveAnimal(animal)
+            val savedAnimal = animalRepository.saveAnimal(animal)
             Log.wtf("Животное ищет дом", animal.name)
 
-            showNotification(animal.id, animal.name, animal.imagePath)
+            showNotification(savedAnimal.id, savedAnimal.name, savedAnimal.imagePath)
         }
 
         return Result.success()

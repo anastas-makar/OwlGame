@@ -26,9 +26,11 @@ class AnimalsRepository @Inject constructor(
         return null
     }
 
-    suspend fun saveAnimal(animal: Animal) {
+    suspend fun saveAnimal(animal: Animal) : Animal {
         val savedAnimal = animal.copy(
             imagePath = imageRepository.saveImageLocally(animal.imagePath))
         animalDao.insert(savedAnimal)
+
+        return savedAnimal
     }
 }
