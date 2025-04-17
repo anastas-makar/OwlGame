@@ -5,6 +5,7 @@ import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.graphics.BitmapFactory
 import android.net.Uri
 import android.util.Log
 import androidx.core.app.NotificationCompat
@@ -53,13 +54,15 @@ class AnimalBuildingsWorker(
             animalRepository.saveAnimal(animal)
             Log.wtf("Животное ищет дом", animal.name)
 
-            showNotification(animal.id, animal.name)
+            showNotification(animal.id, animal.name, animal.imagePath)
         }
 
         return Result.success()
     }
 
-    private fun showNotification(animalId: String, animalName: String) {
+    private fun showNotification(animalId: String,
+                                 animalName: String,
+                                 animalIconPath: String) {
         val notificationManager = applicationContext.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
         val channelId = "animal_channel_id"
@@ -82,9 +85,10 @@ class AnimalBuildingsWorker(
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
 
-
+        val bitmap = BitmapFactory.decodeFile(animalIconPath)
         val notification = NotificationCompat.Builder(applicationContext, channelId)
             .setSmallIcon(R.drawable.test2)
+            .setLargeIcon(bitmap)
             .setContentTitle("$animalName ищет дом")
             .setContentText("Нажми, чтобы узнать больше")
             .setContentIntent(pendingIntent)
