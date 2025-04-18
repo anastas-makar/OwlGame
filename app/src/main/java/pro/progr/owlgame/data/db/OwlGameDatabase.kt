@@ -9,7 +9,8 @@ import androidx.room.RoomDatabase
     Slot::class,
     Building::class,
     MapEntity::class,
-    Animal::class],
+    Animal::class,
+    BuildingToAnimal::class],
     version = 1, exportSchema = false)
 abstract class OwlGameDatabase : RoomDatabase() {
     abstract fun townsDao(): TownsDao
