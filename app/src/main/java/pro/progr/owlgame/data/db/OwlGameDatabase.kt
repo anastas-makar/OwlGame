@@ -24,8 +24,6 @@ abstract class OwlGameDatabase : RoomDatabase() {
 
     abstract fun animalDao(): AnimalDao
 
-    abstract fun buildingToAnimalDao(): BuildingToAnimalDao
-
     companion object {
         @Volatile
         private var INSTANCE: OwlGameDatabase? = null
