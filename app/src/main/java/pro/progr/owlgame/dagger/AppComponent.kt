@@ -5,6 +5,7 @@ import dagger.BindsInstance
 import dagger.Component
 import pro.progr.owlgame.data.dagger.DatabaseModule
 import pro.progr.owlgame.data.dagger.NetworkModule
+import pro.progr.owlgame.presentation.viewmodel.dagger.AnimalViewModelFactory
 import pro.progr.owlgame.presentation.viewmodel.dagger.MapViewModelFactory
 import pro.progr.owlgame.presentation.viewmodel.dagger.PouchViewModelFactory
 import pro.progr.owlgame.presentation.viewmodel.dagger.ViewModelFactory
@@ -21,6 +22,8 @@ interface AppComponent {
     fun pouchViewModelFactory(): PouchViewModelFactory
 
     fun mapViewModelFactory(): MapViewModelFactory
+
+    fun animalViewModelFactory(): AnimalViewModelFactory
 
     fun viewModelFactory() : ViewModelFactory
 

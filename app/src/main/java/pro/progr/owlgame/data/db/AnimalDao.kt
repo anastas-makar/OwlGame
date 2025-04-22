@@ -11,4 +11,7 @@ interface AnimalDao {
     fun insert(animal: Animal): Long
     @Query("SELECT COUNT(*) FROM animals WHERE status='SEARCHING'")
     fun countSearching(): Long
+
+    @Query("SELECT * FROM animals WHERE id=:id")
+    fun getById(id: String): Animal?
 }
