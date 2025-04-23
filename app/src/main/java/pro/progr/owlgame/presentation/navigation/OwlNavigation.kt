@@ -60,7 +60,7 @@ fun OwlNavigation(startDestination : String = "towns",
             val id = backStackEntry.arguments?.getString("id")
 
             id?.let {
-                AnimalSearchingScreen(navController, id)
+                AnimalSearchingScreen(backToMain, navController, id)
             }
         }
 

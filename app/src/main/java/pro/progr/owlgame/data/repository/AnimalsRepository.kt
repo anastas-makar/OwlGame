@@ -1,5 +1,6 @@
 package pro.progr.owlgame.data.repository
 
+import kotlinx.coroutines.flow.Flow
 import pro.progr.owlgame.data.db.Animal
 import pro.progr.owlgame.data.db.AnimalDao
 import pro.progr.owlgame.data.web.AnimalApiService
@@ -26,7 +27,7 @@ class AnimalsRepository @Inject constructor(
         return null
     }
 
-    suspend fun getAnimalById(id : String) : Animal? {
+    fun getAnimalById(id : String) : Flow<Animal?> {
         return animalDao.getById(id)
     }
 

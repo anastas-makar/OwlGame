@@ -18,6 +18,6 @@ inline fun <reified VM : ViewModel> DaggerAnimalViewModel(id: String) : VM {
         .build()
         .animalViewModelFactory()
 
-    factory.id = id
+    factory.animalId = id
     return viewModel(factory = factory)
 }
