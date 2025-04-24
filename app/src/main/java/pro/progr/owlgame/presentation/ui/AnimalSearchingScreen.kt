@@ -36,14 +36,16 @@ fun AnimalSearchingScreen(
                     .padding(innerPadding)
                     .fillMaxWidth()
             ) {
-                Text(text = if (animalState.value != null)
-                    "${animalState.value?.name} ищет дом."
-                    else "")
                 animalState.value?.let { animal ->
                     AsyncImage(model = animal.imagePath,
                         contentDescription = "Изображение ${animal.name}")
 
                 }
+                Text(text = if (animalState.value != null)
+                    "${animalState.value?.name} может поселиться здесь: "
+                else "")
+
+
             }
         }
     )
