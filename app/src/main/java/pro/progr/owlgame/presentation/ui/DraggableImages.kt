@@ -33,15 +33,27 @@ fun DraggableImages(map: State<MapData>,
 
         if (mapViewModel.newHouseState.value) {
             mapViewModel.selectedBuilding.value?.let {
-                NewDraggableImage(
-                    slot = Slot(x = 0f, y = 0f, mapId = map.value.id, buildingId = it.id),
-                    mapViewModel = mapViewModel)
+
+                val slot = Slot(x = 0f, y = 0f, mapId = map.value.id, buildingId = it.id)
+                mapViewModel.saveSlot(
+                    slot.x,
+                    slot.y,
+                    slot.mapId,
+                    slot.buildingId
+                )
 
             }
         }
 
         for (slot in map.value.slots) {
-            DraggableImage(slot = slot.slot, mapViewModel = mapViewModel)
+            if (slot.slot.x == 0f && slot.slot.y == 0f) {
+                NewDraggableImage(
+                    slot = slot.slot,
+                    mapViewModel = mapViewModel)
+            } else {
+                DraggableImage(slot = slot.slot, mapViewModel = mapViewModel)
+
+            }
         }
 
     }
