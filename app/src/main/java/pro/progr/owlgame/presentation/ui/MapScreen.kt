@@ -130,20 +130,15 @@ fun MapScreen(
 
                     DraggableImages(map, mapViewModel)
 
-                    val buildingsOnMapsState = mapViewModel.getBuildingsOnMap(map.value.id).collectAsState(
-                        initial = emptyList()
-                    )
-
                     map.value.town?.let { town ->
                         Text(text = "Улица Главная", modifier = Modifier.padding(16.dp), fontWeight = FontWeight.Bold)
 
                         BuildingsGrid(
-                            buildingsList = buildingsOnMapsState
-                                .value.map { building ->
+                            buildingsList = map.value.slots.map { slotWithBuilding ->
                                     BuildingModel(
-                                        building.id,
-                                        building.name,
-                                        building.imageUrl
+                                        slotWithBuilding.building.id,
+                                        slotWithBuilding.building.name,
+                                        slotWithBuilding.building.imageUrl
                                     )
                                 }
                         )

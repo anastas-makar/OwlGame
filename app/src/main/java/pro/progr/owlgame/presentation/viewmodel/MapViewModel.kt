@@ -71,10 +71,6 @@ class MapViewModel @Inject constructor(
         return buildingsRepository.getAvailableHouses()
     }
 
-    fun getBuildingsOnMap(mapId: String) : Flow<List<Building>> {
-        return buildingsRepository.getBuildingsOnMap(mapId)
-    }
-
     fun saveSlot(x: Float, y: Float, mapId: String, buildingId: String) {
         viewModelScope.launch(Dispatchers.IO) {
             slotsRepository.saveSlot(x, y, mapId, buildingId)

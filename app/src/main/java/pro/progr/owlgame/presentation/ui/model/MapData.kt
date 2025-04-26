@@ -1,6 +1,6 @@
 package pro.progr.owlgame.presentation.ui.model
 
-import pro.progr.owlgame.data.db.Slot
+import pro.progr.owlgame.data.db.SlotWithBuilding
 import pro.progr.owlgame.data.db.Town
 
 data class MapData (
@@ -8,5 +8,5 @@ data class MapData (
     val name: String,
     val imageUrl: String,
     val town: Town? = null,
-    val slots: List<Slot> = emptyList()
+    val slots: List<SlotWithBuilding> = emptyList()
 )

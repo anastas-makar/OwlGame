@@ -39,13 +39,12 @@ fun AnimalSearchingScreen(
                 animalState.value?.let { animal ->
                     AsyncImage(model = animal.imagePath,
                         contentDescription = "Изображение ${animal.name}")
-
                 }
                 Text(text = if (animalState.value != null)
                     "${animalState.value?.name} может поселиться здесь: "
                 else "")
 
-
+                
             }
         }
     )
