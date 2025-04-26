@@ -33,7 +33,7 @@ fun DraggableImages(map: State<MapData>,
 
         if (mapViewModel.newHouseState.value) {
             mapViewModel.selectedBuilding.value?.let {
-                DraggableImage(
+                NewDraggableImage(
                     slot = Slot(x = 0f, y = 0f, mapId = map.value.id, buildingId = it.id),
                     mapViewModel = mapViewModel)
 
