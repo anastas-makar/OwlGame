@@ -76,6 +76,7 @@ fun MapScreen(
                 modifier = Modifier
                     .padding(innerPadding)
                     .fillMaxWidth()
+                    .navigationBarsPadding()
             ) {
 
                 Column(
