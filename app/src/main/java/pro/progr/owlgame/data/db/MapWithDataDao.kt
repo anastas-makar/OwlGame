@@ -13,4 +13,9 @@ interface MapWithDataDao {
     @Transaction
     @Query("SELECT * FROM maps")
     fun getMapsWithData(): Flow<List<MapWithData>>
+    @Transaction
+    @Query("SELECT * FROM maps WHERE id IN " +
+            "(SELECT DISTINCT mapId FROM buildings " +
+            "WHERE animalId IS NULL AND mapId IS NOT NULL)")
+    fun getMapsWithUninhabitedBuildings(): Flow<List<MapWithData>>
 }

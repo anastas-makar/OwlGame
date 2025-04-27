@@ -27,8 +27,6 @@ interface AppComponent {
 
     fun viewModelFactory() : ViewModelFactory
 
-
-
     @Component.Builder
     interface Builder {
         @BindsInstance

@@ -37,6 +37,10 @@ class MapsRepository @Inject constructor(
         }
     }
 
+    fun getMapsWithUninhabitedBuildings() : Flow<List<MapWithData>> {
+        return mapsWithDataDao.getMapsWithUninhabitedBuildings()
+    }
+
     suspend fun updateMapsFromServer() {
         var result = try {
             val response = apiService.getMaps(apiKey)
