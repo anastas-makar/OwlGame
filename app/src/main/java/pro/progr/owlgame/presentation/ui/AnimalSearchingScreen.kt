@@ -24,6 +24,8 @@ fun AnimalSearchingScreen(
 ) {
     val animalState = animalViewModel.animal.collectAsState(initial = null)
 
+    val mapsState = animalViewModel.mapsWithUninhabitedBuildings.collectAsState(initial = emptyList())
+
     Scaffold(
         topBar = {
             Box(modifier = Modifier.statusBarsPadding()) {
@@ -44,7 +46,7 @@ fun AnimalSearchingScreen(
                     "${animalState.value?.name} может поселиться здесь: "
                 else "")
 
-                
+
             }
         }
     )
