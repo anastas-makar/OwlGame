@@ -42,9 +42,10 @@ fun AnimalSearchingScreen(
                     AsyncImage(model = animal.imagePath,
                         contentDescription = "Изображение ${animal.name}")
                 }
-                Text(text = if (animalState.value != null)
-                    "${animalState.value?.name} может поселиться здесь: "
-                else "")
+                if (animalState.value != null) {
+                    Text(text =
+                    "${animalState.value?.name} может поселиться здесь: ")
+                }
 
 
             }
