@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -14,6 +15,7 @@ import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import pro.progr.owlgame.presentation.viewmodel.AnimalViewModel
 import pro.progr.owlgame.presentation.viewmodel.dagger.DaggerAnimalViewModel
+import androidx.compose.foundation.lazy.itemsIndexed
 
 @Composable
 fun AnimalSearchingScreen(
@@ -47,7 +49,13 @@ fun AnimalSearchingScreen(
                     "${animalState.value?.name} может поселиться здесь: ")
                 }
 
+                LazyColumn {
 
+                    itemsIndexed(mapsState.value) { _, mapWithData ->
+                        Text(text = "В городе ${mapWithData.town?.name} можно выбрать дом:")
+                    }
+
+                }
             }
         }
     )
