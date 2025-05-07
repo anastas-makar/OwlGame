@@ -223,7 +223,8 @@ fun BuildingsGrid(buildingsList : List<BuildingModel>) {
             modifier = Modifier.fillMaxSize(),
             contentPadding = PaddingValues(8.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp),
-            horizontalArrangement = Arrangement.spacedBy(8.dp)
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
+            userScrollEnabled = false
         ) {
             itemsIndexed(buildingsList) { _, building ->
                 Box(
