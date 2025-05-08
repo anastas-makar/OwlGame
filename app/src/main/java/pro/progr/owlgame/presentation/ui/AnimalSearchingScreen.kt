@@ -1,5 +1,6 @@
 package pro.progr.owlgame.presentation.ui
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -94,6 +95,9 @@ fun AnimalSearchingScreen(
                                                 modifier = Modifier
                                                     .aspectRatio(1f)
                                                     .fillMaxWidth()
+                                                    .clickable {
+
+                                                    }
                                             )
                                         }
                                     }
