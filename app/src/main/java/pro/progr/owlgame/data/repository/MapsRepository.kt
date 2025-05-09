@@ -61,7 +61,6 @@ class MapsRepository @Inject constructor(
     }
 
     fun getMapById(id: String): Flow<MapWithData?> {
-        Log.wtf("Map id: ", id)
         return mapsWithDataDao.getMapWithData(id)
     }
 

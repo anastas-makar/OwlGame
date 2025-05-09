@@ -19,6 +19,10 @@ class BuildingsRepository @Inject constructor(private val buildingsDao : Buildin
        TODO()
    }
 
+    fun updateAnimalId(buildingId: String, animalId: String): Int {
+        return buildingsDao.updateAnimalId(buildingId, animalId)
+    }
+
     suspend fun saveBuildings(buildings: List<Building>) {
         buildingsDao.insert(buildings)
     }

@@ -31,8 +31,8 @@ import androidx.compose.ui.unit.dp
 fun AnimalSearchingScreen(
     backToMain: () -> Unit,
     navController: NavHostController,
-    id: String,
-    animalViewModel : AnimalViewModel = DaggerAnimalViewModel(id = id)
+    animalId: String,
+    animalViewModel : AnimalViewModel = DaggerAnimalViewModel(id = animalId)
 ) {
     val animalState = animalViewModel.animal.collectAsState(initial = null)
 
@@ -96,7 +96,8 @@ fun AnimalSearchingScreen(
                                                     .aspectRatio(1f)
                                                     .fillMaxWidth()
                                                     .clickable {
-
+                                                        animalViewModel.saveAnimalInBuilding(slotWithBuilding.building.id,
+                                                            animalId)
                                                     }
                                             )
                                         }
