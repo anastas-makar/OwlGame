@@ -59,57 +59,54 @@ fun AnimalSearchingScreen(
                     "${animalState.value?.name} может поселиться здесь: ")
                 }
 
-                LazyColumn {
-
+                LazyColumn(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalArrangement = Arrangement.spacedBy(16.dp)
+                ) {
                     itemsIndexed(mapsState.value) { _, mapWithData ->
-                        Text(text = "В городе ${mapWithData.town?.name} можно выбрать дом:")
+                        this@LazyColumn.item {
+                            Column(modifier = Modifier.padding(vertical = 8.dp)) {
+                                Text(text = "В городе ${mapWithData.town?.name} можно выбрать дом:")
 
-                        LazyColumn {
-                            itemsIndexed(mapsState.value) { _, mapWithData ->
-                                Column(modifier = Modifier.padding(vertical = 8.dp)) {
-                                    Text(text = "В городе ${mapWithData.town?.name} можно выбрать дом:")
+                                AsyncImage(
+                                    model = mapWithData.mapEntity.imagePath,
+                                    contentDescription = "Карта города",
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .height(200.dp)
+                                )
 
-                                    AsyncImage(
-                                        model = mapWithData.mapEntity.imagePath,
-                                        contentDescription = "Карта города",
-                                        modifier = Modifier
-                                            .fillMaxWidth()
-                                            .height(200.dp)
-                                    )
+                                Spacer(modifier = Modifier.height(8.dp))
 
-                                    Spacer(modifier = Modifier.height(8.dp))
-
-                                    LazyVerticalGrid(
-                                        columns = GridCells.Fixed(3),
-                                        modifier = Modifier
-                                            .fillMaxWidth()
-                                            .heightIn(max = 400.dp), // можно настроить
-                                        horizontalArrangement = Arrangement.spacedBy(8.dp),
-                                        verticalArrangement = Arrangement.spacedBy(8.dp),
-                                        userScrollEnabled = false // чтобы не мешал основному скроллу
-                                    ) {
-                                        itemsIndexed(mapWithData.slots) { _, slotWithBuilding ->
-                                            AsyncImage(
-                                                model = slotWithBuilding.building.imageUrl,
-                                                contentDescription = "Дом",
-                                                modifier = Modifier
-                                                    .aspectRatio(1f)
-                                                    .fillMaxWidth()
-                                                    .clickable {
-                                                        animalViewModel.saveAnimalInBuilding(slotWithBuilding.building.id,
-                                                            animalId)
-
-                                                        navController.navigate("map/${mapWithData.mapEntity.id}")
-                                                    }
-                                            )
-                                        }
+                                // Грид с фиксированной высотой, чтобы не ломал скролл
+                                LazyVerticalGrid(
+                                    columns = GridCells.Fixed(3),
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .heightIn(max = 400.dp),
+                                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                                    verticalArrangement = Arrangement.spacedBy(8.dp),
+                                    userScrollEnabled = false
+                                ) {
+                                    itemsIndexed(mapWithData.slots) { _, slotWithBuilding ->
+                                        AsyncImage(
+                                            model = slotWithBuilding.building.imageUrl,
+                                            contentDescription = "Дом",
+                                            modifier = Modifier
+                                                .aspectRatio(1f)
+                                                .fillMaxWidth()
+                                                .clickable {
+                                                    animalViewModel.saveAnimalInBuilding(slotWithBuilding.building.id, animalId)
+                                                    navController.navigate("map/${mapWithData.mapEntity.id}")
+                                                }
+                                        )
                                     }
                                 }
                             }
                         }
                     }
-
                 }
+
             }
         }
     )
