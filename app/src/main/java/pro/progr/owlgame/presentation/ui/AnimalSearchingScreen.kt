@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
@@ -27,6 +28,7 @@ import coil.compose.AsyncImage
 import pro.progr.owlgame.presentation.viewmodel.AnimalViewModel
 import pro.progr.owlgame.presentation.viewmodel.dagger.DaggerAnimalViewModel
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 
 @Composable
@@ -53,14 +55,15 @@ fun AnimalSearchingScreen(
                     .fillMaxWidth()
             ) {
                 animalState.value?.let { animal ->
-                    Row {
+                    Row(modifier = Modifier.padding(16.dp, 10.dp)) {
                         AsyncImage(model = animal.imagePath,
                             contentDescription = "Изображение ${animal.name}")
 
                         Spacer(modifier = Modifier.width(8.dp))
 
-                        Text(text =
-                        "${animalState.value?.name} ищет дом. ")
+                        Text(text = "${animalState.value?.name}",
+                            fontWeight = FontWeight.Bold
+                        )
                     }
                 }
 
@@ -71,15 +74,20 @@ fun AnimalSearchingScreen(
                     itemsIndexed(mapsState.value) { _, mapWithData ->
                         this@LazyColumn.item {
                             Column(modifier = Modifier.padding(vertical = 8.dp)) {
-                                Text(text = "В городе ${mapWithData.town?.name} можно выбрать дом:")
+                                Row {
+                                    AsyncImage(
+                                        model = mapWithData.mapEntity.imagePath,
+                                        contentDescription = "Карта города",
+                                        modifier = Modifier
+                                            .fillMaxWidth()
+                                            .size(70.dp)
+                                    )
 
-                                AsyncImage(
-                                    model = mapWithData.mapEntity.imagePath,
-                                    contentDescription = "Карта города",
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .height(200.dp)
-                                )
+                                    Spacer(modifier = Modifier.width(8.dp))
+
+                                    Text(text = "В городе ${mapWithData.town?.name} можно выбрать дом:")
+
+                                }
 
                                 Spacer(modifier = Modifier.height(8.dp))
 
