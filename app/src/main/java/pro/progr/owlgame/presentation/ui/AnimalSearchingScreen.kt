@@ -98,6 +98,8 @@ fun AnimalSearchingScreen(
                                                     .clickable {
                                                         animalViewModel.saveAnimalInBuilding(slotWithBuilding.building.id,
                                                             animalId)
+
+                                                        navController.navigate("map/${mapWithData.mapEntity.id}")
                                                     }
                                             )
                                         }
