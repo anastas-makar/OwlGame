@@ -4,6 +4,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -11,6 +12,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -51,12 +53,15 @@ fun AnimalSearchingScreen(
                     .fillMaxWidth()
             ) {
                 animalState.value?.let { animal ->
-                    AsyncImage(model = animal.imagePath,
-                        contentDescription = "Изображение ${animal.name}")
-                }
-                if (animalState.value != null) {
-                    Text(text =
-                    "${animalState.value?.name} может поселиться здесь: ")
+                    Row {
+                        AsyncImage(model = animal.imagePath,
+                            contentDescription = "Изображение ${animal.name}")
+
+                        Spacer(modifier = Modifier.width(8.dp))
+
+                        Text(text =
+                        "${animalState.value?.name} ищет дом. ")
+                    }
                 }
 
                 LazyColumn(
@@ -96,7 +101,10 @@ fun AnimalSearchingScreen(
                                                 .aspectRatio(1f)
                                                 .fillMaxWidth()
                                                 .clickable {
-                                                    animalViewModel.saveAnimalInBuilding(slotWithBuilding.building.id, animalId)
+                                                    animalViewModel.saveAnimalInBuilding(
+                                                        slotWithBuilding.building.id,
+                                                        animalId
+                                                    )
                                                     navController.navigate("map/${mapWithData.mapEntity.id}")
                                                 }
                                         )
