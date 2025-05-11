@@ -13,6 +13,9 @@ interface AnimalDao {
     @Query("SELECT COUNT(*) FROM animals WHERE status='SEARCHING'")
     fun countSearching(): Long
 
+    @Query("UPDATE animals SET status='PET' WHERE id=:animalId")
+    fun setPet(animalId: String)
+
     @Query("SELECT * FROM animals WHERE id=:id")
     fun getById(id: String): Flow<Animal?>
 }

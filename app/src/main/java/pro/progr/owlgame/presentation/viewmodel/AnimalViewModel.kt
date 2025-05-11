@@ -5,14 +5,14 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import pro.progr.owlgame.data.repository.AnimalsRepository
-import pro.progr.owlgame.data.repository.BuildingsRepository
 import pro.progr.owlgame.data.repository.MapsRepository
+import pro.progr.owlgame.domain.GrantBuildingToAnimalUseCase
 import javax.inject.Inject
 
 class AnimalViewModel @Inject constructor(
     animalsRepository: AnimalsRepository,
     mapsRepository: MapsRepository,
-    val buildingsRepository: BuildingsRepository,
+    val grantBuildingToAnimalUseCase: GrantBuildingToAnimalUseCase,
     animalId: String
 ) : ViewModel() {
     val animal = animalsRepository.getAnimalById(animalId)
@@ -21,7 +21,7 @@ class AnimalViewModel @Inject constructor(
 
     fun saveAnimalInBuilding(buildingId: String, animalId: String) {
         viewModelScope.launch (Dispatchers.IO) {
-            buildingsRepository.updateAnimalId(buildingId, animalId)
+            grantBuildingToAnimalUseCase(buildingId, animalId)
         }
     }
 }

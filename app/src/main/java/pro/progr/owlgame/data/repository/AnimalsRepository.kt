@@ -18,7 +18,7 @@ class AnimalsRepository @Inject constructor(
     }
 
     suspend fun getAnimal() : Animal? {
-        val response =animalApiService.getAnimal(apiKey)
+        val response = animalApiService.getAnimal(apiKey)
 
         if (response.isSuccessful) {
             return response.body()
@@ -29,6 +29,10 @@ class AnimalsRepository @Inject constructor(
 
     fun getAnimalById(id : String) : Flow<Animal?> {
         return animalDao.getById(id)
+    }
+
+    fun setPet(animalId: String) {
+        animalDao.setPet(animalId)
     }
 
     suspend fun saveAnimal(animal: Animal) : Animal {
