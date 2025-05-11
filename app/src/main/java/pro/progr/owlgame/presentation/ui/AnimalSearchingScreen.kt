@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -74,13 +75,12 @@ fun AnimalSearchingScreen(
                     itemsIndexed(mapsState.value) { _, mapWithData ->
                         this@LazyColumn.item {
                             Column(modifier = Modifier.padding(vertical = 8.dp)) {
-                                Row {
+                                Row(modifier = Modifier.padding(16.dp, 10.dp)) {
                                     AsyncImage(
                                         model = mapWithData.mapEntity.imagePath,
                                         contentDescription = "Карта города",
                                         modifier = Modifier
-                                            .fillMaxWidth()
-                                            .size(70.dp)
+                                            .size(100.dp)
                                     )
 
                                     Spacer(modifier = Modifier.width(8.dp))
@@ -96,6 +96,7 @@ fun AnimalSearchingScreen(
                                     columns = GridCells.Fixed(3),
                                     modifier = Modifier
                                         .fillMaxWidth()
+                                        .wrapContentHeight()
                                         .heightIn(max = 400.dp),
                                     horizontalArrangement = Arrangement.spacedBy(8.dp),
                                     verticalArrangement = Arrangement.spacedBy(8.dp),
