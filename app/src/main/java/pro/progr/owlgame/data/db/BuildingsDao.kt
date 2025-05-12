@@ -14,7 +14,7 @@ public interface BuildingsDao {
     @Query("UPDATE buildings SET mapId=:mapId WHERE id=:buildingId")
     fun updateMapId(buildingId: String, mapId: String): Int
 
-    @Query("UPDATE buildings SET mapId=:animalId WHERE id=:buildingId")
+    @Query("UPDATE buildings SET animalId=:animalId WHERE id=:buildingId")
     fun updateAnimalId(buildingId: String, animalId: String): Int
 
     @Query("SELECT * FROM buildings WHERE mapId IS NULL")
