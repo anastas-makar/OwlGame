@@ -37,11 +37,12 @@ fun AnimalSearchingScreen(
     backToMain: () -> Unit,
     navController: NavHostController,
     animalId: String,
-    animalViewModel : AnimalViewModel = DaggerAnimalViewModel(id = animalId)
+    animalViewModel: AnimalViewModel = DaggerAnimalViewModel(id = animalId)
 ) {
     val animalState = animalViewModel.animal.collectAsState(initial = null)
 
-    val mapsState = animalViewModel.mapsWithUninhabitedBuildings.collectAsState(initial = emptyList())
+    val mapsState =
+        animalViewModel.mapsWithUninhabitedBuildings.collectAsState(initial = emptyList())
 
     Scaffold(
         topBar = {
@@ -57,12 +58,15 @@ fun AnimalSearchingScreen(
             ) {
                 animalState.value?.let { animal ->
                     Row(modifier = Modifier.padding(16.dp, 10.dp)) {
-                        AsyncImage(model = animal.imagePath,
-                            contentDescription = "Изображение ${animal.name}")
+                        AsyncImage(
+                            model = animal.imagePath,
+                            contentDescription = "Изображение ${animal.name}"
+                        )
 
                         Spacer(modifier = Modifier.width(8.dp))
 
-                        Text(text = "${animalState.value?.name}",
+                        Text(
+                            text = "${animalState.value?.name}",
                             fontWeight = FontWeight.Bold
                         )
                     }
@@ -73,51 +77,49 @@ fun AnimalSearchingScreen(
                     verticalArrangement = Arrangement.spacedBy(16.dp)
                 ) {
                     itemsIndexed(mapsState.value) { _, mapWithData ->
-                        this@LazyColumn.item {
-                            Column(modifier = Modifier.padding(vertical = 8.dp)) {
-                                Row(modifier = Modifier.padding(16.dp, 10.dp)) {
-                                    AsyncImage(
-                                        model = mapWithData.mapEntity.imagePath,
-                                        contentDescription = "Карта города",
-                                        modifier = Modifier
-                                            .size(100.dp)
-                                    )
-
-                                    Spacer(modifier = Modifier.width(8.dp))
-
-                                    Text(text = "В городе ${mapWithData.town?.name} можно выбрать дом:")
-
-                                }
-
-                                Spacer(modifier = Modifier.height(8.dp))
-
-                                // Грид с фиксированной высотой, чтобы не ломал скролл
-                                LazyVerticalGrid(
-                                    columns = GridCells.Fixed(3),
+                        Column(modifier = Modifier.padding(vertical = 8.dp)) {
+                            Row(modifier = Modifier.padding(16.dp, 10.dp)) {
+                                AsyncImage(
+                                    model = mapWithData.mapEntity.imagePath,
+                                    contentDescription = "Карта города",
                                     modifier = Modifier
-                                        .fillMaxWidth()
-                                        .wrapContentHeight()
-                                        .heightIn(max = 400.dp),
-                                    horizontalArrangement = Arrangement.spacedBy(8.dp),
-                                    verticalArrangement = Arrangement.spacedBy(8.dp),
-                                    userScrollEnabled = false
-                                ) {
-                                    itemsIndexed(mapWithData.slots) { _, slotWithBuilding ->
-                                        AsyncImage(
-                                            model = slotWithBuilding.building.imageUrl,
-                                            contentDescription = "Дом",
-                                            modifier = Modifier
-                                                .aspectRatio(1f)
-                                                .fillMaxWidth()
-                                                .clickable {
-                                                    animalViewModel.saveAnimalInBuilding(
-                                                        slotWithBuilding.building.id,
-                                                        animalId
-                                                    )
-                                                    navController.navigate("map/${mapWithData.mapEntity.id}")
-                                                }
-                                        )
-                                    }
+                                        .size(100.dp)
+                                )
+
+                                Spacer(modifier = Modifier.width(8.dp))
+
+                                Text(text = "В городе ${mapWithData.town?.name} можно выбрать дом:")
+
+                            }
+
+                            Spacer(modifier = Modifier.height(8.dp))
+
+                            // Грид с фиксированной высотой, чтобы не ломал скролл
+                            LazyVerticalGrid(
+                                columns = GridCells.Fixed(3),
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .wrapContentHeight()
+                                    .heightIn(max = 400.dp),
+                                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                                verticalArrangement = Arrangement.spacedBy(8.dp),
+                                userScrollEnabled = false
+                            ) {
+                                itemsIndexed(mapWithData.slots) { _, slotWithBuilding ->
+                                    AsyncImage(
+                                        model = slotWithBuilding.building.imageUrl,
+                                        contentDescription = "Дом",
+                                        modifier = Modifier
+                                            .aspectRatio(1f)
+                                            .fillMaxWidth()
+                                            .clickable {
+                                                animalViewModel.saveAnimalInBuilding(
+                                                    slotWithBuilding.building.id,
+                                                    animalId
+                                                )
+                                                navController.navigate("map/${mapWithData.mapEntity.id}")
+                                            }
+                                    )
                                 }
                             }
                         }
