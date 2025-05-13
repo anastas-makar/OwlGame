@@ -100,12 +100,17 @@ fun AnimalSearchingScreen(
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .wrapContentHeight()
+                                    .padding(16.dp, 5.dp)
                                     .heightIn(max = 400.dp),
                                 horizontalArrangement = Arrangement.spacedBy(8.dp),
                                 verticalArrangement = Arrangement.spacedBy(8.dp),
                                 userScrollEnabled = false
                             ) {
-                                itemsIndexed(mapWithData.slots) { _, slotWithBuilding ->
+                                itemsIndexed(mapWithData.slots
+                                    .filter {slotWithBuilding ->
+                                        slotWithBuilding.building.animalId == null
+                                    }
+                                ) { _, slotWithBuilding ->
                                     AsyncImage(
                                         model = slotWithBuilding.building.imageUrl,
                                         contentDescription = "Дом",
