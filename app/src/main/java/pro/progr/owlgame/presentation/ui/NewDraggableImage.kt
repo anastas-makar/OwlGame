@@ -22,13 +22,15 @@ import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.delay
 import pro.progr.owlgame.R
+import pro.progr.owlgame.data.db.BuildingType
 import pro.progr.owlgame.data.db.Slot
 import pro.progr.owlgame.presentation.viewmodel.MapViewModel
 import kotlin.math.roundToInt
 
 @Composable
 fun NewDraggableImage(slot: Slot,
-                                                       mapViewModel: MapViewModel) {
+                      buildingType: BuildingType,
+                      mapViewModel: MapViewModel) {
     val houseOffset = remember { mutableStateOf(Offset(slot.x, slot.y)) }
 
     val scale = remember { Animatable(1f) }
@@ -53,7 +55,11 @@ fun NewDraggableImage(slot: Slot,
     }
 
     Image(
-        painter = painterResource(R.drawable.map_icon_house),
+        painter = painterResource(
+            if (buildingType == BuildingType.HOUSE)
+                R.drawable.map_icon_house
+            else
+                R.drawable.map_icon_fortress),
         contentDescription = "Полупрозрачное изображение",
         modifier = Modifier
             .offset {

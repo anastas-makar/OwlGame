@@ -67,8 +67,8 @@ class MapViewModel @Inject constructor(
 
     }
 
-    fun getAvailableHouses() : Flow<List<Building>> {
-        return buildingsRepository.getAvailableHouses()
+    fun getAvailableBuildings() : Flow<List<Building>> {
+        return buildingsRepository.getAvailableBuildings()
     }
 
     fun saveSlot(x: Float, y: Float, mapId: String, buildingId: String) {

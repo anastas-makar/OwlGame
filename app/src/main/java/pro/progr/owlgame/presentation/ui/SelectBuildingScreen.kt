@@ -34,16 +34,19 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import pro.progr.diamondapi.DiamondInterface
 import pro.progr.owlgame.R
+import pro.progr.owlgame.data.db.Building
+import pro.progr.owlgame.data.db.BuildingType
 import pro.progr.owlgame.presentation.viewmodel.MapViewModel
 
 @Composable
-fun SelectHouseScreen(mapViewModel: MapViewModel,
-                      diamondBalance : State<Int>,
-                      diamondDao : DiamondInterface,
-                      scope : CoroutineScope,
-                      snackbarHostState: SnackbarHostState
+fun SelectBuildingScreen(mapViewModel: MapViewModel,
+                         diamondBalance : State<Int>,
+                         diamondDao : DiamondInterface,
+                         scope : CoroutineScope,
+                         snackbarHostState: SnackbarHostState,
+                         buildingType: BuildingType
 ) {
-    val buildingsState = mapViewModel.getAvailableHouses().collectAsState(initial = emptyList())
+    val buildingsState = mapViewModel.getAvailableBuildings().collectAsState(initial = emptyList())
 
     Box(
         modifier = Modifier
@@ -51,6 +54,7 @@ fun SelectHouseScreen(mapViewModel: MapViewModel,
             .background(color = Color.White.copy(alpha = 0.5f))
             .clickable {
                 mapViewModel.selectHouseState.value = false
+                mapViewModel.selectFortressState.value = false
             }
     ) {
 
@@ -61,7 +65,9 @@ fun SelectHouseScreen(mapViewModel: MapViewModel,
             verticalArrangement = Arrangement.spacedBy(8.dp),
             horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            itemsIndexed(buildingsState.value) { _, building ->
+            itemsIndexed(buildingsState.value.filter {building: Building ->
+                building.type == buildingType
+            }) { _, building ->
 
                 Card(
                     modifier = Modifier

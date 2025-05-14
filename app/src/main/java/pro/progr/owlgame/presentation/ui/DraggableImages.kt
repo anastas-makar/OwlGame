@@ -49,9 +49,12 @@ fun DraggableImages(map: State<MapData>,
             if (slot.slot.x == 0f && slot.slot.y == 0f) {
                 NewDraggableImage(
                     slot = slot.slot,
+                    buildingType = slot.building.type,
                     mapViewModel = mapViewModel)
             } else {
-                DraggableImage(slot = slot.slot, mapViewModel = mapViewModel)
+                DraggableImage(slot = slot.slot,
+                    buildingType = slot.building.type,
+                    mapViewModel = mapViewModel)
 
             }
         }

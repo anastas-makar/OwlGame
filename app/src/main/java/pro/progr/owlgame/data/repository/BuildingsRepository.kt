@@ -6,7 +6,7 @@ import pro.progr.owlgame.data.db.BuildingsDao
 import javax.inject.Inject
 
 class BuildingsRepository @Inject constructor(private val buildingsDao : BuildingsDao) {
-   fun getAvailableHouses() : Flow<List<Building>> {
+   fun getAvailableBuildings() : Flow<List<Building>> {
 
        return buildingsDao.getAvailable()
    }
@@ -14,10 +14,6 @@ class BuildingsRepository @Inject constructor(private val buildingsDao : Buildin
     fun countUninhabited() : Long {
         return buildingsDao.countUninhabited()
     }
-
-   fun getAvailableFortresses() : Flow<Building> {
-       TODO()
-   }
 
     fun updateAnimalId(buildingId: String, animalId: String): Int {
         return buildingsDao.updateAnimalId(buildingId, animalId)

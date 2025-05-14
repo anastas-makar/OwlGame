@@ -40,6 +40,7 @@ import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import pro.progr.diamondapi.DiamondInterface
+import pro.progr.owlgame.data.db.BuildingType
 import pro.progr.owlgame.presentation.ui.model.BuildingModel
 import pro.progr.owlgame.presentation.ui.model.MapData
 import pro.progr.owlgame.presentation.viewmodel.MapViewModel
@@ -195,20 +196,22 @@ fun MapScreen(
                 }
 
                 if (mapViewModel.selectHouseState.value) {
-                    SelectHouseScreen(mapViewModel = mapViewModel,
+                    SelectBuildingScreen(mapViewModel = mapViewModel,
                         diamondBalance = diamondBalance,
                         diamondDao = diamondDao,
                         scope = scope,
-                        snackbarHostState = snackbarHostState
+                        snackbarHostState = snackbarHostState,
+                        buildingType = BuildingType.HOUSE
                         )
                 }
 
                 if (mapViewModel.selectFortressState.value) {
-                    SelectHouseScreen(mapViewModel = mapViewModel,
+                    SelectBuildingScreen(mapViewModel = mapViewModel,
                         diamondBalance = diamondBalance,
                         diamondDao = diamondDao,
                         scope = scope,
-                        snackbarHostState = snackbarHostState)
+                        snackbarHostState = snackbarHostState,
+                        buildingType = BuildingType.FORTRESS)
                 }
             }
         }
