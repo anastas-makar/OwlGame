@@ -7,7 +7,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import pro.progr.owlgame.data.repository.PouchesRepository
 import pro.progr.owlgame.data.web.inpouch.BuildingInPouch
-import pro.progr.owlgame.data.web.inpouch.BuildingType
 import pro.progr.owlgame.data.web.inpouch.InPouch
 import pro.progr.owlgame.data.web.inpouch.MapInPouchModel
 import pro.progr.owlgame.domain.SaveBuildingsUseCase
@@ -62,8 +61,8 @@ class InPouchViewModel @Inject constructor(
 
                         BuildingInPouch(
                             ent.id,
-                            BuildingType.HOUSE,
-                            5000,
+                            ent.type,
+                            ent.price,
                             ent.name,
                             ent.imageUrl
                         )

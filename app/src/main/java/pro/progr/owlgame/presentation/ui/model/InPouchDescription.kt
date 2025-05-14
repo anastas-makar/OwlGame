@@ -1,9 +1,9 @@
-package pro.progr.owlgame.presentation.ui.model;
+package pro.progr.owlgame.presentation.ui.model
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
 import pro.progr.owlgame.R
-import pro.progr.owlgame.data.web.inpouch.BuildingType
+import pro.progr.owlgame.data.db.BuildingType
 import pro.progr.owlgame.data.web.inpouch.InPouch
 
 class InPouchDescription constructor(val inPouch : InPouch) {

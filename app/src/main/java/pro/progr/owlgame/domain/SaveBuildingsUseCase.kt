@@ -16,7 +16,8 @@ class SaveBuildingsUseCase @Inject constructor(private val imageRepository: Imag
                 id = it.id,
                 name = it.name,
                 imageUrl = imageRepository.saveImageLocally(it.imageUrl),
-                price = it.cost
+                price = it.cost,
+                type = it.type
             )
         }
 

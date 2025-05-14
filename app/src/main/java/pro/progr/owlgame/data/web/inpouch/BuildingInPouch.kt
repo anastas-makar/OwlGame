@@ -1,5 +1,7 @@
 package pro.progr.owlgame.data.web.inpouch
 
+import pro.progr.owlgame.data.db.BuildingType
+
 data class BuildingInPouch (
     val id : String,
     val type: BuildingType,
