@@ -93,6 +93,8 @@ class MapViewModel @Inject constructor(
 
             if (result.isSuccess) {
                 selectHouseState.value = false
+                selectFortressState.value = false
+
                 selectedBuilding.value = BuildingModel(
                     building.id,
                     building.name,

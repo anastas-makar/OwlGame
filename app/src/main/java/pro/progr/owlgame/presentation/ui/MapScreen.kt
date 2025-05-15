@@ -62,8 +62,6 @@ fun MapScreen(
 
     val diamondBalance = diamondDao.getDiamondsCount().collectAsState(initial = 0)
 
-    Log.wtf("Diamond balance: ", diamondBalance.value.toString())
-
     Scaffold(
         snackbarHost = { SnackbarHost(snackbarHostState,
             modifier = Modifier.navigationBarsPadding()) },
