@@ -76,11 +76,11 @@ fun AnimalSearchingScreen(
                     modifier = Modifier.fillMaxWidth(),
                     verticalArrangement = Arrangement.spacedBy(16.dp)
                 ) {
-                    itemsIndexed(mapsState.value) { _, mapWithData ->
+                    itemsIndexed(mapsState.value) { _, mapData ->
                         Column(modifier = Modifier.padding(vertical = 8.dp)) {
                             Row(modifier = Modifier.padding(16.dp, 10.dp)) {
                                 AsyncImage(
-                                    model = mapWithData.mapEntity.imagePath,
+                                    model = mapData.imageUrl,
                                     contentDescription = "Карта города",
                                     modifier = Modifier
                                         .size(100.dp)
@@ -88,7 +88,7 @@ fun AnimalSearchingScreen(
 
                                 Spacer(modifier = Modifier.width(8.dp))
 
-                                Text(text = "В городе ${mapWithData.town?.name} можно выбрать дом:")
+                                Text(text = "В городе ${mapData.town?.name} можно выбрать дом:")
 
                             }
 
@@ -106,25 +106,29 @@ fun AnimalSearchingScreen(
                                 verticalArrangement = Arrangement.spacedBy(8.dp),
                                 userScrollEnabled = false
                             ) {
-                                itemsIndexed(mapWithData.slots
+                                itemsIndexed(mapData.slots
                                     .filter {slotWithBuilding ->
-                                        slotWithBuilding.building.animalId == null
+                                        slotWithBuilding.building != null &&
+                                        slotWithBuilding.building.building.animalId == null
                                     }
                                 ) { _, slotWithBuilding ->
-                                    AsyncImage(
-                                        model = slotWithBuilding.building.imageUrl,
-                                        contentDescription = "Дом",
-                                        modifier = Modifier
-                                            .aspectRatio(1f)
-                                            .fillMaxWidth()
-                                            .clickable {
-                                                animalViewModel.saveAnimalInBuilding(
-                                                    slotWithBuilding.building.id,
-                                                    animalId
-                                                )
-                                                navController.navigate("map/${mapWithData.mapEntity.id}")
-                                            }
-                                    )
+                                    slotWithBuilding.building?.let {
+                                        AsyncImage(
+                                            model = slotWithBuilding.building.building.imageUrl,
+                                            contentDescription = "Дом",
+                                            modifier = Modifier
+                                                .aspectRatio(1f)
+                                                .fillMaxWidth()
+                                                .clickable {
+                                                    animalViewModel.saveAnimalInBuilding(
+                                                        slotWithBuilding.building.building.id,
+                                                        animalId
+                                                    )
+                                                    navController.navigate("map/${mapData.id}")
+                                                }
+                                        )
+
+                                    }
                                 }
                             }
                         }

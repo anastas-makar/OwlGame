@@ -17,5 +17,5 @@ data class MapWithData (
         entity = Slot::class,
         entityColumn = "mapId"
     )
-    val slots : List<SlotWithBuilding>
+    val slots : List<Slot>
 )

@@ -20,6 +20,8 @@ abstract class OwlGameDatabase : RoomDatabase() {
 
     abstract fun buildingsDao(): BuildingsDao
 
+    abstract fun buildingWithAnimalDao(): BuildingWithAnimalDao
+
     abstract fun mapDao(): MapDao
 
     abstract fun animalDao(): AnimalDao

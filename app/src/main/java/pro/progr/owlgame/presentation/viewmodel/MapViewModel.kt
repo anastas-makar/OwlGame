@@ -6,7 +6,10 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -19,6 +22,7 @@ import pro.progr.owlgame.data.repository.SlotsRepository
 import pro.progr.owlgame.domain.FoundTownUseCase
 import pro.progr.owlgame.presentation.ui.model.BuildingModel
 import pro.progr.owlgame.presentation.ui.model.MapData
+import pro.progr.owlgame.presentation.ui.model.SlotWithBuilding
 import javax.inject.Inject
 
 class MapViewModel @Inject constructor(
@@ -29,19 +33,29 @@ class MapViewModel @Inject constructor(
     private val foundTownUseCase: FoundTownUseCase,
 ) : ViewModel() {
 
-    val map : Flow<MapData> = mapsRepository.getMapById(mapId).map { mapWithData ->
-        if (mapWithData != null)  {
+    val map: StateFlow<MapData> = combine(
+        mapsRepository.getMapById(mapId),
+        buildingsRepository.getBuildingsWithAnimals(mapId)
+    ) { mapWithData, buildingsMap ->
+        if (mapWithData != null) {
             MapData(
                 id = mapWithData.mapEntity.id,
                 name = mapWithData.mapEntity.name,
                 imageUrl = mapWithData.mapEntity.imagePath,
                 town = mapWithData.town,
-                slots = mapWithData.slots
+                slots = mapWithData.slots.map { slot ->
+                    val building = slot.buildingId?.let { buildingsMap[it] }
+                    SlotWithBuilding(slot, building)
+                }
             )
         } else {
             MapData("", "", "")
         }
-    }
+    }.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(5000),
+        initialValue = MapData("", "", "")
+    )
 
     val foundTown = MutableStateFlow(false)
 

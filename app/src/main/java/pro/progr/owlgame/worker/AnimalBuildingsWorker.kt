@@ -48,7 +48,7 @@ class AnimalBuildingsWorker(
 
         val animal = SearchAnimalsUseCase(
             animalRepository,
-            BuildingsRepository(db.buildingsDao()))()
+            BuildingsRepository(db.buildingsDao(), db.buildingWithAnimalDao()))()
 
         if (animal != null) {
             val savedAnimal = animalRepository.saveAnimal(animal)

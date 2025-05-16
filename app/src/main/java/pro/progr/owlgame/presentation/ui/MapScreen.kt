@@ -1,6 +1,5 @@
 package pro.progr.owlgame.presentation.ui
 
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -18,6 +17,7 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
+import androidx.compose.material.Card
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Scaffold
 import androidx.compose.material.SnackbarHost
@@ -134,12 +134,16 @@ fun MapScreen(
                         Text(text = "Улица Главная", modifier = Modifier.padding(16.dp), fontWeight = FontWeight.Bold)
 
                         BuildingsGrid(
-                            buildingsList = map.value.slots.map { slotWithBuilding ->
+                            buildingsList = map.value.slots.filter {
+                                it.building != null
+                            }.map { slotWithBuilding ->
                                     BuildingModel(
-                                        slotWithBuilding.building.id,
-                                        slotWithBuilding.building.name,
-                                        slotWithBuilding.building.imageUrl
-                                    )
+                                        slotWithBuilding.building!!.building.id,
+                                        slotWithBuilding.building.building.name,
+                                        slotWithBuilding.building.building.imageUrl,
+                                        slotWithBuilding.building.animal
+                                        )
+
                                 }
                         )
                     }
@@ -228,22 +232,30 @@ fun BuildingsGrid(buildingsList : List<BuildingModel>) {
             userScrollEnabled = false
         ) {
             itemsIndexed(buildingsList) { _, building ->
-                Box(
+                Card(
                     modifier = Modifier
                         .fillMaxSize()
                 ) {
-                    AsyncImage(
-                        model = ImageRequest.Builder(LocalContext.current)
-                            .data(building.imageResource)
-                            .build(),
-                        contentDescription = null,
-                        contentScale = ContentScale.FillWidth,
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .clickable {
+                    Column {
+                        AsyncImage(
+                            model = ImageRequest.Builder(LocalContext.current)
+                                .data(building.imageResource)
+                                .build(),
+                            contentDescription = null,
+                            contentScale = ContentScale.FillWidth,
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .clickable {
 
-                            }
-                    )
+                                }
+                        )
+
+                        if (building.animal != null) {
+                            Text(text = "Живёт ${building.animal.name}",
+                                modifier = Modifier.padding(5.dp))
+                        }
+
+                    }
                 }
             }
         }

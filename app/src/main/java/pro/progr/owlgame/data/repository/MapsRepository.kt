@@ -31,7 +31,7 @@ class MapsRepository @Inject constructor(
                     mapWithData.mapEntity.name,
                     mapWithData.mapEntity.imagePath,
                     town = mapWithData.town,
-                    slots = mapWithData.slots
+                    slots = emptyList() //todo: для отображения карт они вроде не нужны сейчас
                 )
             }
         }
