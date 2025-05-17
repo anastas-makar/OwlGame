@@ -1,6 +1,5 @@
 package pro.progr.owlgame.data.repository
 
-import android.util.Log
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import pro.progr.owlgame.data.db.MapDao
@@ -39,25 +38,6 @@ class MapsRepository @Inject constructor(
 
     fun getMapsWithUninhabitedBuildings() : Flow<List<MapWithData>> {
         return mapsWithDataDao.getMapsWithUninhabitedBuildings()
-    }
-
-    suspend fun updateMapsFromServer() {
-        var result = try {
-            val response = apiService.getMaps(apiKey)
-            if (response.isSuccessful) {
-                val maps = response.body() ?: emptyList()
-                Result.success(maps)
-            } else {
-                Result.failure(Exception("Failed to load maps: ${response.errorBody()?.string()}"))
-            }
-        } catch (e: Exception) {
-            Result.failure(e)
-        }
-
-        if (result.isSuccess) {
-
-            //сохранение в базе?
-        }
     }
 
     fun getMapById(id: String): Flow<MapWithData?> {
