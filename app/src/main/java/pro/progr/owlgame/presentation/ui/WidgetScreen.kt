@@ -1,6 +1,6 @@
 package pro.progr.owlgame.presentation.ui
 
-import android.content.Context
+import android.app.Application
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -13,30 +13,25 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import pro.progr.owlgame.R
 import pro.progr.owlgame.presentation.ui.model.OwlMenuModel
+import pro.progr.owlgame.presentation.viewmodel.WidgetViewModel
+import pro.progr.owlgame.presentation.viewmodel.dagger.WidgetViewModelFactory
 
 @Composable
 fun WidgetScreen(navController: NavHostController) {
     val context = LocalContext.current
-    var animalId by remember { mutableStateOf<String?>(null) }
-
-    LaunchedEffect(Unit) {
-        val prefs = context.getSharedPreferences("animal_search_prefs", Context.MODE_PRIVATE)
-        animalId = prefs.getString("animal_id", null)
-    }
+    val viewModel: WidgetViewModel = viewModel(
+        factory = WidgetViewModelFactory(context.applicationContext as Application)
+    )
 
     val menuList = listOf(
         OwlMenuModel(
