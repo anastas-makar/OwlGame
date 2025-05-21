@@ -1,6 +1,5 @@
 package pro.progr.owlgame.presentation.ui
 
-import android.app.Application
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -17,21 +16,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import pro.progr.owlgame.R
 import pro.progr.owlgame.presentation.ui.model.OwlMenuModel
-import pro.progr.owlgame.presentation.viewmodel.WidgetViewModel
-import pro.progr.owlgame.presentation.viewmodel.dagger.WidgetViewModelFactory
 
 @Composable
 fun WidgetScreen(navController: NavHostController) {
-    val context = LocalContext.current
-    val viewModel: WidgetViewModel = viewModel(
-        factory = WidgetViewModelFactory(context.applicationContext as Application)
-    )
 
     val menuList = listOf(
         OwlMenuModel(
