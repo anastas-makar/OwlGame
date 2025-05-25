@@ -1,25 +1,61 @@
 package pro.progr.owlgame.presentation.viewmodel
 
-import android.app.Application
-import android.content.Context
-import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.ViewModel
 import pro.progr.owlgame.R
+import pro.progr.owlgame.data.preferences.OwlPreferences
 import pro.progr.owlgame.presentation.ui.model.OwlMenuModel
+import java.time.LocalDate
 
-class WidgetViewModel(application: Application) : AndroidViewModel(application) {
+class WidgetViewModel(
+    preferences: OwlPreferences,
+    )  : ViewModel() {
+    val menuList = MenuListWrapper(preferences).menuItems
 
-    private val prefs = application.getSharedPreferences("animal_search_prefs", Context.MODE_PRIVATE)
+    class MenuListWrapper(private val preferences: OwlPreferences) {
+        val menuItems : ArrayList<OwlMenuModel>
+            get() {
+                return ArrayList<OwlMenuModel>()
+                    .withAnimalSearching()
+                    .withPouch()
+                    .withMaps()
+            }
 
-    val menuList = listOf(
-        OwlMenuModel(
-            text = "Карты",
-            navigateTo = "owl_navigation",
-            imageResource = R.drawable.test1
-        ),
-        OwlMenuModel(
-            text = "Открыть мешочек",
-            navigateTo = "owl_navigation/pouch",
-            imageResource = R.drawable.pouch
-        )
-    )
+        private fun ArrayList<OwlMenuModel>.withAnimalSearching() : ArrayList<OwlMenuModel> {
+            val animalId = preferences.getAnimalId()
+            if (animalId !=null) {
+
+                add(OwlMenuModel(
+                    text = "Животное ищет дом",
+                    navigateTo = "owl_navigation/animal_searching/$animalId",
+                    imageResource = R.drawable.test1
+                ))
+            }
+
+            return this
+        }
+
+        private fun ArrayList<OwlMenuModel>.withMaps() : ArrayList<OwlMenuModel> {
+            add(OwlMenuModel(
+                text = "Карты",
+                navigateTo = "owl_navigation",
+                imageResource = R.drawable.test1
+            ))
+
+            return this
+        }
+
+        private fun ArrayList<OwlMenuModel>.withPouch() : ArrayList<OwlMenuModel> {
+            val lastPouchDay = preferences.getLastPouchOpenDay()
+            if (lastPouchDay < LocalDate.now().toEpochDay()) {
+
+                add(OwlMenuModel(
+                    text = "Открыть мешочек",
+                    navigateTo = "owl_navigation/pouch",
+                    imageResource = R.drawable.pouch
+                ))
+            }
+
+            return this
+        }
+    }
 }

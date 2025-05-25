@@ -19,24 +19,12 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
-import pro.progr.owlgame.R
-import pro.progr.owlgame.presentation.ui.model.OwlMenuModel
+import pro.progr.owlgame.presentation.viewmodel.WidgetViewModel
+import pro.progr.owlgame.presentation.viewmodel.dagger.DaggerWidgetViewModel
 
 @Composable
 fun WidgetScreen(navController: NavHostController) {
-
-    val menuList = listOf(
-        OwlMenuModel(
-            text = "Карты",
-            navigateTo = "owl_navigation",
-            imageResource = R.drawable.test1
-        ),
-        OwlMenuModel(
-            text = "Открыть мешочек",
-            navigateTo = "owl_navigation/pouch",
-            imageResource = R.drawable.pouch
-        )
-    )
+    val viewModel : WidgetViewModel = DaggerWidgetViewModel()
 
     LazyVerticalGrid(
         columns = GridCells.Fixed(2),
@@ -45,7 +33,7 @@ fun WidgetScreen(navController: NavHostController) {
         verticalArrangement = Arrangement.spacedBy(8.dp),
         horizontalArrangement = Arrangement.spacedBy(8.dp)
     ) {
-        itemsIndexed(menuList) { _, menuItem ->
+        itemsIndexed(viewModel.menuList) { _, menuItem ->
             Box(
                 modifier = Modifier
                     .padding(5.dp)

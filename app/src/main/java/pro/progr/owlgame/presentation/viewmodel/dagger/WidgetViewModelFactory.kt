@@ -1,12 +1,14 @@
 package pro.progr.owlgame.presentation.viewmodel.dagger
 
-import android.app.Application
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import pro.progr.owlgame.data.preferences.OwlPreferences
 import pro.progr.owlgame.presentation.viewmodel.WidgetViewModel
+import javax.inject.Inject
 
-class WidgetViewModelFactory(private val application: Application) : ViewModelProvider.Factory {
+class WidgetViewModelFactory @Inject constructor(private val preferences: OwlPreferences)
+    : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        return WidgetViewModel(application) as T
+        return WidgetViewModel(preferences) as T
     }
 }

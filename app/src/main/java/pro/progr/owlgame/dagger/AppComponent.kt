@@ -9,6 +9,7 @@ import pro.progr.owlgame.presentation.viewmodel.dagger.AnimalViewModelFactory
 import pro.progr.owlgame.presentation.viewmodel.dagger.MapViewModelFactory
 import pro.progr.owlgame.presentation.viewmodel.dagger.PouchViewModelFactory
 import pro.progr.owlgame.presentation.viewmodel.dagger.ViewModelFactory
+import pro.progr.owlgame.presentation.viewmodel.dagger.WidgetViewModelFactory
 import javax.inject.Singleton
 
 @Singleton
@@ -24,6 +25,8 @@ interface AppComponent {
     fun mapViewModelFactory(): MapViewModelFactory
 
     fun animalViewModelFactory(): AnimalViewModelFactory
+
+    fun widgetViewModelFactory(): WidgetViewModelFactory
 
     fun viewModelFactory() : ViewModelFactory
 
