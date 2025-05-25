@@ -9,7 +9,12 @@ import java.time.LocalDate
 class WidgetViewModel(
     preferences: OwlPreferences,
     )  : ViewModel() {
-    val menuList = MenuListWrapper(preferences).menuItems
+
+    val menuListWrapper = MenuListWrapper(preferences)
+
+    fun getMenuList() : ArrayList<OwlMenuModel> {
+        return menuListWrapper.menuItems
+    }
 
     class MenuListWrapper(private val preferences: OwlPreferences) {
         val menuItems : ArrayList<OwlMenuModel>
@@ -47,7 +52,6 @@ class WidgetViewModel(
         private fun ArrayList<OwlMenuModel>.withPouch() : ArrayList<OwlMenuModel> {
             val lastPouchDay = preferences.getLastPouchOpenDay()
             if (lastPouchDay < LocalDate.now().toEpochDay()) {
-
                 add(OwlMenuModel(
                     text = "Открыть мешочек",
                     navigateTo = "owl_navigation/pouch",

@@ -25,6 +25,7 @@ import pro.progr.owlgame.presentation.viewmodel.dagger.DaggerWidgetViewModel
 @Composable
 fun WidgetScreen(navController: NavHostController) {
     val viewModel : WidgetViewModel = DaggerWidgetViewModel()
+    val menuList = viewModel.getMenuList()
 
     LazyVerticalGrid(
         columns = GridCells.Fixed(2),
@@ -33,7 +34,7 @@ fun WidgetScreen(navController: NavHostController) {
         verticalArrangement = Arrangement.spacedBy(8.dp),
         horizontalArrangement = Arrangement.spacedBy(8.dp)
     ) {
-        itemsIndexed(viewModel.menuList) { _, menuItem ->
+        itemsIndexed(menuList) { _, menuItem ->
             Box(
                 modifier = Modifier
                     .padding(5.dp)
