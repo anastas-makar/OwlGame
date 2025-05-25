@@ -12,6 +12,7 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
@@ -25,7 +26,10 @@ import pro.progr.owlgame.presentation.viewmodel.dagger.DaggerWidgetViewModel
 @Composable
 fun WidgetScreen(navController: NavHostController) {
     val viewModel : WidgetViewModel = DaggerWidgetViewModel()
-    val menuList = viewModel.getMenuList()
+
+    LaunchedEffect(key1 = viewModel.menuItems.value) {
+        viewModel.updateMenuList()
+    }
 
     LazyVerticalGrid(
         columns = GridCells.Fixed(2),
@@ -34,7 +38,7 @@ fun WidgetScreen(navController: NavHostController) {
         verticalArrangement = Arrangement.spacedBy(8.dp),
         horizontalArrangement = Arrangement.spacedBy(8.dp)
     ) {
-        itemsIndexed(menuList) { _, menuItem ->
+        itemsIndexed(viewModel.menuItems.value) { _, menuItem ->
             Box(
                 modifier = Modifier
                     .padding(5.dp)

@@ -1,5 +1,6 @@
 package pro.progr.owlgame.presentation.viewmodel
 
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import pro.progr.owlgame.R
 import pro.progr.owlgame.data.preferences.OwlPreferences
@@ -10,10 +11,11 @@ class WidgetViewModel(
     preferences: OwlPreferences,
     )  : ViewModel() {
 
-    val menuListWrapper = MenuListWrapper(preferences)
+    private val menuListWrapper = MenuListWrapper(preferences)
+    val menuItems = mutableStateOf(ArrayList<OwlMenuModel>())
 
-    fun getMenuList() : ArrayList<OwlMenuModel> {
-        return menuListWrapper.menuItems
+    fun updateMenuList() {
+        menuItems.value = menuListWrapper.menuItems
     }
 
     class MenuListWrapper(private val preferences: OwlPreferences) {
