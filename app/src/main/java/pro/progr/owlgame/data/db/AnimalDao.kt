@@ -21,4 +21,7 @@ interface AnimalDao {
 
     @Query("SELECT * FROM animals WHERE id=:id")
     fun getById(id: String): Flow<Animal?>
+
+    @Query("SELECT * FROM animals WHERE id=:id")
+    fun getAnimalById(id: String): Animal?
 }

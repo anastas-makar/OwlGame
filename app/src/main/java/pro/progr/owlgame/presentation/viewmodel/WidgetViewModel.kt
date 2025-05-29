@@ -27,15 +27,15 @@ class WidgetViewModel(
             }
 
         private fun ArrayList<OwlMenuModel>.withAnimalSearching() : ArrayList<OwlMenuModel> {
-//            val animalId = preferences.getAnimalId()
-//            if (animalId !=null) {
-//
-//                add(OwlMenuModel(
-//                    text = "Животное ищет дом",
-//                    navigateTo = "owl_navigation/animal_searching/$animalId",
-//                    imageResource = R.drawable.test1
-//                ))
-//            }
+            val animal = widgetRepository.getAnimal()
+            if (animal !=null) {
+
+                add(OwlMenuModel(
+                    text = "${animal.name} ищет дом",
+                    navigateTo = "owl_navigation/animal_searching/${animal.id}",
+                    imagePath = animal.imagePath
+                ))
+            }
 
             return this
         }
@@ -44,7 +44,7 @@ class WidgetViewModel(
             add(OwlMenuModel(
                 text = "Карты",
                 navigateTo = "owl_navigation",
-                imageResource = R.drawable.test1
+                imagePath = R.drawable.test1
             ))
 
             return this
@@ -55,7 +55,7 @@ class WidgetViewModel(
                 add(OwlMenuModel(
                     text = "Открыть мешочек",
                     navigateTo = "owl_navigation/pouch",
-                    imageResource = R.drawable.pouch
+                    imagePath = R.drawable.pouch
                 ))
             }
 

@@ -15,20 +15,20 @@ class WidgetRepository @Inject constructor(
     private val animalDao: AnimalDao,
     private val mapDao: MapDao
 ) {
-    fun getRandomMap() : MapEntity? {
+    fun getRandomMap(): MapEntity? {
         TODO()
     }
 
-    fun getAnimal() : Flow<Animal?> {
-                    val animalId = preferences.getAnimalId()
-            if (animalId !=null) {
-                return animalDao.getById(animalId)
-            }
+    fun getAnimal(): Animal? {
+        val animalId = preferences.getAnimalId()
+        if (animalId != null) {
+            return animalDao.getAnimalById(animalId)
+        }
 
-        return flowOf(null)
+        return null
     }
 
-    fun isPouchAvailable() : Boolean {
+    fun isPouchAvailable(): Boolean {
         val lastPouchDay = preferences.getLastPouchOpenDay()
         return lastPouchDay < LocalDate.now().toEpochDay()
     }
