@@ -50,7 +50,7 @@ fun WidgetScreen(navController: NavHostController) {
                 Column {
                     AsyncImage(
                         model = ImageRequest.Builder(LocalContext.current)
-                            .data(menuItem.imageResource)
+                            .data(menuItem.imageUri)
                             .build(),
                         contentDescription = null,
                         contentScale = ContentScale.FillWidth,

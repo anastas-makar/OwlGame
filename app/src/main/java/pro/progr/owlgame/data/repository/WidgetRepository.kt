@@ -1,19 +1,21 @@
 package pro.progr.owlgame.data.repository
 
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flowOf
+import android.content.Context
+import android.net.Uri
 import pro.progr.owlgame.data.db.Animal
 import pro.progr.owlgame.data.db.AnimalDao
 import pro.progr.owlgame.data.db.MapDao
 import pro.progr.owlgame.data.db.MapEntity
 import pro.progr.owlgame.data.preferences.OwlPreferences
+import pro.progr.owlgame.presentation.ui.model.UriWrapper
 import java.time.LocalDate
 import javax.inject.Inject
 
 class WidgetRepository @Inject constructor(
     private val preferences: OwlPreferences,
     private val animalDao: AnimalDao,
-    private val mapDao: MapDao
+    private val mapDao: MapDao,
+    private val context: Context
 ) {
     fun getRandomMap(): MapEntity? {
         TODO()
@@ -31,5 +33,13 @@ class WidgetRepository @Inject constructor(
     fun isPouchAvailable(): Boolean {
         val lastPouchDay = preferences.getLastPouchOpenDay()
         return lastPouchDay < LocalDate.now().toEpochDay()
+    }
+
+    fun getUri(res : Int) : Uri {
+        return UriWrapper(res, context).uri
+    }
+
+    fun getUri(path : String) : Uri {
+        return UriWrapper(path).uri
     }
 }

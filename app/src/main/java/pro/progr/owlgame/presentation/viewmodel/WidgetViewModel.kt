@@ -33,7 +33,7 @@ class WidgetViewModel(
                 add(OwlMenuModel(
                     text = "${animal.name} ищет дом",
                     navigateTo = "owl_navigation/animal_searching/${animal.id}",
-                    imagePath = animal.imagePath
+                    imageUri = widgetRepository.getUri(animal.imagePath)
                 ))
             }
 
@@ -44,7 +44,7 @@ class WidgetViewModel(
             add(OwlMenuModel(
                 text = "Карты",
                 navigateTo = "owl_navigation",
-                imagePath = R.drawable.test1
+                imageUri = widgetRepository.getUri(R.drawable.test1)
             ))
 
             return this
@@ -55,7 +55,7 @@ class WidgetViewModel(
                 add(OwlMenuModel(
                     text = "Открыть мешочек",
                     navigateTo = "owl_navigation/pouch",
-                    imagePath = R.drawable.pouch
+                    imageUri = widgetRepository.getUri(R.drawable.pouch)
                 ))
             }
 
