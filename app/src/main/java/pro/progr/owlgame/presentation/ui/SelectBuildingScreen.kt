@@ -32,7 +32,7 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
-import pro.progr.diamondapi.DiamondInterface
+import pro.progr.diamondapi.PurchaseInterface
 import pro.progr.owlgame.R
 import pro.progr.owlgame.data.db.Building
 import pro.progr.owlgame.data.db.BuildingType
@@ -41,7 +41,7 @@ import pro.progr.owlgame.presentation.viewmodel.MapViewModel
 @Composable
 fun SelectBuildingScreen(mapViewModel: MapViewModel,
                          diamondBalance : State<Int>,
-                         diamondDao : DiamondInterface,
+                         diamondDao : PurchaseInterface,
                          scope : CoroutineScope,
                          snackbarHostState: SnackbarHostState,
                          buildingType: BuildingType

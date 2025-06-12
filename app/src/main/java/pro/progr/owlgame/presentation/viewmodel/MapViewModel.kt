@@ -13,7 +13,7 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import pro.progr.diamondapi.DiamondInterface
+import pro.progr.diamondapi.PurchaseInterface
 import pro.progr.owlgame.data.db.Building
 import pro.progr.owlgame.data.db.Slot
 import pro.progr.owlgame.data.repository.BuildingsRepository
@@ -99,10 +99,10 @@ class MapViewModel @Inject constructor(
         }
     }
 
-    fun purchase(diamondDao: DiamondInterface, building: Building) {
+    fun purchase(diamondDao: PurchaseInterface, building: Building) {
         viewModelScope.launch {
             val result = withContext(Dispatchers.IO) {
-                diamondDao.purchase(building.price)
+                diamondDao.spendDiamonds(building.price)
             }
 
             if (result.isSuccess) {

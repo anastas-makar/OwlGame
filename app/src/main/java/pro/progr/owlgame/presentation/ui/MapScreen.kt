@@ -39,7 +39,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
-import pro.progr.diamondapi.DiamondInterface
+import pro.progr.diamondapi.PurchaseInterface
 import pro.progr.owlgame.data.db.BuildingType
 import pro.progr.owlgame.presentation.ui.model.BuildingModel
 import pro.progr.owlgame.presentation.ui.model.MapData
@@ -50,7 +50,7 @@ import pro.progr.owlgame.presentation.viewmodel.dagger.DaggerMapViewModel
 fun MapScreen(
     navController: NavHostController,
     id: String,
-    diamondDao: DiamondInterface,
+    diamondDao: PurchaseInterface,
     mapViewModel: MapViewModel = DaggerMapViewModel(id)
 ) {
     val map = mapViewModel.map.collectAsState(initial = MapData("", "", ""))

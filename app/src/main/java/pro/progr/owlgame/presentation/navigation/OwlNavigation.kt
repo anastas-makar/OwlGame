@@ -12,13 +12,13 @@ import pro.progr.owlgame.presentation.ui.MapScreen
 import pro.progr.owlgame.presentation.ui.PouchesScreen
 import pro.progr.owlgame.presentation.ui.MapsListScreen
 
-import pro.progr.diamondapi.DiamondInterface
+import pro.progr.diamondapi.PurchaseInterface
 import pro.progr.owlgame.presentation.ui.AnimalSearchingScreen
 
 @Composable
 fun OwlNavigation(startDestination : String = "towns",
                   backToMain : () -> Unit,
-                  diamondDao: DiamondInterface) {
+                  diamondDao: PurchaseInterface) {
     val navController = rememberNavController()
 
     NavHost(navController = navController, startDestination = startDestination) {
