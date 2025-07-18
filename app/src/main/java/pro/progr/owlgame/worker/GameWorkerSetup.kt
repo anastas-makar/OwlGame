@@ -1,7 +1,6 @@
 package pro.progr.owlgame.worker
 
 import android.content.Context
-import androidx.work.Configuration
 import androidx.work.Constraints
 import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.NetworkType
@@ -16,13 +15,13 @@ object GameWorkerSetup {
             .setRequiredNetworkType(NetworkType.CONNECTED)
             .build()
 
-        val dailyRequest = PeriodicWorkRequestBuilder<AnimalBuildingsWorker>(1, TimeUnit.DAYS)
+        val dailyRequest = PeriodicWorkRequestBuilder<AnimalBuildingsWorker>(20, TimeUnit.MINUTES)//todo: для теста
             .setConstraints(constraints)
             .build()
 
         WorkManager.getInstance(context).enqueueUniquePeriodicWork(
             "CheckBuildingsWork",
-            ExistingPeriodicWorkPolicy.KEEP,
+            ExistingPeriodicWorkPolicy.CANCEL_AND_REENQUEUE,
             dailyRequest
         )
     }
