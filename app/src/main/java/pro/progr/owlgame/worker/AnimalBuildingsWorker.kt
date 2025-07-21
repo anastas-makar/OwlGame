@@ -128,7 +128,7 @@ class AnimalBuildingsWorker(
 
         val bitmap = BitmapFactory.decodeFile(animalIconPath)
         val notification = NotificationCompat.Builder(applicationContext, channelId)
-            .setSmallIcon(R.drawable.test2)
+            .setSmallIcon(R.drawable.test2) //todo:
             .setLargeIcon(bitmap)
             .setContentTitle("$animalName ищет дом")
             .setContentText("Нажми, чтобы узнать больше")

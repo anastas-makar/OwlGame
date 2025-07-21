@@ -2,19 +2,28 @@ package pro.progr.owlgame.presentation.viewmodel
 
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import pro.progr.owlgame.R
 import pro.progr.owlgame.data.repository.WidgetRepository
 import pro.progr.owlgame.presentation.ui.model.OwlMenuModel
 
 class WidgetViewModel(
-    widgetRepository: WidgetRepository,
+    val widgetRepository: WidgetRepository,
     )  : ViewModel() {
 
-    private val menuListWrapper = MenuListWrapper(widgetRepository)
     val menuItems = mutableStateOf(ArrayList<OwlMenuModel>())
 
     fun updateMenuList() {
-        menuItems.value = menuListWrapper.menuItems
+        viewModelScope.launch {
+            val items = withContext(Dispatchers.IO) {
+                MenuListWrapper(widgetRepository).menuItems
+            }
+            menuItems.value = items
+        }
+
     }
 
     class MenuListWrapper(private val widgetRepository: WidgetRepository) {
@@ -32,7 +41,7 @@ class WidgetViewModel(
 
                 add(OwlMenuModel(
                     text = "${animal.name} ищет дом",
-                    navigateTo = "owl_navigation/animal_searching/${animal.id}",
+                    navigateTo = "animal?id=${animal.id}",
                     imageUri = widgetRepository.getUri(animal.imagePath)
                 ))
             }
