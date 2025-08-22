@@ -3,6 +3,8 @@ package pro.progr.owlgame.presentation.ui
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.foundation.layout.offset
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
@@ -11,6 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
@@ -34,7 +37,9 @@ fun DraggableImage(slot: Slot,
                 R.drawable.map_icon_fortress
         ),
         contentDescription = "Полупрозрачное изображение",
+        contentScale = ContentScale.Fit,
         modifier = Modifier
+            .size(50.dp)
             .offset {
                 IntOffset(
                     houseOffset.value.x.roundToInt(),
@@ -67,8 +72,8 @@ fun DraggableImage(slot: Slot,
                     })
             }
             .graphicsLayer {
-                shadowElevation = 8f
-                shape = RoundedCornerShape(8.dp)
+                shadowElevation = 20f
+                shape = RoundedCornerShape(25.dp)
                 clip = true
             }
     )

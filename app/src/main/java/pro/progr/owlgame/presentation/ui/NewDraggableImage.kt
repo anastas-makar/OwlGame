@@ -6,6 +6,7 @@ import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.foundation.layout.offset
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -16,6 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.IntOffset
@@ -36,7 +38,7 @@ fun NewDraggableImage(slot: Slot,
     val scale = remember { Animatable(1f) }
     val isDragged = remember { mutableStateOf(false) }
 
-    val imageHeightDp = 48.dp
+    val imageHeightDp = 100.dp
     val imageHeightPx = with(LocalDensity.current) { imageHeightDp.toPx() }
 
     // Анимация мигания, пока не начали таскать
@@ -50,7 +52,7 @@ fun NewDraggableImage(slot: Slot,
                 targetValue = 1f,
                 animationSpec = tween(durationMillis = 300, easing = FastOutSlowInEasing)
             )
-            delay(4000) // пауза между миганиями, 4 секунды
+            delay(3000) // пауза между миганиями, 4 секунды
         }
     }
 
@@ -61,7 +63,9 @@ fun NewDraggableImage(slot: Slot,
             else
                 R.drawable.map_icon_fortress),
         contentDescription = "Полупрозрачное изображение",
+        contentScale = ContentScale.Fit,
         modifier = Modifier
+            .size(50.dp)
             .offset {
                 IntOffset(
                     houseOffset.value.x.roundToInt(),
@@ -71,8 +75,8 @@ fun NewDraggableImage(slot: Slot,
             .graphicsLayer {
                 scaleX = scale.value
                 scaleY = scale.value
-                shadowElevation = 8f
-                shape = RoundedCornerShape(8.dp)
+                shadowElevation = 20f
+                shape = RoundedCornerShape(25.dp)
                 clip = true
             }
             .pointerInput(Unit) {
