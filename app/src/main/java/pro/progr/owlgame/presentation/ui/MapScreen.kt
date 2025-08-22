@@ -1,20 +1,23 @@
 package pro.progr.owlgame.presentation.ui
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.itemsIndexed
+import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Card
@@ -29,7 +32,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.ui.Alignment.Companion.CenterHorizontally
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
@@ -59,206 +62,188 @@ fun MapScreen(
 
     val snackbarHostState = remember { SnackbarHostState() }
     val scope = rememberCoroutineScope()
-
     val diamondBalance = diamondDao.getDiamondsCount().collectAsState(initial = 0)
 
     Scaffold(
-        snackbarHost = { SnackbarHost(snackbarHostState,
-            modifier = Modifier.navigationBarsPadding()) },
-        topBar = {
-            Box(modifier = Modifier.statusBarsPadding()) {
-                MapBar(navController, mapViewModel)
-            }
-        },
+        snackbarHost = { SnackbarHost(snackbarHostState, modifier = Modifier.navigationBarsPadding()) },
+        topBar = { Box(Modifier.statusBarsPadding()) { MapBar(navController, mapViewModel) } },
         content = { innerPadding ->
-            Box(
+
+            LazyColumn(
                 modifier = Modifier
                     .padding(innerPadding)
-                    .fillMaxWidth()
-                    .navigationBarsPadding()
+                    .fillMaxSize(),
+                contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp),
+                verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
-
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 16.dp, vertical = 8.dp)
-                ) {
-                    if (map.value.id == "") {
-                        Text(text = "Загрузка...")
-                    } else if (!foundTown.value && map.value.town == null) {
-                        Button(
-                            colors = ButtonDefaults.buttonColors(
-                                backgroundColor = Color.DarkGray,
-                                contentColor = Color.White
-                            ),
-                            onClick = {
-                                mapViewModel.startToFoundTown()
-                            },
-                            modifier = Modifier.align(CenterHorizontally)
-                        ) {
-                            Text(text = "Основать город")
+                // 1) Хедер/кнопки
+                item {
+                    when {
+                        map.value.id.isEmpty() -> Text("Загрузка…")
+                        !foundTown.value && map.value.town == null -> {
+                            Button(
+                                colors = ButtonDefaults.buttonColors(
+                                    backgroundColor = Color.DarkGray, contentColor = Color.White
+                                ),
+                                onClick = { mapViewModel.startToFoundTown() },
+                                modifier = Modifier.wrapContentSize()
+                                    .padding(5.dp)
+                            ) { Text("Основать город") }
                         }
-                    } else if (map.value.town != null) {
-                        Row(modifier = Modifier.fillMaxWidth()) {
-                            Button(
-                                colors = ButtonDefaults.buttonColors(
-                                    backgroundColor = Color.DarkGray,
-                                    contentColor = Color.White
-                                ),
-                                onClick = {
-                                    mapViewModel.selectHouseState.value = true
-                                },
-                                modifier = Modifier.padding(horizontal = 7.dp)
-                            ) {
-                                Text(text = "Построить дом")
-                            }
+                        else -> {
+                            Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(14.dp)) {
+                                Button(
+                                    colors = ButtonDefaults.buttonColors(
+                                        backgroundColor = Color.DarkGray, contentColor = Color.White
+                                    ),
+                                    onClick = { mapViewModel.selectHouseState.value = true },
+                                    modifier = Modifier.weight(1f)
+                                ) { Text("Построить дом") }
 
-                            Button(
-                                colors = ButtonDefaults.buttonColors(
-                                    backgroundColor = Color.DarkGray,
-                                    contentColor = Color.White
-                                ),
-                                onClick = {
-                                    mapViewModel.selectFortressState.value = true
-                                },
-                                modifier = Modifier.padding(horizontal = 7.dp)
-                            ) {
-                                Text(text = "Построить замок")
+                                Button(
+                                    colors = ButtonDefaults.buttonColors(
+                                        backgroundColor = Color.DarkGray, contentColor = Color.White
+                                    ),
+                                    onClick = { mapViewModel.selectFortressState.value = true },
+                                    modifier = Modifier.weight(1f)
+                                ) { Text("Построить замок") }
                             }
                         }
                     }
+                }
 
-                    DraggableImages(map, mapViewModel)
+                // 2) Карта/дрэг-область — ДАЙ ЕЙ ГРАНИЦУ ПО ВЫСОТЕ!
+                item {
+                    // если DraggableImages тянет высоту, ограничь:
+                    Box(Modifier.fillMaxWidth().heightIn(max = 420.dp)) {
+                        DraggableImages(map, mapViewModel)
+                    }
+                }
 
-                    map.value.town?.let { town ->
-                        Text(text = "Улица Главная", modifier = Modifier.padding(16.dp), fontWeight = FontWeight.Bold)
-
-                        BuildingsGrid(
-                            buildingsList = map.value.slots.filter {
-                                it.building != null
-                            }.map { slotWithBuilding ->
-                                    BuildingModel(
-                                        slotWithBuilding.building!!.building.id,
-                                        slotWithBuilding.building.building.name,
-                                        slotWithBuilding.building.building.imageUrl,
-                                        slotWithBuilding.building.animal
-                                        )
-
-                                }
+                // 3) Заголовок улицы
+                if (map.value.town != null) {
+                    item {
+                        Text(
+                            text = "Улица Главная",
+                            modifier = Modifier.padding(top = 8.dp, bottom = 4.dp),
+                            fontWeight = FontWeight.Bold
                         )
                     }
 
-                }
+                    // 4) Сетка как строки по 3
+                    val buildings = map.value.slots
+                        .filter { it.building != null }
+                        .map { s ->
+                            BuildingModel(
+                                s.building!!.building.id,
+                                s.building.building.name,
+                                s.building.building.imageUrl,
+                                s.building.animal
+                            )
+                        }
+                    val rows = buildings.chunked(3)
 
-                if (foundTown.value) {
-                    Box(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .background(color = Color.White.copy(alpha = 0.5f))
-                    ) {
-                        Column(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .background(color = Color.Transparent)
-                                .padding(16.dp),
-                            horizontalAlignment = CenterHorizontally
+                    items(rows) { row ->
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.spacedBy(8.dp)
                         ) {
-                            OutlinedTextField(
-                                value = cityName.value,
-                                onValueChange = { cityName.value = it },
-                                label = { Text(text = "Название города",
+                            row.forEach { b ->
+                                BuildingCard(b, Modifier.weight(1f))
+                            }
+                            // добиваем пустые ячейки чтобы сетка была ровной
+                            repeat(3 - row.size) { Spacer(Modifier.weight(1f)) }
+                        }
+                    }
+                }
+            }
+
+            // Оверлеи поверх — оставляем как было:
+            if (foundTown.value) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(Color.White.copy(alpha = 0.5f))
+                ) {
+                    Column(
+                        modifier = Modifier
+                            .align(Alignment.Center)
+                            .fillMaxWidth()
+                            .padding(16.dp),
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        OutlinedTextField(
+                            value = cityName.value,
+                            onValueChange = { cityName.value = it },
+                            label = {
+                                Text(
+                                    text = "Название города",
                                     color = Color.Gray,
                                     modifier = Modifier
-                                        .background(color = Color.White)
-                                        .padding(1.dp)) },
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(16.dp),
-                                colors = TextFieldDefaults.outlinedTextFieldColors(
-                                    backgroundColor = Color.White, // Цвет фона внутри рамки
-                                    focusedBorderColor = Color.Gray,
-                                    unfocusedLabelColor = Color.Gray,
-                                    unfocusedBorderColor = Color.Gray // Цвет рамки без фокуса
+                                        .background(Color.White)
+                                        .padding(1.dp)
                                 )
+                            },
+                            modifier = Modifier.fillMaxWidth(),
+                            colors = TextFieldDefaults.outlinedTextFieldColors(
+                                backgroundColor = Color.White,
+                                focusedBorderColor = Color.Gray,
+                                unfocusedLabelColor = Color.Gray,
+                                unfocusedBorderColor = Color.Gray
                             )
-
-                            Button(
-                                colors = ButtonDefaults.buttonColors(
-                                    backgroundColor = Color.DarkGray,
-                                    contentColor = Color.White
-                                ),
-                                onClick = {
-                                    mapViewModel.foundTown(map.value, cityName.value)
-                                }
-                            ) {
-                                Text(text = "Сохранить")
-                            }
-                        }
+                        )
+                        Spacer(Modifier.height(12.dp))
+                        Button(
+                            colors = ButtonDefaults.buttonColors(
+                                backgroundColor = Color.DarkGray, contentColor = Color.White
+                            ),
+                            onClick = { mapViewModel.foundTown(map.value, cityName.value) }
+                        ) { Text("Сохранить") }
                     }
                 }
+            }
 
-                if (mapViewModel.selectHouseState.value) {
-                    SelectBuildingScreen(mapViewModel = mapViewModel,
-                        diamondBalance = diamondBalance,
-                        diamondDao = diamondDao,
-                        scope = scope,
-                        snackbarHostState = snackbarHostState,
-                        buildingType = BuildingType.HOUSE
-                        )
-                }
-
-                if (mapViewModel.selectFortressState.value) {
-                    SelectBuildingScreen(mapViewModel = mapViewModel,
-                        diamondBalance = diamondBalance,
-                        diamondDao = diamondDao,
-                        scope = scope,
-                        snackbarHostState = snackbarHostState,
-                        buildingType = BuildingType.FORTRESS)
-                }
+            if (mapViewModel.selectHouseState.value) {
+                SelectBuildingScreen(
+                    mapViewModel = mapViewModel,
+                    diamondBalance = diamondBalance,
+                    diamondDao = diamondDao,
+                    scope = scope,
+                    snackbarHostState = snackbarHostState,
+                    buildingType = BuildingType.HOUSE
+                )
+            }
+            if (mapViewModel.selectFortressState.value) {
+                SelectBuildingScreen(
+                    mapViewModel = mapViewModel,
+                    diamondBalance = diamondBalance,
+                    diamondDao = diamondDao,
+                    scope = scope,
+                    snackbarHostState = snackbarHostState,
+                    buildingType = BuildingType.FORTRESS
+                )
             }
         }
     )
 }
 
 @Composable
-fun BuildingsGrid(buildingsList : List<BuildingModel>) {
-    Box(modifier = Modifier.fillMaxSize()) {
-        LazyVerticalGrid(
-            columns = GridCells.Fixed(3),
-            modifier = Modifier.fillMaxSize(),
-            contentPadding = PaddingValues(8.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp),
-            horizontalArrangement = Arrangement.spacedBy(8.dp),
-            userScrollEnabled = false
-        ) {
-            itemsIndexed(buildingsList) { _, building ->
-                Card(
-                    modifier = Modifier
-                        .fillMaxSize()
-                ) {
-                    Column {
-                        AsyncImage(
-                            model = ImageRequest.Builder(LocalContext.current)
-                                .data(building.imageResource)
-                                .build(),
-                            contentDescription = null,
-                            contentScale = ContentScale.FillWidth,
-                            modifier = Modifier
-                                .fillMaxSize()
-                                .clickable {
-
-                                }
-                        )
-
-                        if (building.animal != null) {
-                            Text(text = "Живёт ${building.animal.name}",
-                                modifier = Modifier.padding(5.dp))
-                        }
-
-                    }
-                }
+private fun BuildingCard(building: BuildingModel, modifier: Modifier = Modifier) {
+    Card(modifier = modifier) {
+        Column {
+            AsyncImage(
+                model = ImageRequest.Builder(LocalContext.current)
+                    .data(building.imageResource)
+                    .build(),
+                contentDescription = null,
+                contentScale = ContentScale.Crop,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .aspectRatio(1f)
+            )
+            building.animal?.let {
+                Text("Живёт ${it.name}", modifier = Modifier.padding(5.dp))
             }
         }
-
     }
 }
