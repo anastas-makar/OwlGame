@@ -72,7 +72,7 @@ fun DraggableImage(slot: Slot,
                     })
             }
             .graphicsLayer {
-                shadowElevation = 20f
+                shadowElevation = 0f
                 shape = RoundedCornerShape(25.dp)
                 clip = true
             }

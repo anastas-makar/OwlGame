@@ -75,7 +75,7 @@ fun NewDraggableImage(slot: Slot,
             .graphicsLayer {
                 scaleX = scale.value
                 scaleY = scale.value
-                shadowElevation = 20f
+                shadowElevation = 0f
                 shape = RoundedCornerShape(25.dp)
                 clip = true
             }
