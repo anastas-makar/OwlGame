@@ -87,7 +87,6 @@ fun MapScreen(
                                 ),
                                 onClick = { mapViewModel.startToFoundTown() },
                                 modifier = Modifier.wrapContentSize()
-                                    .padding(5.dp)
                             ) { Text("Основать город") }
                         }
                         else -> {
@@ -167,7 +166,7 @@ fun MapScreen(
                 ) {
                     Column(
                         modifier = Modifier
-                            .align(Alignment.Center)
+                            .align(Alignment.TopCenter)
                             .fillMaxWidth()
                             .padding(16.dp),
                         horizontalAlignment = Alignment.CenterHorizontally
