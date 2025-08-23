@@ -15,13 +15,13 @@ object GameWorkerSetup {
             .setRequiredNetworkType(NetworkType.CONNECTED)
             .build()
 
-        val dailyRequest = PeriodicWorkRequestBuilder<AnimalBuildingsWorker>(20, TimeUnit.MINUTES)//todo: для теста
+        val dailyRequest = PeriodicWorkRequestBuilder<AnimalBuildingsWorker>(6, TimeUnit.HOURS)
             .setConstraints(constraints)
             .build()
 
         WorkManager.getInstance(context).enqueueUniquePeriodicWork(
             "CheckBuildingsWork",
-            ExistingPeriodicWorkPolicy.CANCEL_AND_REENQUEUE,
+            ExistingPeriodicWorkPolicy.KEEP,
             dailyRequest
         )
     }
