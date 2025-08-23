@@ -17,13 +17,12 @@ import pro.progr.owlgame.data.repository.BuildingsRepository
 import pro.progr.owlgame.data.web.RetrofitProvider
 import pro.progr.owlgame.domain.SearchAnimalsUseCase
 import java.time.LocalDate
-import java.time.format.TextStyle
-import java.util.Locale
 import pro.progr.owlgame.BuildConfig
 import pro.progr.owlgame.R
 import pro.progr.owlgame.data.db.AnimalStatus
 import pro.progr.owlgame.data.repository.ImageRepository
 import pro.progr.owlgame.data.web.AnimalApiService
+import java.time.LocalTime
 
 private const val ANIMAL_ID_PREF = "animal_id"
 
@@ -34,7 +33,14 @@ class AnimalBuildingsWorker(
     workerParams: WorkerParameters) : CoroutineWorker(context, workerParams) {
 
     override suspend fun doWork(): Result {
-        Log.wtf("WORKER IS WORKING", LocalDate.now().dayOfWeek.getDisplayName(TextStyle.FULL, Locale.getDefault()))
+        val now = LocalTime.now()
+        val start = LocalTime.of(10, 0)
+        val end = LocalTime.of(22, 0)
+
+        if (now.isBefore(start) || now.isAfter(end)) {
+            // Не рабочее время — просто выходим
+            return Result.success()
+        }
 
         val prefs = applicationContext.getSharedPreferences("animal_search_prefs", Context.MODE_PRIVATE)
 
