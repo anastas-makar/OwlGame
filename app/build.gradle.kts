@@ -97,7 +97,7 @@ dependencies {
 
     implementation("io.coil-kt:coil-compose:2.7.0")
 
-    implementation("pro.progr:diamond-api:1.0.0-alpha")
+    implementation("pro.progr:diamond-api:1.0.1-alpha")
 }
 
 publishing {
