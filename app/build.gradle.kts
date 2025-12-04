@@ -77,12 +77,12 @@ dependencies {
     implementation("com.squareup.retrofit2:retrofit:3.0.0")
     implementation("com.squareup.retrofit2:converter-gson:3.0.0")
 
-    implementation("androidx.compose.ui:ui:1.9.5")
-    implementation("androidx.compose.ui:ui-tooling:1.9.5")
-    implementation("androidx.compose.material:material:1.9.5")
+    implementation("androidx.compose.ui:ui:1.10.0")
+    implementation("androidx.compose.ui:ui-tooling:1.10.0")
+    implementation("androidx.compose.material:material:1.10.0")
     implementation("androidx.compose.material:material-icons-extended:1.7.8")
-    implementation("androidx.compose.foundation:foundation:1.9.5")
-    implementation("androidx.activity:activity-compose:1.12.0")
+    implementation("androidx.compose.foundation:foundation:1.10.0")
+    implementation("androidx.activity:activity-compose:1.12.1")
     implementation("androidx.navigation:navigation-compose:2.9.6")
 
     implementation("androidx.work:work-runtime-ktx:2.11.0")
