@@ -58,10 +58,9 @@ fun WidgetScreen(navController: NavHostController) {
                             .fillMaxSize()
                     )
 
-                    Text(text = menuItem.text)
+                    Text(text = menuItem.text, modifier = Modifier.padding(5.dp))
 
                 }
-
 
             }
         }
