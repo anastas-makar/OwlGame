@@ -14,7 +14,7 @@ import androidx.compose.ui.unit.dp
 fun MapsListBar(backToMain : () -> Unit) {
     TopAppBar(
         title = {
-            Text(text = "Мои города")
+            Text(text = "Мои владения")
         },
         navigationIcon = {
             IconButton(onClick = { backToMain() }) {

@@ -51,7 +51,7 @@ class WidgetViewModel(
 
         private fun ArrayList<OwlMenuModel>.withMaps() : ArrayList<OwlMenuModel> {
             add(OwlMenuModel(
-                text = "Карты",
+                text = "Осмотреть владения",
                 navigateTo = "owl_navigation",
                 imageUri = widgetRepository.getUri(R.drawable.test1)
             ))
