@@ -52,7 +52,9 @@ fun InPouchContent(
                             .width(200.dp)
                             .aspectRatio(1f)
                     )
-                    Text(text = InPouchDescription(inPouch).compile())
+                    Text(text = InPouchDescription(inPouch).compile(),
+                        fontWeight = FontWeight.Black,
+                        modifier = Modifier.padding(top = 8.dp, end = 8.dp))
                 }
             }
 
