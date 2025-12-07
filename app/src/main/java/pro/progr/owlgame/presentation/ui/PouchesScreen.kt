@@ -24,6 +24,7 @@ import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import kotlinx.coroutines.delay
 import pro.progr.owlgame.data.web.Pouch
+import pro.progr.owlgame.presentation.viewmodel.InPouchViewModel
 import pro.progr.owlgame.presentation.viewmodel.PouchesViewModel
 import pro.progr.owlgame.presentation.viewmodel.dagger.DaggerPouchViewModel
 
@@ -53,21 +54,31 @@ fun PouchesScreen(
             }
         },
         content = { innerPadding ->
-            Row(
-                modifier = Modifier
-                    .padding(innerPadding)
-                    .fillMaxSize()
-            ) {
-                repeat(3) { index ->
-                    AnimatedPouchesColumn(
-                        modifier = Modifier
-                            .weight(1f)
-                            .fillMaxHeight(),
-                        pouches = pouchesRows[index],
-                        direction = if (index % 2 == 0) Direction.DOWN else Direction.UP,
-                        navController = navController
-                    )
+            if (pouchesViewModel.isPouchSelected.value) {
+                pouchesViewModel.selectedPouch.value?.let { p ->
+                    val inPouchViewModel: InPouchViewModel = DaggerPouchViewModel()
+                    inPouchViewModel.loadInPouch(p.id)
+
+                    InPouchContent(navController, inPouchViewModel, p)
                 }
+            } else {
+                Row(
+                    modifier = Modifier
+                        .padding(innerPadding)
+                        .fillMaxSize()
+                ) {
+                    repeat(3) { index ->
+                        AnimatedPouchesColumn(
+                            modifier = Modifier
+                                .weight(1f)
+                                .fillMaxHeight(),
+                            pouches = pouchesRows[index],
+                            direction = if (index % 2 == 0) Direction.DOWN else Direction.UP,
+                            pouchesViewModel = pouchesViewModel
+                        )
+                    }
+                }
+
             }
         }
     )
@@ -80,7 +91,7 @@ fun AnimatedPouchesColumn(
     modifier: Modifier = Modifier,
     pouches: List<Pouch>,
     direction: Direction,
-    navController: NavHostController
+    pouchesViewModel: PouchesViewModel
 ) {
     val listState = rememberLazyListState()
 
@@ -116,7 +127,8 @@ fun AnimatedPouchesColumn(
                         .fillMaxWidth()
                         .aspectRatio(1f) // Квадратные изображения
                         .clickable {
-                            navController.navigate("inPouch/${pouch.id}")
+                            pouchesViewModel.selectedPouch.value = pouch
+                            pouchesViewModel.isPouchSelected.value = true
                         }
                 )
             }

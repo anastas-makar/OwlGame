@@ -15,6 +15,9 @@ class PouchesViewModel @Inject constructor(
 
     var pouches = mutableStateOf<List<Pouch>>(emptyList())
 
+    val isPouchSelected = mutableStateOf(false)
+    var selectedPouch = mutableStateOf<Pouch?>(null)
+
     fun loadPouches() {
         viewModelScope.launch {
             val result = pouchesRepository.getPouches()
