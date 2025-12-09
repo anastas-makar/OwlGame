@@ -10,7 +10,9 @@ import android.net.Uri
 import android.util.Log
 import androidx.core.app.NotificationCompat
 import androidx.work.CoroutineWorker
+import androidx.work.ListenableWorker
 import androidx.work.WorkerParameters
+import pro.progr.authapi.AuthInterface
 import pro.progr.owlgame.data.db.OwlGameDatabase
 import pro.progr.owlgame.data.repository.AnimalsRepository
 import pro.progr.owlgame.data.repository.BuildingsRepository
@@ -28,60 +30,67 @@ private const val ANIMAL_ID_PREF = "animal_id"
 
 private const val ANIMAL_DAY_PREF = "animal_day"
 
-class AnimalBuildingsWorker(
-    context: Context,
-    workerParams: WorkerParameters) : CoroutineWorker(context, workerParams) {
-
-    override suspend fun doWork(): Result {
+suspend fun doAnimalBuildingsWork(applicationContext: Context,
+                           auth: AuthInterface): ListenableWorker.Result = try {
         val now = LocalTime.now()
         val start = LocalTime.of(10, 0)
         val end = LocalTime.of(22, 0)
 
-        if (now.isBefore(start) || now.isAfter(end)) {
-            // Не рабочее время — просто выходим
-            return Result.success()
-        }
+        if (!(now.isBefore(start) || now.isAfter(end))) {
 
-        val prefs = applicationContext.getSharedPreferences("animal_search_prefs", Context.MODE_PRIVATE)
+            val prefs = applicationContext.getSharedPreferences("animal_search_prefs", Context.MODE_PRIVATE)
 
-        val db = OwlGameDatabase.getDatabase(context = applicationContext)
-        val animalDao = db.animalDao()
+            val db = OwlGameDatabase.getDatabase(context = applicationContext)
+            val animalDao = db.animalDao()
 
-        Log.wtf("AnimalDao count searching: ", animalDao.countSearching().toString())
+            Log.wtf("AnimalDao count searching: ", animalDao.countSearching().toString())
 
-        val animalRepository = AnimalsRepository(
-            db.animalDao(),
-            RetrofitProvider.provideRetrofit(BuildConfig.API_BASE_URL).create(AnimalApiService::class.java),
-            ImageRepository(
-                context = applicationContext,
-                baseUrl = BuildConfig.API_BASE_URL
-            ),
-            BuildConfig.API_KEY
-        )
+            val animalRepository = AnimalsRepository(
+                db.animalDao(),
+                RetrofitProvider.provideRetrofit(BuildConfig.API_BASE_URL,
+                    auth).create(AnimalApiService::class.java),
+                ImageRepository(
+                    context = applicationContext,
+                    baseUrl = BuildConfig.API_BASE_URL
+                ),
+                BuildConfig.API_KEY
+            )
 
-        val animal = SearchAnimalsUseCase(
-            animalRepository,
-            BuildingsRepository(db.buildingsDao(), db.buildingWithAnimalDao())
-        )()
+            val animal = SearchAnimalsUseCase(
+                animalRepository,
+                BuildingsRepository(db.buildingsDao(), db.buildingWithAnimalDao())
+            )()
 
-        if (animal != null && animal.status == AnimalStatus.SEARCHING) {
-            val currentEpochDay = LocalDate.now().toEpochDay()
-            val savedId = prefs.getString(ANIMAL_ID_PREF, null)
-            val savedEpochDay = prefs.getLong(ANIMAL_DAY_PREF, -1L)
+            if (animal != null && animal.status == AnimalStatus.SEARCHING) {
+                val currentEpochDay = LocalDate.now().toEpochDay()
+                val savedId = prefs.getString(ANIMAL_ID_PREF, null)
+                val savedEpochDay = prefs.getLong(ANIMAL_DAY_PREF, -1L)
 
-            if (savedId != null && savedEpochDay != -1L) {
-                if (savedId == animal.id) {
-                    if (currentEpochDay - savedEpochDay >= 2) {
-                        Log.wtf("Animal has been searching for more than 2 days", "Marking as gone")
+                if (savedId != null && savedEpochDay != -1L) {
+                    if (savedId == animal.id) {
+                        if (currentEpochDay - savedEpochDay >= 2) {
+                            Log.wtf("Animal has been searching for more than 2 days", "Marking as gone")
 
-                        animalDao.setGone(animal.id)
+                            animalDao.setGone(animal.id)
+                            prefs.edit().clear().apply()
+                        }
+                    } else {
+                        Log.e("Animal ID mismatch", "Expected $savedId, got ${animal.id}")
                         prefs.edit().clear().apply()
+
+                        // Сохраняем новые данные и шлём уведомление
+                        prefs.edit()
+                            .putString(ANIMAL_ID_PREF, animal.id)
+                            .putLong(ANIMAL_DAY_PREF, currentEpochDay)
+                            .apply()
+
+                        val savedAnimal = animalRepository.saveAnimal(animal)
+                        Log.wtf("Животное ищет дом", animal.name)
+                        showNotification(applicationContext,
+                            savedAnimal.id, savedAnimal.name, savedAnimal.imagePath)
                     }
                 } else {
-                    Log.e("Animal ID mismatch", "Expected $savedId, got ${animal.id}")
-                    prefs.edit().clear().apply()
-
-                    // Сохраняем новые данные и шлём уведомление
+                    // Первый запуск или данные очищены
                     prefs.edit()
                         .putString(ANIMAL_ID_PREF, animal.id)
                         .putLong(ANIMAL_DAY_PREF, currentEpochDay)
@@ -89,25 +98,20 @@ class AnimalBuildingsWorker(
 
                     val savedAnimal = animalRepository.saveAnimal(animal)
                     Log.wtf("Животное ищет дом", animal.name)
-                    showNotification(savedAnimal.id, savedAnimal.name, savedAnimal.imagePath)
+                    showNotification(applicationContext,
+                        savedAnimal.id, savedAnimal.name, savedAnimal.imagePath)
                 }
-            } else {
-                // Первый запуск или данные очищены
-                prefs.edit()
-                    .putString(ANIMAL_ID_PREF, animal.id)
-                    .putLong(ANIMAL_DAY_PREF, currentEpochDay)
-                    .apply()
-
-                val savedAnimal = animalRepository.saveAnimal(animal)
-                Log.wtf("Животное ищет дом", animal.name)
-                showNotification(savedAnimal.id, savedAnimal.name, savedAnimal.imagePath)
             }
         }
 
-        return Result.success()
+        ListenableWorker.Result.success()
+    } catch(e : Exception) {
+            Log.e("doAnimalBuildingsWork", "${e.message}")
+        ListenableWorker.Result.failure()
     }
 
-    private fun showNotification(animalId: String,
+    private fun showNotification(applicationContext: Context,
+                                 animalId: String,
                                  animalName: String,
                                  animalIconPath: String) {
         val notificationManager = applicationContext.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
@@ -144,5 +148,3 @@ class AnimalBuildingsWorker(
 
         notificationManager.notify(animalId.hashCode(), notification)
     }
-
-}

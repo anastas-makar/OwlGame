@@ -7,7 +7,7 @@ import pro.progr.owlgame.data.repository.TownRepository
 import pro.progr.owlgame.presentation.viewmodel.MapsViewModel
 import javax.inject.Inject
 
-class ViewModelFactory @Inject constructor(
+class MapsViewModelFactory @Inject constructor(
     private val townRepository: TownRepository,
     private val mapsRepository: MapsRepository
 ) : ViewModelProvider.Factory {

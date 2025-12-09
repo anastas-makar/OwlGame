@@ -21,11 +21,10 @@ import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import pro.progr.owlgame.presentation.viewmodel.WidgetViewModel
-import pro.progr.owlgame.presentation.viewmodel.dagger.DaggerWidgetViewModel
 
 @Composable
-fun WidgetScreen(navController: NavHostController) {
-    val viewModel : WidgetViewModel = DaggerWidgetViewModel()
+fun WidgetScreen(navController: NavHostController,
+                 viewModel : WidgetViewModel) {
 
     LaunchedEffect(key1 = viewModel.menuItems.value) {
         viewModel.updateMenuList()

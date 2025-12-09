@@ -52,9 +52,8 @@ import pro.progr.owlgame.presentation.viewmodel.dagger.DaggerMapViewModel
 @Composable
 fun MapScreen(
     navController: NavHostController,
-    id: String,
     diamondDao: PurchaseInterface,
-    mapViewModel: MapViewModel = DaggerMapViewModel(id)
+    mapViewModel: MapViewModel
 ) {
     val map = mapViewModel.map.collectAsState(initial = MapData("", "", ""))
     val foundTown = mapViewModel.foundTown.collectAsState(initial = false)

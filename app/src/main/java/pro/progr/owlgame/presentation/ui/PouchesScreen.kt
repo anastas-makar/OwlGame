@@ -26,13 +26,13 @@ import kotlinx.coroutines.delay
 import pro.progr.owlgame.data.web.Pouch
 import pro.progr.owlgame.presentation.viewmodel.InPouchViewModel
 import pro.progr.owlgame.presentation.viewmodel.PouchesViewModel
-import pro.progr.owlgame.presentation.viewmodel.dagger.DaggerPouchViewModel
 
 @Composable
 fun PouchesScreen(
     backToMain: () -> Unit,
     navController: NavHostController,
-    pouchesViewModel: PouchesViewModel = DaggerPouchViewModel()
+    pouchesViewModel: PouchesViewModel,
+    inPouchViewModel: InPouchViewModel
 ) {
     pouchesViewModel.loadPouches()
 
@@ -56,7 +56,6 @@ fun PouchesScreen(
         content = { innerPadding ->
             if (pouchesViewModel.isPouchSelected.value) {
                 pouchesViewModel.selectedPouch.value?.let { p ->
-                    val inPouchViewModel: InPouchViewModel = DaggerPouchViewModel()
                     inPouchViewModel.loadInPouch(p.id)
 
                     InPouchContent(navController, inPouchViewModel, p)

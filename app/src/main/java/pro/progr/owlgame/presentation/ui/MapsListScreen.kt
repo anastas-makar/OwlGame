@@ -24,13 +24,12 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import pro.progr.owlgame.presentation.viewmodel.MapsViewModel
-import pro.progr.owlgame.presentation.viewmodel.dagger.DaggerViewModel
 
 @Composable
 fun MapsListScreen(
     backToMain: () -> Unit,
     navController: NavHostController,
-    mapsViewModel: MapsViewModel = DaggerViewModel()
+    mapsViewModel: MapsViewModel
 ) {
     val mapsList = mapsViewModel.loadMaps().collectAsState(initial = emptyList())
 

@@ -27,7 +27,6 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import pro.progr.owlgame.presentation.viewmodel.AnimalViewModel
-import pro.progr.owlgame.presentation.viewmodel.dagger.DaggerAnimalViewModel
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -37,7 +36,7 @@ fun AnimalSearchingScreen(
     backToMain: () -> Unit,
     navController: NavHostController,
     animalId: String,
-    animalViewModel: AnimalViewModel = DaggerAnimalViewModel(id = animalId)
+    animalViewModel: AnimalViewModel
 ) {
     val animalState = animalViewModel.animal.collectAsState(initial = null)
 
