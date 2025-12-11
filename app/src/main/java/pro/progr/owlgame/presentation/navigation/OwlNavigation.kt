@@ -1,23 +1,18 @@
 package pro.progr.owlgame.presentation.navigation
 
-import android.app.Application
 import androidx.activity.compose.BackHandler
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import pro.progr.authapi.AuthInterface
-import pro.progr.owlgame.presentation.ui.MapScreen
-import pro.progr.owlgame.presentation.ui.PouchesScreen
-import pro.progr.owlgame.presentation.ui.MapsListScreen
-
 import pro.progr.diamondapi.PurchaseInterface
-import pro.progr.owlgame.dagger.OwlGameModule
-import pro.progr.owlgame.dagger.DaggerOwlGameComponent
+import pro.progr.owlgame.dagger.OwlGameComponent
 import pro.progr.owlgame.presentation.ui.AnimalSearchingScreen
+import pro.progr.owlgame.presentation.ui.MapScreen
+import pro.progr.owlgame.presentation.ui.MapsListScreen
+import pro.progr.owlgame.presentation.ui.PouchesScreen
 import pro.progr.owlgame.presentation.viewmodel.AnimalViewModel
 import pro.progr.owlgame.presentation.viewmodel.InPouchViewModel
 import pro.progr.owlgame.presentation.viewmodel.MapViewModel
@@ -32,15 +27,8 @@ import pro.progr.owlgame.presentation.viewmodel.dagger.DaggerPouchesViewModel
 fun OwlNavigation(startDestination : String = "towns",
                   backToMain : () -> Unit,
                   diamondDao: PurchaseInterface,
-                  auth: AuthInterface) {
+                  component: OwlGameComponent) {
     val navController = rememberNavController()
-
-    val application = LocalContext.current.applicationContext as Application
-    val component = DaggerOwlGameComponent.builder()
-        .application(application)
-        .appModule(OwlGameModule(application))
-        .auth(auth)
-        .build()
 
     val mapsViewModel: MapsViewModel = DaggerMapsViewModel(component)
 
