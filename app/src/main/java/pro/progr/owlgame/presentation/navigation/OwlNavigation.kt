@@ -15,8 +15,8 @@ import pro.progr.owlgame.presentation.ui.PouchesScreen
 import pro.progr.owlgame.presentation.ui.MapsListScreen
 
 import pro.progr.diamondapi.PurchaseInterface
-import pro.progr.owlgame.dagger.AppModule
-import pro.progr.owlgame.dagger.DaggerAppComponent
+import pro.progr.owlgame.dagger.OwlGameModule
+import pro.progr.owlgame.dagger.DaggerOwlGameComponent
 import pro.progr.owlgame.presentation.ui.AnimalSearchingScreen
 import pro.progr.owlgame.presentation.viewmodel.AnimalViewModel
 import pro.progr.owlgame.presentation.viewmodel.InPouchViewModel
@@ -36,9 +36,9 @@ fun OwlNavigation(startDestination : String = "towns",
     val navController = rememberNavController()
 
     val application = LocalContext.current.applicationContext as Application
-    val component = DaggerAppComponent.builder()
+    val component = DaggerOwlGameComponent.builder()
         .application(application)
-        .appModule(AppModule(application))
+        .appModule(OwlGameModule(application))
         .auth(auth)
         .build()
 

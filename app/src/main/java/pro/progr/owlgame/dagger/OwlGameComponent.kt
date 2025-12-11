@@ -16,10 +16,10 @@ import javax.inject.Singleton
 @Singleton
 @Component(modules = [PouchModule::class,
     NetworkModule::class,
-    AppModule::class,
+    OwlGameModule::class,
     DatabaseModule::class
 ])
-interface AppComponent {
+interface OwlGameComponent {
 
     fun pouchViewModelFactory(): PouchViewModelFactory
 
@@ -39,8 +39,8 @@ interface AppComponent {
         @BindsInstance
         fun auth(auth: AuthInterface): Builder
 
-        fun appModule(appModule: AppModule): Builder
+        fun appModule(owlGameModule: OwlGameModule): Builder
 
-        fun build(): AppComponent
+        fun build(): OwlGameComponent
     }
 }

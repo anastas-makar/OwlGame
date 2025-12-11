@@ -9,7 +9,7 @@ import dagger.Module
 import dagger.Provides
 
 @Module
-class AppModule(private val application:Application) {
+class OwlGameModule(private val application:Application) {
 
     @Provides
     @Singleton
