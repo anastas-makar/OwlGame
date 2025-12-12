@@ -8,7 +8,6 @@ import pro.progr.owlgame.data.db.BuildingWithAnimalDao
 import pro.progr.owlgame.data.db.BuildingsDao
 import pro.progr.owlgame.data.db.MapDao
 import pro.progr.owlgame.data.db.OwlGameDatabase
-import pro.progr.owlgame.data.db.SlotsDao
 import pro.progr.owlgame.data.db.MapWithDataDao
 import pro.progr.owlgame.data.db.TownsDao
 import javax.inject.Singleton
@@ -40,11 +39,6 @@ object DatabaseModule {
     @Provides
     fun provideBuildingWithAnimalDao(database: OwlGameDatabase): BuildingWithAnimalDao {
         return database.buildingWithAnimalDao()
-    }
-
-    @Provides
-    fun provideSlotsDao(database: OwlGameDatabase): SlotsDao {
-        return database.slotsDao()
     }
 
     @Provides

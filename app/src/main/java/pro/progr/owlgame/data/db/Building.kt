@@ -12,5 +12,7 @@ data class Building (
     val mapId : String? = null,
     val price : Int = 500,
     var animalId: String? = null,
+    val x : Float = 0f,
+    val y : Float = 0f,
     val type: BuildingType = BuildingType.HOUSE
 )

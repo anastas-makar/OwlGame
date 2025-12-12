@@ -43,7 +43,7 @@ class MapViewModel @Inject constructor(
                 name = mapWithData.mapEntity.name,
                 imageUrl = mapWithData.mapEntity.imagePath,
                 town = mapWithData.town,
-                slots = mapWithData.slots.map { slot ->
+                slots = mapWithData.buildings.map { slot ->
                     val building = slot.buildingId?.let { buildingsMap[it] }
                     SlotWithBuilding(slot, building)
                 }
@@ -93,9 +93,9 @@ class MapViewModel @Inject constructor(
         }
     }
 
-    fun updateSlot(slot: Slot) {
+    fun updateSlot(buildingId : String, x : Float, y : Float) {
         viewModelScope.launch (Dispatchers.IO) {
-            slotsRepository.updateSlot(slot)
+            slotsRepository.updateSlot(buildingId, x, y)
         }
     }
 

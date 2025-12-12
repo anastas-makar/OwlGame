@@ -4,7 +4,6 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
@@ -18,20 +17,19 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import pro.progr.owlgame.R
+import pro.progr.owlgame.data.db.Building
 import pro.progr.owlgame.data.db.BuildingType
-import pro.progr.owlgame.data.db.Slot
 import pro.progr.owlgame.presentation.viewmodel.MapViewModel
 import kotlin.math.roundToInt
 
 @Composable
-fun DraggableImage(slot: Slot,
-                   buildingType: BuildingType,
+fun DraggableImage(building: Building,
                    mapViewModel: MapViewModel) {
     // Состояния для координат первого и второго изображения
-    val houseOffset = remember { mutableStateOf(Offset(slot.x, slot.y)) }
+    val houseOffset = remember { mutableStateOf(Offset(building.x, building.y)) }
     Image(
         painter = painterResource(
-            if (buildingType == BuildingType.HOUSE)
+            if (building.type == BuildingType.HOUSE)
                 R.drawable.map_icon_house
             else
                 R.drawable.map_icon_fortress
@@ -54,21 +52,13 @@ fun DraggableImage(slot: Slot,
                             y = houseOffset.value.y + dragAmount.y
                         )
                     }, onDragEnd = {
-                        if (slot.id == 0) {
-                            mapViewModel.newHouseState.value = false
+                        mapViewModel.newHouseState.value = false
 
-                            mapViewModel.saveSlot(
-                                houseOffset.value.x,
-                                houseOffset.value.y,
-                                slot.mapId,
-                                slot.buildingId
-                            )
-                        } else {
-                            mapViewModel.updateSlot(
-                                slot.copy(
-                                    x = houseOffset.value.x,
-                                    y = houseOffset.value.y))
-                        }
+                        mapViewModel.updateSlot(
+                            buildingId = building.id,
+                            x = houseOffset.value.x,
+                            y = houseOffset.value.y
+                        )
                     })
             }
             .graphicsLayer {

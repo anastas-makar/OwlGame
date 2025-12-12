@@ -14,8 +14,8 @@ data class MapWithData (
     val town: Town?,
     @Relation(
         parentColumn = "id",
-        entity = Slot::class,
+        entity = Building::class,
         entityColumn = "mapId"
     )
-    val slots : List<Slot>
+    val buildings : List<Building>
 )

@@ -11,8 +11,13 @@ public interface BuildingsDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insert(buildings: List<Building>): List<Long>
 
-    @Query("UPDATE buildings SET mapId=:mapId WHERE id=:buildingId")
-    fun updateMapId(buildingId: String, mapId: String): Int
+    @Query("UPDATE buildings SET mapId=:mapId," +
+            "x=:x, y=:y WHERE id=:buildingId")
+    fun setToMap(buildingId: String, mapId: String, x: Float, y: Float): Int
+
+
+    @Query("UPDATE buildings SET x=:x, y=:y WHERE id=:buildingId")
+    fun updateOnMap(buildingId: String, x: Float, y: Float): Int
 
     @Query("UPDATE buildings SET animalId=:animalId WHERE id=:buildingId")
     fun updateAnimalId(buildingId: String, animalId: String): Int

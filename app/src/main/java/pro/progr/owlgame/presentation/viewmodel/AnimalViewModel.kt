@@ -35,7 +35,7 @@ class AnimalViewModel @Inject constructor(
                 name = mapWithData.mapEntity.name,
                 imageUrl = mapWithData.mapEntity.imagePath,
                 town = mapWithData.town,
-                slots = mapWithData.slots.map { slot ->
+                slots = mapWithData.buildings.map { slot ->
                     SlotWithBuilding(
                         slot = slot,
                         building = buildingsMap.get(slot.buildingId)
