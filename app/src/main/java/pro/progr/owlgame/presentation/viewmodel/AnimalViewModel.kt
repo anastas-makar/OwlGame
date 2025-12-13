@@ -13,7 +13,6 @@ import pro.progr.owlgame.data.repository.BuildingsRepository
 import pro.progr.owlgame.data.repository.MapsRepository
 import pro.progr.owlgame.domain.GrantBuildingToAnimalUseCase
 import pro.progr.owlgame.presentation.ui.model.MapData
-import pro.progr.owlgame.presentation.ui.model.SlotWithBuilding
 import javax.inject.Inject
 
 class AnimalViewModel @Inject constructor(
@@ -35,12 +34,7 @@ class AnimalViewModel @Inject constructor(
                 name = mapWithData.mapEntity.name,
                 imageUrl = mapWithData.mapEntity.imagePath,
                 town = mapWithData.town,
-                slots = mapWithData.buildings.map { slot ->
-                    SlotWithBuilding(
-                        slot = slot,
-                        building = buildingsMap.get(slot.buildingId)
-                    )
-                }
+                buildings = mapWithData.buildings
             )
         }
     }.stateIn(

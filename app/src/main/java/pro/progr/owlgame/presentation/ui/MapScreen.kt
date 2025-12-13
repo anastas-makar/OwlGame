@@ -47,7 +47,6 @@ import pro.progr.owlgame.data.db.BuildingType
 import pro.progr.owlgame.presentation.ui.model.BuildingModel
 import pro.progr.owlgame.presentation.ui.model.MapData
 import pro.progr.owlgame.presentation.viewmodel.MapViewModel
-import pro.progr.owlgame.presentation.viewmodel.dagger.DaggerMapViewModel
 
 @Composable
 fun MapScreen(
@@ -129,14 +128,13 @@ fun MapScreen(
                     }
 
                     // 4) Сетка как строки по 3
-                    val buildings = map.value.slots
-                        .filter { it.building != null }
+                    val buildings = map.value.buildings
                         .map { s ->
                             BuildingModel(
-                                s.building!!.building.id,
-                                s.building.building.name,
-                                s.building.building.imageUrl,
-                                s.building.animal
+                                s.id,
+                                s.name,
+                                s.imageUrl,
+                                s.animal
                             )
                         }
                     val rows = buildings.chunked(3)

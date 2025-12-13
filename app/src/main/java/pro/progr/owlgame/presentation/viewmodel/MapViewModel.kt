@@ -15,14 +15,12 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import pro.progr.diamondapi.PurchaseInterface
 import pro.progr.owlgame.data.db.Building
-import pro.progr.owlgame.data.db.Slot
 import pro.progr.owlgame.data.repository.BuildingsRepository
 import pro.progr.owlgame.data.repository.MapsRepository
 import pro.progr.owlgame.data.repository.SlotsRepository
 import pro.progr.owlgame.domain.FoundTownUseCase
 import pro.progr.owlgame.presentation.ui.model.BuildingModel
 import pro.progr.owlgame.presentation.ui.model.MapData
-import pro.progr.owlgame.presentation.ui.model.SlotWithBuilding
 import javax.inject.Inject
 
 class MapViewModel @Inject constructor(
@@ -43,10 +41,7 @@ class MapViewModel @Inject constructor(
                 name = mapWithData.mapEntity.name,
                 imageUrl = mapWithData.mapEntity.imagePath,
                 town = mapWithData.town,
-                slots = mapWithData.buildings.map { slot ->
-                    val building = slot.buildingId?.let { buildingsMap[it] }
-                    SlotWithBuilding(slot, building)
-                }
+                buildings = mapWithData.buildings
             )
         } else {
             MapData("", "", "")

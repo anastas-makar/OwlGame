@@ -105,29 +105,26 @@ fun AnimalSearchingScreen(
                                 verticalArrangement = Arrangement.spacedBy(8.dp),
                                 userScrollEnabled = false
                             ) {
-                                itemsIndexed(mapData.slots
-                                    .filter {slotWithBuilding ->
-                                        slotWithBuilding.building != null &&
-                                        slotWithBuilding.building.building.animalId == null
+                                itemsIndexed(mapData.buildings
+                                    .filter {building ->
+                                        building.animalId == null
                                     }
-                                ) { _, slotWithBuilding ->
-                                    slotWithBuilding.building?.let {
+                                ) { _, building ->
                                         AsyncImage(
-                                            model = slotWithBuilding.building.building.imageUrl,
+                                            model = building.imageUrl,
                                             contentDescription = "Дом",
                                             modifier = Modifier
                                                 .aspectRatio(1f)
                                                 .fillMaxWidth()
                                                 .clickable {
                                                     animalViewModel.saveAnimalInBuilding(
-                                                        slotWithBuilding.building.building.id,
+                                                        building.id,
                                                         animalId
                                                     )
                                                     navController.navigate("map/${mapData.id}")
                                                 }
                                         )
 
-                                    }
                                 }
                             }
                         }

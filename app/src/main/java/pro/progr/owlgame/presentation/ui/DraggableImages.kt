@@ -10,7 +10,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
-import pro.progr.owlgame.data.db.Slot
 import pro.progr.owlgame.presentation.ui.model.MapData
 import pro.progr.owlgame.presentation.viewmodel.MapViewModel
 
@@ -31,35 +30,18 @@ fun DraggableImages(map: State<MapData>,
                 .padding(top = 16.dp)
         )
 
-        if (mapViewModel.newHouseState.value) {
-            mapViewModel.selectedBuilding.value?.let {
-
-                val slot = Slot(x = 0f, y = 0f, mapId = map.value.id, buildingId = it.id)
-                mapViewModel.saveSlot(
-                    slot.x,
-                    slot.y,
-                    slot.mapId,
-                    slot.buildingId
-                )
-
-            }
-        }
-
-        for (slot in map.value.slots) {
-            slot.building?.let {
-                if (slot.slot.x == 0f && slot.slot.y == 0f) {
+        for (building in map.value.buildings) {
+                if (building.x == 0f && building.y == 0f) {
                     NewDraggableImage(
-                        slot = slot.slot,
-                        buildingType = slot.building.building.type,
+                        building = building,
                         mapViewModel = mapViewModel)
                 } else {
-                    DraggableImage(slot = slot.slot,
-                        buildingType = slot.building.building.type,
+                    DraggableImage(
+                        building = building,
                         mapViewModel = mapViewModel)
 
                 }
 
-            }
         }
 
     }
