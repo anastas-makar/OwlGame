@@ -8,6 +8,5 @@ import retrofit2.http.Query
 interface AnimalApiService {
     @GET("animal")
     suspend fun getAnimal(
-        @Query("apiKey") apiKey: String
     ): Response<Animal?>
 }

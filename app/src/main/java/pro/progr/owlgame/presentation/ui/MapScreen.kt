@@ -131,9 +131,9 @@ fun MapScreen(
                     val buildings = map.value.buildings
                         .map { s ->
                             BuildingModel(
-                                s.id,
-                                s.name,
-                                s.imageUrl,
+                                s.building.id,
+                                s.building.name,
+                                s.building.imageUrl,
                                 s.animal
                             )
                         }

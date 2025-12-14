@@ -107,18 +107,18 @@ fun AnimalSearchingScreen(
                             ) {
                                 itemsIndexed(mapData.buildings
                                     .filter {building ->
-                                        building.animalId == null
+                                        building.animal == null
                                     }
                                 ) { _, building ->
                                         AsyncImage(
-                                            model = building.imageUrl,
+                                            model = building.building.imageUrl,
                                             contentDescription = "Дом",
                                             modifier = Modifier
                                                 .aspectRatio(1f)
                                                 .fillMaxWidth()
                                                 .clickable {
                                                     animalViewModel.saveAnimalInBuilding(
-                                                        building.id,
+                                                        building.building.id,
                                                         animalId
                                                     )
                                                     navController.navigate("map/${mapData.id}")

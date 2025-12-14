@@ -31,13 +31,13 @@ fun DraggableImages(map: State<MapData>,
         )
 
         for (building in map.value.buildings) {
-                if (building.x == 0f && building.y == 0f) {
+                if (building.building.x == 0f && building.building.y == 0f) {
                     NewDraggableImage(
-                        building = building,
+                        building = building.building,
                         mapViewModel = mapViewModel)
                 } else {
                     DraggableImage(
-                        building = building,
+                        building = building.building,
                         mapViewModel = mapViewModel)
 
                 }

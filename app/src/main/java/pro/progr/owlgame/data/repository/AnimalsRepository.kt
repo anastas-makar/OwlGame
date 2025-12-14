@@ -3,6 +3,7 @@ package pro.progr.owlgame.data.repository
 import kotlinx.coroutines.flow.Flow
 import pro.progr.owlgame.data.db.Animal
 import pro.progr.owlgame.data.db.AnimalDao
+import pro.progr.owlgame.data.db.Building
 import pro.progr.owlgame.data.web.AnimalApiService
 import javax.inject.Inject
 import javax.inject.Named
@@ -10,15 +11,14 @@ import javax.inject.Named
 class AnimalsRepository @Inject constructor(
     private val animalDao: AnimalDao,
     private val animalApiService: AnimalApiService,
-    private val imageRepository: ImageRepository,
-    @Named("apiKey") private val apiKey: String
+    private val imageRepository: ImageRepository
 ) {
     fun countAnimalsSearching() : Long {
         return animalDao.countSearching()
     }
 
     suspend fun getAnimal() : Animal? {
-        val response = animalApiService.getAnimal(apiKey)
+        val response = animalApiService.getAnimal()
 
         if (response.isSuccessful) {
             return response.body()

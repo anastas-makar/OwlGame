@@ -13,7 +13,7 @@ object RetrofitProvider {
     fun provideRetrofit(baseUrl: String, auth: AuthInterface): Retrofit {
         if (retrofit == null) {
             val client = OkHttpClient.Builder()
-                .followSslRedirects(false)
+                //.followSslRedirects(false)
                 // сначала подписание
                 .addInterceptor(signingInterceptor(auth))
                 // потом логирование, чтобы лог видел уже подписанные заголовки

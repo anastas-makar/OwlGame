@@ -52,8 +52,7 @@ suspend fun doAnimalBuildingsWork(applicationContext: Context,
                 ImageRepository(
                     context = applicationContext,
                     baseUrl = BuildConfig.API_BASE_URL
-                ),
-                BuildConfig.API_KEY
+                )
             )
 
             val animal = SearchAnimalsUseCase(

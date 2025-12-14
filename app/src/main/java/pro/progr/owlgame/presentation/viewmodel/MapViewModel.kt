@@ -41,7 +41,7 @@ class MapViewModel @Inject constructor(
                 name = mapWithData.mapEntity.name,
                 imageUrl = mapWithData.mapEntity.imagePath,
                 town = mapWithData.town,
-                buildings = mapWithData.buildings
+                buildings = buildingsMap.values.toList()
             )
         } else {
             MapData("", "", "")
