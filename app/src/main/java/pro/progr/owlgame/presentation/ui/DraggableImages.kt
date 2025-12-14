@@ -30,6 +30,19 @@ fun DraggableImages(map: State<MapData>,
                 .padding(top = 16.dp)
         )
 
+        if (mapViewModel.newHouseState.value) {
+            mapViewModel.selectedBuilding.value?.let { b ->
+
+                mapViewModel.saveSlot(
+                    x = 0f,
+                    y = 0f,
+                    map.value.id,
+                    b.id
+                )
+
+            }
+        }
+
         for (building in map.value.buildings) {
                 if (building.building.x == 0f && building.building.y == 0f) {
                     NewDraggableImage(
