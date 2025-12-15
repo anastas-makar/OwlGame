@@ -41,7 +41,7 @@ class MapViewModel @Inject constructor(
                 name = mapWithData.mapEntity.name,
                 imageUrl = mapWithData.mapEntity.imagePath,
                 town = mapWithData.town,
-                buildings = buildingsMap.values.toList()
+                buildings = buildingsMap.values.toList().sortedBy { (building, animal) -> building.x }
             )
         } else {
             MapData("", "", "")
