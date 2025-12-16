@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
+import androidx.compose.runtime.key
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
@@ -43,18 +44,15 @@ fun DraggableImages(map: State<MapData>,
             }
         }
 
-        for (building in map.value.buildings) {
-                if (building.building.x == 0f && building.building.y == 0f) {
-                    NewDraggableImage(
-                        building = building.building,
-                        mapViewModel = mapViewModel)
+        for (item in map.value.buildings) {
+            key(item.building.id) {
+                val b = item.building
+                if (b.x == 0f && b.y == 0f) {
+                    NewDraggableImage(building = b, mapViewModel = mapViewModel)
                 } else {
-                    DraggableImage(
-                        building = building.building,
-                        mapViewModel = mapViewModel)
-
+                    DraggableImage(building = b, mapViewModel = mapViewModel)
                 }
-
+            }
         }
 
     }
