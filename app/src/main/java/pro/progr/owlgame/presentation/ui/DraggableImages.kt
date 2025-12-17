@@ -47,11 +47,7 @@ fun DraggableImages(map: State<MapData>,
         for (item in map.value.buildings) {
             key(item.building.id) {
                 val b = item.building
-                if (b.x == 0f && b.y == 0f) {
-                    NewDraggableImage(building = b, mapViewModel = mapViewModel)
-                } else {
-                    DraggableImage(building = b, mapViewModel = mapViewModel)
-                }
+                DraggableImage(building = b, mapViewModel = mapViewModel)
             }
         }
 
