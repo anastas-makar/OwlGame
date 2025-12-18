@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.State
 import androidx.compose.runtime.key
 import androidx.compose.ui.Modifier
@@ -18,6 +19,22 @@ import pro.progr.owlgame.presentation.viewmodel.MapViewModel
 fun DraggableImages(map: State<MapData>,
                     mapViewModel: MapViewModel) {
 
+    LaunchedEffect(
+        mapViewModel.newHouseState.value,
+        mapViewModel.selectedBuilding.value?.id,
+        map.value.id
+    ) {
+        val selected = mapViewModel.selectedBuilding.value
+        if (mapViewModel.newHouseState.value && selected != null && map.value.id.isNotEmpty()) {
+            mapViewModel.saveSlot(
+                x = 0f,
+                y = 0f,
+                mapId = map.value.id,
+                buildingId = selected.id
+            )
+        }
+    }
+
     Box(modifier = Modifier
         .fillMaxWidth()
         .wrapContentHeight()) {
@@ -30,19 +47,6 @@ fun DraggableImages(map: State<MapData>,
                 .fillMaxWidth()
                 .padding(top = 16.dp)
         )
-
-        if (mapViewModel.newHouseState.value) {
-            mapViewModel.selectedBuilding.value?.let { b ->
-
-                mapViewModel.saveSlot(
-                    x = 0f,
-                    y = 0f,
-                    map.value.id,
-                    b.id
-                )
-
-            }
-        }
 
         for (item in map.value.buildings) {
             key(item.building.id) {
