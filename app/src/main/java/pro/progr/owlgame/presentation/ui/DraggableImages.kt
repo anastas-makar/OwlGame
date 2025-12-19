@@ -26,6 +26,22 @@ import pro.progr.owlgame.presentation.viewmodel.MapViewModel
 fun DraggableImages(map: State<MapData>, mapViewModel: MapViewModel) {
     var mapSizePx by remember { mutableStateOf(IntSize.Zero) }
 
+    LaunchedEffect(
+        mapViewModel.newHouseState.value,
+        mapViewModel.selectedBuilding.value?.id,
+        map.value.id
+    ) {
+        val selected = mapViewModel.selectedBuilding.value
+        if (mapViewModel.newHouseState.value && selected != null && map.value.id.isNotEmpty()) {
+            mapViewModel.saveSlot(
+                x = 0f,
+                y = 0f,
+                mapId = map.value.id,
+                buildingId = selected.id
+            )
+        }
+    }
+
     Box(
         modifier = Modifier
             .fillMaxWidth()
