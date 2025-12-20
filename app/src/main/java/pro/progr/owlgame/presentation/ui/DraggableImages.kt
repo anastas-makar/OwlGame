@@ -45,7 +45,7 @@ fun DraggableImages(map: State<MapData>, mapViewModel: MapViewModel) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .clipToBounds() // визуально не даём рисовать за рамками
+            //.clipToBounds() // визуально не даём рисовать за рамками
     ) {
         AsyncImage(
             model = map.value.imageUrl,
