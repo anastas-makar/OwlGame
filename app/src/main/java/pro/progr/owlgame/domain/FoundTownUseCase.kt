@@ -1,19 +1,23 @@
 package pro.progr.owlgame.domain
 
-import pro.progr.owlgame.data.db.Town
-import pro.progr.owlgame.data.repository.TownRepository
+import androidx.room.Transaction
+import pro.progr.owlgame.data.db.MapEntity
+import pro.progr.owlgame.data.repository.MapsRepository
+import pro.progr.owlgame.data.repository.StreetsRepository
 import pro.progr.owlgame.presentation.ui.model.MapData
 import javax.inject.Inject
 
-class FoundTownUseCase @Inject constructor(val townRepository: TownRepository) {
-    operator fun invoke(map: MapData, name: String) : Town {
-        val mapId = map.id
+class FoundTownUseCase @Inject constructor(val mapsRepository: MapsRepository,
+    val streetsRepository: StreetsRepository) {
 
-        return townRepository.insertTown(
-            Town(
+    @Transaction
+    suspend operator fun invoke(mapId : String, name: String, streetName: String) {
+
+        streetsRepository.createStreet(mapId, streetName)
+
+        mapsRepository.setTown(
                 name = name,
                 mapId = mapId
-            )
         )
     }
 }

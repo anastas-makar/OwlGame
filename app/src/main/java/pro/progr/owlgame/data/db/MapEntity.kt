@@ -7,5 +7,6 @@ import androidx.room.PrimaryKey
 data class MapEntity(
     @PrimaryKey val id: String,
     val name: String,
-    val imagePath: String
+    val imagePath: String,
+    val type: MapType = MapType.FREE
 )

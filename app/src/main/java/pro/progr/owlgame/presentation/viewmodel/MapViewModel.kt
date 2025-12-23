@@ -40,7 +40,6 @@ class MapViewModel @Inject constructor(
                 id = mapWithData.mapEntity.id,
                 name = mapWithData.mapEntity.name,
                 imageUrl = mapWithData.mapEntity.imagePath,
-                town = mapWithData.town,
                 buildings = buildingsMap.values.toList()
                     .sortedWith(compareBy({ it.building.x }, { it.building.id }))
             )
@@ -70,9 +69,9 @@ class MapViewModel @Inject constructor(
     }
 
     fun foundTown(map: MapData, townName: String) {
-        viewModelScope.launch (Dispatchers.Default) {
-            foundTown.update { _ -> false }
-            foundTownUseCase(map, townName)
+        foundTown.update { _ -> false }
+        viewModelScope.launch (Dispatchers.IO) {
+            foundTownUseCase(map.id, townName, "Улица Главная")
         }
 
     }

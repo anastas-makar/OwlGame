@@ -8,10 +8,12 @@ data class Building (
     @PrimaryKey
     val id : String,
     val name : String,
+    val streetName : String = "Улица Главная",
     val imageUrl : String,
     val mapId : String? = null,
     val price : Int = 500,
     var animalId: String? = null,
+    val gardenImageUrl: String,
     val x : Float = 0f,
     val y : Float = 0f,
     val type: BuildingType = BuildingType.HOUSE

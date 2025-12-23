@@ -16,8 +16,7 @@ import javax.inject.Singleton
 class MapsRepository @Inject constructor(
     private val apiService: MapApiService,
     private val mapDao: MapDao,
-    private val mapsWithDataDao: MapWithDataDao,
-    @Named("apiKey") private val apiKey: String
+    private val mapsWithDataDao: MapWithDataDao
 ) {
 
     fun getMaps(): Flow<List<MapData>> {
@@ -29,8 +28,7 @@ class MapsRepository @Inject constructor(
                     mapWithData.mapEntity.id,
                     mapWithData.mapEntity.name,
                     mapWithData.mapEntity.imagePath,
-                    town = mapWithData.town,
-                    buildings = emptyList() //todo: для отображения карт они вроде не нужны сейчас
+                    buildings = emptyList()
                 )
             }
         }
@@ -46,6 +44,10 @@ class MapsRepository @Inject constructor(
 
     suspend fun saveMaps(maps: List<MapEntity>) {
         mapDao.insertMaps(maps)
+    }
+
+    suspend fun setTown(name: String, mapId: String) {
+        mapDao.setTown(mapId = mapId, name = name)
     }
 
 }
