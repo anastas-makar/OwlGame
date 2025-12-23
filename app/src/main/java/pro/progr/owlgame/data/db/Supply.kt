@@ -8,5 +8,7 @@ data class Supply (
     @PrimaryKey
     val id : String,
     val imageUrl : String,
-    val name : String
+    val name : String,
+    val effectType : EffectType,
+    val effectAmount : Int
 )

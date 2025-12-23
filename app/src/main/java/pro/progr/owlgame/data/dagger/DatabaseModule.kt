@@ -9,7 +9,7 @@ import pro.progr.owlgame.data.db.BuildingsDao
 import pro.progr.owlgame.data.db.MapDao
 import pro.progr.owlgame.data.db.OwlGameDatabase
 import pro.progr.owlgame.data.db.MapWithDataDao
-import pro.progr.owlgame.data.db.TownsDao
+import pro.progr.owlgame.data.db.StreetsDao
 import javax.inject.Singleton
 
 @Module
@@ -19,11 +19,6 @@ object DatabaseModule {
     @Singleton
     fun provideDatabase(context: Context): OwlGameDatabase {
         return OwlGameDatabase.getDatabase(context)
-    }
-
-    @Provides
-    fun provideTownsDao(database: OwlGameDatabase): TownsDao {
-        return database.townsDao()
     }
 
     @Provides
@@ -44,6 +39,11 @@ object DatabaseModule {
     @Provides
     fun provideMapDao(database: OwlGameDatabase): MapDao {
         return database.mapDao()
+    }
+
+    @Provides
+    fun provideStreetsDao(database: OwlGameDatabase): StreetsDao {
+        return database.streetsDao()
     }
 
     @Provides

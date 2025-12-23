@@ -8,7 +8,6 @@ data class Building (
     @PrimaryKey
     val id : String,
     val name : String,
-    val streetName : String = "Улица Главная",
     val imageUrl : String,
     val mapId : String? = null,
     val price : Int = 500,
