@@ -44,6 +44,7 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import pro.progr.diamondapi.PurchaseInterface
 import pro.progr.owlgame.data.db.BuildingType
+import pro.progr.owlgame.data.db.MapType
 import pro.progr.owlgame.presentation.ui.model.BuildingModel
 import pro.progr.owlgame.presentation.ui.model.MapData
 import pro.progr.owlgame.presentation.viewmodel.MapViewModel
@@ -54,7 +55,7 @@ fun MapScreen(
     diamondDao: PurchaseInterface,
     mapViewModel: MapViewModel
 ) {
-    val map = mapViewModel.map.collectAsState(initial = MapData("", "", ""))
+    val map = mapViewModel.map.collectAsState(initial = MapData("", "", "", MapType.FREE))
     val foundTown = mapViewModel.foundTown.collectAsState(initial = false)
     val cityName = remember { mutableStateOf("") }
 
@@ -78,7 +79,7 @@ fun MapScreen(
                 item {
                     when {
                         map.value.id.isEmpty() -> Text("Загрузка…")
-                        !foundTown.value && map.value.town == null -> {
+                        !foundTown.value && map.value.type == MapType.FREE -> {
                             Button(
                                 colors = ButtonDefaults.buttonColors(
                                     backgroundColor = Color.DarkGray, contentColor = Color.White
@@ -118,7 +119,7 @@ fun MapScreen(
                 }
 
                 // 3) Заголовок улицы
-                if (map.value.town != null) {
+                if (map.value.type == MapType.TOWN) {
                     item {
                         Text(
                             text = "Улица Главная",

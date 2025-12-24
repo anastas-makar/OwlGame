@@ -7,21 +7,18 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import pro.progr.owlgame.data.db.MapType
 import pro.progr.owlgame.presentation.viewmodel.MapViewModel
 import pro.progr.owlgame.presentation.ui.model.MapData
 
 @Composable
 fun MapBar(navController: NavHostController, mapViewModel: MapViewModel) {
 
-    val mapState = mapViewModel.map.collectAsState(initial = MapData("", "", ""))
+    val mapState = mapViewModel.map.collectAsState(initial = MapData("", "", "", MapType.FREE))
 
     TopAppBar(
         title = {
-            mapState.value.town?.let {town ->
-                Text(text = town.name)
-            } ?: run {
-                Text(text = mapState.value.name)
-            }
+            Text(text = mapState.value.name)
         },
         navigationIcon = {
             NavIcon(navController)

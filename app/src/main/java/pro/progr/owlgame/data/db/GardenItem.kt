@@ -8,11 +8,14 @@ data class GardenItem (
     @PrimaryKey
     val id : String,
     val name : String,
+    val description : String,
     val imageUrl : String,
-    val buildingId : String? = null,
+    val gardenId : String? = null,
     val x : Float = 0f,
     val y : Float = 0f,
     val supplyName : String,
     val supplyAmount : Int,
-    val seedAmount : Int
+    val seedAmount : Int = 0,
+    val itemType : ItemType,
+    val gardenType: GardenType
 )
