@@ -7,6 +7,7 @@ import androidx.room.PrimaryKey
 data class Animal(
     @PrimaryKey
     val id : String,
+    val kind : String,
     val name: String,
     val imagePath: String,
     val status: AnimalStatus
