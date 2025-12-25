@@ -33,7 +33,7 @@ class AnimalViewModel @Inject constructor(
                 id = mapWithData.mapEntity.id,
                 name = mapWithData.mapEntity.name,
                 imageUrl = mapWithData.mapEntity.imagePath,
-                town = mapWithData.town,
+                type = mapWithData.mapEntity.type,
                 buildings = buildingsMap.values.toList()
             )
         }

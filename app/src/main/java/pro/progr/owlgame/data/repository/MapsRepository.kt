@@ -28,6 +28,7 @@ class MapsRepository @Inject constructor(
                     mapWithData.mapEntity.id,
                     mapWithData.mapEntity.name,
                     mapWithData.mapEntity.imagePath,
+                    mapWithData.mapEntity.type,
                     buildings = emptyList()
                 )
             }

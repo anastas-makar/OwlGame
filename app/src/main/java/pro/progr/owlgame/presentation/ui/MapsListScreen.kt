@@ -70,7 +70,7 @@ fun MapsListScreen(
                                         }
                                 )
 
-                                Text(text = if (map.town != null) map.town.name else map.name,
+                                Text(text = map.name,
                                     style = MaterialTheme.typography.body1,
                                     modifier = Modifier.padding(10.dp)
                                         .align(Alignment.CenterHorizontally))

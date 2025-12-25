@@ -87,7 +87,7 @@ fun AnimalSearchingScreen(
 
                                 Spacer(modifier = Modifier.width(8.dp))
 
-                                Text(text = "В городе ${mapData.town?.name} можно выбрать дом:")
+                                Text(text = "В городе ${mapData.name} можно выбрать дом:")
 
                             }
 

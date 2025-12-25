@@ -15,6 +15,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import pro.progr.diamondapi.PurchaseInterface
 import pro.progr.owlgame.data.db.Building
+import pro.progr.owlgame.data.db.MapType
 import pro.progr.owlgame.data.repository.BuildingsRepository
 import pro.progr.owlgame.data.repository.MapsRepository
 import pro.progr.owlgame.data.repository.SlotsRepository
@@ -40,16 +41,17 @@ class MapViewModel @Inject constructor(
                 id = mapWithData.mapEntity.id,
                 name = mapWithData.mapEntity.name,
                 imageUrl = mapWithData.mapEntity.imagePath,
+                type = mapWithData.mapEntity.type,
                 buildings = buildingsMap.values.toList()
                     .sortedWith(compareBy({ it.building.x }, { it.building.id }))
             )
         } else {
-            MapData("", "", "")
+            MapData("", "", "", MapType.FREE)
         }
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5000),
-        initialValue = MapData("", "", "")
+        initialValue = MapData("", "", "", MapType.FREE)
     )
 
     val foundTown = MutableStateFlow(false)

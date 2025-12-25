@@ -14,7 +14,7 @@ import androidx.room.RoomDatabase
     Garden::class,
     GardenItem::class,
     Receipt::class,
-    Room::class,
+    RoomEntity::class,
     Supply::class,
     SupplyToBuilding::class,
     SupplyToReceipt::class],

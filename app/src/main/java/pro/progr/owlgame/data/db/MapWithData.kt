@@ -8,12 +8,6 @@ data class MapWithData (
     val mapEntity: MapEntity,
     @Relation(
         parentColumn = "id",
-        entity = Town::class,
-        entityColumn = "mapId"
-    )
-    val town: Town?,
-    @Relation(
-        parentColumn = "id",
         entity = Building::class,
         entityColumn = "mapId"
     )
