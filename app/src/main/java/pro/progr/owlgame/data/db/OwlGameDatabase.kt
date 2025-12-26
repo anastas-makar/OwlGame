@@ -17,7 +17,9 @@ import androidx.room.RoomDatabase
     RoomEntity::class,
     Supply::class,
     SupplyToBuilding::class,
-    SupplyToReceipt::class],
+    SupplyToReceipt::class,
+    Book::class,
+    Chapter::class],
     version = 1, exportSchema = false)
 abstract class OwlGameDatabase : RoomDatabase() {
 
