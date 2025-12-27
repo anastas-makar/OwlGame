@@ -14,14 +14,11 @@ import javax.inject.Singleton
 
 @Singleton
 class MapsRepository @Inject constructor(
-    private val apiService: MapApiService,
     private val mapDao: MapDao,
     private val mapsWithDataDao: MapWithDataDao
 ) {
 
     fun getMaps(): Flow<List<MapData>> {
-        //todo: синхронизация с данными пользователя на сервере, когда данные о картах пользователя будут там сохраняться
-
         return mapsWithDataDao.getMapsWithData().map { mapsList ->
             mapsList.map {mapWithData ->
                 MapData(

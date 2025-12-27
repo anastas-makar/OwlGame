@@ -48,9 +48,9 @@ class NetworkModule {
 
     @Provides
     @Singleton
-    fun provideMapRepository(apiService: MapApiService,
+    fun provideMapRepository(
                              mapDao: MapDao,
                              mapsWithDataDao: MapWithDataDao): MapsRepository {
-        return MapsRepository(apiService, mapDao, mapsWithDataDao)
+        return MapsRepository(mapDao, mapsWithDataDao)
     }
 }

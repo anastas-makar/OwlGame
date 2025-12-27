@@ -11,7 +11,7 @@ interface MapDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertMaps(maps: List<MapEntity>)
 
-    @Query("UPDATE maps SET name=:name AND type=:type WHERE id=:mapId")
+    @Query("UPDATE maps SET name=:name, `type`=:type WHERE id=:mapId")
     suspend fun setTown(mapId: String, name: String, type: MapType = MapType.TOWN)
 
     @Query("SELECT * FROM maps WHERE id = :id")
