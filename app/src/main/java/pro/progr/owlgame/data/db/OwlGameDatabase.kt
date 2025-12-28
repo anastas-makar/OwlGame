@@ -35,6 +35,10 @@ abstract class OwlGameDatabase : RoomDatabase() {
 
     abstract fun animalDao(): AnimalDao
 
+    abstract fun gardensDao(): GardensDao
+
+    abstract fun roomsDao(): RoomsDao
+
     companion object {
         @Volatile
         private var INSTANCE: OwlGameDatabase? = null

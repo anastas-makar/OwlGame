@@ -6,9 +6,11 @@ import dagger.Provides
 import pro.progr.owlgame.data.db.AnimalDao
 import pro.progr.owlgame.data.db.BuildingWithAnimalDao
 import pro.progr.owlgame.data.db.BuildingsDao
+import pro.progr.owlgame.data.db.GardensDao
 import pro.progr.owlgame.data.db.MapDao
 import pro.progr.owlgame.data.db.OwlGameDatabase
 import pro.progr.owlgame.data.db.MapWithDataDao
+import pro.progr.owlgame.data.db.RoomsDao
 import pro.progr.owlgame.data.db.StreetsDao
 import javax.inject.Singleton
 
@@ -49,5 +51,15 @@ object DatabaseModule {
     @Provides
     fun provideAnimalDao(database: OwlGameDatabase): AnimalDao {
         return database.animalDao()
+    }
+
+    @Provides
+    fun provideGardensDao(database: OwlGameDatabase): GardensDao {
+        return database.gardensDao()
+    }
+
+    @Provides
+    fun provideRoomsDao(database: OwlGameDatabase): RoomsDao {
+        return database.roomsDao()
     }
 }

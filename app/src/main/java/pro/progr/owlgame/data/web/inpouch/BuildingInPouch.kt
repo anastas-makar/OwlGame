@@ -7,5 +7,7 @@ data class BuildingInPouch (
     val type: BuildingType,
     val cost: Int,
     val name: String,
-    val imageUrl: String
+    val imageUrl: String,
+    val rooms: List<RoomInPouch>,
+    val gardens: List<GardenInPouch>
 )
