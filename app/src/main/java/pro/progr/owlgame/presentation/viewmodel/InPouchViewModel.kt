@@ -57,16 +57,6 @@ class InPouchViewModel @Inject constructor(
         if (webPouch.buildings.isNotEmpty()) {
             viewModelScope.launch(Dispatchers.IO) {
                 val buildingsWithLocalUrls = saveBuildingsUseCase(webPouch.buildings)
-                    .map { ent ->
-
-                        BuildingInPouch(
-                            ent.id,
-                            ent.type,
-                            ent.price,
-                            ent.name,
-                            ent.imageUrl
-                        )
-                    }
 
                 inPouch.value = inPouch.value?.copy(buildings = buildingsWithLocalUrls)
             }
