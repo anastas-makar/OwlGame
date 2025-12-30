@@ -5,8 +5,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import pro.progr.owlgame.data.repository.PouchesRepository
-import pro.progr.owlgame.data.web.inpouch.BuildingInPouch
 import pro.progr.owlgame.data.web.inpouch.InPouch
 import pro.progr.owlgame.data.web.inpouch.MapInPouchModel
 import pro.progr.owlgame.domain.SaveBuildingsUseCase
@@ -18,48 +18,36 @@ class InPouchViewModel @Inject constructor(
     private val saveMapsUseCase: SaveMapsUseCase,
     private val saveBuildingsUseCase: SaveBuildingsUseCase
 ) : ViewModel() {
+
     val inPouch = mutableStateOf<InPouch?>(null)
-    fun loadInPouch(pouchId : String) {
-        viewModelScope.launch (Dispatchers.IO) {
-            val inPouchresult = pouchesRepository.getInPouch(pouchId).getOrNull()
 
-            if (inPouchresult != null) {
-                saveInPouch(inPouchresult)
-            }
+    fun loadInPouch(pouchId: String) {
+        viewModelScope.launch {
+            val webPouch = withContext(Dispatchers.IO) {
+                pouchesRepository.getInPouch(pouchId).getOrNull()
+            } ?: return@launch
 
-        }
-    }
-
-    //Вот это в отдельный юзкейс
-    //saveMapsUseCase, видимо, надо переименовать и переделать
-    private fun saveInPouch(webPouch: InPouch) {
-        if (webPouch.maps.isNotEmpty()) {
-            viewModelScope.launch(Dispatchers.IO) {
-                val mapsWithLocalUrls = saveMapsUseCase(webPouch.maps)
-                    .map { ent ->
-
-                        MapInPouchModel(
-                            ent.id,
-                            ent.name,
-                            ent.imagePath
-                        )
+            val mapsWithLocalUrls = withContext(Dispatchers.IO) {
+                if (webPouch.maps.isNotEmpty()) {
+                    saveMapsUseCase(webPouch.maps).map { ent ->
+                        MapInPouchModel(ent.id, ent.name, ent.imagePath)
                     }
-
-                inPouch.value = InPouch(
-                    buildings = webPouch.buildings,
-                    maps = mapsWithLocalUrls,
-                    diamonds = webPouch.diamonds
-                )
+                } else emptyList()
             }
 
-        }
-
-        if (webPouch.buildings.isNotEmpty()) {
-            viewModelScope.launch(Dispatchers.IO) {
-                val buildingsWithLocalUrls = saveBuildingsUseCase(webPouch.buildings)
-
-                inPouch.value = inPouch.value?.copy(buildings = buildingsWithLocalUrls)
+            val buildingsWithLocalUrls = withContext(Dispatchers.IO) {
+                if (webPouch.buildings.isNotEmpty()) {
+                    saveBuildingsUseCase(webPouch.buildings) // уже вернёт с rooms/gardens
+                } else emptyList()
             }
+
+            // один раз выставили стейт — и всё
+            inPouch.value = InPouch(
+                buildings = buildingsWithLocalUrls,
+                maps = mapsWithLocalUrls,
+                diamonds = webPouch.diamonds
+                // + остальные поля, если есть
+            )
         }
     }
 }
