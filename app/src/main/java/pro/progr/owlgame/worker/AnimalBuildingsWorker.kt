@@ -57,7 +57,10 @@ suspend fun doAnimalBuildingsWork(applicationContext: Context,
 
             val animal = SearchAnimalsUseCase(
                 animalRepository,
-                BuildingsRepository(db.buildingsDao(), db.buildingWithAnimalDao())
+                BuildingsRepository(db, db.buildingsDao(),
+                    db.gardensDao(),
+                    db.roomsDao(),
+                    db.buildingWithAnimalDao())
             )()
 
             if (animal != null && animal.status == AnimalStatus.SEARCHING) {
