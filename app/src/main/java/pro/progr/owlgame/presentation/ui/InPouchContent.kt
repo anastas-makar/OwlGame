@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.Card
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -29,6 +30,7 @@ import pro.progr.owlgame.data.web.Pouch
 import pro.progr.owlgame.presentation.ui.model.InPouchDescription
 import pro.progr.owlgame.presentation.viewmodel.InPouchViewModel
 
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun InPouchContent(
     navController: NavHostController,
@@ -113,7 +115,10 @@ fun InPouchContent(
                 Card(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(16.dp)
+                        .padding(16.dp),
+                    onClick = {
+                        navController.navigate("building/${building.id}")
+                    }
                 ) {
                     Box {
                         Text(
