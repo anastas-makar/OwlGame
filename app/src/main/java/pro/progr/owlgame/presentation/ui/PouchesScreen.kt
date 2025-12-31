@@ -34,12 +34,24 @@ fun PouchesScreen(
     pouchesViewModel: PouchesViewModel,
     inPouchViewModel: InPouchViewModel
 ) {
-    pouchesViewModel.loadPouches()
+    LaunchedEffect(Unit) {
+        pouchesViewModel.loadPouches()
+    }
 
     val pouches = pouchesViewModel.pouches.value
-    if (pouches.isEmpty()) return // Отображение загрузки, если данные ещё не загружены
+    if (pouches.isEmpty()) return
 
-    val pouchesRows = remember {
+    val isSelected = pouchesViewModel.isPouchSelected.value
+    val selectedPouch = pouchesViewModel.selectedPouch.value
+
+    // грузим только когда реально выбран мешочек
+    LaunchedEffect(isSelected, selectedPouch?.id) {
+        if (isSelected) {
+            selectedPouch?.id?.let { inPouchViewModel.loadInPouch(it) }
+        }
+    }
+
+    val pouchesRows = remember(pouches) {
         listOf(
             PouchesList(pouches.shuffled()),
             PouchesList(pouches.shuffled()),
@@ -54,10 +66,8 @@ fun PouchesScreen(
             }
         },
         content = { innerPadding ->
-            if (pouchesViewModel.isPouchSelected.value) {
-                pouchesViewModel.selectedPouch.value?.let { p ->
-                    inPouchViewModel.loadInPouch(p.id)
-
+            if (isSelected) {
+                selectedPouch?.let { p ->
                     InPouchContent(navController, inPouchViewModel, p)
                 }
             } else {
@@ -68,16 +78,13 @@ fun PouchesScreen(
                 ) {
                     repeat(3) { index ->
                         AnimatedPouchesColumn(
-                            modifier = Modifier
-                                .weight(1f)
-                                .fillMaxHeight(),
+                            modifier = Modifier.weight(1f).fillMaxHeight(),
                             pouches = pouchesRows[index],
                             direction = if (index % 2 == 0) Direction.DOWN else Direction.UP,
                             pouchesViewModel = pouchesViewModel
                         )
                     }
                 }
-
             }
         }
     )

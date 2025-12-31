@@ -4,6 +4,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import pro.progr.owlgame.data.repository.PouchesRepository
@@ -21,8 +22,18 @@ class InPouchViewModel @Inject constructor(
 
     val inPouch = mutableStateOf<InPouch?>(null)
 
+    private var lastLoadedPouchId: String? = null
+    private var loadJob: Job? = null
+
     fun loadInPouch(pouchId: String) {
-        viewModelScope.launch {
+        // если уже загружено и стейт не пустой — не повторяем
+        if (pouchId == lastLoadedPouchId && inPouch.value != null) return
+
+        loadJob?.cancel()
+        loadJob = viewModelScope.launch {
+            // опционально: показать "загрузка"
+            inPouch.value = null
+
             val webPouch = withContext(Dispatchers.IO) {
                 pouchesRepository.getInPouch(pouchId).getOrNull()
             } ?: return@launch
@@ -37,17 +48,17 @@ class InPouchViewModel @Inject constructor(
 
             val buildingsWithLocalUrls = withContext(Dispatchers.IO) {
                 if (webPouch.buildings.isNotEmpty()) {
-                    saveBuildingsUseCase(webPouch.buildings) // уже вернёт с rooms/gardens
+                    saveBuildingsUseCase(webPouch.buildings)
                 } else emptyList()
             }
 
-            // один раз выставили стейт — и всё
             inPouch.value = InPouch(
                 buildings = buildingsWithLocalUrls,
                 maps = mapsWithLocalUrls,
                 diamonds = webPouch.diamonds
-                // + остальные поля, если есть
             )
+            lastLoadedPouchId = pouchId
         }
     }
 }
+
