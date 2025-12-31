@@ -10,15 +10,18 @@ import androidx.navigation.navArgument
 import pro.progr.diamondapi.PurchaseInterface
 import pro.progr.owlgame.dagger.OwlGameComponent
 import pro.progr.owlgame.presentation.ui.AnimalSearchingScreen
+import pro.progr.owlgame.presentation.ui.BuildingScreen
 import pro.progr.owlgame.presentation.ui.MapScreen
 import pro.progr.owlgame.presentation.ui.MapsListScreen
 import pro.progr.owlgame.presentation.ui.PouchesScreen
 import pro.progr.owlgame.presentation.viewmodel.AnimalViewModel
+import pro.progr.owlgame.presentation.viewmodel.BuildingViewModel
 import pro.progr.owlgame.presentation.viewmodel.InPouchViewModel
 import pro.progr.owlgame.presentation.viewmodel.MapViewModel
 import pro.progr.owlgame.presentation.viewmodel.MapsViewModel
 import pro.progr.owlgame.presentation.viewmodel.PouchesViewModel
 import pro.progr.owlgame.presentation.viewmodel.dagger.DaggerAnimalViewModel
+import pro.progr.owlgame.presentation.viewmodel.dagger.DaggerBuildingViewModel
 import pro.progr.owlgame.presentation.viewmodel.dagger.DaggerMapViewModel
 import pro.progr.owlgame.presentation.viewmodel.dagger.DaggerMapsViewModel
 import pro.progr.owlgame.presentation.viewmodel.dagger.DaggerPouchesViewModel
@@ -58,6 +61,18 @@ fun OwlNavigation(startDestination : String = "towns",
                 MapScreen(navController,
                     diamondDao,
                     mapViewModel)
+            }
+        }
+        composable(
+            route = "building/{id}",
+            arguments = listOf(navArgument("id") { type = NavType.StringType })) { backStackEntry ->
+            val id = backStackEntry.arguments?.getString("id")
+
+            id?.let {
+                val buildingViewModel: BuildingViewModel = DaggerBuildingViewModel(component, id)
+                BuildingScreen(navController,
+                    diamondDao,
+                    buildingViewModel)
             }
         }
         //animal_searching

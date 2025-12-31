@@ -21,6 +21,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Card
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Scaffold
 import androidx.compose.material.SnackbarHost
@@ -146,7 +147,9 @@ fun MapScreen(
                             horizontalArrangement = Arrangement.spacedBy(8.dp)
                         ) {
                             row.forEach { b ->
-                                BuildingCard(b, Modifier.weight(1f))
+                                BuildingCard(b,
+                                    Modifier.weight(1f),
+                                    navController)
                             }
                             // добиваем пустые ячейки чтобы сетка была ровной
                             repeat(3 - row.size) { Spacer(Modifier.weight(1f)) }
@@ -224,9 +227,11 @@ fun MapScreen(
     )
 }
 
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
-private fun BuildingCard(building: BuildingModel, modifier: Modifier = Modifier) {
-    Card(modifier = modifier) {
+private fun BuildingCard(building: BuildingModel, modifier: Modifier = Modifier,
+                         navHostController: NavHostController) {
+    Card(modifier = modifier, onClick = {navHostController.navigate("building/${building.id}")}) {
         Column {
             AsyncImage(
                 model = ImageRequest.Builder(LocalContext.current)

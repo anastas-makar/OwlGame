@@ -7,6 +7,7 @@ import pro.progr.authapi.AuthInterface
 import pro.progr.owlgame.data.dagger.DatabaseModule
 import pro.progr.owlgame.data.dagger.NetworkModule
 import pro.progr.owlgame.presentation.viewmodel.dagger.AnimalViewModelFactory
+import pro.progr.owlgame.presentation.viewmodel.dagger.BuildingViewModelFactory
 import pro.progr.owlgame.presentation.viewmodel.dagger.MapViewModelFactory
 import pro.progr.owlgame.presentation.viewmodel.dagger.PouchViewModelFactory
 import pro.progr.owlgame.presentation.viewmodel.dagger.MapsViewModelFactory
@@ -24,6 +25,8 @@ interface OwlGameComponent {
     fun pouchViewModelFactory(): PouchViewModelFactory
 
     fun mapViewModelFactory(): MapViewModelFactory
+
+    fun buildingViewModelFactory(): BuildingViewModelFactory
 
     fun animalViewModelFactory(): AnimalViewModelFactory
 
