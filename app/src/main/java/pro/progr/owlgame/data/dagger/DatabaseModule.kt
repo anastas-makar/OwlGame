@@ -5,6 +5,7 @@ import dagger.Module
 import dagger.Provides
 import pro.progr.owlgame.data.db.AnimalDao
 import pro.progr.owlgame.data.db.BuildingWithAnimalDao
+import pro.progr.owlgame.data.db.BuildingWithDataDao
 import pro.progr.owlgame.data.db.BuildingsDao
 import pro.progr.owlgame.data.db.GardensDao
 import pro.progr.owlgame.data.db.MapDao
@@ -36,6 +37,11 @@ object DatabaseModule {
     @Provides
     fun provideBuildingWithAnimalDao(database: OwlGameDatabase): BuildingWithAnimalDao {
         return database.buildingWithAnimalDao()
+    }
+
+    @Provides
+    fun provideBuildingWithDataDao(database: OwlGameDatabase): BuildingWithDataDao {
+        return database.buildingWithDataDao()
     }
 
     @Provides
