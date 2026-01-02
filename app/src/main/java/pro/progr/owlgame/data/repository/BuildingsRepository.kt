@@ -6,6 +6,8 @@ import kotlinx.coroutines.flow.map
 import pro.progr.owlgame.data.db.Building
 import pro.progr.owlgame.data.db.BuildingWithAnimal
 import pro.progr.owlgame.data.db.BuildingWithAnimalDao
+import pro.progr.owlgame.data.db.BuildingWithData
+import pro.progr.owlgame.data.db.BuildingWithDataDao
 import pro.progr.owlgame.data.db.BuildingsDao
 import pro.progr.owlgame.data.db.Garden
 import pro.progr.owlgame.data.db.GardensDao
@@ -19,7 +21,8 @@ class BuildingsRepository @Inject constructor(
     private val buildingsDao : BuildingsDao,
     private val gardensDao: GardensDao,
     private val roomsDao: RoomsDao,
-    private val buildingWithAnimalDao: BuildingWithAnimalDao
+    private val buildingWithAnimalDao: BuildingWithAnimalDao,
+    private val buildingWithDataDao: BuildingWithDataDao
     ) {
    fun getAvailableBuildings() : Flow<List<Building>> {
 
@@ -63,4 +66,7 @@ class BuildingsRepository @Inject constructor(
         gardensDao.insert(gardens)       // потом зависимые сущности
         roomsDao.insert(rooms)
     }
+
+    fun observe(buildingId: String): Flow<BuildingWithData> =
+        buildingWithDataDao.observeBuildingWithData(buildingId)
 }

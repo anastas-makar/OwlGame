@@ -60,7 +60,8 @@ suspend fun doAnimalBuildingsWork(applicationContext: Context,
                 BuildingsRepository(db, db.buildingsDao(),
                     db.gardensDao(),
                     db.roomsDao(),
-                    db.buildingWithAnimalDao())
+                    db.buildingWithAnimalDao(),
+                    db.buildingWithDataDao())
             )()
 
             if (animal != null && animal.status == AnimalStatus.SEARCHING) {
