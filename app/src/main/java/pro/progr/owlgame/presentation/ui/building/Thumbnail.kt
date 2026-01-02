@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -26,7 +27,8 @@ fun Thumbnail(
             .clickable(onClick = onClick)
             .size(72.dp)
             .clip(RoundedCornerShape(12.dp))
-            .border(borderWidth, Color.DarkGray, RoundedCornerShape(12.dp))
+            .border(borderWidth, if (isSelected)  MaterialTheme.colors.primary
+                else Color.LightGray, RoundedCornerShape(12.dp))
     ) {
         coil.compose.AsyncImage(
             model = imageUrl,
