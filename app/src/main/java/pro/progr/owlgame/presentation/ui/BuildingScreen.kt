@@ -1,7 +1,12 @@
 package pro.progr.owlgame.presentation.ui
 
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import pro.progr.diamondapi.PurchaseInterface
@@ -15,7 +20,21 @@ fun BuildingScreen(
     buildingViewModel: BuildingViewModel
 ) {
     val data by buildingViewModel.observe().collectAsStateWithLifecycle(initialValue = null)
+
+
     data?.let { bWithData ->
-        InBuilding(bWithData)
+        Scaffold(
+            topBar = {
+                Box(modifier = Modifier.statusBarsPadding()) {
+                    BuildingBar(navController, bWithData)
+                }
+            },
+            content = { innerPadding ->
+                Box(modifier = Modifier.padding(innerPadding)) {
+                    InBuilding(bWithData)
+                }
+            }
+        )
+
     }
 }
