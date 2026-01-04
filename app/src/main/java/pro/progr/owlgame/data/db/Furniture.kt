@@ -10,7 +10,6 @@ data class Furniture (
     val name : String,
     val price : Int = 0,
     val imageUrl : String,
-    val buildingId : String? = null,
     val roomId : String? = null,
     val x : Float = 0f,
     val y : Float = 0f,

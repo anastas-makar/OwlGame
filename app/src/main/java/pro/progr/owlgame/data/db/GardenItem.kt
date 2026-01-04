@@ -10,7 +10,6 @@ data class GardenItem (
     val name : String,
     val description : String,
     val imageUrl : String,
-    val buildingId : String? = null,
     val gardenId : String? = null,
     val x : Float = 0f,
     val y : Float = 0f,
