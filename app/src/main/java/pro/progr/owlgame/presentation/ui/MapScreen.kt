@@ -1,6 +1,7 @@
 package pro.progr.owlgame.presentation.ui
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -29,13 +30,18 @@ import androidx.compose.material.SnackbarHostState
 import androidx.compose.material.Text
 import androidx.compose.material.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
@@ -46,6 +52,8 @@ import coil.request.ImageRequest
 import pro.progr.diamondapi.PurchaseInterface
 import pro.progr.owlgame.data.db.BuildingType
 import pro.progr.owlgame.data.db.MapType
+import pro.progr.owlgame.presentation.ui.fab.ExpandableFloatingActionButton
+import pro.progr.owlgame.presentation.ui.fab.FabAction
 import pro.progr.owlgame.presentation.ui.model.BuildingModel
 import pro.progr.owlgame.presentation.ui.model.MapData
 import pro.progr.owlgame.presentation.viewmodel.MapViewModel
@@ -64,10 +72,54 @@ fun MapScreen(
     val scope = rememberCoroutineScope()
     val diamondBalance = diamondDao.getDiamondsCount().collectAsState(initial = 0)
 
+    var fabExpanded by rememberSaveable { mutableStateOf(false) }
+
+    // Показываем FAB только когда реально можно строить (подстрой под свою логику)
+    val showBuildFab =
+        map.value.id.isNotEmpty() &&
+                map.value.type == MapType.TOWN &&
+                !foundTown.value &&
+                !mapViewModel.selectHouseState.value &&
+                !mapViewModel.selectFortressState.value
+
+    // Если открылись оверлеи — FAB-меню закрываем
+    LaunchedEffect(
+        foundTown.value,
+        mapViewModel.selectHouseState.value,
+        mapViewModel.selectFortressState.value
+    ) {
+        if (foundTown.value || mapViewModel.selectHouseState.value || mapViewModel.selectFortressState.value) {
+            fabExpanded = false
+        }
+    }
+
     Scaffold(
         snackbarHost = { SnackbarHost(snackbarHostState, modifier = Modifier.navigationBarsPadding()) },
         topBar = { Box(Modifier.statusBarsPadding()) { MapBar(navController, mapViewModel) } },
-        content = { innerPadding ->
+        floatingActionButton = {
+            if (showBuildFab) {
+                ExpandableFloatingActionButton(
+                    expanded = fabExpanded,
+                    onExpandedChange = { fabExpanded = it },
+                    actions = listOf(
+                        FabAction(
+                            text = "Построить дом",
+                            color = Color.DarkGray,
+                            onClick = { mapViewModel.selectHouseState.value = true }
+                        ),
+                        FabAction(
+                            text = "Построить замок",
+                            color = Color.DarkGray,
+                            onClick = { mapViewModel.selectFortressState.value = true }
+                        )
+                    ),
+                    modifier = Modifier.navigationBarsPadding()
+                )
+            }
+        }
+    ) { innerPadding ->
+
+        Box(Modifier.fillMaxSize()) {
 
             LazyColumn(
                 modifier = Modifier
@@ -76,7 +128,7 @@ fun MapScreen(
                 contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp),
                 verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
-                // 1) Хедер/кнопки
+                // 1) Хедер
                 item {
                     when {
                         map.value.id.isEmpty() -> Text("Загрузка…")
@@ -90,36 +142,18 @@ fun MapScreen(
                             ) { Text("Основать город") }
                         }
                         else -> {
-                            Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(14.dp)) {
-                                Button(
-                                    colors = ButtonDefaults.buttonColors(
-                                        backgroundColor = Color.DarkGray, contentColor = Color.White
-                                    ),
-                                    onClick = { mapViewModel.selectHouseState.value = true },
-                                    modifier = Modifier.weight(1f)
-                                ) { Text("Построить дом") }
-
-                                Button(
-                                    colors = ButtonDefaults.buttonColors(
-                                        backgroundColor = Color.DarkGray, contentColor = Color.White
-                                    ),
-                                    onClick = { mapViewModel.selectFortressState.value = true },
-                                    modifier = Modifier.weight(1f)
-                                ) { Text("Построить замок") }
-                            }
+                            // Раньше тут были кнопки Дом/Замок — теперь ничего
+                            Spacer(Modifier.height(0.dp))
                         }
                     }
                 }
 
-                // 2) Карта/дрэг-область — ДАЙ ЕЙ ГРАНИЦУ ПО ВЫСОТЕ!
                 item {
-                    // если DraggableImages тянет высоту, ограничь:
                     Box(Modifier.fillMaxWidth().heightIn(max = 420.dp)) {
                         DraggableImages(map, mapViewModel)
                     }
                 }
 
-                // 3) Заголовок улицы
                 if (map.value.type == MapType.TOWN) {
                     item {
                         Text(
@@ -129,16 +163,14 @@ fun MapScreen(
                         )
                     }
 
-                    // 4) Сетка как строки по 3
-                    val buildings = map.value.buildings
-                        .map { s ->
-                            BuildingModel(
-                                s.building.id,
-                                s.building.name,
-                                s.building.imageUrl,
-                                s.animal
-                            )
-                        }
+                    val buildings = map.value.buildings.map { s ->
+                        BuildingModel(
+                            s.building.id,
+                            s.building.name,
+                            s.building.imageUrl,
+                            s.animal
+                        )
+                    }
                     val rows = buildings.chunked(3)
 
                     items(rows) { row ->
@@ -147,18 +179,27 @@ fun MapScreen(
                             horizontalArrangement = Arrangement.spacedBy(8.dp)
                         ) {
                             row.forEach { b ->
-                                BuildingCard(b,
-                                    Modifier.weight(1f),
-                                    navController)
+                                BuildingCard(b, Modifier.weight(1f), navController)
                             }
-                            // добиваем пустые ячейки чтобы сетка была ровной
                             repeat(3 - row.size) { Spacer(Modifier.weight(1f)) }
                         }
                     }
                 }
             }
 
-            // Оверлеи поверх — оставляем как было:
+            // Scrim для FAB-меню (закрывать по тапу вне)
+            if (fabExpanded) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(Color.Black.copy(alpha = 0.35f))
+                        .pointerInput(Unit) {
+                            detectTapGestures(onTap = { fabExpanded = false })
+                        }
+                )
+            }
+
+            // Оверлеи (как у тебя было)
             if (foundTown.value) {
                 Box(
                     modifier = Modifier
@@ -213,6 +254,7 @@ fun MapScreen(
                     buildingType = BuildingType.HOUSE
                 )
             }
+
             if (mapViewModel.selectFortressState.value) {
                 SelectBuildingScreen(
                     mapViewModel = mapViewModel,
@@ -224,7 +266,7 @@ fun MapScreen(
                 )
             }
         }
-    )
+    }
 }
 
 @OptIn(ExperimentalMaterialApi::class)
