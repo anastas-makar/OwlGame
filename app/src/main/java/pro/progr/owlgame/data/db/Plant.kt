@@ -3,8 +3,8 @@ package pro.progr.owlgame.data.db
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "garden_items")
-data class GardenItem (
+@Entity(tableName = "plants")
+data class Plant (
     @PrimaryKey
     val id : String,
     val name : String,
@@ -15,7 +15,9 @@ data class GardenItem (
     val y : Float = 0f,
     val supplyName : String,
     val supplyAmount : Int,
-    val itemType : ItemType,
+    val seedAmount : Int,
+    val seedImageUrl : String,
+    val seedName : String,
     val gardenType: GardenType,
     val readiness: Float = 0f
 )

@@ -12,6 +12,7 @@ import androidx.room.RoomDatabase
     Street::class,
     Garden::class,
     GardenItem::class,
+    Plant::class,
     Receipt::class,
     Furniture::class,
     RoomEntity::class,
