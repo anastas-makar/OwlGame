@@ -50,7 +50,7 @@ fun InBuilding(
                 .weight(1f)
         ) {
             when (val s = selected) {
-                is GalleryItem.BuildingItem -> BuildingFasade(s.building)
+                is GalleryItem.BuildingItem -> BuildingFacade(s.building)
                 is GalleryItem.RoomItem -> InRoom(s.room)
                 is GalleryItem.GardenItem -> InGarden(s.garden)
                 null -> Unit
