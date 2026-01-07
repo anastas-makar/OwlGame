@@ -7,10 +7,12 @@ import pro.progr.owlgame.data.db.AnimalDao
 import pro.progr.owlgame.data.db.BuildingWithAnimalDao
 import pro.progr.owlgame.data.db.BuildingWithDataDao
 import pro.progr.owlgame.data.db.BuildingsDao
+import pro.progr.owlgame.data.db.GardenItemsDao
 import pro.progr.owlgame.data.db.GardensDao
 import pro.progr.owlgame.data.db.MapDao
 import pro.progr.owlgame.data.db.OwlGameDatabase
 import pro.progr.owlgame.data.db.MapWithDataDao
+import pro.progr.owlgame.data.db.PlantsDao
 import pro.progr.owlgame.data.db.RoomsDao
 import pro.progr.owlgame.data.db.StreetsDao
 import javax.inject.Singleton
@@ -67,5 +69,15 @@ object DatabaseModule {
     @Provides
     fun provideRoomsDao(database: OwlGameDatabase): RoomsDao {
         return database.roomsDao()
+    }
+
+    @Provides
+    fun provideGardenItemsDao(database: OwlGameDatabase): GardenItemsDao {
+        return database.gardenItemsDao()
+    }
+
+    @Provides
+    fun providePlantsDao(database: OwlGameDatabase): PlantsDao {
+        return database.plantsDao()
     }
 }
