@@ -11,13 +11,17 @@ import pro.progr.owlgame.data.repository.PouchesRepository
 import pro.progr.owlgame.data.web.inpouch.InPouch
 import pro.progr.owlgame.data.web.inpouch.MapInPouchModel
 import pro.progr.owlgame.domain.SaveBuildingsUseCase
+import pro.progr.owlgame.domain.SaveGardenItemsUseCase
 import pro.progr.owlgame.domain.SaveMapsUseCase
+import pro.progr.owlgame.domain.SavePlantsUseCase
 import javax.inject.Inject
 
 class InPouchViewModel @Inject constructor(
     private val pouchesRepository: PouchesRepository,
     private val saveMapsUseCase: SaveMapsUseCase,
-    private val saveBuildingsUseCase: SaveBuildingsUseCase
+    private val saveBuildingsUseCase: SaveBuildingsUseCase,
+    private val savePlantsUseCase: SavePlantsUseCase,
+    private val saveGardenItemsUseCase: SaveGardenItemsUseCase
 ) : ViewModel() {
 
     val inPouch = mutableStateOf<InPouch?>(null)
@@ -52,9 +56,23 @@ class InPouchViewModel @Inject constructor(
                 } else emptyList()
             }
 
+            val plantsWithLocalUrls = withContext(Dispatchers.IO) {
+                if (webPouch.plants.isNotEmpty()) {
+                    savePlantsUseCase(webPouch.plants)
+                } else emptyList()
+            }
+
+            val gardenItemsWithLocalUrls = withContext(Dispatchers.IO) {
+                if (webPouch.gardenItems.isNotEmpty()) {
+                    saveGardenItemsUseCase(webPouch.gardenItems)
+                } else emptyList()
+            }
+
             inPouch.value = InPouch(
                 buildings = buildingsWithLocalUrls,
                 maps = mapsWithLocalUrls,
+                plants = plantsWithLocalUrls,
+                gardenItems = gardenItemsWithLocalUrls,
                 diamonds = webPouch.diamonds
             )
             lastLoadedPouchId = pouchId

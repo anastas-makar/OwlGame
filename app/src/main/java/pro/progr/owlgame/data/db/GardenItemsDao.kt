@@ -7,5 +7,5 @@ import androidx.room.OnConflictStrategy
 @Dao
 public interface GardenItemsDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    fun insert(buildings: List<GardenItem>): List<Long>
+    fun insert(gardenItems: List<GardenItem>): List<Long>
 }

@@ -1,11 +1,9 @@
 package pro.progr.owlgame.data.web.inpouch
 
-import pro.progr.owlgame.data.db.Plant
-
 data class InPouch(
     val buildings : List<BuildingInPouch> = emptyList(),
     val maps : List<MapInPouchModel> = emptyList(),
     val diamonds : DiamondsInPouchModel? = null,
     val gardenItems : List<GardenItemInPouch> = emptyList(),
-    val plants : List<Plant> = emptyList()
+    val plants : List<PlantInPouch> = emptyList()
 )
