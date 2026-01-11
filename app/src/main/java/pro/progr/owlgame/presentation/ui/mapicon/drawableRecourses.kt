@@ -1,4 +1,4 @@
-package pro.progr.owlgame.presentation.ui.draggableimages
+package pro.progr.owlgame.presentation.ui.mapicon
 
 import androidx.annotation.DrawableRes
 import pro.progr.owlgame.R
