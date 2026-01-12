@@ -52,7 +52,7 @@ fun InBuilding(
             when (val s = selected) {
                 is GalleryItem.BuildingItem -> BuildingFacade(s.building)
                 is GalleryItem.RoomItem -> InRoom(s.room)
-                is GalleryItem.GardenItem -> InGarden(s.garden)
+                is GalleryItem.GardenItem -> InGardenZone(s.garden)
                 null -> Unit
             }
         }
