@@ -72,7 +72,8 @@ fun OwlNavigation(startDestination : String = "towns",
                 val buildingViewModel: BuildingViewModel = DaggerBuildingViewModel(component, id)
                 BuildingScreen(navController,
                     diamondDao,
-                    buildingViewModel)
+                    buildingViewModel,
+                    component)
             }
         }
         //animal_searching

@@ -10,14 +10,17 @@ import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import pro.progr.diamondapi.PurchaseInterface
+import pro.progr.owlgame.dagger.OwlGameComponent
 import pro.progr.owlgame.presentation.ui.building.InBuilding
 import pro.progr.owlgame.presentation.viewmodel.BuildingViewModel
+import pro.progr.owlgame.presentation.viewmodel.GardenZoneViewModel
 
 @Composable
 fun BuildingScreen(
     navController: NavHostController,
     diamondDao: PurchaseInterface,
-    buildingViewModel: BuildingViewModel
+    buildingViewModel: BuildingViewModel,
+    component: OwlGameComponent
 ) {
     val data by buildingViewModel.observe().collectAsStateWithLifecycle(initialValue = null)
 
@@ -31,7 +34,7 @@ fun BuildingScreen(
             },
             content = { innerPadding ->
                 Box(modifier = Modifier.padding(innerPadding)) {
-                    InBuilding(bWithData)
+                    InBuilding(bWithData, component)
                 }
             }
         )

@@ -22,18 +22,21 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
+import pro.progr.owlgame.dagger.OwlGameComponent
 import pro.progr.owlgame.data.db.Garden
 import pro.progr.owlgame.data.db.GardenItem
 import pro.progr.owlgame.data.db.GardenType
 import pro.progr.owlgame.presentation.ui.mapicon.DraggableImageOverlay
 import pro.progr.owlgame.presentation.ui.mapicon.gardenItemIconRes
 import pro.progr.owlgame.presentation.viewmodel.GardenZoneViewModel
+import pro.progr.owlgame.presentation.viewmodel.dagger.DaggerGardenZoneViewModel
 
 @Composable
 fun GardenItems(
     garden: Garden,
-    vm: GardenZoneViewModel
+    component: OwlGameComponent
 ) {
+    val vm = DaggerGardenZoneViewModel<GardenZoneViewModel>(component, garden.id)
     val items = vm.gardenItems.collectAsState(initial = emptyList())
 
     val sorted = remember(items.value) {
