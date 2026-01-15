@@ -14,10 +14,10 @@ class PlantsRepository @Inject constructor(
     }
 
     fun observeByGardenId(gardenId: String) : Flow<List<Plant>> {
-        TODO("Not yet implemented")
+        return plantsDao.observeByGardenId(gardenId)
     }
 
     fun updatePos(id: String, x: Float, y: Float) {
-        TODO("Not yet implemented")
+        plantsDao.updatePosition(id, x, y)
     }
 }

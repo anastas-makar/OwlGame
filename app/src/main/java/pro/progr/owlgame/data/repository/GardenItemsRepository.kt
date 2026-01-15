@@ -13,10 +13,10 @@ class GardenItemsRepository @Inject constructor(
     }
 
     fun observeByGardenId(gardenId: String) : Flow<List<GardenItem>> {
-        TODO("Not yet implemented")
+        return gardenItemsDao.observeByGardenId(gardenId)
     }
 
     fun updatePos(id: String, x: Float, y: Float) {
-        TODO("Not yet implemented")
+        gardenItemsDao. updatePosition(id, x, y)
     }
 }
