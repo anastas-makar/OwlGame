@@ -18,6 +18,5 @@ data class Plant (
     val seedAmount : Int,
     val seedImageUrl : String,
     val seedName : String,
-    val gardenType: GardenType,
     val readiness: Float = 0f
 )

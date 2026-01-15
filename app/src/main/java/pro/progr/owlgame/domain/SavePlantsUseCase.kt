@@ -26,8 +26,7 @@ class SavePlantsUseCase @Inject constructor(private val plantsRepository: Plants
                     supplyAmount = pConv.supplyAmount,
                     seedName = pConv.seedName,
                     seedAmount = pConv.seedAmount,
-                    seedImageUrl = pConv.seedImageUrl,
-                    gardenType = pConv.gardenType
+                    seedImageUrl = pConv.seedImageUrl
                 )
             }
         )

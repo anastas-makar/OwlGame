@@ -12,6 +12,5 @@ data class PlantInPouch (
     val supplyAmount : Int,
     val seedAmount : Int,
     val seedImageUrl : String,
-    val seedName : String,
-    val gardenType: GardenType
+    val seedName : String
 )
