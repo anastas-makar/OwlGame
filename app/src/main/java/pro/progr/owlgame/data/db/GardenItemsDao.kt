@@ -11,9 +11,9 @@ public interface GardenItemsDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insert(gardenItems: List<GardenItem>): List<Long>
 
-    @Query("UPDATE garden_items SET gardenId=:gardenId," +
-            "x=:x, y=:y WHERE id=:itemId")
-    fun setToGarden(itemId: String, gardenId: String, x: Float, y: Float): Int
+    @Query("UPDATE garden_items SET gardenId=:gardenId " +
+            " WHERE id=:itemId")
+    fun setToGarden(itemId: String, gardenId: String): Int
 
     @Query("UPDATE garden_items SET x=:x, y=:y WHERE id=:itemId")
     fun updatePosition(itemId: String, x: Float, y: Float): Int

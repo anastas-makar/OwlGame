@@ -17,7 +17,15 @@ class PlantsRepository @Inject constructor(
         return plantsDao.observeByGardenId(gardenId)
     }
 
+    fun getAvailablePlants() : Flow<List<Plant>> {
+        return plantsDao.getAvailable()
+    }
+
     fun updatePos(id: String, x: Float, y: Float) {
         plantsDao.updatePosition(id, x, y)
+    }
+
+    fun setPlant(itemId: String, gardenId: String) {
+        plantsDao.setToGarden(itemId, gardenId)
     }
 }
