@@ -73,6 +73,7 @@ fun GardenItems(
                     keyOf = { it.id },
                     x01Of = { it.x },
                     y01Of = { it.y },
+                    isNewOf = { it.x == 0f && it.y == 0f},
                     iconPainterOf = { painterResource(gardenItemIconRes(it.itemType)) },
                     onCommit01 = { item, x, y -> vm.updateGardenItemPos(item.id, x, y) },
                     modifier = Modifier.fillMaxWidth()
