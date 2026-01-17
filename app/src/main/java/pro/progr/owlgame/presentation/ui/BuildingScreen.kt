@@ -46,25 +46,14 @@ fun BuildingScreen(
                     ExpandableFloatingActionButton(
                         expanded = fabViewModel.fabExpanded.value,
                         onExpandedChange = { fabViewModel.fabExpanded.value = it },
-                        actions = listOf(
-                            FabAction(
-                                text = "Построить дом",
-                                color = Color.DarkGray,
-                                onClick = {  }
-                            ),
-                            FabAction(
-                                text = "Построить замок",
-                                color = Color.DarkGray,
-                                onClick = {  }
-                            )
-                        ),
+                        actions = fabViewModel.fabActions.value,
                         modifier = Modifier.navigationBarsPadding()
                     )
                 }
             },
             content = { innerPadding ->
                 Box(modifier = Modifier.padding(innerPadding)) {
-                    InBuilding(bWithData, component)
+                    InBuilding(bWithData, component, fabViewModel)
 
                     if (fabViewModel.fabExpanded.value) {
                         Box(

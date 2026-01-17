@@ -18,6 +18,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
@@ -26,6 +27,8 @@ import pro.progr.owlgame.dagger.OwlGameComponent
 import pro.progr.owlgame.data.db.Garden
 import pro.progr.owlgame.data.db.GardenItem
 import pro.progr.owlgame.data.db.GardenType
+import pro.progr.owlgame.presentation.ui.fab.FabAction
+import pro.progr.owlgame.presentation.ui.fab.FabViewModel
 import pro.progr.owlgame.presentation.ui.mapicon.DraggableImageOverlay
 import pro.progr.owlgame.presentation.ui.mapicon.gardenItemIconRes
 import pro.progr.owlgame.presentation.viewmodel.GardenZoneViewModel
@@ -34,10 +37,20 @@ import pro.progr.owlgame.presentation.viewmodel.dagger.DaggerGardenZoneViewModel
 @Composable
 fun GardenItems(
     garden: Garden,
-    component: OwlGameComponent
+    component: OwlGameComponent,
+    fabViewModel: FabViewModel
 ) {
     val vm = DaggerGardenZoneViewModel<GardenZoneViewModel>(component, garden.id)
     val items = vm.gardenItems.collectAsState(initial = emptyList())
+    fabViewModel.fabActions.value = listOf(
+        FabAction(
+            text = "Посадить",
+            color = Color.DarkGray,
+            onClick = {
+
+            }
+        )
+    )
 
     val sorted = remember(items.value) {
         items.value

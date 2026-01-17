@@ -13,6 +13,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import pro.progr.owlgame.dagger.OwlGameComponent
 import pro.progr.owlgame.data.db.BuildingWithData
+import pro.progr.owlgame.presentation.ui.fab.FabViewModel
 import pro.progr.owlgame.presentation.ui.model.GalleryItem
 import pro.progr.owlgame.presentation.viewmodel.GardenZoneViewModel
 
@@ -20,6 +21,7 @@ import pro.progr.owlgame.presentation.viewmodel.GardenZoneViewModel
 fun InBuilding(
     data: BuildingWithData,
     component: OwlGameComponent,
+    fabViewModel: FabViewModel,
     modifier: Modifier = Modifier) {
     val rooms = remember(data.rooms) { data.rooms.sortedBy { it.roomNumber } }
     val gardens = remember(data.gardens) { data.gardens.sortedBy { it.gardenNumber } }
@@ -55,7 +57,7 @@ fun InBuilding(
             when (val s = selected) {
                 is GalleryItem.BuildingItem -> BuildingFacade(s.building)
                 is GalleryItem.RoomItem -> InRoom(s.room)
-                is GalleryItem.GardenItem -> InGardenZone(s.garden, component)
+                is GalleryItem.GardenItem -> InGardenZone(s.garden, component, fabViewModel)
                 null -> Unit
             }
         }
