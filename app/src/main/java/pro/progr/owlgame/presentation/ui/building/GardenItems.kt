@@ -90,7 +90,7 @@ fun GardenItems(
     }
 
     if (vm.selectGardenItemsState.value) {
-        SelectGardenItemScreen(vm)
+        SelectGardenItemScreen(vm, fabViewModel)
     }
 }
 
