@@ -2,6 +2,7 @@ package pro.progr.owlgame.presentation.navigation
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -14,6 +15,7 @@ import pro.progr.owlgame.presentation.ui.BuildingScreen
 import pro.progr.owlgame.presentation.ui.MapScreen
 import pro.progr.owlgame.presentation.ui.MapsListScreen
 import pro.progr.owlgame.presentation.ui.PouchesScreen
+import pro.progr.owlgame.presentation.ui.fab.FabViewModel
 import pro.progr.owlgame.presentation.viewmodel.AnimalViewModel
 import pro.progr.owlgame.presentation.viewmodel.BuildingViewModel
 import pro.progr.owlgame.presentation.viewmodel.InPouchViewModel
@@ -32,6 +34,7 @@ fun OwlNavigation(startDestination : String = "towns",
                   diamondDao: PurchaseInterface,
                   component: OwlGameComponent) {
     val navController = rememberNavController()
+    val fabViewModel = remember { FabViewModel() }
 
     val mapsViewModel: MapsViewModel = DaggerMapsViewModel(component)
 
@@ -73,6 +76,7 @@ fun OwlNavigation(startDestination : String = "towns",
                 BuildingScreen(navController,
                     diamondDao,
                     buildingViewModel,
+                    fabViewModel,
                     component)
             }
         }
