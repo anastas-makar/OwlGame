@@ -45,7 +45,10 @@ class GardenZoneViewModel @Inject constructor(
     }
 
     fun setPlant(plant: Plant) {
-        plantsRepo.setPlant(plant.id, gardenId)
+        viewModelScope.launch(Dispatchers.IO) {
+            plantsRepo.setPlant(plant.id, gardenId)
+        }
+        selectGardenItemsState.value = false
     }
 
     fun getAvailableGardenItems() : Flow<List<GardenItem>> {
@@ -53,6 +56,9 @@ class GardenZoneViewModel @Inject constructor(
     }
 
     fun setGardenItem(gardenItem: GardenItem) {
-        gardenItemsRepo.setGardenItem(gardenItem.id, gardenId)
+        viewModelScope.launch(Dispatchers.IO) {
+            gardenItemsRepo.setGardenItem(gardenItem.id, gardenId)
+        }
+        selectGardenItemsState.value = false
     }
 }

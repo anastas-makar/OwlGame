@@ -24,7 +24,7 @@ class GardenItemsRepository @Inject constructor(
         return gardenItemsDao.getAvailable()
     }
 
-    fun setGardenItem(id: String, gardenId: String) {
+    suspend fun setGardenItem(id: String, gardenId: String) {
         gardenItemsDao.setToGarden(id, gardenId)
     }
 }

@@ -27,6 +27,7 @@ import pro.progr.owlgame.dagger.OwlGameComponent
 import pro.progr.owlgame.data.db.Garden
 import pro.progr.owlgame.data.db.GardenItem
 import pro.progr.owlgame.data.db.GardenType
+import pro.progr.owlgame.presentation.ui.SelectGardenItemScreen
 import pro.progr.owlgame.presentation.ui.fab.FabAction
 import pro.progr.owlgame.presentation.ui.fab.FabViewModel
 import pro.progr.owlgame.presentation.ui.mapicon.DraggableImageOverlay
@@ -47,7 +48,7 @@ fun GardenItems(
             text = "Посадить",
             color = Color.DarkGray,
             onClick = {
-
+                vm.selectGardenItemsState.value = true
             }
         )
     )
@@ -86,6 +87,10 @@ fun GardenItems(
                 repeat(3 - row.size) { Spacer(Modifier.weight(1f)) }
             }
         }
+    }
+
+    if (vm.selectGardenItemsState.value) {
+        SelectGardenItemScreen(vm)
     }
 }
 
