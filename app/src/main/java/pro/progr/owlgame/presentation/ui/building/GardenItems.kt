@@ -41,7 +41,7 @@ fun GardenItems(
     component: OwlGameComponent,
     fabViewModel: FabViewModel
 ) {
-    val vm = DaggerGardenZoneViewModel<GardenZoneViewModel>(component, garden.id)
+    val vm = DaggerGardenZoneViewModel<GardenZoneViewModel>(component, garden.id, garden.gardenType)
     val items = vm.gardenItems.collectAsState(initial = emptyList())
     fabViewModel.fabActions.value = listOf(
         FabAction(

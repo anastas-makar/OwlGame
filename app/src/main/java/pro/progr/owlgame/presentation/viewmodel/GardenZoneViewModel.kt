@@ -12,6 +12,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import pro.progr.owlgame.data.db.GardenItem
+import pro.progr.owlgame.data.db.GardenType
 import pro.progr.owlgame.data.db.Plant
 import pro.progr.owlgame.data.repository.GardenItemsRepository
 import pro.progr.owlgame.data.repository.PlantsRepository
@@ -20,6 +21,7 @@ class GardenZoneViewModel @Inject constructor(
     private val gardenItemsRepo: GardenItemsRepository,
     private val plantsRepo: PlantsRepository,
     private val gardenId: String,
+    private val gardenType: GardenType
 ) : ViewModel() {
 
     val selectGardenItemsState: MutableState<Boolean> = mutableStateOf(false)
@@ -52,7 +54,7 @@ class GardenZoneViewModel @Inject constructor(
     }
 
     fun getAvailableGardenItems() : Flow<List<GardenItem>> {
-        return gardenItemsRepo.getAvailableGardenItems()
+        return gardenItemsRepo.getAvailableGardenItems(gardenType)
     }
 
     fun setGardenItem(gardenItem: GardenItem) {

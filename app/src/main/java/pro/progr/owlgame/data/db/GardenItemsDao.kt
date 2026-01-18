@@ -18,8 +18,8 @@ public interface GardenItemsDao {
     @Query("UPDATE garden_items SET x=:x, y=:y WHERE id=:itemId")
     fun updatePosition(itemId: String, x: Float, y: Float): Int
 
-    @Query("SELECT * FROM garden_items WHERE gardenId IS NULL")
-    fun getAvailable() : Flow<List<GardenItem>>
+    @Query("SELECT * FROM garden_items WHERE gardenId IS NULL AND gardenType = :gardenType")
+    fun getAvailable(gardenType: GardenType) : Flow<List<GardenItem>>
 
     @Query("SELECT * FROM garden_items WHERE gardenId=:gardenId")
     fun observeByGardenId(gardenId : String) : Flow<List<GardenItem>>

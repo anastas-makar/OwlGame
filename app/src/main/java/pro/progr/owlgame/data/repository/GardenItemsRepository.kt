@@ -3,6 +3,7 @@ package pro.progr.owlgame.data.repository
 import kotlinx.coroutines.flow.Flow
 import pro.progr.owlgame.data.db.GardenItem
 import pro.progr.owlgame.data.db.GardenItemsDao
+import pro.progr.owlgame.data.db.GardenType
 import javax.inject.Inject
 
 class GardenItemsRepository @Inject constructor(
@@ -20,8 +21,8 @@ class GardenItemsRepository @Inject constructor(
         gardenItemsDao. updatePosition(id, x, y)
     }
 
-    fun getAvailableGardenItems() : Flow<List<GardenItem>> {
-        return gardenItemsDao.getAvailable()
+    fun getAvailableGardenItems(gardenType: GardenType) : Flow<List<GardenItem>> {
+        return gardenItemsDao.getAvailable(gardenType)
     }
 
     suspend fun setGardenItem(id: String, gardenId: String) {
