@@ -17,29 +17,29 @@ import pro.progr.owlgame.data.db.Plant
 import pro.progr.owlgame.data.repository.GardenItemsRepository
 import pro.progr.owlgame.data.repository.PlantsRepository
 
-class GardenZoneViewModel @Inject constructor(
-    private val gardenItemsRepo: GardenItemsRepository,
-    private val gardenId: String,
-    private val gardenType: GardenType
+class KitchenGardenViewModel @Inject constructor(
+    private val plantsRepo: PlantsRepository,
+    private val gardenId: String
 ) : ViewModel() {
 
-    val selectGardenItemsState: MutableState<Boolean> = mutableStateOf(false)
-    val gardenItems: StateFlow<List<GardenItem>> =
-        gardenItemsRepo.observeByGardenId(gardenId)
+    val selectPlantState: MutableState<Boolean> = mutableStateOf(false)
+
+    val plants: StateFlow<List<Plant>> =
+        plantsRepo.observeByGardenId(gardenId)
             .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
-    fun updateGardenItemPos(id: String, x: Float, y: Float) {
-        viewModelScope.launch(Dispatchers.IO) { gardenItemsRepo.updatePos(id, x, y) }
+    fun updatePlantPos(id: String, x: Float, y: Float) {
+        viewModelScope.launch(Dispatchers.IO) { plantsRepo.updatePos(id, x, y) }
     }
 
-    fun getAvailableGardenItems() : Flow<List<GardenItem>> {
-        return gardenItemsRepo.getAvailableGardenItems(gardenType)
+    fun getAvailablePlants() : Flow<List<Plant>> {
+        return plantsRepo.getAvailablePlants()
     }
 
-    fun setGardenItem(gardenItem: GardenItem) {
+    fun setPlant(plant: Plant) {
         viewModelScope.launch(Dispatchers.IO) {
-            gardenItemsRepo.setGardenItem(gardenItem.id, gardenId)
+            plantsRepo.setPlant(plant.id, gardenId)
         }
-        selectGardenItemsState.value = false
+        selectPlantState.value = false
     }
 }

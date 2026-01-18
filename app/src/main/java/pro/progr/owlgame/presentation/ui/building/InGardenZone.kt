@@ -15,6 +15,6 @@ fun InGardenZone(
     when (garden.gardenType) {
         GardenType.GARDEN -> GardenItems(garden, component, fabViewModel)
         GardenType.POOL -> GardenItems(garden, component, fabViewModel)
-        GardenType.KITCHEN_GARDEN -> InKitchenGarden(garden/*, vm*/)
+        GardenType.KITCHEN_GARDEN -> KitchenGardenItems(garden, component, fabViewModel)
     }
 }

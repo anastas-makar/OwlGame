@@ -20,19 +20,23 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
-import pro.progr.owlgame.presentation.viewmodel.GardenZoneViewModel
+import pro.progr.owlgame.presentation.ui.fab.FabViewModel
+import pro.progr.owlgame.presentation.viewmodel.KitchenGardenViewModel
 
 @Composable
-fun SelectPlantScreen(gardenZoneViewModel: GardenZoneViewModel
+fun SelectPlantScreen(gardenViewModel: KitchenGardenViewModel,
+                      fabViewModel: FabViewModel
 ) {
-    val plantsState = gardenZoneViewModel.getAvailablePlants().collectAsState(initial = emptyList())
+    fabViewModel.showFab.value = false
+    val plantsState = gardenViewModel.getAvailablePlants().collectAsState(initial = emptyList())
 
     Box(
         modifier = Modifier
             .fillMaxSize()
             .background(color = Color.White.copy(alpha = 0.5f))
             .clickable {
-                gardenZoneViewModel.selectPlantState.value = false
+                fabViewModel.showFab.value = true
+                gardenViewModel.selectPlantState.value = false
             }
     ) {
 
@@ -49,7 +53,8 @@ fun SelectPlantScreen(gardenZoneViewModel: GardenZoneViewModel
                     modifier = Modifier
                         .padding(30.dp)
                         .clickable {
-                            gardenZoneViewModel.setPlant(plant)
+                            fabViewModel.showFab.value = true
+                            gardenViewModel.setPlant(plant)
                         }.background(color = Color.White, shape = RoundedCornerShape(2.dp))
                         .fillMaxSize()
                 ) {
