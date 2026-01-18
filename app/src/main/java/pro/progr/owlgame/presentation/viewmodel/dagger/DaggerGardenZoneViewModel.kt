@@ -16,5 +16,5 @@ inline fun <reified VM : ViewModel> DaggerGardenZoneViewModel(component: OwlGame
 
     factory.gardenId = id
     factory.gardenType = gardenType
-    return viewModel(factory = factory)
+    return viewModel(factory = factory, key = id)
 }

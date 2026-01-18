@@ -26,7 +26,6 @@ import coil.compose.AsyncImage
 import pro.progr.owlgame.dagger.OwlGameComponent
 import pro.progr.owlgame.data.db.Garden
 import pro.progr.owlgame.data.db.GardenItem
-import pro.progr.owlgame.data.db.GardenType
 import pro.progr.owlgame.presentation.ui.SelectGardenItemScreen
 import pro.progr.owlgame.presentation.ui.fab.FabAction
 import pro.progr.owlgame.presentation.ui.fab.FabViewModel
@@ -55,7 +54,6 @@ fun GardenItems(
 
     val sorted = remember(items.value) {
         items.value
-            .filter { it.gardenId == garden.id && it.gardenType == GardenType.GARDEN }
             .sortedWith(compareBy<GardenItem>({ it.x }, { it.id }))
     }
     val rows = remember(sorted) { sorted.chunked(3) }
