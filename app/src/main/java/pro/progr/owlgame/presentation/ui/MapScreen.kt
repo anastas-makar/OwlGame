@@ -44,6 +44,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
@@ -54,6 +55,8 @@ import pro.progr.owlgame.data.db.BuildingType
 import pro.progr.owlgame.data.db.MapType
 import pro.progr.owlgame.presentation.ui.fab.ExpandableFloatingActionButton
 import pro.progr.owlgame.presentation.ui.fab.FabAction
+import pro.progr.owlgame.presentation.ui.mapicon.DraggableImageOverlay
+import pro.progr.owlgame.presentation.ui.mapicon.buildingIconRes
 import pro.progr.owlgame.presentation.ui.model.BuildingModel
 import pro.progr.owlgame.presentation.ui.model.MapData
 import pro.progr.owlgame.presentation.viewmodel.MapViewModel
@@ -149,8 +152,34 @@ fun MapScreen(
                 }
 
                 item {
+                    LaunchedEffect(
+                        mapViewModel.newHouseState.value,
+                        mapViewModel.selectedBuilding.value?.id,
+                        map.value.id
+                    ) {
+                        val selected = mapViewModel.selectedBuilding.value
+                        if (mapViewModel.newHouseState.value && selected != null && map.value.id.isNotEmpty()) {
+                            mapViewModel.saveSlot(
+                                x = 0f,
+                                y = 0f,
+                                mapId = map.value.id,
+                                buildingId = selected.id
+                            )
+                        }
+                    }
+
                     Box(Modifier.fillMaxWidth().heightIn(max = 420.dp)) {
-                        DraggableImages(map, mapViewModel)
+                        DraggableImageOverlay(
+                            backgroundModel = map.value.imageUrl,
+                            items = map.value.buildings,
+                            modifier = Modifier.fillMaxWidth(),
+                            keyOf = { it.building.id },
+                            x01Of = { it.building.x },
+                            y01Of = { it.building.y },
+                            isNewOf = { it.building.x == 0f && it.building.y == 0f},
+                            iconPainterOf = { painterResource(buildingIconRes(it.building.type)) },
+                            onCommit01 = { item, x, y -> mapViewModel.updateSlot(item.building.id, x, y) },
+                        )
                     }
                 }
 
