@@ -56,7 +56,7 @@ fun InBuilding(
         ) {
             when (val s = selected) {
                 is GalleryItem.BuildingItem -> BuildingFacade(s.building)
-                is GalleryItem.RoomItem -> InRoom(s.room)
+                is GalleryItem.RoomItem -> InRoom(s.room, emptyList(), {id, x01, y01 ->})//todo:
                 is GalleryItem.GardenItem -> InGardenZone(s.garden, component, fabViewModel)
                 null -> Unit
             }
