@@ -24,6 +24,7 @@ import pro.progr.owlgame.presentation.viewmodel.MapsViewModel
 import pro.progr.owlgame.presentation.viewmodel.PouchesViewModel
 import pro.progr.owlgame.presentation.viewmodel.dagger.DaggerAnimalViewModel
 import pro.progr.owlgame.presentation.viewmodel.dagger.DaggerBuildingViewModel
+import pro.progr.owlgame.presentation.viewmodel.dagger.DaggerFabViewModel
 import pro.progr.owlgame.presentation.viewmodel.dagger.DaggerMapViewModel
 import pro.progr.owlgame.presentation.viewmodel.dagger.DaggerMapsViewModel
 import pro.progr.owlgame.presentation.viewmodel.dagger.DaggerPouchesViewModel
@@ -34,7 +35,7 @@ fun OwlNavigation(startDestination : String = "towns",
                   diamondDao: PurchaseInterface,
                   component: OwlGameComponent) {
     val navController = rememberNavController()
-    val fabViewModel = remember { FabViewModel() }
+    val fabViewModel : FabViewModel = DaggerFabViewModel(component)
 
     val mapsViewModel: MapsViewModel = DaggerMapsViewModel(component)
 
