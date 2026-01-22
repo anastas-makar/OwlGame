@@ -7,6 +7,7 @@ import pro.progr.owlgame.data.db.AnimalDao
 import pro.progr.owlgame.data.db.BuildingWithAnimalDao
 import pro.progr.owlgame.data.db.BuildingWithDataDao
 import pro.progr.owlgame.data.db.BuildingsDao
+import pro.progr.owlgame.data.db.FurnitureDao
 import pro.progr.owlgame.data.db.GardenItemsDao
 import pro.progr.owlgame.data.db.GardensDao
 import pro.progr.owlgame.data.db.MapDao
@@ -79,5 +80,10 @@ object DatabaseModule {
     @Provides
     fun providePlantsDao(database: OwlGameDatabase): PlantsDao {
         return database.plantsDao()
+    }
+
+    @Provides
+    fun provideFurnitureDao(database: OwlGameDatabase): FurnitureDao {
+        return database.furnitureDao()
     }
 }
