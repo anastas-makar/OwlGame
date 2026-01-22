@@ -82,7 +82,7 @@ class InPouchViewModel @Inject constructor(
                 plants = plantsWithLocalUrls,
                 gardenItems = gardenItemsWithLocalUrls,
                 diamonds = webPouch.diamonds,
-                furniture = webPouch.furniture
+                furniture = furnitureWithLocalUrls
             )
             lastLoadedPouchId = pouchId
         }
