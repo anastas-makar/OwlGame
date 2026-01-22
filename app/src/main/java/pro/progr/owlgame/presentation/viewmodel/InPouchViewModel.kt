@@ -11,6 +11,7 @@ import pro.progr.owlgame.data.repository.PouchesRepository
 import pro.progr.owlgame.data.web.inpouch.InPouch
 import pro.progr.owlgame.data.web.inpouch.MapInPouchModel
 import pro.progr.owlgame.domain.SaveBuildingsUseCase
+import pro.progr.owlgame.domain.SaveFurnitureUseCase
 import pro.progr.owlgame.domain.SaveGardenItemsUseCase
 import pro.progr.owlgame.domain.SaveMapsUseCase
 import pro.progr.owlgame.domain.SavePlantsUseCase
@@ -21,7 +22,8 @@ class InPouchViewModel @Inject constructor(
     private val saveMapsUseCase: SaveMapsUseCase,
     private val saveBuildingsUseCase: SaveBuildingsUseCase,
     private val savePlantsUseCase: SavePlantsUseCase,
-    private val saveGardenItemsUseCase: SaveGardenItemsUseCase
+    private val saveGardenItemsUseCase: SaveGardenItemsUseCase,
+    private val saveFurnitureUseCase: SaveFurnitureUseCase
 ) : ViewModel() {
 
     val inPouch = mutableStateOf<InPouch?>(null)
@@ -68,12 +70,19 @@ class InPouchViewModel @Inject constructor(
                 } else emptyList()
             }
 
+            val furnitureWithLocalUrls = withContext(Dispatchers.IO) {
+                if (webPouch.furniture.isNotEmpty()) {
+                    saveFurnitureUseCase(webPouch.furniture)
+                } else emptyList()
+            }
+
             inPouch.value = InPouch(
                 buildings = buildingsWithLocalUrls,
                 maps = mapsWithLocalUrls,
                 plants = plantsWithLocalUrls,
                 gardenItems = gardenItemsWithLocalUrls,
-                diamonds = webPouch.diamonds
+                diamonds = webPouch.diamonds,
+                furniture = webPouch.furniture
             )
             lastLoadedPouchId = pouchId
         }

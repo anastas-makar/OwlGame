@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import pro.progr.owlgame.data.repository.PouchesRepository
 import pro.progr.owlgame.domain.SaveBuildingsUseCase
+import pro.progr.owlgame.domain.SaveFurnitureUseCase
 import pro.progr.owlgame.domain.SaveGardenItemsUseCase
 import pro.progr.owlgame.domain.SaveMapsUseCase
 import pro.progr.owlgame.domain.SavePlantsUseCase
@@ -16,7 +17,8 @@ class PouchViewModelFactory @Inject constructor(
     private val saveMapsUseCase: SaveMapsUseCase,
     private val saveBuildingsUseCase: SaveBuildingsUseCase,
     private val savePlantsUseCase: SavePlantsUseCase,
-    private val saveGardenItemsUseCase: SaveGardenItemsUseCase
+    private val saveGardenItemsUseCase: SaveGardenItemsUseCase,
+    private val saveFurnitureUseCase: SaveFurnitureUseCase
 ) : ViewModelProvider.Factory {
 
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
@@ -27,7 +29,8 @@ class PouchViewModelFactory @Inject constructor(
                 saveMapsUseCase,
                 saveBuildingsUseCase,
                 savePlantsUseCase,
-                saveGardenItemsUseCase) as T
+                saveGardenItemsUseCase,
+                saveFurnitureUseCase) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }
