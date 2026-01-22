@@ -15,7 +15,6 @@ import pro.progr.owlgame.dagger.OwlGameComponent
 import pro.progr.owlgame.data.db.BuildingWithData
 import pro.progr.owlgame.presentation.ui.fab.FabViewModel
 import pro.progr.owlgame.presentation.ui.model.GalleryItem
-import pro.progr.owlgame.presentation.viewmodel.GardenZoneViewModel
 
 @Composable
 fun InBuilding(
@@ -56,7 +55,7 @@ fun InBuilding(
         ) {
             when (val s = selected) {
                 is GalleryItem.BuildingItem -> BuildingFacade(s.building)
-                is GalleryItem.RoomItem -> InRoom(s.room, emptyList(), {id, x01, y01 ->})//todo:
+                is GalleryItem.RoomItem -> InRoom(s.room, component, fabViewModel)
                 is GalleryItem.GardenItem -> InGardenZone(s.garden, component, fabViewModel)
                 null -> Unit
             }
