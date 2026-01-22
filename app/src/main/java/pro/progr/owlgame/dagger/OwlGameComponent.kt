@@ -14,6 +14,7 @@ import pro.progr.owlgame.presentation.viewmodel.dagger.KitchenGardenViewModelFac
 import pro.progr.owlgame.presentation.viewmodel.dagger.MapViewModelFactory
 import pro.progr.owlgame.presentation.viewmodel.dagger.PouchViewModelFactory
 import pro.progr.owlgame.presentation.viewmodel.dagger.MapsViewModelFactory
+import pro.progr.owlgame.presentation.viewmodel.dagger.RoomViewModelFactory
 import pro.progr.owlgame.presentation.viewmodel.dagger.WidgetViewModelFactory
 import javax.inject.Singleton
 
@@ -36,6 +37,8 @@ interface OwlGameComponent {
     fun fabViewModelFactory(): FabViewModelFactory
 
     fun kitchenGardenViewModelFactory(): KitchenGardenViewModelFactory
+
+    fun roomViewModelFactory(): RoomViewModelFactory
 
     fun animalViewModelFactory(): AnimalViewModelFactory
 

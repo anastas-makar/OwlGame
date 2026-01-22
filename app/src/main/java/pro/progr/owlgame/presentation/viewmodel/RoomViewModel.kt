@@ -1,0 +1,42 @@
+package pro.progr.owlgame.presentation.viewmodel
+
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import jakarta.inject.Inject
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
+import pro.progr.owlgame.data.db.Furniture
+import pro.progr.owlgame.data.repository.FurnitureRepository
+
+class RoomViewModel @Inject constructor(
+    private val furnitureRepository: FurnitureRepository,
+    private val roomId: String
+) : ViewModel() {
+
+    val selectFurnitureItemState: MutableState<Boolean> = mutableStateOf(false)
+
+    val furnitureItems: StateFlow<List<Furniture>> =
+        furnitureRepository.observeByRoomId(roomId)
+            .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
+
+    fun updatePos(id: String, x: Float, y: Float) {
+        viewModelScope.launch(Dispatchers.IO) { furnitureRepository.updatePos(id, x, y) }
+    }
+
+    fun getAvailableFurnitureItems() : Flow<List<Furniture>> {
+        return furnitureRepository.getAvailableFurnitureItems()
+    }
+
+    fun setFurnitureItem(furniture: Furniture) {
+        viewModelScope.launch(Dispatchers.IO) {
+            furnitureRepository.setFurniture(furniture.id, roomId)
+        }
+        selectFurnitureItemState.value = false
+    }
+}

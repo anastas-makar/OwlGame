@@ -11,10 +11,7 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
-import pro.progr.owlgame.data.db.GardenItem
-import pro.progr.owlgame.data.db.GardenType
 import pro.progr.owlgame.data.db.Plant
-import pro.progr.owlgame.data.repository.GardenItemsRepository
 import pro.progr.owlgame.data.repository.PlantsRepository
 
 class KitchenGardenViewModel @Inject constructor(

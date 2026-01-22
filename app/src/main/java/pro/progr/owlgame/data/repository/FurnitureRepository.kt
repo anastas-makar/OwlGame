@@ -17,7 +17,7 @@ class FurnitureRepository @Inject constructor(
         return furnitureDao.observeByRoomId(roomId)
     }
 
-    fun getAvailablePlants() : Flow<List<Furniture>> {
+    fun getAvailableFurnitureItems() : Flow<List<Furniture>> {
         return furnitureDao.getAvailable()
     }
 
