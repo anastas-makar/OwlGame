@@ -23,7 +23,7 @@ fun InRoom(
     val roomViewModel = DaggerRoomViewModel<RoomViewModel>(component, room.id)
     fabViewModel.fabActions.value = listOf(
         FabAction(
-            text = "Посадить",
+            text = "Поставить",
             color = Color.DarkGray,
             onClick = {
                 roomViewModel.selectFurnitureItemState.value = true
