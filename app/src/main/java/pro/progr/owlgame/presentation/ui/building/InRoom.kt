@@ -3,6 +3,7 @@ package pro.progr.owlgame.presentation.ui.building
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import pro.progr.owlgame.dagger.OwlGameComponent
@@ -21,6 +22,8 @@ fun InRoom(
     newFurnitureId: String? = null,
 ) {
     val roomViewModel = DaggerRoomViewModel<RoomViewModel>(component, room.id)
+    val furniture = roomViewModel.furnitureItems.collectAsState(initial = emptyList())
+
     fabViewModel.fabActions.value = listOf(
         FabAction(
             text = "Поставить",
@@ -37,7 +40,7 @@ fun InRoom(
     ) {
         DraggableSizedImageOverlay(
             backgroundModel = room.imageUrl,           // картинка стены
-            items = roomViewModel.furnitureItems.value,
+            items = furniture.value,
             keyOf = { it.id },
             x01Of = { it.x },
             y01Of = { it.y },
