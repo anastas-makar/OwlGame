@@ -53,15 +53,6 @@ fun <T> DraggableSizedImageOverlay(
 
         if (bgSizePx.width == 0 || bgSizePx.height == 0) return@Box
 
-        // (опционально) чтобы перетаскиваемый был поверх: рисуем “dragging” последним
-        var draggingKey by remember { mutableStateOf<Any?>(null) }
-
-        val (draggingItem, rest) = remember(items, draggingKey) {
-            val d = items.firstOrNull { keyOf(it) == draggingKey }
-            val r = if (d == null) items else items.filterNot { keyOf(it) == draggingKey }
-            d to r
-        }
-
         @Composable
         fun drawOne(item: T) {
             DraggableSizedImageItem(
@@ -75,14 +66,11 @@ fun <T> DraggableSizedImageOverlay(
                 defaultHeight01 = defaultHeight01,
                 imageModel = itemImageModelOf(item),
                 isNew = isNewOf(item),
-                onDragStart = { draggingKey = keyOf(item) },
-                onDragEnd = { draggingKey = null },
                 onCommit01 = { x, y -> onCommit01(item, x, y) }
             )
         }
 
-        rest.forEach { drawOne(it) }
-        if (draggingItem != null) drawOne(draggingItem)
+        items.forEach { drawOne(it) }
     }
 }
 
@@ -98,8 +86,6 @@ private fun DraggableSizedImageItem(
     defaultHeight01: Float,
     imageModel: Any?,
     isNew: Boolean,
-    onDragStart: () -> Unit,
-    onDragEnd: () -> Unit,
     onCommit01: (Float, Float) -> Unit,
 ) {
     val density = LocalDensity.current
@@ -178,14 +164,12 @@ private fun DraggableSizedImageItem(
                     onDragStart = {
                         touched = true
                         isDragging = true
-                        onDragStart()
                     },
                     onDrag = { _, dragAmount ->
                         posPx = clampPx(posPx + dragAmount)
                     },
                     onDragEnd = {
                         isDragging = false
-                        onDragEnd()
 
                         val xNew01 = (posPx.x / bgW).coerceIn(0f, 1f)
                         val yNew01 = (posPx.y / bgH).coerceIn(0f, 1f)
@@ -195,7 +179,6 @@ private fun DraggableSizedImageItem(
                     },
                     onDragCancel = {
                         isDragging = false
-                        onDragEnd()
                     }
                 )
             }
