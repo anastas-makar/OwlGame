@@ -20,6 +20,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.SnackbarHostState
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -37,18 +38,26 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
+import pro.progr.diamondapi.PurchaseInterface
 import pro.progr.owlgame.R
 import pro.progr.owlgame.presentation.ui.fab.FabViewModel
 import pro.progr.owlgame.presentation.viewmodel.RoomViewModel
 
 @Composable
 fun SelectFurnitureScreen(roomViewModel: RoomViewModel,
-                      fabViewModel: FabViewModel
+                      fabViewModel: FabViewModel,
+                      diamondDao : PurchaseInterface,
+                      scope : CoroutineScope,
+                      snackbarHostState: SnackbarHostState
 ) {
     fabViewModel.showFab.value = false
     val furnitureItemsState = roomViewModel.getAvailableFurnitureItems().collectAsState(initial = emptyList())
     val density = LocalDensity.current
     var bgSizePx by remember { mutableStateOf(IntSize.Zero) }
+
+    val diamondBalance = diamondDao.getDiamondsCount().collectAsState(initial = 0)
 
     Box(
         modifier = Modifier
@@ -74,8 +83,14 @@ fun SelectFurnitureScreen(roomViewModel: RoomViewModel,
                     modifier = Modifier
                         .padding(30.dp)
                         .clickable {
-                            fabViewModel.showFab.value = true
-                            roomViewModel.setFurnitureItem(furniture)
+                            if (diamondBalance.value >= furniture.price) {
+                                fabViewModel.showFab.value = true
+                                roomViewModel.setFurnitureItem(furniture, diamondDao)
+                            } else {
+                                scope.launch {
+                                    snackbarHostState.showSnackbar("Недостаточно бриллиантов")
+                                }
+                            }
                         }.background(color = Color.Transparent, shape = RoundedCornerShape(2.dp))
                         .height(200.dp)
                 ) {
@@ -118,6 +133,8 @@ fun SelectFurnitureScreen(roomViewModel: RoomViewModel,
                             Icon(
                                 painter = painterResource(id = R.drawable.ic_diamond_bright),
                                 contentDescription = "Diamond",
+                                tint = if (diamondBalance.value < furniture.price) Color.DarkGray
+                                else Color.Unspecified,
                                 modifier = Modifier.height(12.dp)
                             )
                         }

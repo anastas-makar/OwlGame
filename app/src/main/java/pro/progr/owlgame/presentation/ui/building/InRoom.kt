@@ -2,10 +2,14 @@ package pro.progr.owlgame.presentation.ui.building
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.material.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import pro.progr.diamondapi.PurchaseInterface
 import pro.progr.owlgame.dagger.OwlGameComponent
 import pro.progr.owlgame.data.db.RoomEntity
 import pro.progr.owlgame.presentation.ui.SelectFurnitureScreen
@@ -19,10 +23,14 @@ fun InRoom(
     room: RoomEntity,
     component: OwlGameComponent,
     fabViewModel: FabViewModel,
+    diamondDao: PurchaseInterface,
     newFurnitureId: String? = null,
 ) {
     val roomViewModel = DaggerRoomViewModel<RoomViewModel>(component, room.id)
     val furniture = roomViewModel.furnitureItems.collectAsState(initial = emptyList())
+
+    val snackbarHostState = remember { SnackbarHostState() }
+    val scope = rememberCoroutineScope()
 
     fabViewModel.fabActions.value = listOf(
         FabAction(
@@ -57,6 +65,6 @@ fun InRoom(
     }
 
     if (roomViewModel.selectFurnitureItemState.value) {
-        SelectFurnitureScreen(roomViewModel, fabViewModel)
+        SelectFurnitureScreen(roomViewModel, fabViewModel, diamondDao, scope, snackbarHostState)
     }
 }

@@ -11,6 +11,7 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import pro.progr.diamondapi.PurchaseInterface
 import pro.progr.owlgame.data.db.Furniture
 import pro.progr.owlgame.data.repository.FurnitureRepository
 
@@ -33,9 +34,12 @@ class RoomViewModel @Inject constructor(
         return furnitureRepository.getAvailableFurnitureItems()
     }
 
-    fun setFurnitureItem(furniture: Furniture) {
+    fun setFurnitureItem(furniture: Furniture, pI: PurchaseInterface) {
         viewModelScope.launch(Dispatchers.IO) {
-            furnitureRepository.setFurniture(furniture.id, roomId)
+            val res = pI.spendDiamonds(furniture.price)
+            if(res.isSuccess) {
+                furnitureRepository.setFurniture(furniture.id, roomId)
+            }
         }
         selectFurnitureItemState.value = false
     }

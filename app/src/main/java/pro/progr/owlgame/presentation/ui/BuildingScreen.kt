@@ -19,7 +19,6 @@ import pro.progr.diamondapi.PurchaseInterface
 import pro.progr.owlgame.dagger.OwlGameComponent
 import pro.progr.owlgame.presentation.ui.building.InBuilding
 import pro.progr.owlgame.presentation.ui.fab.ExpandableFloatingActionButton
-import pro.progr.owlgame.presentation.ui.fab.FabAction
 import pro.progr.owlgame.presentation.ui.fab.FabViewModel
 import pro.progr.owlgame.presentation.viewmodel.BuildingViewModel
 
@@ -53,7 +52,7 @@ fun BuildingScreen(
             },
             content = { innerPadding ->
                 Box(modifier = Modifier.padding(innerPadding)) {
-                    InBuilding(bWithData, component, fabViewModel)
+                    InBuilding(bWithData, component, fabViewModel, diamondDao)
 
                     if (fabViewModel.fabExpanded.value) {
                         Box(
