@@ -76,17 +76,19 @@ fun SelectFurnitureScreen(roomViewModel: RoomViewModel,
                             fabViewModel.showFab.value = true
                             roomViewModel.setFurnitureItem(furniture)
                         }.background(color = Color.Transparent, shape = RoundedCornerShape(2.dp))
-                        .height(250.dp)
+                        .height(200.dp)
                 ) {
 
-                    Column(modifier = Modifier.padding(5.dp)) {
+                    Box(modifier = Modifier
+                        .fillMaxSize()
+                        .padding(8.dp)) {
                         AsyncImage(
                             model = furniture.imageUrl,
                             contentDescription = null,
                             contentScale = ContentScale.Fit,
+                            alignment = Alignment.TopCenter,
                             modifier = Modifier
                                 .widthIn(max = with(density) { (bgSizePx.width * furniture.width).toDp() })
-                                .fillMaxSize()
                         )
 
                         Row(
@@ -94,7 +96,7 @@ fun SelectFurnitureScreen(roomViewModel: RoomViewModel,
                             modifier = Modifier
                                 .padding(10.dp)
                                 .wrapContentHeight()
-                                .align(Alignment.CenterHorizontally)
+                                .align(Alignment.BottomCenter)
                         ) {
                             Text(
                                 text = " ◆ ${furniture.price} ",
