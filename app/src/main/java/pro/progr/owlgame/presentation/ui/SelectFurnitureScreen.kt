@@ -4,10 +4,11 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.widthIn
@@ -82,14 +83,26 @@ fun SelectFurnitureScreen(roomViewModel: RoomViewModel,
                     Box(modifier = Modifier
                         .fillMaxSize()
                         .padding(8.dp)) {
-                        AsyncImage(
-                            model = furniture.imageUrl,
-                            contentDescription = null,
-                            contentScale = ContentScale.Fit,
-                            alignment = Alignment.TopCenter,
+                        Box(
                             modifier = Modifier
-                                .widthIn(max = with(density) { (bgSizePx.width * furniture.width).toDp() })
-                        )
+                                .fillMaxWidth()
+                                .fillMaxHeight()
+                                .padding(bottom = 36.dp),  // место под Row с ценой
+                            contentAlignment = Alignment.TopCenter
+                        ) {
+                            AsyncImage(
+                                model = furniture.imageUrl,
+                                contentDescription = null,
+                                contentScale = ContentScale.Fit,
+                                modifier = Modifier
+                                    // Центрирование работает, когда у элемента есть "пространство"
+                                    // и ограничение по ширине остаётся
+                                    .widthIn(max = with(density) { (bgSizePx.width * furniture.width).toDp() })
+                                    .fillMaxWidth()
+                                    // чтобы совсем узкие не расползались в высоту бесконечно:
+                                    .fillMaxHeight()
+                            )
+                        }
 
                         Row(
                             verticalAlignment = Alignment.CenterVertically,
