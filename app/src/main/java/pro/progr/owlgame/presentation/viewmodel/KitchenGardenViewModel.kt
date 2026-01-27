@@ -25,6 +25,9 @@ class KitchenGardenViewModel @Inject constructor(
         plantsRepo.observeByGardenId(gardenId)
             .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
+    val availablePlants = plantsRepo.getAvailablePlants()
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
+
     fun updatePlantPos(id: String, x: Float, y: Float) {
         viewModelScope.launch(Dispatchers.IO) { plantsRepo.updatePos(id, x, y) }
     }

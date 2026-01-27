@@ -39,7 +39,8 @@ import pro.progr.owlgame.presentation.viewmodel.dagger.DaggerKitchenGardenViewMo
 fun KitchenGardenItems(
     garden: Garden,
     component: OwlGameComponent,
-    fabViewModel: FabViewModel
+    fabViewModel: FabViewModel,
+    onMap: Boolean = false
 ) {
     val vm = DaggerKitchenGardenViewModel<KitchenGardenViewModel>(component, garden.id)
     val items = vm.plants.collectAsState(initial = emptyList())
@@ -52,6 +53,8 @@ fun KitchenGardenItems(
             }
         )
     )
+
+    fabViewModel.showFab.value = onMap && vm.availablePlants.value.isNotEmpty()
 
     val sorted = remember(items.value) {
         items.value

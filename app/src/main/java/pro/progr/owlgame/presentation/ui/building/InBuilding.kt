@@ -56,9 +56,11 @@ fun InBuilding(
                 .weight(1f)
         ) {
             when (val s = selected) {
-                is GalleryItem.BuildingItem -> BuildingFacade(s.building)
-                is GalleryItem.RoomItem -> InRoom(s.room, component, fabViewModel, diamondDao)
-                is GalleryItem.GardenItem -> InGardenZone(s.garden, component, fabViewModel)
+                is GalleryItem.BuildingItem -> BuildingFacade(s.building, fabViewModel)
+                is GalleryItem.RoomItem -> InRoom(s.room, component, fabViewModel, diamondDao,
+                    onMap = data.building.mapId != null)
+                is GalleryItem.GardenItem -> InGardenZone(s.garden, component, fabViewModel,
+                    onMap = data.building.mapId != null)
                 null -> Unit
             }
         }

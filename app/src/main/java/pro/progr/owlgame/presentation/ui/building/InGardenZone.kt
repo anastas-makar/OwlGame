@@ -10,11 +10,12 @@ import pro.progr.owlgame.presentation.ui.fab.FabViewModel
 fun InGardenZone(
     garden: Garden,
     component: OwlGameComponent,
-    fabViewModel: FabViewModel
+    fabViewModel: FabViewModel,
+    onMap: Boolean = false
 ) {
     when (garden.gardenType) {
-        GardenType.GARDEN -> GardenItems(garden, component, fabViewModel)
-        GardenType.POOL -> GardenItems(garden, component, fabViewModel)
-        GardenType.KITCHEN_GARDEN -> KitchenGardenItems(garden, component, fabViewModel)
+        GardenType.GARDEN -> GardenItems(garden, component, fabViewModel, onMap)
+        GardenType.POOL -> GardenItems(garden, component, fabViewModel, onMap)
+        GardenType.KITCHEN_GARDEN -> KitchenGardenItems(garden, component, fabViewModel, onMap)
     }
 }

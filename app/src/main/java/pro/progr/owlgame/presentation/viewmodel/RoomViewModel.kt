@@ -26,12 +26,11 @@ class RoomViewModel @Inject constructor(
         furnitureRepository.observeByRoomId(roomId)
             .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
+    val availableFurnitureItems = furnitureRepository.getAvailableFurnitureItems()
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
+
     fun updatePos(id: String, x: Float, y: Float) {
         viewModelScope.launch(Dispatchers.IO) { furnitureRepository.updatePos(id, x, y) }
-    }
-
-    fun getAvailableFurnitureItems() : Flow<List<Furniture>> {
-        return furnitureRepository.getAvailableFurnitureItems()
     }
 
     fun setFurnitureItem(furniture: Furniture, pI: PurchaseInterface) {

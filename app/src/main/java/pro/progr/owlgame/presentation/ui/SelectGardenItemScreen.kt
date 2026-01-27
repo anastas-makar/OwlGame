@@ -28,7 +28,6 @@ fun SelectGardenItemScreen(gardenZoneViewModel: GardenZoneViewModel,
                            fabViewModel: FabViewModel
 ) {
     fabViewModel.showFab.value = false
-    val gardenItemsState = gardenZoneViewModel.getAvailableGardenItems().collectAsState(initial = emptyList())
 
     Box(
         modifier = Modifier
@@ -47,7 +46,7 @@ fun SelectGardenItemScreen(gardenZoneViewModel: GardenZoneViewModel,
             verticalArrangement = Arrangement.spacedBy(8.dp),
             horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            itemsIndexed(gardenItemsState.value) { _, gardenItem ->
+            itemsIndexed(gardenZoneViewModel.availableGardenItems.value) { _, gardenItem ->
 
                 Card(
                     modifier = Modifier

@@ -53,7 +53,6 @@ fun SelectFurnitureScreen(roomViewModel: RoomViewModel,
                       snackbarHostState: SnackbarHostState
 ) {
     fabViewModel.showFab.value = false
-    val furnitureItemsState = roomViewModel.getAvailableFurnitureItems().collectAsState(initial = emptyList())
     val density = LocalDensity.current
     var bgSizePx by remember { mutableStateOf(IntSize.Zero) }
 
@@ -77,7 +76,7 @@ fun SelectFurnitureScreen(roomViewModel: RoomViewModel,
             verticalArrangement = Arrangement.spacedBy(8.dp),
             horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            itemsIndexed(furnitureItemsState.value) { _, furniture ->
+            itemsIndexed(roomViewModel.availableFurnitureItems.value) { _, furniture ->
 
                 Card(
                     modifier = Modifier

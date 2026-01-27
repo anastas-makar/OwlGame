@@ -24,7 +24,7 @@ fun InRoom(
     component: OwlGameComponent,
     fabViewModel: FabViewModel,
     diamondDao: PurchaseInterface,
-    newFurnitureId: String? = null,
+    onMap: Boolean = false,
 ) {
     val roomViewModel = DaggerRoomViewModel<RoomViewModel>(component, room.id)
     val furniture = roomViewModel.furnitureItems.collectAsState(initial = emptyList())
@@ -42,6 +42,8 @@ fun InRoom(
         )
     )
 
+    fabViewModel.showFab.value = onMap && roomViewModel.availableFurnitureItems.value.isNotEmpty()
+
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -55,7 +57,7 @@ fun InRoom(
             width01Of = { it.width },
             height01Of = { it.height },
             itemImageModelOf = { it.imageUrl },        // мебель — картинка, не иконка
-            isNewOf = { it.id == newFurnitureId },
+            isNewOf = { it.x == 0f && it.y == 0f },
             onCommit01 = { f, x, y -> roomViewModel.updatePos(f.id, x, y) },
             // можно настроить дефолтные размеры, если в БД 0
             defaultWidth01 = 0.22f,

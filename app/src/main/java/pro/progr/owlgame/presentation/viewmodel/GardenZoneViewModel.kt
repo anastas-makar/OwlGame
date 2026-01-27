@@ -26,12 +26,11 @@ class GardenZoneViewModel @Inject constructor(
         gardenItemsRepo.observeByGardenId(gardenId)
             .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
+    val availableGardenItems = gardenItemsRepo.getAvailableGardenItems(gardenType)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
+
     fun updateGardenItemPos(id: String, x: Float, y: Float) {
         viewModelScope.launch(Dispatchers.IO) { gardenItemsRepo.updatePos(id, x, y) }
-    }
-
-    fun getAvailableGardenItems() : Flow<List<GardenItem>> {
-        return gardenItemsRepo.getAvailableGardenItems(gardenType)
     }
 
     fun setGardenItem(gardenItem: GardenItem) {
