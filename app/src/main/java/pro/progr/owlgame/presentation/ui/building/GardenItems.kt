@@ -43,6 +43,7 @@ fun GardenItems(
 ) {
     val vm = DaggerGardenZoneViewModel<GardenZoneViewModel>(component, garden.id, garden.gardenType)
     val items = vm.gardenItems.collectAsState(initial = emptyList())
+    val availableItems = vm.availableGardenItems.collectAsState(initial = emptyList())
     fabViewModel.fabActions.value = listOf(
         FabAction(
             text = "Посадить",
@@ -53,7 +54,7 @@ fun GardenItems(
         )
     )
 
-    fabViewModel.showFab.value = onMap && vm.availableGardenItems.value.isNotEmpty()
+    fabViewModel.showFab.value = onMap && availableItems.value.isNotEmpty()
 
     val sorted = remember(items.value) {
         items.value
@@ -92,7 +93,7 @@ fun GardenItems(
     }
 
     if (vm.selectGardenItemsState.value) {
-        SelectGardenItemScreen(vm, fabViewModel)
+        SelectGardenItemScreen(vm, fabViewModel, availableItems)
     }
 }
 

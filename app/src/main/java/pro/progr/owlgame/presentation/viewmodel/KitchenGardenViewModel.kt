@@ -25,7 +25,7 @@ class KitchenGardenViewModel @Inject constructor(
         plantsRepo.observeByGardenId(gardenId)
             .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
-    val availablePlants = plantsRepo.getAvailablePlants()
+    val availablePlants: StateFlow<List<Plant>> = plantsRepo.getAvailablePlants()
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
     fun updatePlantPos(id: String, x: Float, y: Float) {

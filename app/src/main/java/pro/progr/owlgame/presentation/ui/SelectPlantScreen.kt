@@ -14,18 +14,20 @@ import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.State
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
+import pro.progr.owlgame.data.db.Plant
 import pro.progr.owlgame.presentation.ui.fab.FabViewModel
 import pro.progr.owlgame.presentation.viewmodel.KitchenGardenViewModel
 
 @Composable
 fun SelectPlantScreen(gardenViewModel: KitchenGardenViewModel,
-                      fabViewModel: FabViewModel
+                      fabViewModel: FabViewModel,
+                      availablePlants: State<List<Plant>>
 ) {
     fabViewModel.showFab.value = false
 
@@ -46,7 +48,7 @@ fun SelectPlantScreen(gardenViewModel: KitchenGardenViewModel,
             verticalArrangement = Arrangement.spacedBy(8.dp),
             horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            itemsIndexed(gardenViewModel.availablePlants.value) { _, plant ->
+            itemsIndexed(availablePlants.value) { _, plant ->
 
                 Card(
                     modifier = Modifier

@@ -25,7 +25,6 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import pro.progr.owlgame.dagger.OwlGameComponent
 import pro.progr.owlgame.data.db.Garden
-import pro.progr.owlgame.data.db.GardenItem
 import pro.progr.owlgame.data.db.Plant
 import pro.progr.owlgame.presentation.ui.SelectPlantScreen
 import pro.progr.owlgame.presentation.ui.fab.FabAction
@@ -44,6 +43,7 @@ fun KitchenGardenItems(
 ) {
     val vm = DaggerKitchenGardenViewModel<KitchenGardenViewModel>(component, garden.id)
     val items = vm.plants.collectAsState(initial = emptyList())
+    val availablePlants = vm.availablePlants.collectAsState(initial = emptyList())
     fabViewModel.fabActions.value = listOf(
         FabAction(
             text = "Посадить растение",
@@ -54,7 +54,7 @@ fun KitchenGardenItems(
         )
     )
 
-    fabViewModel.showFab.value = onMap && vm.availablePlants.value.isNotEmpty()
+    fabViewModel.showFab.value = onMap && availablePlants.value.isNotEmpty()
 
     val sorted = remember(items.value) {
         items.value
@@ -93,7 +93,7 @@ fun KitchenGardenItems(
     }
 
     if (vm.selectPlantState.value) {
-        SelectPlantScreen(vm, fabViewModel)
+        SelectPlantScreen(vm, fabViewModel, availablePlants)
     }
 }
 

@@ -28,6 +28,7 @@ fun InRoom(
 ) {
     val roomViewModel = DaggerRoomViewModel<RoomViewModel>(component, room.id)
     val furniture = roomViewModel.furnitureItems.collectAsState(initial = emptyList())
+    val availableFurniture = roomViewModel.availableFurnitureItems.collectAsState(initial = emptyList())
 
     val snackbarHostState = remember { SnackbarHostState() }
     val scope = rememberCoroutineScope()
@@ -42,7 +43,7 @@ fun InRoom(
         )
     )
 
-    fabViewModel.showFab.value = onMap && roomViewModel.availableFurnitureItems.value.isNotEmpty()
+    fabViewModel.showFab.value = onMap && availableFurniture.value.isNotEmpty()
 
     Box(
         modifier = Modifier
@@ -67,6 +68,11 @@ fun InRoom(
     }
 
     if (roomViewModel.selectFurnitureItemState.value) {
-        SelectFurnitureScreen(roomViewModel, fabViewModel, diamondDao, scope, snackbarHostState)
+        SelectFurnitureScreen(roomViewModel,
+            fabViewModel,
+            diamondDao,
+            scope,
+            snackbarHostState,
+            availableFurniture)
     }
 }

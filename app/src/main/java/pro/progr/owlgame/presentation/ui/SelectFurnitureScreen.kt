@@ -42,6 +42,8 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import pro.progr.diamondapi.PurchaseInterface
 import pro.progr.owlgame.R
+import androidx.compose.runtime.State
+import pro.progr.owlgame.data.db.Furniture
 import pro.progr.owlgame.presentation.ui.fab.FabViewModel
 import pro.progr.owlgame.presentation.viewmodel.RoomViewModel
 
@@ -50,7 +52,8 @@ fun SelectFurnitureScreen(roomViewModel: RoomViewModel,
                       fabViewModel: FabViewModel,
                       diamondDao : PurchaseInterface,
                       scope : CoroutineScope,
-                      snackbarHostState: SnackbarHostState
+                      snackbarHostState: SnackbarHostState,
+                      availableFurniture:  State<List<Furniture>>
 ) {
     fabViewModel.showFab.value = false
     val density = LocalDensity.current
@@ -76,7 +79,7 @@ fun SelectFurnitureScreen(roomViewModel: RoomViewModel,
             verticalArrangement = Arrangement.spacedBy(8.dp),
             horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            itemsIndexed(roomViewModel.availableFurnitureItems.value) { _, furniture ->
+            itemsIndexed(availableFurniture.value) { _, furniture ->
 
                 Card(
                     modifier = Modifier

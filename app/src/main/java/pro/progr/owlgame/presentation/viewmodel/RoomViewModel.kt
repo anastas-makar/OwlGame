@@ -6,7 +6,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import jakarta.inject.Inject
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.stateIn
@@ -26,7 +25,7 @@ class RoomViewModel @Inject constructor(
         furnitureRepository.observeByRoomId(roomId)
             .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
-    val availableFurnitureItems = furnitureRepository.getAvailableFurnitureItems()
+    val availableFurnitureItems: StateFlow<List<Furniture>> = furnitureRepository.getAvailableFurnitureItems()
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
     fun updatePos(id: String, x: Float, y: Float) {
