@@ -7,6 +7,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import pro.progr.diamondapi.PurchaseInterface
 import pro.progr.owlgame.data.repository.PouchesRepository
 import pro.progr.owlgame.data.web.inpouch.InPouch
 import pro.progr.owlgame.data.web.inpouch.MapInPouchModel
@@ -31,7 +32,7 @@ class InPouchViewModel @Inject constructor(
     private var lastLoadedPouchId: String? = null
     private var loadJob: Job? = null
 
-    fun loadInPouch(pouchId: String) {
+    fun loadInPouch(pouchId: String, diamondDao: PurchaseInterface) {
         // если уже загружено и стейт не пустой — не повторяем
         if (pouchId == lastLoadedPouchId && inPouch.value != null) return
 
@@ -62,6 +63,12 @@ class InPouchViewModel @Inject constructor(
                 if (webPouch.plants.isNotEmpty()) {
                     savePlantsUseCase(webPouch.plants)
                 } else emptyList()
+            }
+
+            if (webPouch.diamonds != null) {
+                viewModelScope.launch(Dispatchers.IO) {
+                    diamondDao.spendDiamonds(-webPouch.diamonds.amount)
+                }
             }
 
             val gardenItemsWithLocalUrls = withContext(Dispatchers.IO) {

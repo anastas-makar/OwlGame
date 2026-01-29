@@ -23,6 +23,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import kotlinx.coroutines.delay
+import pro.progr.diamondapi.PurchaseInterface
 import pro.progr.owlgame.data.web.Pouch
 import pro.progr.owlgame.presentation.viewmodel.InPouchViewModel
 import pro.progr.owlgame.presentation.viewmodel.PouchesViewModel
@@ -32,7 +33,8 @@ fun PouchesScreen(
     backToMain: () -> Unit,
     navController: NavHostController,
     pouchesViewModel: PouchesViewModel,
-    inPouchViewModel: InPouchViewModel
+    inPouchViewModel: InPouchViewModel,
+    diamondDao: PurchaseInterface
 ) {
     LaunchedEffect(Unit) {
         pouchesViewModel.loadPouches()
@@ -47,7 +49,7 @@ fun PouchesScreen(
     // грузим только когда реально выбран мешочек
     LaunchedEffect(isSelected, selectedPouch?.id) {
         if (isSelected) {
-            selectedPouch?.id?.let { inPouchViewModel.loadInPouch(it) }
+            selectedPouch?.id?.let { inPouchViewModel.loadInPouch(it, diamondDao) }
         }
     }
 
