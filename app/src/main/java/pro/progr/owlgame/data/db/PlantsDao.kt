@@ -19,13 +19,14 @@ public interface PlantsDao {
         UPDATE plants
         SET readiness =
           CASE
-            WHEN readiness + :delta > 1.0 THEN 1.0
-            WHEN readiness + :delta < 0.0 THEN 0.0
+            WHEN readiness + :delta >= 1.0 THEN 1.0
+            WHEN readiness + :delta <= 0.0 THEN 0.0
             ELSE readiness + :delta
           END
-        WHERE id = :itemId
+        WHERE readiness < 1.0
+          AND gardenId IS NOT NULL
         """)
-    suspend fun addReadinessClamped(itemId: String, delta: Float): Int
+    suspend fun addReadinessToAllPlanted(delta: Float): Int
 
     @Query("UPDATE plants SET x=:x, y=:y WHERE id=:plantId")
     fun updatePosition(plantId: String, x: Float, y: Float): Int
