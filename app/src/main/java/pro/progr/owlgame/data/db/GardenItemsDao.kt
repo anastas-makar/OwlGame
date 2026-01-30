@@ -23,4 +23,16 @@ public interface GardenItemsDao {
 
     @Query("SELECT * FROM garden_items WHERE gardenId=:gardenId")
     fun observeByGardenId(gardenId : String) : Flow<List<GardenItem>>
+
+    @Query("""
+        UPDATE garden_items
+        SET readiness =
+          CASE
+            WHEN readiness + :delta > 1.0 THEN 1.0
+            WHEN readiness + :delta < 0.0 THEN 0.0
+            ELSE readiness + :delta
+          END
+        WHERE id = :itemId
+        """)
+    suspend fun addReadinessClamped(itemId: String, delta: Float): Int
 }
