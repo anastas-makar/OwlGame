@@ -15,7 +15,7 @@ class GrowthRepository @Inject constructor(
     }
 
     private fun getDelta(lastUpdate: Long, now: Long) : Float {
-        return (now.toFloat() - lastUpdate.toFloat()) / GROW_DURATION_MILLIS.toFloat()
+        return (now - lastUpdate).toFloat() / GROW_DURATION_MILLIS.toFloat()
     }
 
     fun setGrowthUpdate(updateTime: Long) {
@@ -24,10 +24,15 @@ class GrowthRepository @Inject constructor(
 
     fun getGrowthState() : GrowthState {
         val last = preferences.getGrowthUpdate()
+
         val now = System.currentTimeMillis()
 
+        if (last == 0L) {
+            return GrowthState.NotStarted(now)
+        }
+
         if (shouldGrow(last, now)) {
-            return GrowthState.Growing(getDelta(last, now))
+            return GrowthState.Growing(getDelta(last, now), now)
         }
 
         return GrowthState.Suspended()

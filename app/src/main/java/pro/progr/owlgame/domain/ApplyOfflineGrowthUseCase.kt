@@ -11,13 +11,14 @@ class ApplyOfflineGrowthUseCase @Inject constructor(
     private val gardenItemsRepository: GardenItemsRepository,
     private val growthRepository: GrowthRepository
 ) {
-    suspend operator fun invoke() {
-        val growthState = growthRepository.getGrowthState()
-
-        if (growthState is GrowthState.Growing) {
+    suspend operator fun invoke() = when(val growthState = growthRepository.getGrowthState()) {
+        is GrowthState.Growing -> {
             plantsRepository.addReadinessToAllPlanted(growthState.delta)
             gardenItemsRepository.addReadinessToAllPlanted(growthState.delta)
-            growthRepository.setGrowthUpdate(System.currentTimeMillis())
+            growthRepository.setGrowthUpdate(growthState.updateTime)
         }
+        is GrowthState.NotStarted -> growthRepository.setGrowthUpdate(growthState.updateTime)
+        is GrowthState.Suspended -> Unit
     }
+
 }
