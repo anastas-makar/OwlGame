@@ -32,4 +32,10 @@ class OwlPreferences @Inject constructor(
     fun setLastPouchOpenDay(epochDay: Long) {
         prefs.edit().putLong(LAST_POUCH_DAY, epochDay).apply()
     }
+
+    fun getGrowthUpdate() : Long = prefs.getLong(GROWTH_UPDATE, 0L)
+
+    fun setGrowthUpdate(updateTime: Long) {
+        prefs.edit().putLong(GROWTH_UPDATE, updateTime).apply()
+    }
 }

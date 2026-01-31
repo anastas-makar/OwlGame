@@ -28,4 +28,8 @@ class PlantsRepository @Inject constructor(
     fun setPlant(itemId: String, gardenId: String) {
         plantsDao.setToGarden(itemId, gardenId)
     }
+
+    suspend fun addReadinessToAllPlanted(delta: Float) {
+        plantsDao.addReadinessToAllPlanted(delta)
+    }
 }

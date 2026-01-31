@@ -31,7 +31,7 @@ class WidgetRepository @Inject constructor(
     }
 
     fun isPouchAvailable(): Boolean {
-        val lastPouchDay = -1//preferences.getLastPouchOpenDay()
+        val lastPouchDay = preferences.getLastPouchOpenDay()
         return lastPouchDay < LocalDate.now().toEpochDay()
     }
 
