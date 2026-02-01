@@ -7,7 +7,7 @@ import androidx.room.Query
 
 @Dao
 interface SuppliesDao {
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(supplies: List<Supply>) : List<Long>
 
     @Query("UPDATE supplies SET amount = amount + :amount WHERE id = :supplyId")
