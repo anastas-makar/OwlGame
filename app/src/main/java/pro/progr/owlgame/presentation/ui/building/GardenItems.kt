@@ -1,5 +1,6 @@
 package pro.progr.owlgame.presentation.ui.building
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -7,20 +8,26 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import pro.progr.owlgame.dagger.OwlGameComponent
@@ -33,6 +40,7 @@ import pro.progr.owlgame.presentation.ui.mapicon.DraggableImageOverlay
 import pro.progr.owlgame.presentation.ui.mapicon.gardenItemIconRes
 import pro.progr.owlgame.presentation.viewmodel.GardenZoneViewModel
 import pro.progr.owlgame.presentation.viewmodel.dagger.DaggerGardenZoneViewModel
+import kotlin.math.roundToInt
 
 @Composable
 fun GardenItems(
@@ -99,6 +107,10 @@ fun GardenItems(
 
 @Composable
 private fun GardenItemCard(item: GardenItem, modifier: Modifier = Modifier) {
+    val r = item.readiness.coerceIn(0f, 1f)
+    val ready = r >= 0.999f
+    val pct = (r * 100f).roundToInt()
+
     Card(modifier) {
         Column {
             AsyncImage(
@@ -107,7 +119,47 @@ private fun GardenItemCard(item: GardenItem, modifier: Modifier = Modifier) {
                 contentScale = ContentScale.Crop,
                 modifier = Modifier.fillMaxWidth().aspectRatio(1f)
             )
-            Text(item.name, modifier = Modifier.padding(6.dp))
+
+            Column(Modifier.padding(6.dp)) {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(item.name, modifier = Modifier.weight(1f))
+
+                    if (ready) {
+                        Text(
+                            text = "Готово",
+                            fontWeight = FontWeight.Bold,
+                            color = Color(0xFF2E7D32) // зелёный
+                        )
+                    } else {
+                        Text(
+                            text = "$pct%",
+                            color = Color.Gray
+                        )
+                    }
+                }
+
+                Spacer(Modifier.height(6.dp))
+
+                // Полоска прогресса (свой, чтобы выглядеть аккуратнее стандартного)
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(6.dp)
+                        .clip(RoundedCornerShape(999.dp))
+                        .background(Color.Black.copy(alpha = 0.10f))
+                ) {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxHeight()
+                            .fillMaxWidth(r)
+                            .clip(RoundedCornerShape(999.dp))
+                            .background(if (ready) Color(0xFF2E7D32) else Color.DarkGray)
+                    )
+                }
+            }
         }
     }
 }
