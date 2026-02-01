@@ -8,7 +8,7 @@ data class GardenItemInPouch (
     val name : String,
     val description : String,
     val imageUrl : String,
-    val supplyName : String,
+    val supply : SupplyInPouch,
     val supplyAmount : Int,
     val itemType : ItemType,
     val gardenType: GardenType

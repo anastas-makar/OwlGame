@@ -13,10 +13,9 @@ data class Plant (
     val gardenId : String? = null,
     val x : Float = 0f,
     val y : Float = 0f,
-    val supplyName : String,
+    val supplyId : String,
     val supplyAmount : Int,
     val seedAmount : Int,
-    val seedImageUrl : String,
-    val seedName : String,
-    val readiness: Float = 0f
+    val readiness: Float = 0f,
+    val deleted: Boolean = false
 )
