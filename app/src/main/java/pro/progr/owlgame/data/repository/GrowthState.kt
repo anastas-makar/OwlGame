@@ -7,5 +7,5 @@ sealed interface GrowthState {
 
     class Suspended : GrowthState
 
-    class NotStarted(val updateTime: Long) : GrowthState
+    class NeedsStart(val updateTime: Long) : GrowthState
 }

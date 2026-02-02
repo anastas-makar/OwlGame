@@ -23,7 +23,7 @@ class ApplyOfflineGrowthUseCase @Inject constructor(
                 growthRepository.setGrowthUpdate(growthState.updateTime)
             }
 
-            is GrowthState.NotStarted -> growthRepository.setGrowthUpdate(growthState.updateTime)
+            is GrowthState.NeedsStart -> growthRepository.setGrowthUpdate(growthState.updateTime)
             is GrowthState.Suspended -> Unit
         }
     }
