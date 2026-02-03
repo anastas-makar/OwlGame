@@ -7,6 +7,5 @@ data class PlantInPouch (
     val imageUrl : String,
     val supply : SupplyInPouch,
     val supplyAmount : Int,
-    val seedAmount : Int,
-    val seedName : String
+    val seedAmount : Int
 )
