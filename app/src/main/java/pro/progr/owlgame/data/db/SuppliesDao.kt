@@ -4,6 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface SuppliesDao {
@@ -12,4 +13,7 @@ interface SuppliesDao {
 
     @Query("UPDATE supplies SET amount = amount + :amount WHERE id = :supplyId")
     suspend fun updateAmount(supplyId : String, amount : Int)
+
+    @Query("SELECT * FROM supplies WHERE id=:supplyId")
+    suspend fun getById(supplyId : String) : Flow<Supply?>
 }
