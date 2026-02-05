@@ -31,10 +31,10 @@ public interface PlantsDao {
     @Query("UPDATE plants SET x=:x, y=:y WHERE id=:plantId")
     fun updatePosition(plantId: String, x: Float, y: Float): Int
 
-    @Query("SELECT * FROM plants WHERE gardenId IS NULL")
+    @Query("SELECT * FROM plants WHERE gardenId IS NULL AND deleted=0")
     fun getAvailable() : Flow<List<Plant>>
 
-    @Query("SELECT * FROM plants WHERE gardenId=:gardenId")
+    @Query("SELECT * FROM plants WHERE gardenId=:gardenId AND deleted=0")
     fun observeByGardenId(gardenId : String) : Flow<List<Plant>>
 
     @Query("UPDATE plants SET deleted = 1 WHERE id = :id")
