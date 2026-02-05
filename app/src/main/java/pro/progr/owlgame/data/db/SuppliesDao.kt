@@ -15,5 +15,5 @@ interface SuppliesDao {
     suspend fun updateAmount(supplyId : String, amount : Int)
 
     @Query("SELECT * FROM supplies WHERE id=:supplyId")
-    suspend fun getById(supplyId : String) : Flow<Supply?>
+    fun getById(supplyId : String) : Flow<Supply?>
 }
