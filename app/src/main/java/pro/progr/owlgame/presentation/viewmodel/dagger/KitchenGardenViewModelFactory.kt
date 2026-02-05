@@ -3,11 +3,13 @@ package pro.progr.owlgame.presentation.viewmodel.dagger
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import pro.progr.owlgame.data.repository.PlantsRepository
+import pro.progr.owlgame.data.repository.SuppliesRepository
 import pro.progr.owlgame.presentation.viewmodel.KitchenGardenViewModel
 import javax.inject.Inject
 
 class KitchenGardenViewModelFactory @Inject constructor(
-    private val plantsRepository: PlantsRepository
+    private val plantsRepository: PlantsRepository,
+    private val suppliesRepository: SuppliesRepository,
 ) : ViewModelProvider.Factory {
     var gardenId: String = ""
 
@@ -15,6 +17,7 @@ class KitchenGardenViewModelFactory @Inject constructor(
             if (modelClass.isAssignableFrom(KitchenGardenViewModel::class.java)) {
             return KitchenGardenViewModel(
                 plantsRepository,
+                suppliesRepository,
                 gardenId) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")

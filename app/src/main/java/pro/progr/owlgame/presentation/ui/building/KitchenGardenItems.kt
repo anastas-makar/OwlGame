@@ -1,6 +1,7 @@
 package pro.progr.owlgame.presentation.ui.building
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -20,7 +21,10 @@ import androidx.compose.material.Card
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -52,6 +56,25 @@ fun KitchenGardenItems(
     val vm = DaggerKitchenGardenViewModel<KitchenGardenViewModel>(component, garden.id)
     val items = vm.plants.collectAsState(initial = emptyList())
     val availablePlants = vm.availablePlants.collectAsState(initial = emptyList())
+
+    var harvestPlant by remember { mutableStateOf<Plant?>(null) }
+
+    harvestPlant?.let { plant ->
+        HarvestPlantDialog(
+            plant = plant,
+            supplyFlow = vm.observeSupply(plant.supplyId),
+            onHarvestSeeds = {
+                vm.harvestSeeds(plant)
+                harvestPlant = null
+            },
+            onHarvestSupply = {
+                vm.harvestSupply(plant)
+                harvestPlant = null
+            },
+            onDismiss = { harvestPlant = null }
+        )
+    }
+
     fabViewModel.fabActions.value = listOf(
         FabAction(
             text = "Посадить растение",
@@ -94,7 +117,9 @@ fun KitchenGardenItems(
         items(rows.size) { ind ->
             val row = rows[ind]
             Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                row.forEach { p -> PlantCard(p, Modifier.weight(1f)) }
+                row.forEach { p -> PlantCard(p,
+                    Modifier.weight(1f),
+                    onReadyClick = { harvestPlant = it }) }
                 repeat(3 - row.size) { Spacer(Modifier.weight(1f)) }
             }
         }
@@ -106,12 +131,19 @@ fun KitchenGardenItems(
 }
 
 @Composable
-private fun PlantCard(item: Plant, modifier: Modifier = Modifier) {
+private fun PlantCard(
+    item: Plant,
+    modifier: Modifier = Modifier,
+    onReadyClick: (Plant) -> Unit
+) {
     val r = item.readiness.coerceIn(0f, 1f)
     val ready = r >= 0.999f
     val pct = (r * 100f).roundToInt()
 
-    Card(modifier) {
+    Card(
+        modifier = modifier
+            .clickable(enabled = ready) { onReadyClick(item) }
+    ) {
         Column {
             AsyncImage(
                 model = item.imageUrl,
@@ -126,24 +158,15 @@ private fun PlantCard(item: Plant, modifier: Modifier = Modifier) {
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Text(item.name, modifier = Modifier.weight(1f))
-
-                    if (ready) {
-                        Text(
-                            text = "Готово",
-                            fontWeight = FontWeight.Bold,
-                            color = Color(0xFF2E7D32) // зелёный
-                        )
-                    } else {
-                        Text(
-                            text = "$pct%",
-                            color = Color.Gray
-                        )
-                    }
+                    Text(
+                        text = if (ready) "Готово" else "$pct%",
+                        fontWeight = if (ready) FontWeight.Bold else FontWeight.Normal,
+                        color = if (ready) Color(0xFF2E7D32) else Color.Gray
+                    )
                 }
 
                 Spacer(Modifier.height(6.dp))
 
-                // Полоска прогресса (свой, чтобы выглядеть аккуратнее стандартного)
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
