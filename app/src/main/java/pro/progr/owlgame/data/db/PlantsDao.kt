@@ -36,4 +36,7 @@ public interface PlantsDao {
 
     @Query("SELECT * FROM plants WHERE gardenId=:gardenId")
     fun observeByGardenId(gardenId : String) : Flow<List<Plant>>
+
+    @Query("UPDATE plants SET deleted = 1 WHERE id = :id")
+    suspend fun markDeleted(id: String)
 }

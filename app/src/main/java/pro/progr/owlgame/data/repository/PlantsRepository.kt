@@ -13,6 +13,8 @@ class PlantsRepository @Inject constructor(
         plantsDao.insert(plants)
     }
 
+    suspend fun markDeleted(id: String) = plantsDao.markDeleted(id)
+
     fun observeByGardenId(gardenId: String) : Flow<List<Plant>> {
         return plantsDao.observeByGardenId(gardenId)
     }

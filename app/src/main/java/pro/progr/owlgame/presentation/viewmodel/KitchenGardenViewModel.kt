@@ -12,10 +12,14 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import pro.progr.owlgame.data.db.Plant
+import pro.progr.owlgame.data.db.Supply
 import pro.progr.owlgame.data.repository.PlantsRepository
+import pro.progr.owlgame.data.repository.SuppliesRepository
+import java.util.UUID
 
 class KitchenGardenViewModel @Inject constructor(
     private val plantsRepo: PlantsRepository,
+    private val suppliesRepo: SuppliesRepository,
     private val gardenId: String
 ) : ViewModel() {
 
@@ -41,5 +45,32 @@ class KitchenGardenViewModel @Inject constructor(
             plantsRepo.setPlant(plant.id, gardenId)
         }
         selectPlantState.value = false
+    }
+
+
+    fun observeSupply(id: String): Flow<Supply?> = suppliesRepo.observeById(id)
+
+    fun harvestSeeds(plant: Plant) {
+        viewModelScope.launch(Dispatchers.IO) {
+            val seeds = List(plant.seedAmount.coerceAtLeast(0)) {
+                plant.copy(
+                    id = UUID.randomUUID().toString(),
+                    gardenId = null,      // семена не посажены
+                    x = 0f,
+                    y = 0f,
+                    readiness = 0f,
+                    deleted = false
+                )
+            }
+            if (seeds.isNotEmpty()) plantsRepo.insert(seeds)
+            plantsRepo.markDeleted(plant.id)
+        }
+    }
+
+    fun harvestSupply(plant: Plant) {
+        viewModelScope.launch(Dispatchers.IO) {
+            suppliesRepo.updateAmount(plant.supplyId, plant.supplyAmount)
+            plantsRepo.markDeleted(plant.id)
+        }
     }
 }

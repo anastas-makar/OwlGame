@@ -17,7 +17,7 @@ class SuppliesRepository @Inject constructor(
         suppliesDao.updateAmount(supplyId, amount)
     }
 
-    suspend fun getById(supplyId : String) : Flow<Supply?> {
+    fun observeById(supplyId : String) : Flow<Supply?> {
         return suppliesDao.getById(supplyId)
     }
 }
