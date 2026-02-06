@@ -13,9 +13,11 @@ import kotlinx.coroutines.launch
 import pro.progr.owlgame.data.db.GardenItem
 import pro.progr.owlgame.data.db.GardenType
 import pro.progr.owlgame.data.repository.GardenItemsRepository
+import pro.progr.owlgame.data.repository.SuppliesRepository
 
 class GardenZoneViewModel @Inject constructor(
     private val gardenItemsRepo: GardenItemsRepository,
+    private val suppliesRepository: SuppliesRepository,
     private val gardenId: String,
     private val gardenType: GardenType
 ) : ViewModel() {
