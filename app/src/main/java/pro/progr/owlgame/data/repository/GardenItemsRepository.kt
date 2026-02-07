@@ -32,4 +32,8 @@ class GardenItemsRepository @Inject constructor(
     suspend fun addReadinessToAllPlanted(delta: Float) {
         gardenItemsDao.addReadinessToAllPlanted(delta)
     }
+
+    suspend fun flushReadinessForItem(itemId: String) {
+        gardenItemsDao.flushReadinessForItem(itemId)
+    }
 }

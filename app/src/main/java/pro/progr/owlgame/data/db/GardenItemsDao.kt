@@ -36,4 +36,7 @@ public interface GardenItemsDao {
           AND gardenId IS NOT NULL
         """)
     suspend fun addReadinessToAllPlanted(delta: Float): Int
+
+    @Query("UPDATE garden_items SET readiness=0.0 WHERE id = :itemId")
+    suspend fun flushReadinessForItem(itemId: String)
 }

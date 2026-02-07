@@ -6,12 +6,14 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import jakarta.inject.Inject
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import pro.progr.owlgame.data.db.GardenItem
 import pro.progr.owlgame.data.db.GardenType
+import pro.progr.owlgame.data.db.Supply
 import pro.progr.owlgame.data.repository.GardenItemsRepository
 import pro.progr.owlgame.data.repository.SuppliesRepository
 
@@ -39,5 +41,14 @@ class GardenZoneViewModel @Inject constructor(
             gardenItemsRepo.setGardenItem(gardenItem.id, gardenId)
         }
         selectGardenItemsState.value = false
+    }
+
+    fun observeSupply(id: String): Flow<Supply?> = suppliesRepository.observeById(id)
+
+    fun harvestSupply(gardenItem: GardenItem) {
+        viewModelScope.launch(Dispatchers.IO) {
+            suppliesRepository.updateAmount(gardenItem.supplyId, gardenItem.supplyAmount)
+            gardenItemsRepo.flushReadinessForItem(gardenItem.id)
+        }
     }
 }
