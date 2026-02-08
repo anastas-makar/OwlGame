@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface SuppliesDao {
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(supplies: List<Supply>) : List<Long>
 
     @Query("UPDATE supplies SET amount = amount + :amount WHERE id = :supplyId")
