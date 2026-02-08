@@ -1,14 +1,11 @@
 package pro.progr.owlgame.presentation.ui.building
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.AlertDialog
-import androidx.compose.material.Button
-import androidx.compose.material.OutlinedButton
 import androidx.compose.material.Text
 import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
@@ -29,63 +26,48 @@ fun HarvestPlantDialog(
     onDismiss: () -> Unit
 ) {
     val supply = supplyFlow.collectAsState(initial = null).value
+    val supplyName = supply?.name ?: "Припас"
 
     AlertDialog(
         onDismissRequest = onDismiss,
         title = { Text("Собрать урожай") },
-        text = {
-            Column {
-                Text("Выберите, что собрать. Можно выбрать только одно.")
-                Spacer(Modifier.height(10.dp))
-
-                // Семена
-                Row(verticalAlignment = Alignment.CenterVertically) {
-                    Text("Семена: ${plant.seedAmount}")
-                }
-
-                Spacer(Modifier.height(6.dp))
-
-                // Припас
-                Row(verticalAlignment = Alignment.CenterVertically) {
-                    val supplyName = supply?.name ?: "припас"
-                    Text("$supplyName: ${plant.supplyAmount}")
-                }
-            }
-        },
+        text = { Text("Выберите, что собрать. Можно выбрать только одно.") },
         buttons = {
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(12.dp)
             ) {
-                Button(
+                HarvestOptionButton(
+                    imageUrl = plant.imageUrl,
+                    title = "Семена",
+                    subtitle = plant.name,
+                    amountText = "+${plant.seedAmount}",
                     onClick = onHarvestSeeds,
-                    modifier = Modifier.fillMaxWidth(),
-                    enabled = plant.seedAmount > 0
-                ) {
-                    Text("Собрать семена (+${plant.seedAmount})")
-                }
+                    enabled = plant.seedAmount > 0,
+                    outlined = false
+                )
 
-                Spacer(Modifier.height(8.dp))
+                Spacer(Modifier.height(10.dp))
 
-                OutlinedButton(
+                HarvestOptionButton(
+                    imageUrl = supply?.imageUrl,
+                    title = supplyName,
+                    subtitle = "Припасы",
+                    amountText = "+${plant.supplyAmount}",
                     onClick = onHarvestSupply,
-                    modifier = Modifier.fillMaxWidth(),
-                    enabled = plant.supplyAmount > 0
-                ) {
-                    val supplyName = supply?.name ?: "припасы"
-                    Text("Собрать $supplyName (+${plant.supplyAmount})")
-                }
+                    enabled = plant.supplyAmount > 0,
+                    outlined = true
+                )
 
-                Spacer(Modifier.height(4.dp))
+                Spacer(Modifier.height(6.dp))
 
                 TextButton(
                     onClick = onDismiss,
                     modifier = Modifier.align(Alignment.End)
-                ) {
-                    Text("Отмена")
-                }
+                ) { Text("Отмена") }
             }
         }
     )
 }
+
