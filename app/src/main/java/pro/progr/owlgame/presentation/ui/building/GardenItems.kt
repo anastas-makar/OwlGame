@@ -1,6 +1,7 @@
 package pro.progr.owlgame.presentation.ui.building
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -20,7 +21,10 @@ import androidx.compose.material.Card
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -64,6 +68,21 @@ fun GardenItems(
 
     fabViewModel.showFab.value = onMap && availableItems.value.isNotEmpty()
 
+    var harvestGardenItem by remember { mutableStateOf<GardenItem?>(null) }
+
+    harvestGardenItem?.let { gItem ->
+        HarvestGardenItemDialog (
+            gardenItem = gItem,
+            supplyFlow = vm.observeSupply(gItem.supplyId),
+            onHarvestSupply = {
+                vm.harvestSupply(gItem)
+                harvestGardenItem = null
+            },
+            onDismiss = { harvestGardenItem = null }
+        )
+    }
+
+
     val sorted = remember(items.value) {
         items.value
             .sortedWith(compareBy<GardenItem>({ it.x }, { it.id }))
@@ -94,7 +113,9 @@ fun GardenItems(
         items(rows.size) { ind ->
             val row = rows[ind]
             Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                row.forEach { gi -> GardenItemCard(gi, Modifier.weight(1f)) }
+                row.forEach { gi -> GardenItemCard(item = gi,
+                    onReadyClick = { harvestGardenItem = gi },
+                    modifier = Modifier.weight(1f)) }
                 repeat(3 - row.size) { Spacer(Modifier.weight(1f)) }
             }
         }
@@ -106,12 +127,16 @@ fun GardenItems(
 }
 
 @Composable
-private fun GardenItemCard(item: GardenItem, modifier: Modifier = Modifier) {
+private fun GardenItemCard(item: GardenItem,
+                           onReadyClick: (GardenItem) -> Unit, modifier: Modifier = Modifier) {
     val r = item.readiness.coerceIn(0f, 1f)
     val ready = r >= 0.999f
     val pct = (r * 100f).roundToInt()
 
-    Card(modifier) {
+    Card(
+        modifier = modifier
+            .clickable(enabled = ready) { onReadyClick(item) }
+    ) {
         Column {
             AsyncImage(
                 model = item.imageUrl,
