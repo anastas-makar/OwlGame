@@ -6,5 +6,6 @@ data class InPouch(
     val diamonds : DiamondsInPouchModel? = null,
     val gardenItems : List<GardenItemInPouch> = emptyList(),
     val plants : List<PlantInPouch> = emptyList(),
-    val furniture : List<FurnitureInPouch> = emptyList()
+    val furniture : List<FurnitureInPouch> = emptyList(),
+    val receipts : List<ReceiptInPouch> = emptyList()
 )

@@ -7,7 +7,8 @@ import androidx.room.PrimaryKey
 data class Receipt (
     @PrimaryKey
     val id : String,
-    val name : String,
+    val resSupplyId : String,
+    val description: String,
     val effectType : EffectType,
     val effectAmount : Int
 )
