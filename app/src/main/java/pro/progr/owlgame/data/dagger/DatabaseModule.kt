@@ -14,6 +14,7 @@ import pro.progr.owlgame.data.db.MapDao
 import pro.progr.owlgame.data.db.OwlGameDatabase
 import pro.progr.owlgame.data.db.MapWithDataDao
 import pro.progr.owlgame.data.db.PlantsDao
+import pro.progr.owlgame.data.db.ReceiptsDao
 import pro.progr.owlgame.data.db.RoomsDao
 import pro.progr.owlgame.data.db.StreetsDao
 import pro.progr.owlgame.data.db.SuppliesDao
@@ -91,5 +92,10 @@ object DatabaseModule {
     @Provides
     fun provideSuppliesDao(database: OwlGameDatabase): SuppliesDao {
         return database.suppliesDao()
+    }
+
+    @Provides
+    fun provideReceiptsDao(database: OwlGameDatabase): ReceiptsDao {
+        return database.receiptsDao()
     }
 }
