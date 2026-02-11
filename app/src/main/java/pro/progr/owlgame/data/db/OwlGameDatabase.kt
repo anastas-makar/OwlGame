@@ -52,6 +52,8 @@ abstract class OwlGameDatabase : RoomDatabase() {
 
     abstract fun receiptsDao(): ReceiptsDao
 
+    abstract fun supplyToReceiptsDao(): SupplyToReceiptDao
+
     companion object {
         @Volatile
         private var INSTANCE: OwlGameDatabase? = null

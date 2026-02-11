@@ -18,6 +18,7 @@ import pro.progr.owlgame.data.db.ReceiptsDao
 import pro.progr.owlgame.data.db.RoomsDao
 import pro.progr.owlgame.data.db.StreetsDao
 import pro.progr.owlgame.data.db.SuppliesDao
+import pro.progr.owlgame.data.db.SupplyToReceiptDao
 import javax.inject.Singleton
 
 @Module
@@ -97,5 +98,10 @@ object DatabaseModule {
     @Provides
     fun provideReceiptsDao(database: OwlGameDatabase): ReceiptsDao {
         return database.receiptsDao()
+    }
+
+    @Provides
+    fun provideSupplyToReceiptsDao(database: OwlGameDatabase): SupplyToReceiptDao {
+        return database.supplyToReceiptsDao()
     }
 }
