@@ -8,8 +8,8 @@ import pro.progr.owlgame.domain.mapper.linkId
 import pro.progr.owlgame.domain.mapper.toEntity
 import javax.inject.Inject
 
-class SaveReceiptsUseСase @Inject constructor(
-    private val suplyToReceiptRepository: SupplyToReceiptRepository
+class SaveReceiptsUseCase @Inject constructor(
+    private val supplyToReceiptRepository: SupplyToReceiptRepository
 ) {
 
     suspend operator fun invoke(receipts: List<ReceiptInPouch>) {
@@ -42,6 +42,6 @@ class SaveReceiptsUseСase @Inject constructor(
                     }
             }
 
-        suplyToReceiptRepository.saveReceipts(allSupplies, receiptEntities, links)
+        supplyToReceiptRepository.saveReceipts(allSupplies, receiptEntities, links)
     }
 }
