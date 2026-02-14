@@ -15,7 +15,6 @@ class SaveReceiptsUseCase @Inject constructor(
     suspend operator fun invoke(receipts: List<ReceiptInPouch>) {
         if (receipts.isEmpty()) return
 
-        // 1) Собираем все Supply (result + ingredients), вставляем только отсутствующие
         val allSupplies: List<Supply> =
             buildList {
                 receipts.forEach { r ->

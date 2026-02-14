@@ -8,6 +8,7 @@ import pro.progr.owlgame.domain.SaveFurnitureUseCase
 import pro.progr.owlgame.domain.SaveGardenItemsUseCase
 import pro.progr.owlgame.domain.SaveMapsUseCase
 import pro.progr.owlgame.domain.SavePlantsUseCase
+import pro.progr.owlgame.domain.SaveReceiptsUseCase
 import pro.progr.owlgame.presentation.viewmodel.InPouchViewModel
 import pro.progr.owlgame.presentation.viewmodel.PouchesViewModel
 import javax.inject.Inject
@@ -18,7 +19,8 @@ class PouchViewModelFactory @Inject constructor(
     private val saveBuildingsUseCase: SaveBuildingsUseCase,
     private val savePlantsUseCase: SavePlantsUseCase,
     private val saveGardenItemsUseCase: SaveGardenItemsUseCase,
-    private val saveFurnitureUseCase: SaveFurnitureUseCase
+    private val saveFurnitureUseCase: SaveFurnitureUseCase,
+    private val saveReceiptsUseCase: SaveReceiptsUseCase
 ) : ViewModelProvider.Factory {
 
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
@@ -30,7 +32,8 @@ class PouchViewModelFactory @Inject constructor(
                 saveBuildingsUseCase,
                 savePlantsUseCase,
                 saveGardenItemsUseCase,
-                saveFurnitureUseCase) as T
+                saveFurnitureUseCase,
+                saveReceiptsUseCase) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }
