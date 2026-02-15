@@ -1,7 +1,7 @@
 package pro.progr.owlgame.presentation.ui.building
 
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
@@ -14,14 +14,14 @@ import androidx.compose.ui.unit.dp
 fun LargeImage(imageUrl: String) {
     Box(
         modifier = Modifier
-            .fillMaxSize()
+            .fillMaxWidth()
             .padding(12.dp)
             .clip(RoundedCornerShape(16.dp))
     ) {
         coil.compose.AsyncImage(
             model = imageUrl,
             contentDescription = null,
-            modifier = Modifier.fillMaxSize(),
+            modifier = Modifier.fillMaxWidth(),
             contentScale = ContentScale.Fit
         )
     }
