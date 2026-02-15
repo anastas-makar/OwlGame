@@ -2,6 +2,7 @@ package pro.progr.owlgame.presentation.ui.building
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -9,6 +10,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
 import pro.progr.diamondapi.PurchaseInterface
 import pro.progr.owlgame.dagger.OwlGameComponent
 import pro.progr.owlgame.data.db.RoomEntity
@@ -47,6 +49,7 @@ fun InRoom(
 
     Box(
         modifier = Modifier
+            .padding(top = 8.dp)
             .fillMaxWidth()
     ) {
         DraggableSizedImageOverlay(

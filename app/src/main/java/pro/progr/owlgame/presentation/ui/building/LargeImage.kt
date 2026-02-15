@@ -15,7 +15,7 @@ fun LargeImage(imageUrl: String) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(12.dp)
+            .padding(8.dp)
             .clip(RoundedCornerShape(16.dp))
     ) {
         coil.compose.AsyncImage(
