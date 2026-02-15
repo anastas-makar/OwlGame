@@ -29,7 +29,7 @@ fun InBuilding(
 
     val items = remember(data.building, rooms, gardens) {
         buildList<GalleryItem> {
-            add(GalleryItem.BuildingItem(data.building))
+            add(GalleryItem.BuildingItem(data))
             addAll(rooms.map { GalleryItem.RoomItem(it) })
             addAll(gardens.map { GalleryItem.GardenItem(it) })
         }
