@@ -11,8 +11,20 @@ class OwlPreferences @Inject constructor(
 
     fun getAnimalId(): String? = prefs.getString(ANIMAL_ID, null)
 
-    fun setAnimalId(id: String) {
-        prefs.edit().putString(ANIMAL_ID, id).apply()
+    fun setAnimalIdAndDay(id: String, day: Long) {
+        prefs.edit()
+            .putString(ANIMAL_ID, id)
+            .putLong(ANIMAL_DAY, day)
+            .apply()
+    }
+
+    fun getAnimalDay() : Long = prefs.getLong(ANIMAL_DAY, -1L)
+
+    fun clearAnimalDayAndId() {
+        prefs.edit()
+            .remove(ANIMAL_DAY)
+            .remove(ANIMAL_ID)
+            .apply()
     }
 
     fun getCachedCardIndex(): Int? = prefs.getInt(CACHED_CARD_INDEX, -1).takeIf { it != -1 }

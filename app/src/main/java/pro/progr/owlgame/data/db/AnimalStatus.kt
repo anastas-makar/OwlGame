@@ -4,5 +4,6 @@ enum class AnimalStatus {
     SEARCHING,
     PET,
     EXPEDITION,
+    GONE,
     FUGITIVE;
 }

@@ -103,6 +103,7 @@ private fun BuildingResidentCard(
                         AnimalStatus.FUGITIVE -> "Временно в бегах"
                         AnimalStatus.PET -> null
                         AnimalStatus.SEARCHING -> null // на всякий случай
+                        AnimalStatus.GONE -> null // на всякий случай
                     }
 
                     if (statusLine != null) {
