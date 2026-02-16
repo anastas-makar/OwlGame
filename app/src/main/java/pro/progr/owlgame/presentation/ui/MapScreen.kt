@@ -315,7 +315,7 @@ private fun BuildingCard(building: BuildingModel, modifier: Modifier = Modifier,
                     .aspectRatio(1f)
             )
             building.animal?.let {
-                Text("Живёт ${it.name}", modifier = Modifier.padding(5.dp))
+                Text("Живёт ${it.kind} ${it.name}", modifier = Modifier.padding(5.dp))
             }
         }
     }

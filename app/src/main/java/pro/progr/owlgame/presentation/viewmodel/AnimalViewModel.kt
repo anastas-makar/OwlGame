@@ -28,19 +28,24 @@ class AnimalViewModel @Inject constructor(
         mapsRepository.getMapsWithUninhabitedBuildings(),
         buildingsRepository.getBuildingsWithAnimals()
     ) { mapsWithData, buildingsMap ->
+
         mapsWithData.map { mapWithData ->
+            val mapId = mapWithData.mapEntity.id
+
             MapData(
-                id = mapWithData.mapEntity.id,
+                id = mapId,
                 name = mapWithData.mapEntity.name,
                 imageUrl = mapWithData.mapEntity.imagePath,
                 type = mapWithData.mapEntity.type,
-                buildings = buildingsMap.values.toList()
+                buildings = buildingsMap.values
+                    .filter { it.building.mapId == mapId }
+                    .toList()
             )
         }
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5000),
-        initialValue = emptyList<MapData>()
+        initialValue = emptyList()
     )
     fun saveAnimalInBuilding(buildingId: String, animalId: String) {
         viewModelScope.launch (Dispatchers.IO) {
