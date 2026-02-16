@@ -89,7 +89,7 @@ suspend fun doAnimalBuildingsWork(applicationContext: Context,
                         animal.id, "${animal.name} ${animal.kind}", animal.imagePath)
                 }
 
-            }
+            } ?: prefs.clearAnimalDayAndId() //на всякий случай, чтобы несуществующее животное не застряло в prefs
         }
 
         ListenableWorker.Result.success()

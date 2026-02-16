@@ -1,6 +1,5 @@
 package pro.progr.owlgame.presentation.ui
 
-import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -51,7 +50,6 @@ fun InPouchContent(
     var bgSizePx by remember { mutableStateOf(IntSize.Zero) }
 
     inPouchViewModel.inPouch.value?.let { inPouch ->
-        Log.wtf("IN POUCH !!!!", inPouch.toString())
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()

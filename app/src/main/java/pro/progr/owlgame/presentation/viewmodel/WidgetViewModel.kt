@@ -7,6 +7,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import pro.progr.owlgame.R
+import pro.progr.owlgame.data.db.AnimalStatus
 import pro.progr.owlgame.data.repository.WidgetRepository
 import pro.progr.owlgame.presentation.ui.model.OwlMenuModel
 
@@ -37,7 +38,13 @@ class WidgetViewModel(
 
         private fun ArrayList<OwlMenuModel>.withAnimalSearching() : ArrayList<OwlMenuModel> {
             val animal = widgetRepository.getAnimal()
+
             if (animal !=null) {
+
+                if (animal.status != AnimalStatus.SEARCHING) {
+                    widgetRepository.clearAnimalDayAndId()
+                    return this
+                }
 
                 add(OwlMenuModel(
                     text = "${animal.name} ${animal.kind} ищет дом",

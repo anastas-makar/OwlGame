@@ -39,6 +39,10 @@ class WidgetRepository @Inject constructor(
         return UriWrapper(res, context).uri
     }
 
+    fun clearAnimalDayAndId() {
+        preferences.clearAnimalDayAndId()
+    }
+
     fun getUri(path : String) : Uri {
         return UriWrapper(path).uri
     }
