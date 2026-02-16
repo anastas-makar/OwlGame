@@ -40,7 +40,7 @@ class WidgetViewModel(
             if (animal !=null) {
 
                 add(OwlMenuModel(
-                    text = "${animal.name} ищет дом",
+                    text = "${animal.name} ${animal.kind} ищет дом",
                     navigateTo = "animal?id=${animal.id}",
                     imageUri = widgetRepository.getUri(animal.imagePath)
                 ))
