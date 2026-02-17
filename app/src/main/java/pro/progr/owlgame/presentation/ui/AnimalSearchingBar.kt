@@ -20,7 +20,7 @@ fun AnimalSearchingBar(backToMain : () -> Unit,
     TopAppBar(
         title = {
             Text(text = if (animalState.value != null)
-                "${animalState.value?.name} ищет дом"
+                "${animalState.value?.kind} ${animalState.value?.name} ищет дом"
                 else "")
         },
         navigationIcon = {
