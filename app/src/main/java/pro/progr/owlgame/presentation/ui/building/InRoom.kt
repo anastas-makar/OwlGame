@@ -37,7 +37,7 @@ fun InRoom(
 
     fabViewModel.fabActions.value = listOf(
         FabAction(
-            text = "Поставить",
+            text = "Поставить мебель",
             color = Color.DarkGray,
             onClick = {
                 roomViewModel.selectFurnitureItemState.value = true

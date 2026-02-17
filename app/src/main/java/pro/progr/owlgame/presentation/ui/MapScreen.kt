@@ -80,7 +80,7 @@ fun MapScreen(
     // Показываем FAB только когда реально можно строить (подстрой под свою логику)
     val showBuildFab =
         map.value.id.isNotEmpty() &&
-                map.value.type == MapType.TOWN &&
+                //(map.value.type == MapType.TOWN || map.value.type == MapType.FREE) &&
                 !foundTown.value &&
                 !mapViewModel.selectHouseState.value &&
                 !mapViewModel.selectFortressState.value
@@ -104,18 +104,31 @@ fun MapScreen(
                 ExpandableFloatingActionButton(
                     expanded = fabExpanded,
                     onExpandedChange = { fabExpanded = it },
-                    actions = listOf(
-                        FabAction(
-                            text = "Построить дом",
-                            color = Color.DarkGray,
-                            onClick = { mapViewModel.selectHouseState.value = true }
-                        ),
-                        FabAction(
-                            text = "Построить замок",
-                            color = Color.DarkGray,
-                            onClick = { mapViewModel.selectFortressState.value = true }
-                        )
-                    ),
+                    actions = when {
+                        map.value.id.isEmpty() -> emptyList<FabAction>()
+                        !foundTown.value && map.value.type == MapType.FREE ->
+                            listOf(
+
+                                FabAction(
+                                    text = "Основать город",
+                                    color = Color.DarkGray,
+                                    onClick = { mapViewModel.startToFoundTown() }
+                                )
+                            )
+                        else ->
+                            listOf(
+                                FabAction(
+                                    text = "Построить дом",
+                                    color = Color.DarkGray,
+                                    onClick = { mapViewModel.selectHouseState.value = true }
+                                ),
+                                FabAction(
+                                    text = "Построить замок",
+                                    color = Color.DarkGray,
+                                    onClick = { mapViewModel.selectFortressState.value = true }
+                                )
+                            )
+                    },
                     modifier = Modifier.navigationBarsPadding()
                 )
             }
@@ -135,15 +148,6 @@ fun MapScreen(
                 item {
                     when {
                         map.value.id.isEmpty() -> Text("Загрузка…")
-                        !foundTown.value && map.value.type == MapType.FREE -> {
-                            Button(
-                                colors = ButtonDefaults.buttonColors(
-                                    backgroundColor = Color.DarkGray, contentColor = Color.White
-                                ),
-                                onClick = { mapViewModel.startToFoundTown() },
-                                modifier = Modifier.wrapContentSize()
-                            ) { Text("Основать город") }
-                        }
                         else -> {
                             // Раньше тут были кнопки Дом/Замок — теперь ничего
                             Spacer(Modifier.height(0.dp))
