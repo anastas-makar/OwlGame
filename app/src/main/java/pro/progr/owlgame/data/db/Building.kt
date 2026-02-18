@@ -1,9 +1,11 @@
 package pro.progr.owlgame.data.db
 
 import androidx.room.Entity
+import androidx.room.Index
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "buildings")
+@Entity(tableName = "buildings",
+    indices = [Index(value = ["animalId"], unique = true)])
 data class Building (
     @PrimaryKey
     val id : String,
