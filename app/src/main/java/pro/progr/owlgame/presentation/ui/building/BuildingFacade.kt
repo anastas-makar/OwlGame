@@ -1,6 +1,7 @@
 package pro.progr.owlgame.presentation.ui.building
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -16,6 +17,10 @@ import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -51,8 +56,14 @@ private fun BuildingResidentCard(
     animal: Animal?,
     modifier: Modifier = Modifier
 ) {
+    var showDialog by remember { mutableStateOf(false) }
+
     Card(
-        modifier = modifier,
+        modifier = modifier
+            .then(
+                if (animal != null) Modifier.clickable { showDialog = true }
+                else Modifier
+            ),
         elevation = 4.dp,
         shape = RoundedCornerShape(14.dp)
     ) {
@@ -62,11 +73,11 @@ private fun BuildingResidentCard(
                 .padding(12.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            // Аватар
+            // Аватар чуть больше
             Box(
                 modifier = Modifier
-                    .size(56.dp)
-                    .clip(RoundedCornerShape(14.dp))
+                    .size(72.dp)
+                    .clip(RoundedCornerShape(16.dp))
                     .background(Color.Black.copy(alpha = 0.06f)),
                 contentAlignment = Alignment.Center
             ) {
@@ -78,7 +89,7 @@ private fun BuildingResidentCard(
                         modifier = Modifier.fillMaxSize()
                     )
                 } else {
-                    Text("—", style = MaterialTheme.typography.h5, color = Color.Gray)
+                    Text("—", style = MaterialTheme.typography.h4, color = Color.Gray)
                 }
             }
 
@@ -107,17 +118,22 @@ private fun BuildingResidentCard(
                     }
 
                     if (statusLine != null) {
-                        Spacer(Modifier.height(2.dp))
-                        StatusChip(
-                            text = statusLine,
-                            modifier = Modifier.padding(top = 2.dp)
-                        )
+                        Spacer(Modifier.height(4.dp))
+                        StatusChip(text = statusLine)
                     }
                 }
             }
         }
     }
+
+    if (animal != null && showDialog) {
+        AnimalProfileDialog(
+            animal = animal,
+            onDismiss = { showDialog = false }
+        )
+    }
 }
+
 
 @Composable
 private fun StatusChip(text: String, modifier: Modifier = Modifier) {
