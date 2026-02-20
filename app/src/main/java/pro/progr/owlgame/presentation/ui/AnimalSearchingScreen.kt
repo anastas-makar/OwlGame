@@ -30,7 +30,6 @@ import pro.progr.owlgame.presentation.viewmodel.AnimalViewModel
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import pro.progr.owlgame.data.db.AnimalStatus
 
 @Composable
 fun AnimalSearchingScreen(
@@ -57,9 +56,6 @@ fun AnimalSearchingScreen(
                     .fillMaxWidth()
             ) {
                 animalState.value?.let { animal ->
-                    if (animal.status != AnimalStatus.SEARCHING) {
-                        backToMain()
-                    }
 
                     Row(modifier = Modifier.padding(16.dp, 10.dp)) {
                         AsyncImage(
