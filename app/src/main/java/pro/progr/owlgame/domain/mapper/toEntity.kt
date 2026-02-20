@@ -10,6 +10,7 @@ fun SupplyInPouch.toEntity(): Supply =
         id = id,
         imageUrl = imageUrl,
         name = name,
+        description = description,
         amount = 0,              // ВАЖНО: с сервера amount игрока не приходит
         effectType = effectType,
         effectAmount = effectAmount

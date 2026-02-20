@@ -41,6 +41,7 @@ class SavePlantsUseCase @Inject constructor(private val plantsRepository: Plants
                     id = pConv.supply.id,
                     imageUrl = pConv.supply.imageUrl,
                     name = pConv.supply.name,
+                    description = pConv.supply.description,
                     amount = 0,
                     effectType = pConv.supply.effectType,
                     effectAmount = pConv.supply.effectAmount
