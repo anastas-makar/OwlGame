@@ -2,10 +2,10 @@ package pro.progr.owlgame.data.repository
 
 sealed interface GrowthState {
 
-    class Growing(val delta: Float,
+    data class Growing(val delta: Float,
                   val updateTime: Long) : GrowthState
 
-    class Suspended : GrowthState
+    data object Suspended : GrowthState
 
-    class NeedsStart(val updateTime: Long) : GrowthState
+    data class NeedsStart(val updateTime: Long) : GrowthState
 }

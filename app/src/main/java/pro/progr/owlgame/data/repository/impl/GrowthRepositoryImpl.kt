@@ -44,7 +44,7 @@ class GrowthRepositoryImpl @Inject constructor(
             return GrowthState.Growing(getDelta(last, now), now)
         }
 
-        return GrowthState.Suspended()
+        return GrowthState.Suspended
     }
 }
 
