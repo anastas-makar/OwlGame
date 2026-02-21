@@ -14,11 +14,11 @@ import pro.progr.owlgame.data.db.MapDao
 import pro.progr.owlgame.data.db.OwlGameDatabase
 import pro.progr.owlgame.data.db.MapWithDataDao
 import pro.progr.owlgame.data.db.PlantsDao
-import pro.progr.owlgame.data.db.ReceiptsDao
+import pro.progr.owlgame.data.db.RecipesDao
 import pro.progr.owlgame.data.db.RoomsDao
 import pro.progr.owlgame.data.db.StreetsDao
 import pro.progr.owlgame.data.db.SuppliesDao
-import pro.progr.owlgame.data.db.SupplyToReceiptDao
+import pro.progr.owlgame.data.db.SupplyToRecipeDao
 import javax.inject.Singleton
 
 @Module
@@ -96,12 +96,12 @@ object DatabaseModule {
     }
 
     @Provides
-    fun provideReceiptsDao(database: OwlGameDatabase): ReceiptsDao {
-        return database.receiptsDao()
+    fun provideRecipesDao(database: OwlGameDatabase): RecipesDao {
+        return database.recipesDao()
     }
 
     @Provides
-    fun provideSupplyToReceiptsDao(database: OwlGameDatabase): SupplyToReceiptDao {
-        return database.supplyToReceiptsDao()
+    fun provideSupplyToRecipesDao(database: OwlGameDatabase): SupplyToRecipeDao {
+        return database.supplyToRecipesDao()
     }
 }

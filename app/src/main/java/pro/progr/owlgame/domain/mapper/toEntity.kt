@@ -1,8 +1,8 @@
 package pro.progr.owlgame.domain.mapper
 
-import pro.progr.owlgame.data.db.Receipt
+import pro.progr.owlgame.data.db.Recipe
 import pro.progr.owlgame.data.db.Supply
-import pro.progr.owlgame.data.web.inpouch.ReceiptInPouch
+import pro.progr.owlgame.data.web.inpouch.RecipeInPouch
 import pro.progr.owlgame.data.web.inpouch.SupplyInPouch
 
 fun SupplyInPouch.toEntity(): Supply =
@@ -16,8 +16,8 @@ fun SupplyInPouch.toEntity(): Supply =
         effectAmount = effectAmount
     )
 
-fun ReceiptInPouch.toEntity(): Receipt =
-    Receipt(
+fun RecipeInPouch.toEntity(): Recipe =
+    Recipe(
         id = id,
         resSupplyId = resultSupply.id,
         description = description,
@@ -25,5 +25,5 @@ fun ReceiptInPouch.toEntity(): Receipt =
         effectAmount = effectAmount
     )
 
-fun linkId(receiptId: String, supplyId: String): String =
-    "${receiptId}__${supplyId}" // стабильный id для SupplyToReceipt
+fun linkId(recipeId: String, supplyId: String): String =
+    "${recipeId}__${supplyId}" // стабильный id для SupplyToRecipe

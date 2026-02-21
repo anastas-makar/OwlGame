@@ -8,7 +8,7 @@ import pro.progr.owlgame.domain.SaveFurnitureUseCase
 import pro.progr.owlgame.domain.SaveGardenItemsUseCase
 import pro.progr.owlgame.domain.SaveMapsUseCase
 import pro.progr.owlgame.domain.SavePlantsUseCase
-import pro.progr.owlgame.domain.SaveReceiptsUseCase
+import pro.progr.owlgame.domain.SaveRecipesUseCase
 import pro.progr.owlgame.presentation.viewmodel.dagger.PouchViewModelFactory
 
 @Module
@@ -22,7 +22,7 @@ class PouchModule {
         savePlantsUseCase: SavePlantsUseCase,
         saveGardenItemsUseCase: SaveGardenItemsUseCase,
         saveFurnitureUseCase: SaveFurnitureUseCase,
-        saveReceiptsUseCase: SaveReceiptsUseCase
+        saveRecipesUseCase: SaveRecipesUseCase
     ): PouchViewModelFactory {
         return PouchViewModelFactory(pouchesRepository,
             saveMapsUseCase,
@@ -30,6 +30,6 @@ class PouchModule {
             savePlantsUseCase,
             saveGardenItemsUseCase,
             saveFurnitureUseCase,
-            saveReceiptsUseCase)
+            saveRecipesUseCase)
     }
 }

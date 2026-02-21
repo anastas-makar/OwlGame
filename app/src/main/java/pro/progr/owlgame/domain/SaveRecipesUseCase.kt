@@ -1,46 +1,46 @@
 package pro.progr.owlgame.domain
 
 import pro.progr.owlgame.data.db.Supply
-import pro.progr.owlgame.data.db.SupplyToReceipt
-import pro.progr.owlgame.data.repository.SupplyToReceiptRepository
-import pro.progr.owlgame.data.web.inpouch.ReceiptInPouch
+import pro.progr.owlgame.data.db.SupplyToRecipe
+import pro.progr.owlgame.data.repository.SupplyToRecipeRepository
+import pro.progr.owlgame.data.web.inpouch.RecipeInPouch
 import pro.progr.owlgame.domain.mapper.linkId
 import pro.progr.owlgame.domain.mapper.toEntity
 import javax.inject.Inject
 
-class SaveReceiptsUseCase @Inject constructor(
-    private val supplyToReceiptRepository: SupplyToReceiptRepository
+class SaveRecipesUseCase @Inject constructor(
+    private val supplyToRecipeRepository: SupplyToRecipeRepository
 ) {
 
-    suspend operator fun invoke(receipts: List<ReceiptInPouch>) {
-        if (receipts.isEmpty()) return
+    suspend operator fun invoke(recipes: List<RecipeInPouch>) {
+        if (recipes.isEmpty()) return
 
         val allSupplies: List<Supply> =
             buildList {
-                receipts.forEach { r ->
+                recipes.forEach { r ->
                     add(r.resultSupply.toEntity())
                     r.ingredients.forEach { ing -> add(ing.supplyInPouch.toEntity()) }
                 }
             }
                 .distinctBy { it.id }
 
-        val receiptEntities = receipts.map { it.toEntity() }
+        val recipeEntities = recipes.map { it.toEntity() }
 
-        val links: List<SupplyToReceipt> =
-            receipts.flatMap { r ->
+        val links: List<SupplyToRecipe> =
+            recipes.flatMap { r ->
                 // на всякий случай: если один и тот же supply попался несколько раз — суммируем
                 r.ingredients
                     .groupBy { it.supplyInPouch.id }
                     .map { (supplyId, items) ->
-                        SupplyToReceipt(
+                        SupplyToRecipe(
                             id = linkId(r.id, supplyId),
                             supplyId = supplyId,
-                            receiptId = r.id,
+                            recipeId = r.id,
                             amount = items.sumOf { it.amount }
                         )
                     }
             }
 
-        supplyToReceiptRepository.saveReceipts(allSupplies, receiptEntities, links)
+        supplyToRecipeRepository.saveRecipes(allSupplies, recipeEntities, links)
     }
 }

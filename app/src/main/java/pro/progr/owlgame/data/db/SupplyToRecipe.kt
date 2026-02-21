@@ -4,12 +4,12 @@ import androidx.room.Entity
 import androidx.room.Index
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "supply_to_receipt",
-    indices = [Index(value = ["receiptId", "supplyId"], unique = true)])
-data class SupplyToReceipt (
+@Entity(tableName = "supply_to_recipe",
+    indices = [Index(value = ["recipeId", "supplyId"], unique = true)])
+data class SupplyToRecipe (
     @PrimaryKey
     val id : String,
     val supplyId : String,
-    val receiptId : String,
+    val recipeId : String,
     val amount: Int
 )

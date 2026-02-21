@@ -16,7 +16,7 @@ import pro.progr.owlgame.domain.SaveFurnitureUseCase
 import pro.progr.owlgame.domain.SaveGardenItemsUseCase
 import pro.progr.owlgame.domain.SaveMapsUseCase
 import pro.progr.owlgame.domain.SavePlantsUseCase
-import pro.progr.owlgame.domain.SaveReceiptsUseCase
+import pro.progr.owlgame.domain.SaveRecipesUseCase
 import javax.inject.Inject
 
 class InPouchViewModel @Inject constructor(
@@ -26,7 +26,7 @@ class InPouchViewModel @Inject constructor(
     private val savePlantsUseCase: SavePlantsUseCase,
     private val saveGardenItemsUseCase: SaveGardenItemsUseCase,
     private val saveFurnitureUseCase: SaveFurnitureUseCase,
-    private val saveReceiptsUseCase: SaveReceiptsUseCase
+    private val saveRecipesUseCase: SaveRecipesUseCase
 ) : ViewModel() {
 
     val inPouch = mutableStateOf<InPouch?>(null)
@@ -73,9 +73,9 @@ class InPouchViewModel @Inject constructor(
                 }
             }
 
-            if (webPouch.receipts.isNotEmpty()) {
+            if (webPouch.recipes.isNotEmpty()) {
                 viewModelScope.launch(Dispatchers.IO) {
-                    saveReceiptsUseCase(webPouch.receipts)
+                    saveRecipesUseCase(webPouch.recipes)
                 }
             }
 
@@ -98,7 +98,7 @@ class InPouchViewModel @Inject constructor(
                 gardenItems = gardenItemsWithLocalUrls,
                 diamonds = webPouch.diamonds,
                 furniture = furnitureWithLocalUrls,
-                receipts = webPouch.receipts
+                recipes = webPouch.recipes
             )
             lastLoadedPouchId = pouchId
         }

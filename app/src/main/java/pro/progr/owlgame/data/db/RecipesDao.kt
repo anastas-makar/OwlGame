@@ -7,14 +7,14 @@ import androidx.room.Query
 import kotlinx.coroutines.flow.Flow
 
 @Dao
-interface ReceiptsDao {
+interface RecipesDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun upsertAll(receipts: List<Receipt>)
+    suspend fun upsertAll(recipes: List<Recipe>)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun upsert(receipt: Receipt)
+    suspend fun upsert(recipe: Recipe)
 
-    @Query("SELECT * FROM receipts WHERE id = :receiptId")
-    fun getById(receiptId: String): Flow<Receipt?>
+    @Query("SELECT * FROM recipes WHERE id = :recipeId")
+    fun getById(recipeId: String): Flow<Recipe?>
 }

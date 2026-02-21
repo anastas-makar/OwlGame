@@ -3,8 +3,8 @@ package pro.progr.owlgame.data.db
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "receipts")
-data class Receipt (
+@Entity(tableName = "recipes")
+data class Recipe (
     @PrimaryKey
     val id : String,
     val resSupplyId : String,

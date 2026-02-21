@@ -13,12 +13,12 @@ import androidx.room.RoomDatabase
     Garden::class,
     GardenItem::class,
     Plant::class,
-    Receipt::class,
+    Recipe::class,
     Furniture::class,
     RoomEntity::class,
     Supply::class,
     SupplyToBuilding::class,
-    SupplyToReceipt::class,
+    SupplyToRecipe::class,
     Book::class,
     Chapter::class],
     version = 1, exportSchema = false)
@@ -50,9 +50,9 @@ abstract class OwlGameDatabase : RoomDatabase() {
 
     abstract fun suppliesDao(): SuppliesDao
 
-    abstract fun receiptsDao(): ReceiptsDao
+    abstract fun recipesDao(): RecipesDao
 
-    abstract fun supplyToReceiptsDao(): SupplyToReceiptDao
+    abstract fun supplyToRecipesDao(): SupplyToRecipeDao
 
     companion object {
         @Volatile
