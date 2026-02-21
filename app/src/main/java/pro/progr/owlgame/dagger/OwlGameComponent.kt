@@ -22,7 +22,8 @@ import javax.inject.Singleton
 @Component(modules = [PouchModule::class,
     NetworkModule::class,
     OwlGameModule::class,
-    DatabaseModule::class
+    DatabaseModule::class,
+    RepositoryBindingsModule::class
 ])
 interface OwlGameComponent {
 

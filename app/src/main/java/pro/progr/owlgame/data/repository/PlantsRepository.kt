@@ -2,36 +2,20 @@ package pro.progr.owlgame.data.repository
 
 import kotlinx.coroutines.flow.Flow
 import pro.progr.owlgame.data.db.Plant
-import pro.progr.owlgame.data.db.PlantsDao
-import javax.inject.Inject
 
-class PlantsRepository @Inject constructor(
-    private val plantsDao: PlantsDao
-) {
+interface PlantsRepository {
 
-    suspend fun insert(plants: List<Plant>) {
-        plantsDao.insert(plants)
-    }
+    suspend fun insert(plants: List<Plant>)
 
-    suspend fun markDeleted(id: String) = plantsDao.markDeleted(id)
+    suspend fun markDeleted(id: String)
 
-    fun observeByGardenId(gardenId: String) : Flow<List<Plant>> {
-        return plantsDao.observeByGardenId(gardenId)
-    }
+    fun observeByGardenId(gardenId: String) : Flow<List<Plant>>
 
-    fun getAvailablePlants() : Flow<List<Plant>> {
-        return plantsDao.getAvailable()
-    }
+    fun getAvailablePlants() : Flow<List<Plant>>
 
-    fun updatePos(id: String, x: Float, y: Float) {
-        plantsDao.updatePosition(id, x, y)
-    }
+    fun updatePos(id: String, x: Float, y: Float)
 
-    fun setPlant(itemId: String, gardenId: String) {
-        plantsDao.setToGarden(itemId, gardenId)
-    }
+    fun setPlant(itemId: String, gardenId: String)
 
-    suspend fun addReadinessToAllPlanted(delta: Float) {
-        plantsDao.addReadinessToAllPlanted(delta)
-    }
+    suspend fun addReadinessToAllPlanted(delta: Float)
 }

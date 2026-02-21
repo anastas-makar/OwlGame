@@ -12,15 +12,15 @@ import androidx.core.app.NotificationCompat
 import androidx.work.ListenableWorker
 import pro.progr.authapi.AuthInterface
 import pro.progr.owlgame.data.db.OwlGameDatabase
-import pro.progr.owlgame.data.repository.AnimalsRepository
-import pro.progr.owlgame.data.repository.BuildingsRepository
 import pro.progr.owlgame.data.web.RetrofitProvider
 import pro.progr.owlgame.domain.SearchingAnimalUseCase
 import java.time.LocalDate
 import pro.progr.owlgame.BuildConfig
 import pro.progr.owlgame.R
 import pro.progr.owlgame.data.preferences.OwlPreferences
-import pro.progr.owlgame.data.repository.ImageRepository
+import pro.progr.owlgame.data.repository.impl.AnimalsRepositoryImpl
+import pro.progr.owlgame.data.repository.impl.BuildingsRepositoryImpl
+import pro.progr.owlgame.data.repository.impl.ImageRepositoryImpl
 import pro.progr.owlgame.data.web.AnimalApiService
 import java.time.LocalTime
 
@@ -37,11 +37,11 @@ suspend fun doAnimalBuildingsWork(applicationContext: Context,
             val db = OwlGameDatabase.getDatabase(context = applicationContext)
             val animalDao = db.animalDao()
 
-            val animalRepository = AnimalsRepository(
+            val animalRepository = AnimalsRepositoryImpl(
                 db.animalDao(),
                 RetrofitProvider.provideRetrofit(BuildConfig.API_BASE_URL,
                     auth).create(AnimalApiService::class.java),
-                ImageRepository(
+                ImageRepositoryImpl(
                     context = applicationContext,
                     baseUrl = BuildConfig.API_BASE_URL
                 )
@@ -51,7 +51,7 @@ suspend fun doAnimalBuildingsWork(applicationContext: Context,
 
             SearchingAnimalUseCase(
                 animalRepository,
-                BuildingsRepository(db, db.buildingsDao(),
+                BuildingsRepositoryImpl(db, db.buildingsDao(),
                     db.gardensDao(),
                     db.roomsDao(),
                     db.buildingWithAnimalDao(),

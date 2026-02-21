@@ -1,18 +1,8 @@
 package pro.progr.owlgame.data.repository
 
-import androidx.room.Transaction
-import pro.progr.owlgame.data.db.BuildingsDao
-import javax.inject.Inject
+interface SlotsRepository {
 
-class SlotsRepository @Inject constructor(
-    private val buildingsDao: BuildingsDao) {
+    fun saveSlot(x : Float, y : Float, mapId : String, buildingId : String)
 
-    @Transaction
-    fun saveSlot(x : Float, y : Float, mapId : String, buildingId : String) {
-        buildingsDao.setToMap(buildingId, mapId, x, y)
-    }
-
-    fun updateSlot(buildingId : String, x : Float, y : Float) {
-        buildingsDao.updateOnMap(buildingId, x, y)
-    }
+    fun updateSlot(buildingId : String, x : Float, y : Float)
 }

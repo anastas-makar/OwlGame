@@ -45,12 +45,4 @@ class NetworkModule {
     fun provideAnimalApiService(retrofit: Retrofit): AnimalApiService {
         return retrofit.create(AnimalApiService::class.java)
     }
-
-    @Provides
-    @Singleton
-    fun provideMapRepository(
-                             mapDao: MapDao,
-                             mapsWithDataDao: MapWithDataDao): MapsRepository {
-        return MapsRepository(mapDao, mapsWithDataDao)
-    }
 }
