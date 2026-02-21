@@ -9,6 +9,7 @@ import pro.progr.owlgame.data.db.MapEntity
 import pro.progr.owlgame.data.preferences.OwlPreferences
 import pro.progr.owlgame.data.repository.WidgetRepository
 import pro.progr.owlgame.presentation.ui.model.UriWrapper
+import java.time.Clock
 import java.time.LocalDate
 import javax.inject.Inject
 
@@ -16,7 +17,8 @@ class WidgetRepositoryImpl @Inject constructor(
     private val preferences: OwlPreferences,
     private val animalDao: AnimalDao,
     private val mapDao: MapDao,
-    private val context: Context
+    private val context: Context,
+    private val clock: Clock
 ) :  WidgetRepository {
     override fun getRandomMap(): MapEntity? {
         TODO()
@@ -33,7 +35,7 @@ class WidgetRepositoryImpl @Inject constructor(
 
     override fun isPouchAvailable(): Boolean {
         val lastPouchDay = preferences.getLastPouchOpenDay()
-        return lastPouchDay < LocalDate.now().toEpochDay()
+        return lastPouchDay < LocalDate.now(clock).toEpochDay()
     }
 
     override fun getUri(res : Int) : Uri {

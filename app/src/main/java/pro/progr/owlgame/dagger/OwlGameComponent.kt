@@ -6,6 +6,7 @@ import dagger.Component
 import pro.progr.authapi.AuthInterface
 import pro.progr.owlgame.data.dagger.DatabaseModule
 import pro.progr.owlgame.data.dagger.NetworkModule
+import pro.progr.owlgame.data.dagger.RepositoryBindingsModule
 import pro.progr.owlgame.presentation.viewmodel.dagger.AnimalViewModelFactory
 import pro.progr.owlgame.presentation.viewmodel.dagger.BuildingViewModelFactory
 import pro.progr.owlgame.presentation.viewmodel.dagger.FabViewModelFactory
@@ -23,7 +24,8 @@ import javax.inject.Singleton
     NetworkModule::class,
     OwlGameModule::class,
     DatabaseModule::class,
-    RepositoryBindingsModule::class
+    RepositoryBindingsModule::class,
+    TimeModule::class
 ])
 interface OwlGameComponent {
 

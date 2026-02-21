@@ -5,6 +5,7 @@ import pro.progr.owlgame.data.repository.PouchesRepository
 import pro.progr.owlgame.data.web.MapApiService
 import pro.progr.owlgame.data.web.Pouch
 import pro.progr.owlgame.data.web.inpouch.InPouch
+import java.time.Clock
 import java.time.LocalDate
 import javax.inject.Inject
 import javax.inject.Named
@@ -12,6 +13,7 @@ import javax.inject.Named
 class PouchesRepositoryImpl
     @Inject constructor(private val apiService: MapApiService,
                                                 private val prefs: OwlPreferences,
+                                                private val clock: Clock,
                                                 @Named("apiKey") private val apiKey: String)
     : PouchesRepository {
 
@@ -34,7 +36,7 @@ class PouchesRepositoryImpl
         return try {
             val response = apiService.getInPouch(pouchId, apiKey)
             if (response.isSuccessful) {
-                prefs.setLastPouchOpenDay(LocalDate.now().toEpochDay())
+                prefs.setLastPouchOpenDay(LocalDate.now(clock).toEpochDay())
                 val inPouch = response.body() ?: InPouch()
                 Result.success(inPouch)
             } else {
