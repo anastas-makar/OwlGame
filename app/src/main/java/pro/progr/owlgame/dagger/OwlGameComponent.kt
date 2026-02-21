@@ -19,7 +19,7 @@ import pro.progr.owlgame.presentation.viewmodel.dagger.WidgetViewModelFactory
 import javax.inject.Singleton
 
 @Singleton
-@Component(modules = [PouchModule::class,
+@Component(modules = [
     NetworkModule::class,
     OwlGameModule::class,
     DatabaseModule::class,

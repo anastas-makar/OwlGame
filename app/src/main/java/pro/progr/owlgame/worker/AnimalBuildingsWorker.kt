@@ -6,7 +6,6 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.graphics.BitmapFactory
-import android.net.Uri
 import android.util.Log
 import androidx.core.app.NotificationCompat
 import androidx.work.ListenableWorker
@@ -23,6 +22,7 @@ import pro.progr.owlgame.data.repository.impl.BuildingsRepositoryImpl
 import pro.progr.owlgame.data.repository.impl.ImageRepositoryImpl
 import pro.progr.owlgame.data.web.AnimalApiService
 import java.time.LocalTime
+import androidx.core.net.toUri
 
 suspend fun doAnimalBuildingsWork(applicationContext: Context,
                            auth: AuthInterface): ListenableWorker.Result = try {
@@ -112,7 +112,7 @@ suspend fun doAnimalBuildingsWork(applicationContext: Context,
         )
         notificationManager.createNotificationChannel(channel)
 
-        val deepLinkUri = Uri.parse("owlgame://animal/$animalId")
+        val deepLinkUri = "owlgame://animal/$animalId".toUri()
         val intent = Intent(Intent.ACTION_VIEW, deepLinkUri).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         }

@@ -1,6 +1,6 @@
-package pro.progr.owlgame.presentation.ui.model
+package pro.progr.owlgame.domain.model
 
-data class IngredientUi(
+data class IngredientModel(
     val supplyId: String,
     val name: String,
     val imageUrl: String,

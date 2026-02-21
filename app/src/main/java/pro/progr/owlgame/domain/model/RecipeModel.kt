@@ -1,11 +1,11 @@
-package pro.progr.owlgame.presentation.ui.model
+package pro.progr.owlgame.domain.model
 
-data class RecipeUi(
+data class RecipeModel(
     val recipeId: String,
     val resultSupplyId: String,
     val resultName: String,
     val resultImageUrl: String,
     val description: String,
-    val ingredients: List<IngredientUi>,
+    val ingredients: List<IngredientModel>,
     val craftable: Boolean
 )
