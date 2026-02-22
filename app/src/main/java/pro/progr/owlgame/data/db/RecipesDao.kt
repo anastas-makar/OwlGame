@@ -17,4 +17,10 @@ interface RecipesDao {
 
     @Query("SELECT * FROM recipes WHERE id = :recipeId")
     fun getById(recipeId: String): Flow<Recipe?>
+
+    @Query("SELECT * FROM recipes WHERE id = :recipeId LIMIT 1")
+    suspend fun getRecipeById(recipeId: String): Recipe?
+
+    @Query("SELECT * FROM recipes")
+    fun observeAll(): Flow<List<Recipe>>
 }

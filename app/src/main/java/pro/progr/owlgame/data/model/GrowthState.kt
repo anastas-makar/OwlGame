@@ -1,4 +1,4 @@
-package pro.progr.owlgame.data.repository
+package pro.progr.owlgame.data.model
 
 sealed interface GrowthState {
 

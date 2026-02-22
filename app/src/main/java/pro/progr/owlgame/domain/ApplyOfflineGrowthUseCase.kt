@@ -4,7 +4,7 @@ import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import pro.progr.owlgame.data.repository.GardenItemsRepository
 import pro.progr.owlgame.data.repository.GrowthRepository
-import pro.progr.owlgame.data.repository.GrowthState
+import pro.progr.owlgame.data.model.GrowthState
 import pro.progr.owlgame.data.repository.PlantsRepository
 import javax.inject.Inject
 

@@ -16,4 +16,10 @@ interface SuppliesDao {
 
     @Query("SELECT * FROM supplies WHERE id=:supplyId")
     fun getById(supplyId : String) : Flow<Supply?>
+
+    @Query("SELECT * FROM supplies WHERE id IN (:ids)")
+    suspend fun getByIds(ids: List<String>): List<Supply>
+
+    @Query("SELECT * FROM supplies")
+    fun observeAll(): Flow<List<Supply>>
 }

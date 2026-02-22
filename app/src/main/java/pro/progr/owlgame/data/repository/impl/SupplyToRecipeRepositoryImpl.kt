@@ -8,6 +8,7 @@ import pro.progr.owlgame.data.db.SuppliesDao
 import pro.progr.owlgame.data.db.Supply
 import pro.progr.owlgame.data.db.SupplyToRecipe
 import pro.progr.owlgame.data.db.SupplyToRecipeDao
+import pro.progr.owlgame.data.model.CraftResult
 import pro.progr.owlgame.data.repository.SupplyToRecipeRepository
 import javax.inject.Inject
 
@@ -34,5 +35,31 @@ class SupplyToRecipeRepositoryImpl @Inject constructor(
             supplyToRecipeDao.upsertAll(links)
         }
 
+    }
+
+    override suspend fun craftSupplyByRecipe(recipeId: String): CraftResult = db.withTransaction {
+        val recipe = recipesDao.getRecipeById(recipeId) ?: return@withTransaction CraftResult.NotFound
+        val need = supplyToRecipeDao.getByRecipe(recipeId)
+
+        // какие supply надо прочитать (ингредиенты + результат)
+        val ids = (need.map { it.supplyId } + recipe.resSupplyId).distinct()
+        val supplies = suppliesDao.getByIds(ids).associateBy { it.id }
+
+        // проверка наличия ингредиентов
+        val enough = need.all { link ->
+            val have = supplies[link.supplyId]?.amount ?: 0
+            have >= link.amount
+        }
+        if (!enough) return@withTransaction CraftResult.NotEnoughIngredients
+
+        // списываем ингредиенты
+        need.forEach { link ->
+            suppliesDao.updateAmount(link.supplyId, -link.amount)
+        }
+
+        // добавляем результат (+1 штука за крафт)
+        suppliesDao.updateAmount(recipe.resSupplyId, +1)
+
+        CraftResult.Success
     }
 }

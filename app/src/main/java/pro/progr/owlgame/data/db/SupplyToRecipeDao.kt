@@ -4,6 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface SupplyToRecipeDao {
@@ -13,4 +14,11 @@ interface SupplyToRecipeDao {
 
     @Query("DELETE FROM supply_to_recipe WHERE recipeId IN (:recipeIds)")
     suspend fun deleteByRecipeIds(recipeIds: List<String>)
+
+
+    @Query("SELECT * FROM supply_to_recipe")
+    fun observeAll(): Flow<List<SupplyToRecipe>>
+
+    @Query("SELECT * FROM supply_to_recipe WHERE recipeId = :recipeId")
+    suspend fun getByRecipe(recipeId: String): List<SupplyToRecipe>
 }
