@@ -1,5 +1,6 @@
 package pro.progr.owlgame.data.repository.impl
 
+import android.util.Log
 import androidx.room.withTransaction
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
@@ -28,14 +29,15 @@ class SupplyToRecipeRepositoryImpl @Inject constructor(
     ) {
 
         db.withTransaction {
-
             suppliesDao.insert(supplies)
-
             recipesDao.upsertAll(recipes)
 
-            supplyToRecipeDao.deleteByRecipeIds(recipes.map { it.id })
+            val recipeIds = recipes.map { it.id }
+            supplyToRecipeDao.markDeletedByRecipeIds(recipeIds)
 
-            supplyToRecipeDao.upsertAll(links)
+            supplyToRecipeDao.upsertAll(
+                links.map { it.copy(deleted = false) }
+            )
         }
 
     }
@@ -48,8 +50,11 @@ class SupplyToRecipeRepositoryImpl @Inject constructor(
         val ids = (need.map { it.supplyId } + recipe.resSupplyId).distinct()
         val supplies = suppliesDao.getByIds(ids).associateBy { it.id }
 
-        supplies[recipe.resSupplyId]
-            ?: return@withTransaction CraftResult.NotFound
+        val missingIds = ids.filterNot { it in supplies.keys }
+        if (missingIds.isNotEmpty()) {
+            Log.e("SupplyToRecipeRepositoryImpl", "Supply ids missing: $missingIds")
+            return@withTransaction CraftResult.BrokenRecipe
+        }
 
         // проверка наличия ингредиентов
         val enough = need.all { link ->

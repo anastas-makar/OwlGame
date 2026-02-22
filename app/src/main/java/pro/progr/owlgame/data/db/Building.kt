@@ -1,11 +1,33 @@
 package pro.progr.owlgame.data.db
 
 import androidx.room.Entity
+import androidx.room.ForeignKey
 import androidx.room.Index
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "buildings",
-    indices = [Index(value = ["animalId"], unique = true)])
+@Entity(
+    tableName = "buildings",
+    indices = [
+        Index(value = ["animalId"], unique = true),
+        Index(value = ["mapId"])
+    ],
+    foreignKeys = [
+        ForeignKey(
+            entity = Animal::class,
+            parentColumns = ["id"],
+            childColumns = ["animalId"],
+            onDelete = ForeignKey.SET_NULL,
+            onUpdate = ForeignKey.CASCADE
+        ),
+        ForeignKey(
+            entity = MapEntity::class,
+            parentColumns = ["id"],
+            childColumns = ["mapId"],
+            onDelete = ForeignKey.SET_NULL,
+            onUpdate = ForeignKey.CASCADE
+        )
+    ]
+)
 data class Building (
     @PrimaryKey
     val id : String,

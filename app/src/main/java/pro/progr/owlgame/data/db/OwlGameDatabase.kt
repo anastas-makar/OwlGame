@@ -17,7 +17,6 @@ import androidx.room.RoomDatabase
     Furniture::class,
     RoomEntity::class,
     Supply::class,
-    SupplyToBuilding::class,
     SupplyToRecipe::class,
     Book::class,
     Chapter::class],
