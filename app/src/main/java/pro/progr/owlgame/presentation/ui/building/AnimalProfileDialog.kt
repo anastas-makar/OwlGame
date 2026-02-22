@@ -118,7 +118,8 @@ fun AnimalProfileDialog(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.End
                 ) {
-                    TextButton(onClick = onDismiss) {
+                    TextButton(onClick = onDismiss,
+                        colors = ButtonDefaults.textButtonColors(contentColor = Color.Gray)) {
                         Text("Закрыть")
                     }
                 }
