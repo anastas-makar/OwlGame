@@ -1,6 +1,8 @@
 package pro.progr.owlgame.data.repository.impl
 
 import androidx.room.withTransaction
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.combine
 import pro.progr.owlgame.data.db.OwlGameDatabase
 import pro.progr.owlgame.data.db.Recipe
 import pro.progr.owlgame.data.db.RecipesDao
@@ -18,6 +20,7 @@ class SupplyToRecipeRepositoryImpl @Inject constructor(
     private val recipesDao: RecipesDao,
     private val supplyToRecipeDao: SupplyToRecipeDao
 ) : SupplyToRecipeRepository {
+
     override suspend fun saveRecipes(
         supplies: List<Supply>,
         recipes: List<Recipe>,
@@ -45,6 +48,9 @@ class SupplyToRecipeRepositoryImpl @Inject constructor(
         val ids = (need.map { it.supplyId } + recipe.resSupplyId).distinct()
         val supplies = suppliesDao.getByIds(ids).associateBy { it.id }
 
+        supplies[recipe.resSupplyId]
+            ?: return@withTransaction CraftResult.NotFound
+
         // проверка наличия ингредиентов
         val enough = need.all { link ->
             val have = supplies[link.supplyId]?.amount ?: 0
@@ -61,5 +67,18 @@ class SupplyToRecipeRepositoryImpl @Inject constructor(
         suppliesDao.updateAmount(recipe.resSupplyId, +1)
 
         CraftResult.Success
+    }
+
+    override fun <T>observeRecipes(mapFun: (recipes: List<Recipe>,
+                                            supplies: List<Supply>,
+                                            links: List<SupplyToRecipe>
+            ) -> List<T>): Flow<List<T>> {
+        return combine(
+            recipesDao.observeAll(),
+            suppliesDao.observeAll(),
+            supplyToRecipeDao.observeAll()
+        ) { recipes, supplies, links ->
+            mapFun(recipes, supplies, links)
+        }
     }
 }
