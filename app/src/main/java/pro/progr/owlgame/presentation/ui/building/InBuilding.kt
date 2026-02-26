@@ -58,7 +58,9 @@ fun InBuilding(
             when (val s = selected) {
                 is GalleryItem.BuildingItem -> BuildingFacade(s.building, fabViewModel)
                 is GalleryItem.RoomItem -> InRoom(s.room, component, fabViewModel, diamondDao,
-                    onMap = data.building.mapId != null)
+                    onMap = data.building.mapId != null,
+                    animal = data.animal,
+                    onOpenCraft = nav)
                 is GalleryItem.GardenItem -> InGardenZone(s.garden, component, fabViewModel,
                     onMap = data.building.mapId != null)
                 null -> Unit

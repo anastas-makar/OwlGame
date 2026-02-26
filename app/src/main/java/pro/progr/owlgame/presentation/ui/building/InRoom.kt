@@ -1,6 +1,7 @@
 package pro.progr.owlgame.presentation.ui.building
 
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.SnackbarHostState
@@ -13,6 +14,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import pro.progr.diamondapi.PurchaseInterface
 import pro.progr.owlgame.dagger.OwlGameComponent
+import pro.progr.owlgame.data.db.Animal
+import pro.progr.owlgame.data.db.FurnitureType
 import pro.progr.owlgame.data.db.RoomEntity
 import pro.progr.owlgame.presentation.ui.SelectFurnitureScreen
 import pro.progr.owlgame.presentation.ui.fab.FabAction
@@ -26,6 +29,8 @@ fun InRoom(
     component: OwlGameComponent,
     fabViewModel: FabViewModel,
     diamondDao: PurchaseInterface,
+    animal: Animal?, // <- добавили
+    onOpenCraft: (roomId: String, animalId: String) -> Unit, // <- добавили
     onMap: Boolean = false,
 ) {
     val roomViewModel = DaggerRoomViewModel<RoomViewModel>(component, room.id)
@@ -47,35 +52,53 @@ fun InRoom(
 
     fabViewModel.showFab.value = onMap && availableFurniture.value.isNotEmpty()
 
-    Box(
+    val hasRefrigerator = furniture.value.any { it.type == FurnitureType.REFRIGERATOR }
+    val canOpenCraft = hasRefrigerator && animal != null
+
+    Column(
         modifier = Modifier
             .padding(top = 8.dp)
             .fillMaxWidth()
     ) {
-        DraggableSizedImageOverlay(
-            backgroundModel = room.imageUrl,           // картинка стены
-            items = furniture.value,
-            keyOf = { it.id },
-            x01Of = { it.x },
-            y01Of = { it.y },
-            width01Of = { it.width },
-            height01Of = { it.height },
-            itemImageModelOf = { it.imageUrl },        // мебель — картинка, не иконка
-            isNewOf = { it.x == 0f && it.y == 0f },
-            onCommit01 = { f, x, y -> roomViewModel.updatePos(f.id, x, y) },
-            // можно настроить дефолтные размеры, если в БД 0
-            defaultWidth01 = 0.22f,
-            defaultHeight01 = 0.35f,
+        Box(
             modifier = Modifier.fillMaxWidth()
-        )
+        ) {
+            DraggableSizedImageOverlay(
+                backgroundModel = room.imageUrl,
+                items = furniture.value,
+                keyOf = { it.id },
+                x01Of = { it.x },
+                y01Of = { it.y },
+                width01Of = { it.width },
+                height01Of = { it.height },
+                itemImageModelOf = { it.imageUrl },
+                isNewOf = { it.x == 0f && it.y == 0f },
+                onCommit01 = { f, x, y -> roomViewModel.updatePos(f.id, x, y) },
+                defaultWidth01 = 0.22f,
+                defaultHeight01 = 0.35f,
+                modifier = Modifier.fillMaxWidth()
+            )
+        }
+
+        if (canOpenCraft) {
+            CraftAvailableBanner(
+                animalKind = animal!!.kind,
+                animalName = animal.name,
+                onClick = {
+                    onOpenCraft(room.id, animal.id)
+                }
+            )
+        }
     }
 
     if (roomViewModel.selectFurnitureItemState.value) {
-        SelectFurnitureScreen(roomViewModel,
+        SelectFurnitureScreen(
+            roomViewModel,
             fabViewModel,
             diamondDao,
             scope,
             snackbarHostState,
-            availableFurniture)
+            availableFurniture
+        )
     }
 }
