@@ -20,9 +20,7 @@ fun RecipeInPouch.toEntity(): Recipe =
     Recipe(
         id = id,
         resSupplyId = resultSupply.id,
-        description = description,
-        effectType = effectType,
-        effectAmount = effectAmount
+        description = description
     )
 
 fun linkId(recipeId: String, supplyId: String): String =

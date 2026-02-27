@@ -22,7 +22,5 @@ data class Recipe (
     @PrimaryKey
     val id : String,
     val resSupplyId : String,
-    val description: String,
-    val effectType : EffectType,
-    val effectAmount : Int
+    val description: String
 )
