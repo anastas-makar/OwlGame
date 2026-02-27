@@ -52,7 +52,11 @@ fun BuildingScreen(
             },
             content = { innerPadding ->
                 Box(modifier = Modifier.padding(innerPadding)) {
-                    InBuilding(bWithData, component, fabViewModel, diamondDao)
+                    InBuilding(bWithData,
+                        component,
+                        fabViewModel,
+                        diamondDao,
+                        navController)
 
                     if (fabViewModel.fabExpanded.value) {
                         Box(

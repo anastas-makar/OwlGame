@@ -29,8 +29,8 @@ fun InRoom(
     component: OwlGameComponent,
     fabViewModel: FabViewModel,
     diamondDao: PurchaseInterface,
-    animal: Animal?, // <- добавили
-    onOpenCraft: (roomId: String, animalId: String) -> Unit, // <- добавили
+    animal: Animal?,
+    onOpenCraft: (animalId: String) -> Unit,
     onMap: Boolean = false,
 ) {
     val roomViewModel = DaggerRoomViewModel<RoomViewModel>(component, room.id)
@@ -82,10 +82,10 @@ fun InRoom(
 
         if (canOpenCraft) {
             CraftAvailableBanner(
-                animalKind = animal!!.kind,
+                animalKind = animal.kind,
                 animalName = animal.name,
                 onClick = {
-                    onOpenCraft(room.id, animal.id)
+                    onOpenCraft(animal.id)
                 }
             )
         }

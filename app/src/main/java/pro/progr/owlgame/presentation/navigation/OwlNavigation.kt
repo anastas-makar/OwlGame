@@ -14,15 +14,18 @@ import pro.progr.owlgame.presentation.ui.BuildingScreen
 import pro.progr.owlgame.presentation.ui.MapScreen
 import pro.progr.owlgame.presentation.ui.MapsListScreen
 import pro.progr.owlgame.presentation.ui.PouchesScreen
+import pro.progr.owlgame.presentation.ui.craft.CraftScreen
 import pro.progr.owlgame.presentation.ui.fab.FabViewModel
 import pro.progr.owlgame.presentation.viewmodel.AnimalViewModel
 import pro.progr.owlgame.presentation.viewmodel.BuildingViewModel
+import pro.progr.owlgame.presentation.viewmodel.CraftViewModel
 import pro.progr.owlgame.presentation.viewmodel.InPouchViewModel
 import pro.progr.owlgame.presentation.viewmodel.MapViewModel
 import pro.progr.owlgame.presentation.viewmodel.MapsViewModel
 import pro.progr.owlgame.presentation.viewmodel.PouchesViewModel
 import pro.progr.owlgame.presentation.viewmodel.dagger.DaggerAnimalViewModel
 import pro.progr.owlgame.presentation.viewmodel.dagger.DaggerBuildingViewModel
+import pro.progr.owlgame.presentation.viewmodel.dagger.DaggerCraftViewModel
 import pro.progr.owlgame.presentation.viewmodel.dagger.DaggerFabViewModel
 import pro.progr.owlgame.presentation.viewmodel.dagger.DaggerMapViewModel
 import pro.progr.owlgame.presentation.viewmodel.dagger.DaggerMapsViewModel
@@ -79,6 +82,16 @@ fun OwlNavigation(startDestination : String = "towns",
                     buildingViewModel,
                     fabViewModel,
                     component)
+            }
+        }
+        composable(
+            route = "craft/{animalId}",
+            arguments = listOf(navArgument("animalId") { type = NavType.StringType })) { backStackEntry ->
+            val id = backStackEntry.arguments?.getString("animalId")
+
+            id?.let {
+                val craftViewModel : CraftViewModel = DaggerCraftViewModel(component)
+                CraftScreen(craftViewModel)
             }
         }
         //animal_searching

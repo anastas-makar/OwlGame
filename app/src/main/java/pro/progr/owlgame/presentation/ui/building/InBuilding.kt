@@ -11,6 +11,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.navigation.NavController
 import pro.progr.diamondapi.PurchaseInterface
 import pro.progr.owlgame.dagger.OwlGameComponent
 import pro.progr.owlgame.data.db.BuildingWithData
@@ -23,6 +24,7 @@ fun InBuilding(
     component: OwlGameComponent,
     fabViewModel: FabViewModel,
     diamondDao: PurchaseInterface,
+    navController: NavController,
     modifier: Modifier = Modifier) {
     val rooms = remember(data.rooms) { data.rooms.sortedBy { it.roomNumber } }
     val gardens = remember(data.gardens) { data.gardens.sortedBy { it.gardenNumber } }
@@ -60,7 +62,7 @@ fun InBuilding(
                 is GalleryItem.RoomItem -> InRoom(s.room, component, fabViewModel, diamondDao,
                     onMap = data.building.mapId != null,
                     animal = data.animal,
-                    onOpenCraft = nav)
+                    onOpenCraft = { animalId -> navController.navigate("craft/$animalId")})
                 is GalleryItem.GardenItem -> InGardenZone(s.garden, component, fabViewModel,
                     onMap = data.building.mapId != null)
                 null -> Unit
