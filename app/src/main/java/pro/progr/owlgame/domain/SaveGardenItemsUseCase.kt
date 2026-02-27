@@ -21,6 +21,20 @@ class SaveGardenItemsUseCase @Inject constructor(private val gardenItemsReposito
             )
         }
 
+        suppliesRepository.insert(
+            gardenItemsConverted.map { gI ->
+                Supply(
+                    id = gI.supply.id,
+                    imageUrl = gI.supply.imageUrl,
+                    name = gI.supply.name,
+                    description = gI.supply.description,
+                    amount = 0,
+                    effectType = gI.supply.effectType,
+                    effectAmount = gI.supply.effectAmount
+                )
+            }
+        )
+
         gardenItemsRepository.insert(
             gardenItemsConverted.map { gI ->
                 GardenItem(
@@ -32,20 +46,6 @@ class SaveGardenItemsUseCase @Inject constructor(private val gardenItemsReposito
                     supplyAmount = gI.supplyAmount,
                     itemType = gI.itemType,
                     gardenType = gI.gardenType
-                )
-            }
-        )
-
-        suppliesRepository.insert(
-            gardenItemsConverted.map { gI ->
-                Supply(
-                    id = gI.supply.id,
-                    imageUrl = gI.supply.imageUrl,
-                    name = gI.supply.name,
-                    description = gI.supply.description,
-                    amount = 0,
-                    effectType = gI.supply.effectType,
-                    effectAmount = gI.supply.effectAmount
                 )
             }
         )

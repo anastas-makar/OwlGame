@@ -21,20 +21,6 @@ class SavePlantsUseCase @Inject constructor(private val plantsRepository: Plants
             )
         }
 
-        plantsRepository.insert(
-            plantsConverted.map { pConv ->
-                Plant(
-                    id = pConv.id,
-                    name = pConv.name,
-                    description = pConv.description,
-                    imageUrl = pConv.imageUrl,
-                    supplyId = pConv.supply.id,
-                    supplyAmount = pConv.supplyAmount,
-                    seedAmount = pConv.seedAmount
-                )
-            }
-        )
-
         suppliesRepository.insert(
             plantsConverted.map { pConv ->
                 Supply(
@@ -45,6 +31,20 @@ class SavePlantsUseCase @Inject constructor(private val plantsRepository: Plants
                     amount = 0,
                     effectType = pConv.supply.effectType,
                     effectAmount = pConv.supply.effectAmount
+                )
+            }
+        )
+
+        plantsRepository.insert(
+            plantsConverted.map { pConv ->
+                Plant(
+                    id = pConv.id,
+                    name = pConv.name,
+                    description = pConv.description,
+                    imageUrl = pConv.imageUrl,
+                    supplyId = pConv.supply.id,
+                    supplyAmount = pConv.supplyAmount,
+                    seedAmount = pConv.seedAmount
                 )
             }
         )
