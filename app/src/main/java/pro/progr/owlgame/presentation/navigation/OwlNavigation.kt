@@ -91,7 +91,7 @@ fun OwlNavigation(startDestination : String = "towns",
 
             id?.let {
                 val craftViewModel : CraftViewModel = DaggerCraftViewModel(component)
-                CraftScreen(craftViewModel)
+                CraftScreen(navController, craftViewModel)
             }
         }
         //animal_searching
