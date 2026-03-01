@@ -11,15 +11,20 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import pro.progr.owlgame.data.model.CraftResult
+import pro.progr.owlgame.data.repository.AnimalsRepository
 import pro.progr.owlgame.data.repository.SupplyToRecipeRepository
 import pro.progr.owlgame.domain.ObserveRecipesUseCase
 import pro.progr.owlgame.domain.model.RecipeModel
 import javax.inject.Inject
 
 class CraftViewModel @Inject constructor(
-    private val observeRecipesUseCase: ObserveRecipesUseCase,
-    private val supplyToRecipeRepository: SupplyToRecipeRepository
+    observeRecipesUseCase: ObserveRecipesUseCase,
+    private val supplyToRecipeRepository: SupplyToRecipeRepository,
+    animalsRepository: AnimalsRepository,
+    animalId: String
 ) : ViewModel() {
+
+    val animal = animalsRepository.getAnimalById(animalId)
 
     val recipes: StateFlow<List<RecipeModel>> =
         observeRecipesUseCase()

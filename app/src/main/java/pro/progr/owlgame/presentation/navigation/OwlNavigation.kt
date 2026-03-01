@@ -90,7 +90,7 @@ fun OwlNavigation(startDestination : String = "towns",
             val id = backStackEntry.arguments?.getString("animalId")
 
             id?.let {
-                val craftViewModel : CraftViewModel = DaggerCraftViewModel(component)
+                val craftViewModel : CraftViewModel = DaggerCraftViewModel(component, id)
                 CraftScreen(navController, craftViewModel)
             }
         }

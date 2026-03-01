@@ -13,5 +13,5 @@ inline fun <reified VM : ViewModel> DaggerAnimalViewModel(component: OwlGameComp
         .animalViewModelFactory()
 
     factory.animalId = id
-    return viewModel(factory = factory)
+    return viewModel(factory = factory, key = id)
 }

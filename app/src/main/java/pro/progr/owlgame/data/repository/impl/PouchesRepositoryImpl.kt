@@ -1,5 +1,6 @@
 package pro.progr.owlgame.data.repository.impl
 
+import android.util.Log
 import pro.progr.owlgame.data.preferences.OwlPreferences
 import pro.progr.owlgame.data.repository.PouchesRepository
 import pro.progr.owlgame.data.web.MapApiService
@@ -25,10 +26,12 @@ class PouchesRepositoryImpl
                 val maps = mapUrls.map { pouchUrl -> Pouch("todo", pouchUrl) }
                 Result.success(maps)
             } else {
+                Log.e("pouch", "" + response.errorBody()?.string())
                 Result.failure(Exception("Failed to load pouches: ${response.errorBody()?.string()}"))
             }
         } catch (e: Exception) {
-            Result.failure(e)
+            Log.e("pouch error", e.message.toString())
+                Result.failure(e)
         }
     }
 
