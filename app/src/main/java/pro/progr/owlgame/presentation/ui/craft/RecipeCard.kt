@@ -25,22 +25,22 @@ fun RecipeCard(
 
     Card(
         elevation = 4.dp,
-        modifier = Modifier.Companion
+        modifier = Modifier
             .fillMaxWidth()
             .graphicsLayer { this.alpha = alpha }
             .clickable { onClick() } // кликабельна всегда
     ) {
-        Column(Modifier.Companion.padding(12.dp)) {
+        Column(Modifier.padding(12.dp)) {
             // картинка результата
             AsyncImage(
                 model = recipe.resultImageUrl,
                 contentDescription = recipe.resultName,
-                modifier = Modifier.Companion
+                modifier = Modifier
                     .fillMaxWidth()
                     .height(110.dp)
             )
 
-            Spacer(Modifier.Companion.height(8.dp))
+            Spacer(Modifier.height(8.dp))
 
             Text(
                 text = recipe.resultName,
@@ -48,7 +48,7 @@ fun RecipeCard(
                 maxLines = 1
             )
 
-            Spacer(Modifier.Companion.height(4.dp))
+            Spacer(Modifier.height(4.dp))
 
             Text(
                 text = recipe.description,
@@ -57,7 +57,7 @@ fun RecipeCard(
             )
 
             if (!recipe.craftable) {
-                Spacer(Modifier.Companion.height(8.dp))
+                Spacer(Modifier.height(8.dp))
                 Text(
                     text = "Не хватает ингредиентов",
                     style = MaterialTheme.typography.caption
