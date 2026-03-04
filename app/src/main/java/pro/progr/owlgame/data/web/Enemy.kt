@@ -5,7 +5,8 @@ data class Enemy (
     val name: String,
     val description: String,
     val imageUrl: String,
-    val number: Int,
     val healAmount: Int,
-    val attackAmount: Int
+    val damageAmount: Int,
+    val x: Float,
+    val y: Float
 )
