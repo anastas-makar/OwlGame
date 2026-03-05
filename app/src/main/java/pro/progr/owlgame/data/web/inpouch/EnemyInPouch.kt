@@ -1,6 +1,6 @@
-package pro.progr.owlgame.data.web
+package pro.progr.owlgame.data.web.inpouch
 
-data class Enemy (
+data class EnemyInPouch (
     val id: String,
     val name: String,
     val description: String,
