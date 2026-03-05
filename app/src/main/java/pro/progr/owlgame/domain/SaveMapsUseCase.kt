@@ -13,7 +13,8 @@ class SaveMapsUseCase @Inject constructor(private val mapsRepository: MapsReposi
             MapEntity(
                 id = it.id,
                 name = it.name,
-                imagePath = imageRepository.saveImageLocally(it.imageUrl)
+                imagePath = imageRepository.saveImageLocally(it.imageUrl),
+                type = it.type
             )
         }
 

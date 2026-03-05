@@ -8,5 +8,5 @@ data class MapEntity(
     @PrimaryKey val id: String,
     val name: String,
     val imagePath: String,
-    val type: MapType = MapType.FREE
+    val type: MapType
 )

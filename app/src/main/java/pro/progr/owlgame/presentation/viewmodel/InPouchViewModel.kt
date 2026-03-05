@@ -50,7 +50,7 @@ class InPouchViewModel @Inject constructor(
             val mapsWithLocalUrls = withContext(Dispatchers.IO) {
                 if (webPouch.maps.isNotEmpty()) {
                     saveMapsUseCase(webPouch.maps).map { ent ->
-                        MapInPouchModel(ent.id, ent.name, ent.imagePath)
+                        MapInPouchModel(ent.id, ent.name, ent.imagePath, ent.type)
                     }
                 } else emptyList()
             }
