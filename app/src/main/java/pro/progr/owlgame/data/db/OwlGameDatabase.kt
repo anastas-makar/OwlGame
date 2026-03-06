@@ -15,6 +15,8 @@ import androidx.room.RoomDatabase
     Plant::class,
     Recipe::class,
     Furniture::class,
+    Expedition::class,
+    Enemy::class,
     RoomEntity::class,
     Supply::class,
     SupplyToRecipe::class,
@@ -46,6 +48,10 @@ abstract class OwlGameDatabase : RoomDatabase() {
     abstract fun plantsDao(): PlantsDao
 
     abstract fun furnitureDao(): FurnitureDao
+    
+    abstract fun expeditionDao(): ExpeditionDao
+    
+    abstract fun enemyDao(): EnemyDao
 
     abstract fun suppliesDao(): SuppliesDao
 

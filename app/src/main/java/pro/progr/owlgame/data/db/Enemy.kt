@@ -3,6 +3,7 @@ package pro.progr.owlgame.data.db
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.Index
+import androidx.room.PrimaryKey
 
 @Entity(
     tableName = "enemies",
@@ -20,6 +21,7 @@ import androidx.room.Index
     ]
 )
 data class Enemy (
+    @PrimaryKey
     val id: String,
     val expeditionId: String,
     val name: String,
