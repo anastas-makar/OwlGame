@@ -23,3 +23,6 @@ fun gardenItemIconRes(type: ItemType): Int = when (type) {
 
 @DrawableRes
 fun plantIconRes(): Int = R.drawable.ic_plant
+
+@DrawableRes
+fun enemyIconRes(): Int = R.drawable.ic_enemy
