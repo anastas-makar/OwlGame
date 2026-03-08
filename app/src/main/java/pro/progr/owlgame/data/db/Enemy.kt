@@ -15,7 +15,7 @@ import androidx.room.PrimaryKey
             entity = Expedition::class,
             parentColumns = ["id"],
             childColumns = ["expeditionId"],
-            onDelete = ForeignKey.SET_NULL,
+            onDelete = ForeignKey.CASCADE,
             onUpdate = ForeignKey.CASCADE
         )
     ]

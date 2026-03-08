@@ -7,5 +7,5 @@ import androidx.room.OnConflictStrategy
 @Dao
 interface ExpeditionDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    fun insert(furniture: List<Expedition>): List<Long>
+    fun insert(expeditions: List<Expedition>): List<Long>
 }

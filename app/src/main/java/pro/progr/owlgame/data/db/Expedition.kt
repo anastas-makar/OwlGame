@@ -14,7 +14,7 @@ import androidx.room.PrimaryKey
             entity = MapEntity::class,
             parentColumns = ["id"],
             childColumns = ["mapId"],
-            onDelete = ForeignKey.SET_NULL,
+            onDelete = ForeignKey.CASCADE,
             onUpdate = ForeignKey.CASCADE
         )
     ])
