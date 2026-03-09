@@ -57,11 +57,16 @@ class WidgetViewModel(
         }
 
         private fun ArrayList<OwlMenuModel>.withMaps() : ArrayList<OwlMenuModel> {
-            add(OwlMenuModel(
-                text = "Осмотреть владения",
-                navigateTo = "owl_navigation",
-                imageUri = widgetRepository.getUri(R.drawable.test1)
-            ))
+            val randomMap = widgetRepository.getRandomMap()
+
+            if (randomMap != null) {
+                add(OwlMenuModel(
+                    text = "Осмотреть владения",
+                    navigateTo = "owl_navigation",
+                    imageUri = widgetRepository.getUri(randomMap.imagePath)
+                ))
+
+            }
 
             return this
         }

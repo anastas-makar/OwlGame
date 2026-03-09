@@ -21,7 +21,7 @@ class WidgetRepositoryImpl @Inject constructor(
     private val clock: Clock
 ) :  WidgetRepository {
     override fun getRandomMap(): MapEntity? {
-        TODO()
+        return mapDao.getRandomMap()
     }
 
     override fun getAnimal(): Animal? {
