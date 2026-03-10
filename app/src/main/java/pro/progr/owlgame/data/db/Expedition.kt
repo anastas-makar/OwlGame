@@ -4,6 +4,7 @@ import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.Index
 import androidx.room.PrimaryKey
+import pro.progr.owlgame.data.model.ExpeditionStatus
 
 @Entity(tableName = "expeditions",
     indices = [
@@ -25,5 +26,6 @@ data class Expedition(
     val description: String,
     val mapId: String,
     val healAmount: Int,
-    val damageAmount: Int
+    val damageAmount: Int,
+    val status: ExpeditionStatus = ExpeditionStatus.ACTIVE
 )
