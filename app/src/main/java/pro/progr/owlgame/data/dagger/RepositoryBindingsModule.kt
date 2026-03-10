@@ -4,6 +4,7 @@ import dagger.Binds
 import dagger.Module
 import pro.progr.owlgame.data.repository.AnimalsRepository
 import pro.progr.owlgame.data.repository.BuildingsRepository
+import pro.progr.owlgame.data.repository.ExpeditionsRepository
 import pro.progr.owlgame.data.repository.FurnitureRepository
 import pro.progr.owlgame.data.repository.GardenItemsRepository
 import pro.progr.owlgame.data.repository.GrowthRepository
@@ -18,6 +19,7 @@ import pro.progr.owlgame.data.repository.SupplyToRecipeRepository
 import pro.progr.owlgame.data.repository.WidgetRepository
 import pro.progr.owlgame.data.repository.impl.AnimalsRepositoryImpl
 import pro.progr.owlgame.data.repository.impl.BuildingsRepositoryImpl
+import pro.progr.owlgame.data.repository.impl.ExpeditionsRepositoryImpl
 import pro.progr.owlgame.data.repository.impl.FurnitureRepositoryImpl
 import pro.progr.owlgame.data.repository.impl.GardenItemsRepositoryImpl
 import pro.progr.owlgame.data.repository.impl.GrowthRepositoryImpl
@@ -82,6 +84,10 @@ interface RepositoryBindingsModule {
     @Binds
     @Singleton
     fun bindMapsRepository(impl: MapsRepositoryImpl): MapsRepository
+
+    @Binds
+    @Singleton
+    fun bindExpeditionsRepository(impl: ExpeditionsRepositoryImpl): ExpeditionsRepository
 
     @Binds
     @Singleton
