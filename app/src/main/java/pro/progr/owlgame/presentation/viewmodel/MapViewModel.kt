@@ -4,11 +4,14 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -17,6 +20,7 @@ import pro.progr.diamondapi.PurchaseInterface
 import pro.progr.owlgame.data.db.Building
 import pro.progr.owlgame.data.db.MapType
 import pro.progr.owlgame.data.repository.BuildingsRepository
+import pro.progr.owlgame.data.repository.ExpeditionsRepository
 import pro.progr.owlgame.data.repository.MapsRepository
 import pro.progr.owlgame.data.repository.SlotsRepository
 import pro.progr.owlgame.domain.FoundTownUseCase
@@ -28,31 +32,55 @@ class MapViewModel @Inject constructor(
     mapsRepository: MapsRepository,
     private val buildingsRepository: BuildingsRepository,
     private val slotsRepository: SlotsRepository,
+    private val expeditionsRepository: ExpeditionsRepository,
     mapId: String,
     private val foundTownUseCase: FoundTownUseCase,
 ) : ViewModel() {
 
-    val map: StateFlow<MapData> = combine(
-        mapsRepository.getMapById(mapId),
-        buildingsRepository.getBuildingsWithAnimals(mapId)
-    ) { mapWithData, buildingsMap ->
-        if (mapWithData != null) {
-            MapData(
-                id = mapWithData.mapEntity.id,
-                name = mapWithData.mapEntity.name,
-                imageUrl = mapWithData.mapEntity.imagePath,
-                type = mapWithData.mapEntity.type,
-                buildings = buildingsMap.values.toList()
-                    .sortedWith(compareBy({ it.building.x }, { it.building.id }))
-            )
-        } else {
-            MapData("", "", "", MapType.FREE)
+    @OptIn(ExperimentalCoroutinesApi::class)
+    val map: StateFlow<MapData> = mapsRepository.getMapById(mapId)
+        .flatMapLatest { mapWithData ->
+            if (mapWithData == null) {
+                flowOf(MapData("", "", "", MapType.FREE))
+            } else {
+                val mapEntity = mapWithData.mapEntity
+
+                val buildingsFlow =
+                    if (mapEntity.type == MapType.TOWN) {
+                        buildingsRepository.getBuildingsWithAnimals(mapId)
+                    } else {
+                        flowOf(emptyMap())
+                    }
+
+                val expeditionFlow =
+                    if (
+                        mapEntity.type == MapType.OCCUPIED ||
+                        mapEntity.type == MapType.EXPEDITION
+                    ) {
+                        expeditionsRepository.getExpeditionWithData(mapId)
+                    } else {
+                        flowOf(null)
+                    }
+
+                combine(buildingsFlow, expeditionFlow) { buildingsMap, expeditionWithData ->
+                    MapData(
+                        id = mapEntity.id,
+                        name = mapEntity.name,
+                        imageUrl = mapEntity.imagePath,
+                        type = mapEntity.type,
+                        buildings = buildingsMap.values
+                            .toList()
+                            .sortedWith(compareBy({ it.building.x }, { it.building.id })),
+                        expedition = expeditionWithData
+                    )
+                }
+            }
         }
-    }.stateIn(
-        scope = viewModelScope,
-        started = SharingStarted.WhileSubscribed(5000),
-        initialValue = MapData("", "", "", MapType.FREE)
-    )
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5000),
+            initialValue = MapData("", "", "", MapType.FREE)
+        )
 
     val foundTown = MutableStateFlow(false)
 
