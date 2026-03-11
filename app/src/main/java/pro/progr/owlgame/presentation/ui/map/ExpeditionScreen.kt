@@ -1,4 +1,4 @@
-package pro.progr.owlgame.presentation.ui
+package pro.progr.owlgame.presentation.ui.map
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectTapGestures
@@ -16,7 +16,6 @@ import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
-import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Button
@@ -52,7 +51,10 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import pro.progr.diamondapi.PurchaseInterface
 import pro.progr.owlgame.data.db.BuildingType
+import pro.progr.owlgame.data.db.Expedition
 import pro.progr.owlgame.data.db.MapType
+import pro.progr.owlgame.presentation.ui.MapBar
+import pro.progr.owlgame.presentation.ui.SelectBuildingScreen
 import pro.progr.owlgame.presentation.ui.fab.ExpandableFloatingActionButton
 import pro.progr.owlgame.presentation.ui.fab.FabAction
 import pro.progr.owlgame.presentation.ui.mapicon.DraggableImageOverlay
@@ -62,7 +64,7 @@ import pro.progr.owlgame.presentation.ui.model.MapData
 import pro.progr.owlgame.presentation.viewmodel.MapViewModel
 
 @Composable
-fun MapScreen(
+fun ExpeditionScreen(
     navController: NavHostController,
     diamondDao: PurchaseInterface,
     mapViewModel: MapViewModel
