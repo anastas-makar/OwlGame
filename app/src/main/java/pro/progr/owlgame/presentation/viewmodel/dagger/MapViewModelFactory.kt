@@ -3,6 +3,7 @@ package pro.progr.owlgame.presentation.viewmodel.dagger
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import pro.progr.owlgame.data.repository.BuildingsRepository
+import pro.progr.owlgame.data.repository.ExpeditionsRepository
 import pro.progr.owlgame.data.repository.MapsRepository
 import pro.progr.owlgame.data.repository.SlotsRepository
 import pro.progr.owlgame.domain.FoundTownUseCase
@@ -13,6 +14,7 @@ class MapViewModelFactory @Inject constructor(
     private val mapsRepository: MapsRepository,
     private val buildingsRepository: BuildingsRepository,
     private val slotsRepository: SlotsRepository,
+    private val expeditionsRepository: ExpeditionsRepository,
     private val foundTownUseCase: FoundTownUseCase
 ) : ViewModelProvider.Factory {
     var id : String = ""
@@ -23,6 +25,7 @@ class MapViewModelFactory @Inject constructor(
                 mapsRepository,
                 buildingsRepository,
                 slotsRepository,
+                expeditionsRepository,
                 id,
                 foundTownUseCase) as T
         }

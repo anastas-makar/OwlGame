@@ -11,7 +11,7 @@ import pro.progr.diamondapi.PurchaseInterface
 import pro.progr.owlgame.dagger.OwlGameComponent
 import pro.progr.owlgame.presentation.ui.AnimalSearchingScreen
 import pro.progr.owlgame.presentation.ui.BuildingScreen
-import pro.progr.owlgame.presentation.ui.MapScreen
+import pro.progr.owlgame.presentation.ui.map.MapScreen
 import pro.progr.owlgame.presentation.ui.MapsListScreen
 import pro.progr.owlgame.presentation.ui.PouchesScreen
 import pro.progr.owlgame.presentation.ui.craft.CraftScreen

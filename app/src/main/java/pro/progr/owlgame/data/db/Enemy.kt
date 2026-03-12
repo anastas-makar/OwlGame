@@ -4,6 +4,7 @@ import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.Index
 import androidx.room.PrimaryKey
+import pro.progr.owlgame.data.model.EnemyStatus
 
 @Entity(
     tableName = "enemies",
@@ -30,5 +31,6 @@ data class Enemy (
     val healAmount: Int,
     val damageAmount: Int,
     val x: Float,
-    val y: Float
+    val y: Float,
+    val status: EnemyStatus = EnemyStatus.UNTOUCHED
 )

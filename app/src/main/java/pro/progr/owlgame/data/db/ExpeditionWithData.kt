@@ -5,11 +5,11 @@ import androidx.room.Relation
 
 data class ExpeditionWithData (
     @Embedded
-    val mapEntity: Expedition,
+    val expedition: Expedition,
     @Relation(
         parentColumn = "id",
         entity = Enemy::class,
         entityColumn = "expeditionId"
     )
-    val buildings : List<Enemy>
+    val enemies : List<Enemy>
 )

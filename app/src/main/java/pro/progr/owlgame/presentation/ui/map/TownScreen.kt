@@ -88,11 +88,10 @@ fun TownScreen(
 
     // Если открылись оверлеи — FAB-меню закрываем
     LaunchedEffect(
-        foundTown.value,
         mapViewModel.selectHouseState.value,
         mapViewModel.selectFortressState.value
     ) {
-        if (foundTown.value || mapViewModel.selectHouseState.value || mapViewModel.selectFortressState.value) {
+        if (mapViewModel.selectHouseState.value || mapViewModel.selectFortressState.value) {
             fabExpanded = false
         }
     }
@@ -105,31 +104,18 @@ fun TownScreen(
                 ExpandableFloatingActionButton(
                     expanded = fabExpanded,
                     onExpandedChange = { fabExpanded = it },
-                    actions = when {
-                        map.value.id.isEmpty() -> emptyList<FabAction>()
-                        !foundTown.value && map.value.type == MapType.FREE ->
-                            listOf(
-
-                                FabAction(
-                                    text = "Основать город",
-                                    color = Color.DarkGray,
-                                    onClick = { mapViewModel.startToFoundTown() }
-                                )
-                            )
-                        else ->
-                            listOf(
-                                FabAction(
-                                    text = "Построить дом",
-                                    color = Color.DarkGray,
-                                    onClick = { mapViewModel.selectHouseState.value = true }
-                                ),
-                                FabAction(
-                                    text = "Построить замок",
-                                    color = Color.DarkGray,
-                                    onClick = { mapViewModel.selectFortressState.value = true }
-                                )
-                            )
-                    },
+                    actions = listOf(
+                        FabAction(
+                            text = "Построить дом",
+                            color = Color.DarkGray,
+                            onClick = { mapViewModel.selectHouseState.value = true }
+                        ),
+                        FabAction(
+                            text = "Построить замок",
+                            color = Color.DarkGray,
+                            onClick = { mapViewModel.selectFortressState.value = true }
+                        )
+                    ),
                     modifier = Modifier.navigationBarsPadding()
                 )
             }
@@ -188,35 +174,33 @@ fun TownScreen(
                     }
                 }
 
-                if (map.value.type == MapType.TOWN) {
-                    item {
-                        Text(
-                            text = "Улица Главная",
-                            modifier = Modifier.padding(top = 8.dp, bottom = 4.dp),
-                            fontWeight = FontWeight.Bold
-                        )
-                    }
+                item {
+                    Text(
+                        text = "Улица Главная",
+                        modifier = Modifier.padding(top = 8.dp, bottom = 4.dp),
+                        fontWeight = FontWeight.Bold
+                    )
+                }
 
-                    val buildings = map.value.buildings.map { s ->
-                        BuildingModel(
-                            s.building.id,
-                            s.building.name,
-                            s.building.imageUrl,
-                            s.animal
-                        )
-                    }
-                    val rows = buildings.chunked(3)
+                val buildings = map.value.buildings.map { s ->
+                    BuildingModel(
+                        s.building.id,
+                        s.building.name,
+                        s.building.imageUrl,
+                        s.animal
+                    )
+                }
+                val rows = buildings.chunked(3)
 
-                    items(rows) { row ->
-                        Row(
-                            modifier = Modifier.fillMaxWidth(),
-                            horizontalArrangement = Arrangement.spacedBy(8.dp)
-                        ) {
-                            row.forEach { b ->
-                                BuildingCard(b, Modifier.weight(1f), navController)
-                            }
-                            repeat(3 - row.size) { Spacer(Modifier.weight(1f)) }
+                items(rows) { row ->
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
+                        row.forEach { b ->
+                            BuildingCard(b, Modifier.weight(1f), navController)
                         }
+                        repeat(3 - row.size) { Spacer(Modifier.weight(1f)) }
                     }
                 }
             }
@@ -233,50 +217,7 @@ fun TownScreen(
                 )
             }
 
-            // Оверлеи (как у тебя было)
-            if (foundTown.value) {
-                Box(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .background(Color.White.copy(alpha = 0.5f))
-                ) {
-                    Column(
-                        modifier = Modifier
-                            .align(Alignment.TopCenter)
-                            .fillMaxWidth()
-                            .padding(16.dp),
-                        horizontalAlignment = Alignment.CenterHorizontally
-                    ) {
-                        OutlinedTextField(
-                            value = cityName.value,
-                            onValueChange = { cityName.value = it },
-                            label = {
-                                Text(
-                                    text = "Название города",
-                                    color = Color.Gray,
-                                    modifier = Modifier
-                                        .background(Color.White)
-                                        .padding(1.dp)
-                                )
-                            },
-                            modifier = Modifier.fillMaxWidth(),
-                            colors = TextFieldDefaults.outlinedTextFieldColors(
-                                backgroundColor = Color.White,
-                                focusedBorderColor = Color.Gray,
-                                unfocusedLabelColor = Color.Gray,
-                                unfocusedBorderColor = Color.Gray
-                            )
-                        )
-                        Spacer(Modifier.height(12.dp))
-                        Button(
-                            colors = ButtonDefaults.buttonColors(
-                                backgroundColor = Color.DarkGray, contentColor = Color.White
-                            ),
-                            onClick = { mapViewModel.foundTown(map.value, cityName.value) }
-                        ) { Text("Сохранить") }
-                    }
-                }
-            }
+            // Оверлеи
 
             if (mapViewModel.selectHouseState.value) {
                 SelectBuildingScreen(
