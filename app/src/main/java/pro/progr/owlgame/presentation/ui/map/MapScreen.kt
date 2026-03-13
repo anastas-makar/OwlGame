@@ -19,18 +19,22 @@ fun MapScreen(
         MapType.FREE -> FreeMapScreen(
             navController,
             diamondDao,
-            mapViewModel)
+            mapViewModel,
+            map)
         MapType.TOWN -> TownScreen(
-                navController,
-                diamondDao,
-                mapViewModel)
+            navController,
+            diamondDao,
+            mapViewModel,
+            map)
         MapType.OCCUPIED -> OccupiedMapScreen(
-                navController,
-                diamondDao,
-                mapViewModel)
+            navController,
+            diamondDao,
+            mapViewModel,
+            map)
         MapType.EXPEDITION -> ExpeditionScreen(
-                navController,
-                diamondDao,
-                mapViewModel)
+            navController,
+            diamondDao,
+            mapViewModel,
+            map)
     }
 }

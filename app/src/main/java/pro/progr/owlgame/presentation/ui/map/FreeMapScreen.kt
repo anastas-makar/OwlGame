@@ -38,6 +38,7 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import androidx.compose.runtime.State
 import pro.progr.diamondapi.PurchaseInterface
 import pro.progr.owlgame.data.db.MapType
 import pro.progr.owlgame.presentation.ui.MapBar
@@ -52,9 +53,9 @@ import pro.progr.owlgame.presentation.viewmodel.MapViewModel
 fun FreeMapScreen(
     navController: NavHostController,
     diamondDao: PurchaseInterface,
-    mapViewModel: MapViewModel
+    mapViewModel: MapViewModel,
+    map: State<MapData>
 ) {
-    val map = mapViewModel.map.collectAsState(initial = MapData("", "", "", MapType.FREE))
     val foundTown = mapViewModel.foundTown.collectAsState(initial = false)
     val cityName = remember { mutableStateOf("") }
 

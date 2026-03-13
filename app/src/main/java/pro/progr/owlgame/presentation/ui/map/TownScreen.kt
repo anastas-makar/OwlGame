@@ -18,18 +18,15 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.Button
-import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Card
 import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Scaffold
 import androidx.compose.material.SnackbarHost
 import androidx.compose.material.SnackbarHostState
 import androidx.compose.material.Text
-import androidx.compose.material.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -37,7 +34,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
@@ -51,7 +47,6 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import pro.progr.diamondapi.PurchaseInterface
 import pro.progr.owlgame.data.db.BuildingType
-import pro.progr.owlgame.data.db.MapType
 import pro.progr.owlgame.presentation.ui.MapBar
 import pro.progr.owlgame.presentation.ui.SelectBuildingScreen
 import pro.progr.owlgame.presentation.ui.fab.ExpandableFloatingActionButton
@@ -66,11 +61,10 @@ import pro.progr.owlgame.presentation.viewmodel.MapViewModel
 fun TownScreen(
     navController: NavHostController,
     diamondDao: PurchaseInterface,
-    mapViewModel: MapViewModel
+    mapViewModel: MapViewModel,
+    map: State<MapData>
 ) {
-    val map = mapViewModel.map.collectAsState(initial = MapData("", "", "", MapType.FREE))
     val foundTown = mapViewModel.foundTown.collectAsState(initial = false)
-    val cityName = remember { mutableStateOf("") }
 
     val snackbarHostState = remember { SnackbarHostState() }
     val scope = rememberCoroutineScope()

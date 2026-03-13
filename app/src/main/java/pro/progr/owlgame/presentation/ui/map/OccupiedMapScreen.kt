@@ -14,6 +14,7 @@ import androidx.compose.material.SnackbarHost
 import androidx.compose.material.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -27,7 +28,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import pro.progr.diamondapi.PurchaseInterface
-import pro.progr.owlgame.data.db.MapType
 import pro.progr.owlgame.data.model.EnemyStatus
 import pro.progr.owlgame.presentation.ui.MapBar
 import pro.progr.owlgame.presentation.ui.fab.ExpandableFloatingActionButton
@@ -41,9 +41,9 @@ import pro.progr.owlgame.presentation.viewmodel.MapViewModel
 fun OccupiedMapScreen(
     navController: NavHostController,
     diamondDao: PurchaseInterface,
-    mapViewModel: MapViewModel
+    mapViewModel: MapViewModel,
+    map: State<MapData>
 ) {
-    val map = mapViewModel.map.collectAsState(initial = MapData("", "", "", MapType.FREE))
 
     val snackbarHostState = remember { SnackbarHostState() }
 

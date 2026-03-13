@@ -30,6 +30,7 @@ import androidx.compose.material.Text
 import androidx.compose.material.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -67,9 +68,9 @@ import pro.progr.owlgame.presentation.viewmodel.MapViewModel
 fun ExpeditionScreen(
     navController: NavHostController,
     diamondDao: PurchaseInterface,
-    mapViewModel: MapViewModel
+    mapViewModel: MapViewModel,
+    map: State<MapData>
 ) {
-    val map = mapViewModel.map.collectAsState(initial = MapData("", "", "", MapType.FREE))
     val foundTown = mapViewModel.foundTown.collectAsState(initial = false)
     val cityName = remember { mutableStateOf("") }
 
