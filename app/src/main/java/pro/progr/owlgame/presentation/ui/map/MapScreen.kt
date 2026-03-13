@@ -1,9 +1,11 @@
 package pro.progr.owlgame.presentation.ui.map
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.navigation.NavHostController
 import pro.progr.diamondapi.PurchaseInterface
 import pro.progr.owlgame.data.db.MapType
+import pro.progr.owlgame.presentation.ui.model.MapData
 import pro.progr.owlgame.presentation.viewmodel.MapViewModel
 
 @Composable
@@ -11,8 +13,9 @@ fun MapScreen(
     navController: NavHostController,
     diamondDao: PurchaseInterface,
     mapViewModel: MapViewModel) {
+    val map = mapViewModel.map.collectAsState(initial = MapData("", "", "", MapType.FREE))
 
-    when(mapViewModel.map.value.type) {
+    when(map.value.type) {
         MapType.FREE -> FreeMapScreen(
             navController,
             diamondDao,
