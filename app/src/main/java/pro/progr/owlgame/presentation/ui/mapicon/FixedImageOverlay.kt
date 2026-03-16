@@ -25,11 +25,8 @@ fun <T> FixedImageOverlay(
     keyOf: (T) -> Any,
     x01Of: (T) -> Float,
     y01Of: (T) -> Float,
-    // “новый элемент” лучше задавать снаружи (по id), а не угадывать по (0,0)
     isJumping: (T) -> Boolean = { false },
-    iconPainterOf: @Composable (T) -> Painter,
-    onCommit01: (T, Float, Float) -> Unit,
-    onTouched: ((T) -> Unit)? = null,
+    iconPainterOf: @Composable (T) -> Painter
 ) {
     var bgSizePx by remember { mutableStateOf(IntSize.Zero) }
 

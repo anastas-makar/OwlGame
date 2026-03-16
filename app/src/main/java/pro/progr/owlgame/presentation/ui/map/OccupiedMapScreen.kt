@@ -15,7 +15,6 @@ import androidx.compose.material.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.State
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -32,7 +31,7 @@ import pro.progr.owlgame.data.model.EnemyStatus
 import pro.progr.owlgame.presentation.ui.MapBar
 import pro.progr.owlgame.presentation.ui.fab.ExpandableFloatingActionButton
 import pro.progr.owlgame.presentation.ui.fab.FabAction
-import pro.progr.owlgame.presentation.ui.mapicon.DraggableImageOverlay
+import pro.progr.owlgame.presentation.ui.mapicon.FixedImageOverlay
 import pro.progr.owlgame.presentation.ui.mapicon.enemyIconRes
 import pro.progr.owlgame.presentation.ui.model.MapData
 import pro.progr.owlgame.presentation.viewmodel.MapViewModel
@@ -87,16 +86,15 @@ fun OccupiedMapScreen(
 
                 //todo: иконки монстров двигать нельзя, нужно переделать на статичные иконки
                     Box(Modifier.fillMaxWidth().heightIn(max = 420.dp)) {
-                        DraggableImageOverlay(
+                        FixedImageOverlay(
                             backgroundModel = map.value.imageUrl,
                             items = enemies,
                             modifier = Modifier.fillMaxWidth(),
                             keyOf = { it.id },
                             x01Of = { it.x },
                             y01Of = { it.y },
-                            isNewOf = { it.status == EnemyStatus.ACTIVE},
-                            iconPainterOf = { painterResource(enemyIconRes()) },
-                            onCommit01 = { item, x, y ->  },
+                            isJumping = { it.status == EnemyStatus.ACTIVE},
+                            iconPainterOf = { painterResource(enemyIconRes()) }
                         )
                     }
                 }
