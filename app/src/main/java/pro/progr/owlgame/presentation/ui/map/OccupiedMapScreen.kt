@@ -1,17 +1,25 @@
 package pro.progr.owlgame.presentation.ui.map
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material.Card
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.SnackbarHost
 import androidx.compose.material.SnackbarHostState
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.State
@@ -26,7 +34,6 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
-import pro.progr.diamondapi.PurchaseInterface
 import pro.progr.owlgame.data.model.EnemyStatus
 import pro.progr.owlgame.presentation.ui.MapBar
 import pro.progr.owlgame.presentation.ui.fab.ExpandableFloatingActionButton
@@ -39,7 +46,6 @@ import pro.progr.owlgame.presentation.viewmodel.MapViewModel
 @Composable
 fun OccupiedMapScreen(
     navController: NavHostController,
-    diamondDao: PurchaseInterface,
     mapViewModel: MapViewModel,
     map: State<MapData>
 ) {
@@ -78,13 +84,12 @@ fun OccupiedMapScreen(
         }
     ) { innerPadding ->
 
-        Box(modifier = Modifier
+        LazyColumn(modifier = Modifier
             .padding(innerPadding)
             .fillMaxSize(),) {
 
             map.value.expedition?.let { (expedition, enemies) ->
-
-                //todo: иконки монстров двигать нельзя, нужно переделать на статичные иконки
+                item {
                     Box(Modifier.fillMaxWidth().heightIn(max = 420.dp)) {
                         FixedImageOverlay(
                             backgroundModel = map.value.imageUrl,
@@ -97,8 +102,21 @@ fun OccupiedMapScreen(
                             iconPainterOf = { painterResource(enemyIconRes()) }
                         )
                     }
+
                 }
+                item {
+                    map.value.expedition?.let { expData ->
+                        MapOccupiedBanner(
+                            expData.expedition.title,
+                            expData.expedition.description,
+                            { fabExpanded = true}
+                        )
+
+                    }
+                }
+
             }
+        }
 
             // Scrim для FAB-меню (закрывать по тапу вне)
             if (fabExpanded) {
@@ -112,4 +130,36 @@ fun OccupiedMapScreen(
                 )
             }
         }
+}
+
+@Composable
+private fun MapOccupiedBanner(
+    title: String,
+    description: String,
+    onClick: () -> Unit
+) {
+    Card(
+        modifier = Modifier
+            .padding(top = 10.dp, start = 8.dp, end = 8.dp)
+            .fillMaxWidth()
+            .clickable(onClick = onClick),
+        elevation = 4.dp,
+        backgroundColor = Color(0xFFF5F5F5)
+    ) {
+        Column(
+            modifier = Modifier.padding(12.dp)
+        ) {
+            Text(
+                text = title,
+                style = MaterialTheme.typography.subtitle1
+            )
+
+            Spacer(modifier = Modifier.height(4.dp))
+
+            Text(
+                text = description,
+                style = MaterialTheme.typography.body2
+            )
+        }
+    }
 }
