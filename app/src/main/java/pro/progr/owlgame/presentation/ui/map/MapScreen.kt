@@ -28,6 +28,7 @@ fun MapScreen(
             map)
         MapType.OCCUPIED -> OccupiedMapScreen(
             navController,
+            diamondDao,
             mapViewModel,
             map)
         MapType.EXPEDITION -> ExpeditionScreen(
