@@ -34,6 +34,7 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import pro.progr.diamondapi.PurchaseInterface
 import pro.progr.owlgame.data.model.EnemyStatus
 import pro.progr.owlgame.presentation.ui.MapBar
 import pro.progr.owlgame.presentation.ui.fab.ExpandableFloatingActionButton
@@ -46,19 +47,22 @@ import pro.progr.owlgame.presentation.viewmodel.MapViewModel
 @Composable
 fun OccupiedMapScreen(
     navController: NavHostController,
+    diamondDao: PurchaseInterface,
     mapViewModel: MapViewModel,
     map: State<MapData>
 ) {
 
     val snackbarHostState = remember { SnackbarHostState() }
 
+    val newExpeditionState = remember { mutableStateOf(false) }
+
     var fabExpanded by rememberSaveable { mutableStateOf(false) }
 
     // Если открылись оверлеи — FAB-меню закрываем
     LaunchedEffect(
-        mapViewModel.newExpeditionState.value
+        newExpeditionState.value
     ) {
-        if (mapViewModel.newExpeditionState.value) {
+        if (newExpeditionState.value) {
             fabExpanded = false
         }
     }
