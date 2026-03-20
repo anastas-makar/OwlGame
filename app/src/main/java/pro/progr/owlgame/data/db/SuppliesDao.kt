@@ -22,4 +22,11 @@ interface SuppliesDao {
 
     @Query("SELECT * FROM supplies")
     fun observeAll(): Flow<List<Supply>>
+
+    @Query("""
+        UPDATE supplies
+        SET amount = amount - :amount
+        WHERE id = :supplyId AND amount >= :amount
+    """)
+    suspend fun consume(supplyId: String, amount: Int): Int
 }

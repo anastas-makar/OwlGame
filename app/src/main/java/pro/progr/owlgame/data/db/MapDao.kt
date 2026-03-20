@@ -22,4 +22,14 @@ interface MapDao {
 
     @Query("SELECT * FROM maps ORDER BY RANDOM() LIMIT 1")
     fun getRandomMap(): MapEntity?
+
+    @Query("""
+        UPDATE maps
+        SET type = :type
+        WHERE id = :mapId
+    """)
+    suspend fun updateType(
+        mapId: String,
+        type: MapType
+    ): Int
 }
