@@ -10,4 +10,6 @@ interface SuppliesRepository {
     suspend fun updateAmount(supplyId : String, amount : Int)
 
     fun observeById(supplyId : String) : Flow<Supply?>
+
+    fun getAllSupplies(): Flow<List<Supply>>
 }

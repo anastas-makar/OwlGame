@@ -21,4 +21,8 @@ class SuppliesRepositoryImpl @Inject constructor(
     override fun observeById(supplyId : String) : Flow<Supply?> {
         return suppliesDao.getById(supplyId)
     }
+
+    override fun getAllSupplies(): Flow<List<Supply>> {
+        return suppliesDao.observeAll()
+    }
 }
