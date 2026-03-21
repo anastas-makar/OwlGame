@@ -2,6 +2,7 @@ package pro.progr.owlgame.presentation.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
@@ -11,6 +12,7 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import pro.progr.diamondapi.PurchaseInterface
 import pro.progr.owlgame.data.db.Supply
 import pro.progr.owlgame.data.repository.SuppliesRepository
@@ -117,22 +119,26 @@ class ExpeditionPreparationViewModel @Inject constructor(
             isStarting.value = true
             errorMessage.value = null
 
-            val result = startExpeditionUseCase(
-                diamondDao = diamondDao,
-                mapId = mapId,
-                expeditionId = expeditionId,
-                selectedSupplies = selectedSupplies,
-                extraHeal = state.extraHeal,
-                extraDamage = state.extraDamage
-            )
+            try {
+                val result = withContext(Dispatchers.IO) {
+                    startExpeditionUseCase(
+                        diamondDao = diamondDao,
+                        mapId = mapId,
+                        expeditionId = expeditionId,
+                        selectedSupplies = selectedSupplies,
+                        extraHeal = state.extraHeal,
+                        extraDamage = state.extraDamage
+                    )
+                }
 
-            isStarting.value = false
-
-            if (result.isSuccess) {
-                _events.emit(Event.Started)
-            } else {
-                errorMessage.value = result.exceptionOrNull()?.message
-                    ?: "Не удалось начать экспедицию"
+                if (result.isSuccess) {
+                    _events.emit(Event.Started)
+                } else {
+                    errorMessage.value = result.exceptionOrNull()?.message
+                        ?: "Не удалось начать экспедицию"
+                }
+            } finally {
+                isStarting.value = false
             }
         }
     }

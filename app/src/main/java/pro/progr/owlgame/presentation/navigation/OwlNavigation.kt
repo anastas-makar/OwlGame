@@ -67,6 +67,7 @@ fun OwlNavigation(startDestination : String = "towns",
                 val mapViewModel: MapViewModel = DaggerMapViewModel(component, id)
                 MapScreen(navController,
                     diamondDao,
+                    component,
                     mapViewModel)
             }
         }

@@ -23,6 +23,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.State
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -42,6 +43,7 @@ import pro.progr.owlgame.presentation.ui.fab.FabAction
 import pro.progr.owlgame.presentation.ui.mapicon.FixedImageOverlay
 import pro.progr.owlgame.presentation.ui.mapicon.enemyIconRes
 import pro.progr.owlgame.presentation.ui.model.MapData
+import pro.progr.owlgame.presentation.viewmodel.ExpeditionPreparationViewModel
 import pro.progr.owlgame.presentation.viewmodel.MapViewModel
 
 @Composable
@@ -49,52 +51,78 @@ fun OccupiedMapScreen(
     navController: NavHostController,
     diamondDao: PurchaseInterface,
     mapViewModel: MapViewModel,
-    map: State<MapData>
+    map: State<MapData>,
+    prepViewModel: ExpeditionPreparationViewModel
 ) {
-
     val snackbarHostState = remember { SnackbarHostState() }
 
-    val newExpeditionState = remember { mutableStateOf(false) }
-
     var fabExpanded by rememberSaveable { mutableStateOf(false) }
+    var showPreparationDialog by rememberSaveable { mutableStateOf(false) }
 
-    // Если открылись оверлеи — FAB-меню закрываем
-    LaunchedEffect(
-        newExpeditionState.value
-    ) {
-        if (newExpeditionState.value) {
-            fabExpanded = false
+    val diamonds by diamondDao.getDiamondsCount().collectAsState(initial = 0)
+    val prepState by prepViewModel.uiState.collectAsState()
+
+    LaunchedEffect(Unit) {
+        prepViewModel.events.collect { event ->
+            when (event) {
+                ExpeditionPreparationViewModel.Event.Started -> {
+                    showPreparationDialog = false
+                    fabExpanded = false
+                }
+            }
+        }
+    }
+
+    LaunchedEffect(prepState.errorMessage) {
+        prepState.errorMessage?.let { message ->
+            snackbarHostState.showSnackbar(message)
+            prepViewModel.clearError()
         }
     }
 
     Scaffold(
-        snackbarHost = { SnackbarHost(snackbarHostState, modifier = Modifier.navigationBarsPadding()) },
-        topBar = { Box(Modifier.statusBarsPadding()) { MapBar(navController, mapViewModel) } },
+        snackbarHost = {
+            SnackbarHost(
+                snackbarHostState,
+                modifier = Modifier.navigationBarsPadding()
+            )
+        },
+        topBar = {
+            Box(Modifier.statusBarsPadding()) {
+                MapBar(navController, mapViewModel)
+            }
+        },
         floatingActionButton = {
-                ExpandableFloatingActionButton(
-                    expanded = fabExpanded,
-                    onExpandedChange = { fabExpanded = it },
-                    actions =
-                            listOf(
-
-                                FabAction(
-                                    text = "Начать экспедицию",
-                                    color = Color.Red,
-                                    onClick = {  }
-                                )
-                            ),
-                    modifier = Modifier.navigationBarsPadding()
-                )
+            ExpandableFloatingActionButton(
+                expanded = fabExpanded,
+                onExpandedChange = { fabExpanded = it },
+                actions = listOf(
+                    FabAction(
+                        text = "Начать экспедицию",
+                        color = Color.Red,
+                        onClick = {
+                            fabExpanded = false
+                            showPreparationDialog = true
+                        }
+                    )
+                ),
+                modifier = Modifier.navigationBarsPadding()
+            )
         }
     ) { innerPadding ->
 
-        LazyColumn(modifier = Modifier
-            .padding(innerPadding)
-            .fillMaxSize(),) {
-
+        LazyColumn(
+            modifier = Modifier
+                .padding(innerPadding)
+                .fillMaxSize()
+        ) {
             map.value.expedition?.let { (expedition, enemies) ->
                 item {
-                    Box(Modifier.fillMaxWidth().heightIn(max = 420.dp)) {
+                    Box(
+                        Modifier
+                            .fillMaxWidth()
+                            .heightIn(max = 420.dp)
+                    ) {
                         FixedImageOverlay(
                             backgroundModel = map.value.imageUrl,
                             items = enemies,
@@ -102,38 +130,54 @@ fun OccupiedMapScreen(
                             keyOf = { it.id },
                             x01Of = { it.x },
                             y01Of = { it.y },
-                            isJumping = { it.status == EnemyStatus.ACTIVE},
+                            isJumping = { it.status == EnemyStatus.ACTIVE },
                             iconPainterOf = { painterResource(enemyIconRes()) }
                         )
                     }
-
                 }
+
                 item {
-                    map.value.expedition?.let { expData ->
-                        MapOccupiedBanner(
-                            expData.expedition.title,
-                            expData.expedition.description,
-                            { fabExpanded = true}
-                        )
-
-                    }
-                }
-
-            }
-        }
-
-            // Scrim для FAB-меню (закрывать по тапу вне)
-            if (fabExpanded) {
-                Box(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .background(Color.Black.copy(alpha = 0.35f))
-                        .pointerInput(Unit) {
-                            detectTapGestures(onTap = { fabExpanded = false })
+                    MapOccupiedBanner(
+                        title = expedition.title,
+                        description = expedition.description,
+                        onClick = {
+                            fabExpanded = true
                         }
-                )
+                    )
+                }
             }
         }
+
+        if (fabExpanded) {
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(Color.Black.copy(alpha = 0.35f))
+                    .pointerInput(Unit) {
+                        detectTapGestures(onTap = { fabExpanded = false })
+                    }
+            )
+        }
+
+        val expeditionId = map.value.expedition?.expedition?.id
+        if (showPreparationDialog && expeditionId != null) {
+            ExpeditionPreparationDialog(
+                state = prepState,
+                diamondsAvailable = diamonds,
+                onDismiss = { showPreparationDialog = false },
+                onIncreaseSupply = prepViewModel::increaseSupply,
+                onDecreaseSupply = prepViewModel::decreaseSupply,
+                onExtraHealChange = prepViewModel::setExtraHealText,
+                onExtraDamageChange = prepViewModel::setExtraDamageText,
+                onStartClick = {
+                    prepViewModel.startExpedition(
+                        expeditionId = expeditionId,
+                        diamondDao = diamondDao
+                    )
+                }
+            )
+        }
+    }
 }
 
 @Composable
