@@ -12,4 +12,6 @@ interface SuppliesRepository {
     fun observeById(supplyId : String) : Flow<Supply?>
 
     fun getAllSupplies(): Flow<List<Supply>>
+
+    fun getAllAvailableSupplies(): Flow<List<Supply>>
 }

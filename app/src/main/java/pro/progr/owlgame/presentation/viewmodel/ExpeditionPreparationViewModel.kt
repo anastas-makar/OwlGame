@@ -39,7 +39,7 @@ class ExpeditionPreparationViewModel @Inject constructor(
 
     val uiState: StateFlow<ExpeditionPreparationUiState> =
         combine(
-            suppliesRepository.getAllSupplies(),
+            suppliesRepository.getAllAvailableSupplies(),
             selectedAmounts,
             extraHealText,
             extraDamageText

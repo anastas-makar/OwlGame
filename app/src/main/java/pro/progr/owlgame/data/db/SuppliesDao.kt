@@ -23,6 +23,9 @@ interface SuppliesDao {
     @Query("SELECT * FROM supplies")
     fun observeAll(): Flow<List<Supply>>
 
+    @Query("SELECT * FROM supplies WHERE amount > 0")
+    fun observeAllAvailable(): Flow<List<Supply>>
+
     @Query("""
         UPDATE supplies
         SET amount = amount - :amount
