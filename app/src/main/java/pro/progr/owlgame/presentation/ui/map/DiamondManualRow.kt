@@ -1,7 +1,7 @@
 package pro.progr.owlgame.presentation.ui.map
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -19,6 +19,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 
@@ -26,6 +27,7 @@ import androidx.compose.ui.unit.dp
 fun DiamondManualRow(
     title: String,
     subtitle: String,
+    imageResource: Int,
     value: String,
     onValueChange: (String) -> Unit
 ) {
@@ -37,13 +39,13 @@ fun DiamondManualRow(
             modifier = Modifier.padding(12.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Box(
+            Image(
+                painter = painterResource(imageResource),
+                contentDescription = "Изображение $title",
                 modifier = Modifier
                     .size(64.dp)
-                    .background(Color.LightGray, RoundedCornerShape(8.dp))
-            ) {
-                // позже поставишь картинку
-            }
+                    .background(Color.Transparent, RoundedCornerShape(8.dp))
+            )
 
             Spacer(Modifier.width(12.dp))
 

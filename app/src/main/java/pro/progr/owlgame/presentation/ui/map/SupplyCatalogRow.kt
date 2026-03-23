@@ -1,7 +1,6 @@
 package pro.progr.owlgame.presentation.ui.map
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -20,6 +19,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import coil.compose.AsyncImage
 import pro.progr.owlgame.data.db.EffectType
 import pro.progr.owlgame.presentation.ui.model.SupplySelectionUi
 
@@ -37,13 +37,13 @@ fun SupplyCatalogRow(
             modifier = Modifier.padding(12.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Box(
+            AsyncImage(
+                model = item.supply.imageUrl,
+                contentDescription = "Изображение ${item.supply.name}",
                 modifier = Modifier
                     .size(64.dp)
-                    .background(Color.LightGray, RoundedCornerShape(8.dp))
-            ) {
-                // сюда потом подставишь свой image loader
-            }
+                        .background(Color.Transparent, RoundedCornerShape(8.dp))
+            )
 
             Spacer(Modifier.width(12.dp))
 

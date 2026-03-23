@@ -18,6 +18,7 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
+import pro.progr.owlgame.R
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
@@ -66,6 +67,7 @@ fun ExpeditionPreparationDialog(
                 DiamondManualRow(
                     title = "Чешуйки",
                     subtitle = "1 чешуйка = 1 heal, цена 1 бриллиант",
+                    imageResource = R.drawable.ic_scale,
                     value = state.extraHealText,
                     onValueChange = onExtraHealChange
                 )
@@ -75,6 +77,7 @@ fun ExpeditionPreparationDialog(
                 DiamondManualRow(
                     title = "Бомбочки",
                     subtitle = "1 бомбочка = 1 damage, цена 1 бриллиант",
+                    imageResource = R.drawable.ic_bomb,
                     value = state.extraDamageText,
                     onValueChange = onExtraDamageChange
                 )
