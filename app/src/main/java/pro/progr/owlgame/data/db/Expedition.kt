@@ -17,6 +17,13 @@ import pro.progr.owlgame.data.model.ExpeditionStatus
             childColumns = ["mapId"],
             onDelete = ForeignKey.CASCADE,
             onUpdate = ForeignKey.CASCADE
+        ),
+        ForeignKey(
+            entity = Animal::class,
+            parentColumns = ["id"],
+            childColumns = ["animalId"],
+            onDelete = ForeignKey.CASCADE,
+            onUpdate = ForeignKey.CASCADE
         )
     ])
 data class Expedition(
@@ -25,6 +32,7 @@ data class Expedition(
     val title: String,
     val description: String,
     val mapId: String,
+    val animalId: String?,
     val healAmount: Int,
     val damageAmount: Int,
     val status: ExpeditionStatus = ExpeditionStatus.ACTIVE
