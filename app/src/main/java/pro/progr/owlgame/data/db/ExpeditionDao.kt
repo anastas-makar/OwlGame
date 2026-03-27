@@ -15,6 +15,7 @@ interface ExpeditionDao {
         UPDATE expeditions
         SET healAmount = :healAmount,
             damageAmount = :damageAmount,
+            animalId = :animalId,
             status = :status
         WHERE id = :expeditionId
     """)
@@ -22,6 +23,7 @@ interface ExpeditionDao {
         expeditionId: String,
         healAmount: Int,
         damageAmount: Int,
+        animalId: String,
         status: ExpeditionStatus
     ): Int
 }
