@@ -11,6 +11,20 @@ interface ExpeditionDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insert(expeditions: List<Expedition>): List<Long>
 
+
+    @Query("SELECT * FROM expeditions WHERE id = :expeditionId LIMIT 1")
+    suspend fun getById(expeditionId: String): Expedition?
+
+    @Query("""
+        UPDATE expeditions
+        SET animalId = :animalId
+        WHERE id = :expeditionId
+    """)
+    suspend fun updateAnimalId(
+        expeditionId: String,
+        animalId: String?
+    ): Int
+
     @Query("""
         UPDATE expeditions
         SET healAmount = :healAmount,

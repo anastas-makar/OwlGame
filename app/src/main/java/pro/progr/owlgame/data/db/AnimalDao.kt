@@ -27,4 +27,21 @@ interface AnimalDao {
 
     @Query("SELECT * FROM animals WHERE id=:id")
     fun getAnimalById(id: String): Animal?
+
+    @Query("SELECT * FROM animals WHERE status = :status")
+    fun getAnimalsByStatus(status: AnimalStatus): Flow<List<Animal>>
+
+    @Query("SELECT * FROM animals WHERE status = :status")
+    suspend fun getAnimalsByStatusOnce(status: AnimalStatus): List<Animal>
+
+    @Query("""
+        UPDATE animals
+        SET status = :newStatus
+        WHERE id = :animalId AND status = :expectedOldStatus
+    """)
+    suspend fun updateStatusIfCurrent(
+        animalId: String,
+        newStatus: AnimalStatus,
+        expectedOldStatus: AnimalStatus
+    ): Int
 }
