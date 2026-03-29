@@ -17,7 +17,7 @@ import pro.progr.diamondapi.PurchaseInterface
 import pro.progr.owlgame.data.db.Supply
 import pro.progr.owlgame.data.repository.SuppliesRepository
 import pro.progr.owlgame.domain.StartExpeditionUseCase
-import pro.progr.owlgame.domain.model.SelectedSupplyAmount
+import pro.progr.owlgame.data.model.SelectedSupplyAmount
 import pro.progr.owlgame.presentation.ui.model.ExpeditionPreparationUiState
 import pro.progr.owlgame.presentation.ui.model.SupplySelectionUi
 import javax.inject.Inject

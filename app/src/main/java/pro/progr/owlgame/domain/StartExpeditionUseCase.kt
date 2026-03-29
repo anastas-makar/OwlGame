@@ -13,7 +13,7 @@ import pro.progr.owlgame.data.db.MapDao
 import pro.progr.owlgame.data.db.MapType
 import pro.progr.owlgame.data.db.SuppliesDao
 import pro.progr.owlgame.data.model.ExpeditionStatus
-import pro.progr.owlgame.domain.model.SelectedSupplyAmount
+import pro.progr.owlgame.data.model.SelectedSupplyAmount
 import javax.inject.Inject
 
 class StartExpeditionUseCase @Inject constructor(
