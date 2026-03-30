@@ -8,6 +8,7 @@ import pro.progr.diamondapi.PurchaseInterface
 import pro.progr.owlgame.data.db.AnimalDao
 import pro.progr.owlgame.data.db.AnimalStatus
 import pro.progr.owlgame.data.db.EffectType
+import pro.progr.owlgame.data.db.Expedition
 import pro.progr.owlgame.data.db.ExpeditionDao
 import pro.progr.owlgame.data.db.ExpeditionWithData
 import pro.progr.owlgame.data.db.ExpeditionWithDataDao
@@ -136,6 +137,17 @@ class ExpeditionsRepositoryImpl @Inject constructor(
                 Unit
             }
         }
+    }
+
+    override suspend fun getById(expeditionId: String) : Expedition? {
+        return expeditionsDao.getById(expeditionId);
+    }
+
+    override suspend fun updateAnimalId(
+        expeditionId: String,
+        animalId: String?
+    ): Int {
+        return expeditionsDao.updateAnimalId(expeditionId, animalId)
     }
 
 }
