@@ -58,9 +58,18 @@ fun OccupiedMapScreen(
 
     var fabExpanded by rememberSaveable { mutableStateOf(false) }
     var showPreparationDialog by rememberSaveable { mutableStateOf(false) }
+    var showAnimalDialog by rememberSaveable { mutableStateOf(false) }
 
     val diamonds by diamondDao.getDiamondsCount().collectAsState(initial = 0)
     val prepState by prepViewModel.uiState.collectAsState()
+
+    val expeditionId = map.value.expedition?.expedition?.id
+
+    LaunchedEffect(expeditionId) {
+        if (expeditionId != null) {
+            prepViewModel.ensureAnimalSelected(expeditionId)
+        }
+    }
 
     LaunchedEffect(Unit) {
         prepViewModel.events.collect { event ->
@@ -145,6 +154,19 @@ fun OccupiedMapScreen(
                         }
                     )
                 }
+
+                item {
+                    ExpeditionAnimalBanner(
+                        selectedAnimal = prepState.selectedAnimal,
+                        hasAnyPets = prepState.hasAnyPets,
+                        canChooseAnotherPet = prepState.canChooseAnotherPet,
+                        onClick = {
+                            if (prepState.canChooseAnotherPet) {
+                                showAnimalDialog = true
+                            }
+                        }
+                    )
+                }
             }
         }
 
@@ -159,7 +181,6 @@ fun OccupiedMapScreen(
             )
         }
 
-        val expeditionId = map.value.expedition?.expedition?.id
         if (showPreparationDialog && expeditionId != null) {
             ExpeditionPreparationDialog(
                 state = prepState,
@@ -174,6 +195,21 @@ fun OccupiedMapScreen(
                         expeditionId = expeditionId,
                         diamondDao = diamondDao
                     )
+                }
+            )
+        }
+
+        if (showAnimalDialog && expeditionId != null) {
+            AnimalSelectionDialog(
+                animals = prepState.availablePets,
+                selectedAnimalId = prepState.selectedAnimal?.id,
+                onDismiss = { showAnimalDialog = false },
+                onAnimalClick = { animal ->
+                    prepViewModel.selectAnimal(
+                        expeditionId = expeditionId,
+                        animalId = animal.id
+                    )
+                    showAnimalDialog = false
                 }
             )
         }
