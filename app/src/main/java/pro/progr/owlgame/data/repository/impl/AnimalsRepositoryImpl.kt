@@ -3,6 +3,7 @@ package pro.progr.owlgame.data.repository.impl
 import kotlinx.coroutines.flow.Flow
 import pro.progr.owlgame.data.db.Animal
 import pro.progr.owlgame.data.db.AnimalDao
+import pro.progr.owlgame.data.db.AnimalStatus
 import pro.progr.owlgame.data.repository.AnimalsRepository
 import pro.progr.owlgame.data.repository.ImageRepository
 import pro.progr.owlgame.data.web.AnimalApiService
@@ -45,5 +46,29 @@ class AnimalsRepositoryImpl @Inject constructor(
         animalDao.insert(savedAnimal)
 
         return savedAnimal
+    }
+
+    override fun getPets(): Flow<List<Animal>> {
+        return animalDao.getAnimalsByStatus(AnimalStatus.PET)
+    }
+
+    override suspend fun getPetsOnce(): List<Animal> {
+        return animalDao.getAnimalsByStatusOnce(AnimalStatus.PET)
+    }
+
+    override suspend fun getById(animalId: String): Animal? {
+        return animalDao.getAnimalById(animalId)
+    }
+
+    override suspend fun updateStatusIfCurrent(
+        animalId: String,
+        newStatus: AnimalStatus,
+        expectedOldStatus: AnimalStatus
+    ): Int {
+        return animalDao.updateStatusIfCurrent(
+            animalId,
+            newStatus,
+            expectedOldStatus
+        )
     }
 }

@@ -39,7 +39,8 @@ class SaveMapsUseCase @Inject constructor(
                     description = expeditionModel.description,
                     mapId = mapModel.id,
                     healAmount = 0,
-                    damageAmount = 0
+                    damageAmount = 0,
+                    animalId = null
                 )
 
                 enemyEntities += expeditionModel.enemies.map { enemyModel ->
