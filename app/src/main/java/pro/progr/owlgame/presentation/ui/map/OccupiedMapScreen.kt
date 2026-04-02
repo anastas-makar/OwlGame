@@ -102,21 +102,41 @@ fun OccupiedMapScreen(
             }
         },
         floatingActionButton = {
-            ExpandableFloatingActionButton(
-                expanded = fabExpanded,
-                onExpandedChange = { fabExpanded = it },
-                actions = listOf(
-                    FabAction(
-                        text = "Начать экспедицию",
-                        color = Color.Red,
-                        onClick = {
-                            fabExpanded = false
-                            showPreparationDialog = true
-                        }
-                    )
-                ),
-                modifier = Modifier.navigationBarsPadding()
-            )
+            if (prepState.hasAnyPets) {
+                ExpandableFloatingActionButton(
+                    expanded = fabExpanded,
+                    onExpandedChange = { fabExpanded = it },
+                    actions = if (prepState.canChooseAnotherPet) listOf(
+                        FabAction(
+                            text = "Начать экспедицию",
+                            color = Color.Red,
+                            onClick = {
+                                fabExpanded = false
+                                showPreparationDialog = true
+                            }
+                        ),
+                        FabAction(
+                            text = "Выбрать другое животное",
+                            color = Color.DarkGray,
+                            onClick = {
+                                fabExpanded = false
+                                showAnimalDialog = true
+                            }
+                        )
+                    ) else listOf(
+                        FabAction(
+                            text = "Начать экспедицию",
+                            color = Color.Red,
+                            onClick = {
+                                fabExpanded = false
+                                showPreparationDialog = true
+                            }
+                        )
+                    ),
+                    modifier = Modifier.navigationBarsPadding()
+                )
+            }
+
         }
     ) { innerPadding ->
 
