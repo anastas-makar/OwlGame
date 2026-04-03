@@ -62,8 +62,8 @@ fun ExpeditionScreen(
                 onExpandedChange = { fabExpanded = it },
                 actions = listOf(
                     FabAction(
-                        text = "Бежать",
-                        color = Color.DarkGray,
+                        text = "Бежать!",
+                        color = Color.Red,
                         onClick = {
                             shouldRun = true
                         }
