@@ -159,7 +159,7 @@ fun OccupiedMapScreen(
                             keyOf = { it.id },
                             x01Of = { it.x },
                             y01Of = { it.y },
-                            isJumping = { it.status == EnemyStatus.ACTIVE },
+                            isJumping = { false },
                             iconPainterOf = { painterResource(enemyIconRes()) }
                         )
                     }

@@ -32,5 +32,5 @@ data class Enemy (
     val damageAmount: Int,
     val x: Float,
     val y: Float,
-    val status: EnemyStatus = EnemyStatus.UNTOUCHED
+    val status: EnemyStatus = EnemyStatus.UNDEFEATED
 )
