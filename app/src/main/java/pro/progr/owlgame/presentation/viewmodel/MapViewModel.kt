@@ -26,6 +26,7 @@ import pro.progr.owlgame.data.repository.SlotsRepository
 import pro.progr.owlgame.domain.FoundTownUseCase
 import pro.progr.owlgame.presentation.ui.model.BuildingModel
 import pro.progr.owlgame.presentation.ui.model.MapData
+import pro.progr.owlgame.presentation.ui.model.MapTypeUI
 import javax.inject.Inject
 
 class MapViewModel @Inject constructor(
@@ -41,7 +42,7 @@ class MapViewModel @Inject constructor(
     val map: StateFlow<MapData> = mapsRepository.getMapById(mapId)
         .flatMapLatest { mapWithData ->
             if (mapWithData == null) {
-                flowOf(MapData("", "", "", MapType.FREE))
+                flowOf(MapData("", "", "", MapTypeUI.LOADING))
             } else {
                 val mapEntity = mapWithData.mapEntity
 
@@ -79,7 +80,7 @@ class MapViewModel @Inject constructor(
         .stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(5000),
-            initialValue = MapData("", "", "", MapType.FREE)
+            initialValue = MapData("", "", "", MapTypeUI.LOADING)
         )
 
     val foundTown = MutableStateFlow(false)

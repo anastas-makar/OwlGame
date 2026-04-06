@@ -36,7 +36,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import pro.progr.diamondapi.PurchaseInterface
-import pro.progr.owlgame.data.model.EnemyStatus
 import pro.progr.owlgame.presentation.ui.MapBar
 import pro.progr.owlgame.presentation.ui.fab.ExpandableFloatingActionButton
 import pro.progr.owlgame.presentation.ui.fab.FabAction
@@ -63,7 +62,7 @@ fun OccupiedMapScreen(
     val diamonds by diamondDao.getDiamondsCount().collectAsState(initial = 0)
     val prepState by prepViewModel.uiState.collectAsState()
 
-    val expeditionId = map.value.expedition?.expedition?.id
+    val expeditionId = map.value.expedition?.id
 
     LaunchedEffect(expeditionId) {
         if (expeditionId != null) {
@@ -145,7 +144,7 @@ fun OccupiedMapScreen(
                 .padding(innerPadding)
                 .fillMaxSize()
         ) {
-            map.value.expedition?.let { (expedition, enemies) ->
+            map.value.expedition?.let { expedition ->
                 item {
                     Box(
                         Modifier
@@ -154,7 +153,7 @@ fun OccupiedMapScreen(
                     ) {
                         FixedImageOverlay(
                             backgroundModel = map.value.imageUrl,
-                            items = enemies,
+                            items = expedition.enemies,
                             modifier = Modifier.fillMaxWidth(),
                             keyOf = { it.id },
                             x01Of = { it.x },
