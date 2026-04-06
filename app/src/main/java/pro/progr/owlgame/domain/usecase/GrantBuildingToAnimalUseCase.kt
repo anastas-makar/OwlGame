@@ -1,8 +1,8 @@
-package pro.progr.owlgame.domain
+package pro.progr.owlgame.domain.usecase
 
 import pro.progr.owlgame.data.preferences.OwlPreferences
-import pro.progr.owlgame.data.repository.AnimalsRepository
-import pro.progr.owlgame.data.repository.BuildingsRepository
+import pro.progr.owlgame.domain.repository.AnimalsRepository
+import pro.progr.owlgame.domain.repository.BuildingsRepository
 import javax.inject.Inject
 
 class GrantBuildingToAnimalUseCase @Inject constructor(

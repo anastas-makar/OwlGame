@@ -1,7 +1,7 @@
-package pro.progr.owlgame.domain
+package pro.progr.owlgame.domain.usecase
 
 import kotlinx.coroutines.flow.Flow
-import pro.progr.owlgame.data.repository.SupplyToRecipeRepository
+import pro.progr.owlgame.domain.repository.SupplyToRecipeRepository
 import pro.progr.owlgame.domain.model.IngredientModel
 import pro.progr.owlgame.domain.model.RecipeModel
 import javax.inject.Inject

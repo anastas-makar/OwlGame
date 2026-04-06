@@ -2,7 +2,7 @@ package pro.progr.owlgame.presentation.viewmodel.dagger
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import pro.progr.owlgame.data.repository.FurnitureRepository
+import pro.progr.owlgame.domain.repository.FurnitureRepository
 import pro.progr.owlgame.presentation.viewmodel.RoomViewModel
 import javax.inject.Inject
 

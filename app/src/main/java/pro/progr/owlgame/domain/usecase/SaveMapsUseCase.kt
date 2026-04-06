@@ -1,11 +1,11 @@
-package pro.progr.owlgame.domain
+package pro.progr.owlgame.domain.usecase
 
 import pro.progr.owlgame.data.db.Enemy
 import pro.progr.owlgame.data.db.Expedition
 import pro.progr.owlgame.data.db.MapEntity
 import pro.progr.owlgame.data.db.MapType
-import pro.progr.owlgame.data.repository.ImageRepository
-import pro.progr.owlgame.data.repository.MapsRepository
+import pro.progr.owlgame.domain.repository.ImageRepository
+import pro.progr.owlgame.domain.repository.MapsRepository
 import pro.progr.owlgame.data.web.inpouch.MapInPouchModel
 import javax.inject.Inject
 

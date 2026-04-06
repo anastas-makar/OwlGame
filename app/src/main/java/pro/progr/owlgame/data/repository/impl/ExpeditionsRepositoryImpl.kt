@@ -18,7 +18,7 @@ import pro.progr.owlgame.data.db.OwlGameDatabase
 import pro.progr.owlgame.data.db.SuppliesDao
 import pro.progr.owlgame.data.model.ExpeditionStatus
 import pro.progr.owlgame.data.model.StartExpeditionRequest
-import pro.progr.owlgame.data.repository.ExpeditionsRepository
+import pro.progr.owlgame.domain.repository.ExpeditionsRepository
 import javax.inject.Inject
 
 class ExpeditionsRepositoryImpl @Inject constructor(

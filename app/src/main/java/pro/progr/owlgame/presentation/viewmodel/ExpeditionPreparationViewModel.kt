@@ -19,9 +19,9 @@ import pro.progr.owlgame.data.db.AnimalStatus
 import pro.progr.owlgame.data.db.Supply
 import pro.progr.owlgame.data.model.SelectedSupplyAmount
 import pro.progr.owlgame.data.model.StartExpeditionRequest
-import pro.progr.owlgame.data.repository.AnimalsRepository
-import pro.progr.owlgame.data.repository.ExpeditionsRepository
-import pro.progr.owlgame.data.repository.SuppliesRepository
+import pro.progr.owlgame.domain.repository.AnimalsRepository
+import pro.progr.owlgame.domain.repository.ExpeditionsRepository
+import pro.progr.owlgame.domain.repository.SuppliesRepository
 import pro.progr.owlgame.presentation.ui.model.ExpeditionPreparationUiState
 import pro.progr.owlgame.presentation.ui.model.SupplySelectionUi
 import javax.inject.Inject

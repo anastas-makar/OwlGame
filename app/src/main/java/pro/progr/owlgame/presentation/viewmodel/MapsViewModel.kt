@@ -3,7 +3,7 @@ package pro.progr.owlgame.presentation.viewmodel
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.flow.Flow
-import pro.progr.owlgame.data.repository.MapsRepository
+import pro.progr.owlgame.domain.repository.MapsRepository
 import pro.progr.owlgame.data.web.Map
 import pro.progr.owlgame.presentation.ui.model.MapData
 import javax.inject.Inject

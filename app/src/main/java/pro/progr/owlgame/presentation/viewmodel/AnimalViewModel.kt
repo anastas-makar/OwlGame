@@ -8,10 +8,10 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
-import pro.progr.owlgame.data.repository.AnimalsRepository
-import pro.progr.owlgame.data.repository.BuildingsRepository
-import pro.progr.owlgame.data.repository.MapsRepository
-import pro.progr.owlgame.domain.GrantBuildingToAnimalUseCase
+import pro.progr.owlgame.domain.repository.AnimalsRepository
+import pro.progr.owlgame.domain.repository.BuildingsRepository
+import pro.progr.owlgame.domain.repository.MapsRepository
+import pro.progr.owlgame.domain.usecase.GrantBuildingToAnimalUseCase
 import pro.progr.owlgame.presentation.ui.model.MapData
 import javax.inject.Inject
 

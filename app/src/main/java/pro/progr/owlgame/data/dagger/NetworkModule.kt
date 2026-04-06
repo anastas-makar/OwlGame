@@ -4,9 +4,6 @@ import dagger.Module
 import dagger.Provides
 import pro.progr.authapi.AuthInterface
 import pro.progr.owlgame.BuildConfig
-import pro.progr.owlgame.data.db.MapDao
-import pro.progr.owlgame.data.db.MapWithDataDao
-import pro.progr.owlgame.data.repository.MapsRepository
 import pro.progr.owlgame.data.web.AnimalApiService
 import pro.progr.owlgame.data.web.MapApiService
 import pro.progr.owlgame.data.web.RetrofitProvider

@@ -4,7 +4,7 @@ import kotlinx.coroutines.flow.Flow
 import pro.progr.owlgame.data.db.GardenItem
 import pro.progr.owlgame.data.db.GardenItemsDao
 import pro.progr.owlgame.data.db.GardenType
-import pro.progr.owlgame.data.repository.GardenItemsRepository
+import pro.progr.owlgame.domain.repository.GardenItemsRepository
 import javax.inject.Inject
 
 class GardenItemsRepositoryImpl @Inject constructor(

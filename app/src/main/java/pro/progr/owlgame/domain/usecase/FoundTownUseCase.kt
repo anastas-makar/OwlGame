@@ -1,7 +1,7 @@
-package pro.progr.owlgame.domain
+package pro.progr.owlgame.domain.usecase
 
-import pro.progr.owlgame.data.repository.MapsRepository
-import pro.progr.owlgame.data.repository.StreetsRepository
+import pro.progr.owlgame.domain.repository.MapsRepository
+import pro.progr.owlgame.domain.repository.StreetsRepository
 import javax.inject.Inject
 
 class FoundTownUseCase @Inject constructor(val mapsRepository: MapsRepository,

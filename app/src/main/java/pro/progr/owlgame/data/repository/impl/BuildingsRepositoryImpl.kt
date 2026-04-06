@@ -14,7 +14,7 @@ import pro.progr.owlgame.data.db.GardensDao
 import pro.progr.owlgame.data.db.OwlGameDatabase
 import pro.progr.owlgame.data.db.RoomEntity
 import pro.progr.owlgame.data.db.RoomsDao
-import pro.progr.owlgame.data.repository.BuildingsRepository
+import pro.progr.owlgame.domain.repository.BuildingsRepository
 import javax.inject.Inject
 
 class BuildingsRepositoryImpl @Inject constructor(

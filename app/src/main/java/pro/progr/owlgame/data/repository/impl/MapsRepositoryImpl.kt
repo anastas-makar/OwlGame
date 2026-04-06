@@ -12,7 +12,7 @@ import pro.progr.owlgame.data.db.MapEntity
 import pro.progr.owlgame.data.db.MapWithData
 import pro.progr.owlgame.data.db.MapWithDataDao
 import pro.progr.owlgame.data.db.OwlGameDatabase
-import pro.progr.owlgame.data.repository.MapsRepository
+import pro.progr.owlgame.domain.repository.MapsRepository
 import pro.progr.owlgame.presentation.ui.model.MapData
 import javax.inject.Inject
 

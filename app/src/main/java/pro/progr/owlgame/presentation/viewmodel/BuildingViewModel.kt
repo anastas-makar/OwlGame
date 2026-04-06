@@ -6,8 +6,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import pro.progr.owlgame.data.db.BuildingWithData
-import pro.progr.owlgame.data.repository.BuildingsRepository
-import pro.progr.owlgame.domain.ApplyOfflineGrowthUseCase
+import pro.progr.owlgame.domain.repository.BuildingsRepository
+import pro.progr.owlgame.domain.usecase.ApplyOfflineGrowthUseCase
 import javax.inject.Inject
 
 class BuildingViewModel @Inject constructor(

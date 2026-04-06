@@ -5,7 +5,7 @@ import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
 import coil.imageLoader
 import coil.request.ImageRequest
-import pro.progr.owlgame.data.repository.ImageRepository
+import pro.progr.owlgame.domain.repository.ImageRepository
 import java.io.File
 import java.io.OutputStream
 import javax.inject.Inject

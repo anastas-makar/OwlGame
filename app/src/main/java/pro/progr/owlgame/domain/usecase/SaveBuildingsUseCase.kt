@@ -1,10 +1,10 @@
-package pro.progr.owlgame.domain
+package pro.progr.owlgame.domain.usecase
 
 import pro.progr.owlgame.data.db.Building
 import pro.progr.owlgame.data.db.Garden
 import pro.progr.owlgame.data.db.RoomEntity
-import pro.progr.owlgame.data.repository.BuildingsRepository
-import pro.progr.owlgame.data.repository.ImageRepository
+import pro.progr.owlgame.domain.repository.BuildingsRepository
+import pro.progr.owlgame.domain.repository.ImageRepository
 import pro.progr.owlgame.data.web.inpouch.BuildingInPouch
 import javax.inject.Inject
 

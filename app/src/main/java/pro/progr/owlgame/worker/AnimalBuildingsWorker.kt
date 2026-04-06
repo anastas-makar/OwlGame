@@ -12,7 +12,7 @@ import androidx.work.ListenableWorker
 import pro.progr.authapi.AuthInterface
 import pro.progr.owlgame.data.db.OwlGameDatabase
 import pro.progr.owlgame.data.web.RetrofitProvider
-import pro.progr.owlgame.domain.SearchingAnimalUseCase
+import pro.progr.owlgame.domain.usecase.SearchingAnimalUseCase
 import java.time.LocalDate
 import pro.progr.owlgame.BuildConfig
 import pro.progr.owlgame.R

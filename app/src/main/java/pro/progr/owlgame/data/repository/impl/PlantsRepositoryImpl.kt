@@ -3,7 +3,7 @@ package pro.progr.owlgame.data.repository.impl
 import kotlinx.coroutines.flow.Flow
 import pro.progr.owlgame.data.db.Plant
 import pro.progr.owlgame.data.db.PlantsDao
-import pro.progr.owlgame.data.repository.PlantsRepository
+import pro.progr.owlgame.domain.repository.PlantsRepository
 import javax.inject.Inject
 
 class PlantsRepositoryImpl @Inject constructor(

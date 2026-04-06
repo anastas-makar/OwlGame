@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import pro.progr.diamondapi.PurchaseInterface
 import pro.progr.owlgame.data.db.Furniture
-import pro.progr.owlgame.data.repository.FurnitureRepository
+import pro.progr.owlgame.domain.repository.FurnitureRepository
 
 class RoomViewModel @Inject constructor(
     private val furnitureRepository: FurnitureRepository,

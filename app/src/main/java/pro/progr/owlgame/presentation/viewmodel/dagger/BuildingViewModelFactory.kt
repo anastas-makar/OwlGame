@@ -2,8 +2,8 @@ package pro.progr.owlgame.presentation.viewmodel.dagger
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import pro.progr.owlgame.data.repository.BuildingsRepository
-import pro.progr.owlgame.domain.ApplyOfflineGrowthUseCase
+import pro.progr.owlgame.domain.repository.BuildingsRepository
+import pro.progr.owlgame.domain.usecase.ApplyOfflineGrowthUseCase
 import pro.progr.owlgame.presentation.viewmodel.BuildingViewModel
 import javax.inject.Inject
 

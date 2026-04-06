@@ -13,8 +13,8 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import pro.progr.owlgame.data.db.Plant
 import pro.progr.owlgame.data.db.Supply
-import pro.progr.owlgame.data.repository.PlantsRepository
-import pro.progr.owlgame.data.repository.SuppliesRepository
+import pro.progr.owlgame.domain.repository.PlantsRepository
+import pro.progr.owlgame.domain.repository.SuppliesRepository
 import java.util.UUID
 
 class KitchenGardenViewModel @Inject constructor(

@@ -4,8 +4,8 @@ import kotlinx.coroutines.flow.Flow
 import pro.progr.owlgame.data.db.Animal
 import pro.progr.owlgame.data.db.AnimalDao
 import pro.progr.owlgame.data.db.AnimalStatus
-import pro.progr.owlgame.data.repository.AnimalsRepository
-import pro.progr.owlgame.data.repository.ImageRepository
+import pro.progr.owlgame.domain.repository.AnimalsRepository
+import pro.progr.owlgame.domain.repository.ImageRepository
 import pro.progr.owlgame.data.web.AnimalApiService
 import javax.inject.Inject
 

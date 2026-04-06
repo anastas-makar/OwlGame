@@ -19,11 +19,11 @@ import kotlinx.coroutines.withContext
 import pro.progr.diamondapi.PurchaseInterface
 import pro.progr.owlgame.data.db.Building
 import pro.progr.owlgame.data.db.MapType
-import pro.progr.owlgame.data.repository.BuildingsRepository
-import pro.progr.owlgame.data.repository.ExpeditionsRepository
-import pro.progr.owlgame.data.repository.MapsRepository
-import pro.progr.owlgame.data.repository.SlotsRepository
-import pro.progr.owlgame.domain.FoundTownUseCase
+import pro.progr.owlgame.domain.repository.BuildingsRepository
+import pro.progr.owlgame.domain.repository.ExpeditionsRepository
+import pro.progr.owlgame.domain.repository.MapsRepository
+import pro.progr.owlgame.domain.repository.SlotsRepository
+import pro.progr.owlgame.domain.usecase.FoundTownUseCase
 import pro.progr.owlgame.presentation.ui.model.BuildingModel
 import pro.progr.owlgame.presentation.ui.model.MapData
 import pro.progr.owlgame.presentation.ui.model.MapTypeUI

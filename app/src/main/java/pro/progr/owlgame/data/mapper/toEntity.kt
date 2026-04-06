@@ -1,4 +1,4 @@
-package pro.progr.owlgame.domain.mapper
+package pro.progr.owlgame.data.mapper
 
 import pro.progr.owlgame.data.db.Recipe
 import pro.progr.owlgame.data.db.Supply

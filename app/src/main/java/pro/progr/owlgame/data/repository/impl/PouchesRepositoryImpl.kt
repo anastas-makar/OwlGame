@@ -2,7 +2,7 @@ package pro.progr.owlgame.data.repository.impl
 
 import android.util.Log
 import pro.progr.owlgame.data.preferences.OwlPreferences
-import pro.progr.owlgame.data.repository.PouchesRepository
+import pro.progr.owlgame.domain.repository.PouchesRepository
 import pro.progr.owlgame.data.web.MapApiService
 import pro.progr.owlgame.data.web.Pouch
 import pro.progr.owlgame.data.web.inpouch.InPouch

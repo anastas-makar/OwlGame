@@ -2,9 +2,9 @@ package pro.progr.owlgame.presentation.viewmodel.dagger
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import pro.progr.owlgame.data.repository.AnimalsRepository
-import pro.progr.owlgame.data.repository.ExpeditionsRepository
-import pro.progr.owlgame.data.repository.SuppliesRepository
+import pro.progr.owlgame.domain.repository.AnimalsRepository
+import pro.progr.owlgame.domain.repository.ExpeditionsRepository
+import pro.progr.owlgame.domain.repository.SuppliesRepository
 import pro.progr.owlgame.presentation.viewmodel.ExpeditionPreparationViewModel
 import javax.inject.Inject
 

@@ -1,12 +1,12 @@
-package pro.progr.owlgame.domain
+package pro.progr.owlgame.domain.usecase
 
 import pro.progr.owlgame.data.db.Supply
 import pro.progr.owlgame.data.db.SupplyToRecipe
-import pro.progr.owlgame.data.repository.ImageRepository
-import pro.progr.owlgame.data.repository.SupplyToRecipeRepository
+import pro.progr.owlgame.domain.repository.ImageRepository
+import pro.progr.owlgame.domain.repository.SupplyToRecipeRepository
 import pro.progr.owlgame.data.web.inpouch.RecipeInPouch
-import pro.progr.owlgame.domain.mapper.linkId
-import pro.progr.owlgame.domain.mapper.toEntity
+import pro.progr.owlgame.data.mapper.linkId
+import pro.progr.owlgame.data.mapper.toEntity
 import javax.inject.Inject
 
 class SaveRecipesUseCase @Inject constructor(

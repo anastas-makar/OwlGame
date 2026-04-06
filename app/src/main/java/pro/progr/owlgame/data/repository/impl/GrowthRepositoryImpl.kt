@@ -1,7 +1,7 @@
 package pro.progr.owlgame.data.repository.impl
 
 import pro.progr.owlgame.data.preferences.OwlPreferences
-import pro.progr.owlgame.data.repository.GrowthRepository
+import pro.progr.owlgame.domain.repository.GrowthRepository
 import pro.progr.owlgame.data.model.GrowthState
 import java.time.Clock
 import javax.inject.Inject

@@ -12,7 +12,7 @@ import pro.progr.owlgame.data.db.Supply
 import pro.progr.owlgame.data.db.SupplyToRecipe
 import pro.progr.owlgame.data.db.SupplyToRecipeDao
 import pro.progr.owlgame.data.model.CraftResult
-import pro.progr.owlgame.data.repository.SupplyToRecipeRepository
+import pro.progr.owlgame.domain.repository.SupplyToRecipeRepository
 import javax.inject.Inject
 
 class SupplyToRecipeRepositoryImpl @Inject constructor(

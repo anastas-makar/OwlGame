@@ -1,4 +1,4 @@
-package pro.progr.owlgame.data.repository
+package pro.progr.owlgame.domain.repository
 
 import pro.progr.owlgame.data.web.Pouch
 import pro.progr.owlgame.data.web.inpouch.InPouch

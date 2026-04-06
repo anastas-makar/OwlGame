@@ -2,10 +2,10 @@ package pro.progr.owlgame.presentation.viewmodel.dagger
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import pro.progr.owlgame.data.repository.AnimalsRepository
-import pro.progr.owlgame.data.repository.BuildingsRepository
-import pro.progr.owlgame.data.repository.MapsRepository
-import pro.progr.owlgame.domain.GrantBuildingToAnimalUseCase
+import pro.progr.owlgame.domain.repository.AnimalsRepository
+import pro.progr.owlgame.domain.repository.BuildingsRepository
+import pro.progr.owlgame.domain.repository.MapsRepository
+import pro.progr.owlgame.domain.usecase.GrantBuildingToAnimalUseCase
 import pro.progr.owlgame.presentation.viewmodel.AnimalViewModel
 import javax.inject.Inject
 

@@ -1,4 +1,4 @@
-package pro.progr.owlgame.data.repository
+package pro.progr.owlgame.domain.repository
 
 import kotlinx.coroutines.flow.Flow
 import pro.progr.owlgame.data.db.GardenItem

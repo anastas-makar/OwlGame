@@ -2,13 +2,13 @@ package pro.progr.owlgame.presentation.viewmodel.dagger
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import pro.progr.owlgame.data.repository.PouchesRepository
-import pro.progr.owlgame.domain.SaveBuildingsUseCase
-import pro.progr.owlgame.domain.SaveFurnitureUseCase
-import pro.progr.owlgame.domain.SaveGardenItemsUseCase
-import pro.progr.owlgame.domain.SaveMapsUseCase
-import pro.progr.owlgame.domain.SavePlantsUseCase
-import pro.progr.owlgame.domain.SaveRecipesUseCase
+import pro.progr.owlgame.domain.repository.PouchesRepository
+import pro.progr.owlgame.domain.usecase.SaveBuildingsUseCase
+import pro.progr.owlgame.domain.usecase.SaveFurnitureUseCase
+import pro.progr.owlgame.domain.usecase.SaveGardenItemsUseCase
+import pro.progr.owlgame.domain.usecase.SaveMapsUseCase
+import pro.progr.owlgame.domain.usecase.SavePlantsUseCase
+import pro.progr.owlgame.domain.usecase.SaveRecipesUseCase
 import pro.progr.owlgame.presentation.viewmodel.InPouchViewModel
 import pro.progr.owlgame.presentation.viewmodel.PouchesViewModel
 import javax.inject.Inject

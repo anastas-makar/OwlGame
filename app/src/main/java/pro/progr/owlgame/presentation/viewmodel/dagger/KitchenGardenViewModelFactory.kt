@@ -2,8 +2,8 @@ package pro.progr.owlgame.presentation.viewmodel.dagger
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import pro.progr.owlgame.data.repository.PlantsRepository
-import pro.progr.owlgame.data.repository.SuppliesRepository
+import pro.progr.owlgame.domain.repository.PlantsRepository
+import pro.progr.owlgame.domain.repository.SuppliesRepository
 import pro.progr.owlgame.presentation.viewmodel.KitchenGardenViewModel
 import javax.inject.Inject
 

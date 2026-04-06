@@ -1,7 +1,7 @@
 package pro.progr.owlgame.data.repository.impl
 
 import pro.progr.owlgame.data.db.BuildingsDao
-import pro.progr.owlgame.data.repository.SlotsRepository
+import pro.progr.owlgame.domain.repository.SlotsRepository
 import javax.inject.Inject
 
 class SlotsRepositoryImpl @Inject constructor(

@@ -7,7 +7,7 @@ import pro.progr.owlgame.data.db.AnimalDao
 import pro.progr.owlgame.data.db.MapDao
 import pro.progr.owlgame.data.db.MapEntity
 import pro.progr.owlgame.data.preferences.OwlPreferences
-import pro.progr.owlgame.data.repository.WidgetRepository
+import pro.progr.owlgame.domain.repository.WidgetRepository
 import pro.progr.owlgame.presentation.ui.model.UriWrapper
 import java.time.Clock
 import java.time.LocalDate

@@ -5,7 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
-import pro.progr.owlgame.data.repository.PouchesRepository
+import pro.progr.owlgame.domain.repository.PouchesRepository
 import pro.progr.owlgame.data.web.Pouch
 import javax.inject.Inject
 

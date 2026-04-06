@@ -8,15 +8,15 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import pro.progr.diamondapi.PurchaseInterface
-import pro.progr.owlgame.data.repository.PouchesRepository
+import pro.progr.owlgame.domain.repository.PouchesRepository
 import pro.progr.owlgame.data.web.inpouch.InPouch
 import pro.progr.owlgame.data.web.inpouch.MapInPouchModel
-import pro.progr.owlgame.domain.SaveBuildingsUseCase
-import pro.progr.owlgame.domain.SaveFurnitureUseCase
-import pro.progr.owlgame.domain.SaveGardenItemsUseCase
-import pro.progr.owlgame.domain.SaveMapsUseCase
-import pro.progr.owlgame.domain.SavePlantsUseCase
-import pro.progr.owlgame.domain.SaveRecipesUseCase
+import pro.progr.owlgame.domain.usecase.SaveBuildingsUseCase
+import pro.progr.owlgame.domain.usecase.SaveFurnitureUseCase
+import pro.progr.owlgame.domain.usecase.SaveGardenItemsUseCase
+import pro.progr.owlgame.domain.usecase.SaveMapsUseCase
+import pro.progr.owlgame.domain.usecase.SavePlantsUseCase
+import pro.progr.owlgame.domain.usecase.SaveRecipesUseCase
 import javax.inject.Inject
 
 class InPouchViewModel @Inject constructor(
