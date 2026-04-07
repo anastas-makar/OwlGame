@@ -28,9 +28,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
-import pro.progr.owlgame.data.db.Animal
-import pro.progr.owlgame.data.db.AnimalStatus
-import pro.progr.owlgame.data.db.BuildingWithData
+import pro.progr.owlgame.data.db.entity.Animal
+import pro.progr.owlgame.data.db.model.AnimalStatus
+import pro.progr.owlgame.data.db.embedded.BuildingWithData
 import pro.progr.owlgame.presentation.ui.fab.FabViewModel
 
 @Composable

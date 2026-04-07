@@ -5,7 +5,7 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
-import pro.progr.owlgame.data.db.BuildingWithData
+import pro.progr.owlgame.data.db.embedded.BuildingWithData
 import pro.progr.owlgame.domain.repository.BuildingsRepository
 import pro.progr.owlgame.domain.usecase.ApplyOfflineGrowthUseCase
 import javax.inject.Inject

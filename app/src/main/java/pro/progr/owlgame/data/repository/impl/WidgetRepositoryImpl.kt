@@ -2,10 +2,10 @@ package pro.progr.owlgame.data.repository.impl
 
 import android.content.Context
 import android.net.Uri
-import pro.progr.owlgame.data.db.Animal
-import pro.progr.owlgame.data.db.AnimalDao
-import pro.progr.owlgame.data.db.MapDao
-import pro.progr.owlgame.data.db.MapEntity
+import pro.progr.owlgame.data.db.entity.Animal
+import pro.progr.owlgame.data.db.dao.AnimalDao
+import pro.progr.owlgame.data.db.dao.MapDao
+import pro.progr.owlgame.data.db.entity.MapEntity
 import pro.progr.owlgame.data.preferences.OwlPreferences
 import pro.progr.owlgame.domain.repository.WidgetRepository
 import pro.progr.owlgame.presentation.ui.model.UriWrapper

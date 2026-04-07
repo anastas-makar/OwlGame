@@ -1,8 +1,8 @@
 package pro.progr.owlgame.data.repository.impl
 
 import kotlinx.coroutines.flow.Flow
-import pro.progr.owlgame.data.db.SuppliesDao
-import pro.progr.owlgame.data.db.Supply
+import pro.progr.owlgame.data.db.dao.SuppliesDao
+import pro.progr.owlgame.data.db.entity.Supply
 import pro.progr.owlgame.domain.repository.SuppliesRepository
 import javax.inject.Inject
 

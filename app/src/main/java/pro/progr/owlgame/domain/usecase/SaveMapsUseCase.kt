@@ -1,9 +1,9 @@
 package pro.progr.owlgame.domain.usecase
 
-import pro.progr.owlgame.data.db.Enemy
-import pro.progr.owlgame.data.db.Expedition
-import pro.progr.owlgame.data.db.MapEntity
-import pro.progr.owlgame.data.db.MapType
+import pro.progr.owlgame.data.db.entity.Enemy
+import pro.progr.owlgame.data.db.entity.Expedition
+import pro.progr.owlgame.data.db.entity.MapEntity
+import pro.progr.owlgame.data.db.model.MapType
 import pro.progr.owlgame.domain.repository.ImageRepository
 import pro.progr.owlgame.domain.repository.MapsRepository
 import pro.progr.owlgame.data.web.inpouch.MapInPouchModel

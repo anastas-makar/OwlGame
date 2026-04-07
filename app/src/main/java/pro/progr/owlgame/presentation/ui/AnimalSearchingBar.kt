@@ -10,7 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import pro.progr.owlgame.data.db.Animal
+import pro.progr.owlgame.data.db.entity.Animal
 
 @Composable
 fun AnimalSearchingBar(backToMain : () -> Unit,

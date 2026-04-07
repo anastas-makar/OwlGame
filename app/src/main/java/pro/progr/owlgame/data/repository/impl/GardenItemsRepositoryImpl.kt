@@ -1,9 +1,9 @@
 package pro.progr.owlgame.data.repository.impl
 
 import kotlinx.coroutines.flow.Flow
-import pro.progr.owlgame.data.db.GardenItem
-import pro.progr.owlgame.data.db.GardenItemsDao
-import pro.progr.owlgame.data.db.GardenType
+import pro.progr.owlgame.data.db.entity.GardenItem
+import pro.progr.owlgame.data.db.dao.GardenItemsDao
+import pro.progr.owlgame.data.db.model.GardenType
 import pro.progr.owlgame.domain.repository.GardenItemsRepository
 import javax.inject.Inject
 

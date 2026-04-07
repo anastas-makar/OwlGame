@@ -34,8 +34,8 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import pro.progr.diamondapi.PurchaseInterface
 import pro.progr.owlgame.R
-import pro.progr.owlgame.data.db.Building
-import pro.progr.owlgame.data.db.BuildingType
+import pro.progr.owlgame.data.db.entity.Building
+import pro.progr.owlgame.data.db.model.BuildingType
 import pro.progr.owlgame.presentation.viewmodel.MapViewModel
 
 @Composable

@@ -11,9 +11,9 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
-import pro.progr.owlgame.data.db.GardenItem
-import pro.progr.owlgame.data.db.GardenType
-import pro.progr.owlgame.data.db.Supply
+import pro.progr.owlgame.data.db.entity.GardenItem
+import pro.progr.owlgame.data.db.model.GardenType
+import pro.progr.owlgame.data.db.entity.Supply
 import pro.progr.owlgame.domain.repository.GardenItemsRepository
 import pro.progr.owlgame.domain.repository.SuppliesRepository
 

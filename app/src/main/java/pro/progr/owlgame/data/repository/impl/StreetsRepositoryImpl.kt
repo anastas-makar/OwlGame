@@ -1,7 +1,7 @@
 package pro.progr.owlgame.data.repository.impl
 
-import pro.progr.owlgame.data.db.Street
-import pro.progr.owlgame.data.db.StreetsDao
+import pro.progr.owlgame.data.db.entity.Street
+import pro.progr.owlgame.data.db.dao.StreetsDao
 import pro.progr.owlgame.domain.repository.StreetsRepository
 import java.util.UUID
 import javax.inject.Inject

@@ -1,6 +1,6 @@
 package pro.progr.owlgame.presentation.ui.model
 
-import pro.progr.owlgame.data.db.BuildingWithAnimal
+import pro.progr.owlgame.data.db.embedded.BuildingWithAnimal
 
 data class MapData (
     val id: String,

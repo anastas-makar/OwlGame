@@ -1,6 +1,6 @@
 package pro.progr.owlgame.data.web.inpouch
 
-import pro.progr.owlgame.data.db.FurnitureType
+import pro.progr.owlgame.data.db.model.FurnitureType
 
 data class FurnitureInPouch (
     val id : String,

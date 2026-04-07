@@ -3,17 +3,17 @@ package pro.progr.owlgame.data.repository.impl
 import androidx.room.withTransaction
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import pro.progr.owlgame.data.db.Building
-import pro.progr.owlgame.data.db.BuildingWithAnimal
-import pro.progr.owlgame.data.db.BuildingWithAnimalDao
-import pro.progr.owlgame.data.db.BuildingWithData
-import pro.progr.owlgame.data.db.BuildingWithDataDao
-import pro.progr.owlgame.data.db.BuildingsDao
-import pro.progr.owlgame.data.db.Garden
-import pro.progr.owlgame.data.db.GardensDao
+import pro.progr.owlgame.data.db.entity.Building
+import pro.progr.owlgame.data.db.embedded.BuildingWithAnimal
+import pro.progr.owlgame.data.db.dao.BuildingWithAnimalDao
+import pro.progr.owlgame.data.db.embedded.BuildingWithData
+import pro.progr.owlgame.data.db.dao.BuildingWithDataDao
+import pro.progr.owlgame.data.db.dao.BuildingsDao
+import pro.progr.owlgame.data.db.entity.Garden
+import pro.progr.owlgame.data.db.dao.GardensDao
 import pro.progr.owlgame.data.db.OwlGameDatabase
-import pro.progr.owlgame.data.db.RoomEntity
-import pro.progr.owlgame.data.db.RoomsDao
+import pro.progr.owlgame.data.db.entity.RoomEntity
+import pro.progr.owlgame.data.db.dao.RoomsDao
 import pro.progr.owlgame.domain.repository.BuildingsRepository
 import javax.inject.Inject
 

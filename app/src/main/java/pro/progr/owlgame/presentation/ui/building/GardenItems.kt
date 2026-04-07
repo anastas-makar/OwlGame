@@ -35,8 +35,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import pro.progr.owlgame.dagger.OwlGameComponent
-import pro.progr.owlgame.data.db.Garden
-import pro.progr.owlgame.data.db.GardenItem
+import pro.progr.owlgame.data.db.entity.Garden
+import pro.progr.owlgame.data.db.entity.GardenItem
 import pro.progr.owlgame.presentation.ui.SelectGardenItemScreen
 import pro.progr.owlgame.presentation.ui.fab.FabAction
 import pro.progr.owlgame.presentation.ui.fab.FabViewModel

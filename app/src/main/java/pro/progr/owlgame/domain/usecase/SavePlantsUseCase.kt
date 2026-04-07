@@ -1,7 +1,7 @@
 package pro.progr.owlgame.domain.usecase
 
-import pro.progr.owlgame.data.db.Plant
-import pro.progr.owlgame.data.db.Supply
+import pro.progr.owlgame.data.db.entity.Plant
+import pro.progr.owlgame.data.db.entity.Supply
 import pro.progr.owlgame.domain.repository.ImageRepository
 import pro.progr.owlgame.domain.repository.PlantsRepository
 import pro.progr.owlgame.domain.repository.SuppliesRepository

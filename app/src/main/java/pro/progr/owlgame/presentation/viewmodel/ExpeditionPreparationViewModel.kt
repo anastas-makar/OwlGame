@@ -14,9 +14,9 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import pro.progr.diamondapi.PurchaseInterface
-import pro.progr.owlgame.data.db.Animal
-import pro.progr.owlgame.data.db.AnimalStatus
-import pro.progr.owlgame.data.db.Supply
+import pro.progr.owlgame.data.db.entity.Animal
+import pro.progr.owlgame.data.db.model.AnimalStatus
+import pro.progr.owlgame.data.db.entity.Supply
 import pro.progr.owlgame.data.model.SelectedSupplyAmount
 import pro.progr.owlgame.data.model.StartExpeditionRequest
 import pro.progr.owlgame.domain.repository.AnimalsRepository

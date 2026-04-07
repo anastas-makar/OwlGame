@@ -1,7 +1,7 @@
 package pro.progr.owlgame.domain.repository
 
 import kotlinx.coroutines.flow.Flow
-import pro.progr.owlgame.data.db.Plant
+import pro.progr.owlgame.data.db.entity.Plant
 
 interface PlantsRepository {
 

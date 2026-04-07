@@ -1,7 +1,7 @@
 package pro.progr.owlgame.domain.usecase
 
-import pro.progr.owlgame.data.db.Supply
-import pro.progr.owlgame.data.db.SupplyToRecipe
+import pro.progr.owlgame.data.db.entity.Supply
+import pro.progr.owlgame.data.db.entity.SupplyToRecipe
 import pro.progr.owlgame.domain.repository.ImageRepository
 import pro.progr.owlgame.domain.repository.SupplyToRecipeRepository
 import pro.progr.owlgame.data.web.inpouch.RecipeInPouch

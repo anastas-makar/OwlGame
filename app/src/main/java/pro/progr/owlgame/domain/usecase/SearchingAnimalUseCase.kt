@@ -1,7 +1,7 @@
 package pro.progr.owlgame.domain.usecase
 
 import android.util.Log
-import pro.progr.owlgame.data.db.Animal
+import pro.progr.owlgame.data.db.entity.Animal
 import pro.progr.owlgame.domain.repository.AnimalsRepository
 import pro.progr.owlgame.domain.repository.BuildingsRepository
 import javax.inject.Inject

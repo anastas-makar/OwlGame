@@ -1,6 +1,6 @@
 package pro.progr.owlgame.data.web
 
-import pro.progr.owlgame.data.db.Animal
+import pro.progr.owlgame.data.db.entity.Animal
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query

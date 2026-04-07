@@ -17,8 +17,8 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import pro.progr.diamondapi.PurchaseInterface
-import pro.progr.owlgame.data.db.Building
-import pro.progr.owlgame.data.db.MapType
+import pro.progr.owlgame.data.db.entity.Building
+import pro.progr.owlgame.data.db.model.MapType
 import pro.progr.owlgame.domain.repository.BuildingsRepository
 import pro.progr.owlgame.domain.repository.ExpeditionsRepository
 import pro.progr.owlgame.domain.repository.MapsRepository

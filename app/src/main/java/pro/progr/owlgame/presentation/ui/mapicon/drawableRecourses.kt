@@ -2,8 +2,8 @@ package pro.progr.owlgame.presentation.ui.mapicon
 
 import androidx.annotation.DrawableRes
 import pro.progr.owlgame.R
-import pro.progr.owlgame.data.db.BuildingType
-import pro.progr.owlgame.data.db.ItemType
+import pro.progr.owlgame.data.db.model.BuildingType
+import pro.progr.owlgame.data.db.model.ItemType
 
 @DrawableRes
 fun buildingIconRes(type: BuildingType): Int = when (type) {

@@ -14,9 +14,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import pro.progr.diamondapi.PurchaseInterface
 import pro.progr.owlgame.dagger.OwlGameComponent
-import pro.progr.owlgame.data.db.Animal
-import pro.progr.owlgame.data.db.FurnitureType
-import pro.progr.owlgame.data.db.RoomEntity
+import pro.progr.owlgame.data.db.entity.Animal
+import pro.progr.owlgame.data.db.model.FurnitureType
+import pro.progr.owlgame.data.db.entity.RoomEntity
 import pro.progr.owlgame.presentation.ui.SelectFurnitureScreen
 import pro.progr.owlgame.presentation.ui.fab.FabAction
 import pro.progr.owlgame.presentation.ui.fab.FabViewModel

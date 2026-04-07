@@ -1,8 +1,8 @@
 package pro.progr.owlgame.domain.repository
 
 import android.net.Uri
-import pro.progr.owlgame.data.db.Animal
-import pro.progr.owlgame.data.db.MapEntity
+import pro.progr.owlgame.data.db.entity.Animal
+import pro.progr.owlgame.data.db.entity.MapEntity
 
 interface WidgetRepository {
     fun getRandomMap(): MapEntity?

@@ -1,6 +1,6 @@
 package pro.progr.owlgame.data.web.inpouch
 
-import pro.progr.owlgame.data.db.EffectType
+import pro.progr.owlgame.data.db.model.EffectType
 
 data class SupplyInPouch (
     val id : String,

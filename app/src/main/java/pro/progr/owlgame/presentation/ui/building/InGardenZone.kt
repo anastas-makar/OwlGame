@@ -2,8 +2,8 @@ package pro.progr.owlgame.presentation.ui.building
 
 import androidx.compose.runtime.Composable
 import pro.progr.owlgame.dagger.OwlGameComponent
-import pro.progr.owlgame.data.db.Garden
-import pro.progr.owlgame.data.db.GardenType
+import pro.progr.owlgame.data.db.entity.Garden
+import pro.progr.owlgame.data.db.model.GardenType
 import pro.progr.owlgame.presentation.ui.fab.FabViewModel
 
 @Composable

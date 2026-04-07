@@ -18,8 +18,8 @@ import coil.compose.AsyncImage
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.min
-import pro.progr.owlgame.data.db.Animal
-import pro.progr.owlgame.data.db.AnimalStatus
+import pro.progr.owlgame.data.db.entity.Animal
+import pro.progr.owlgame.data.db.model.AnimalStatus
 import kotlin.math.min
 
 @Composable

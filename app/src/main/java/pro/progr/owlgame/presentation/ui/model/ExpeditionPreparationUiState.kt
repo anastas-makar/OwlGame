@@ -1,8 +1,8 @@
 package pro.progr.owlgame.presentation.ui.model
 
-import pro.progr.owlgame.data.db.EffectType
+import pro.progr.owlgame.data.db.model.EffectType
 
-import pro.progr.owlgame.data.db.Animal
+import pro.progr.owlgame.data.db.entity.Animal
 
 data class ExpeditionPreparationUiState(
     val items: List<SupplySelectionUi> = emptyList(),

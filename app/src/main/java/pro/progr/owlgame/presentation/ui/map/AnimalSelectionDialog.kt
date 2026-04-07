@@ -20,7 +20,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import coil.compose.AsyncImage
-import pro.progr.owlgame.data.db.Animal
+import pro.progr.owlgame.data.db.entity.Animal
 
 @Composable
 fun AnimalSelectionDialog(

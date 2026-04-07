@@ -1,6 +1,6 @@
 package pro.progr.owlgame.domain.usecase
 
-import pro.progr.owlgame.data.db.Furniture
+import pro.progr.owlgame.data.db.entity.Furniture
 import pro.progr.owlgame.domain.repository.FurnitureRepository
 import pro.progr.owlgame.domain.repository.ImageRepository
 import pro.progr.owlgame.data.web.inpouch.FurnitureInPouch

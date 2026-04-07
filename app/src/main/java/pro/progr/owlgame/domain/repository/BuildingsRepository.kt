@@ -1,11 +1,11 @@
 package pro.progr.owlgame.domain.repository
 
 import kotlinx.coroutines.flow.Flow
-import pro.progr.owlgame.data.db.Building
-import pro.progr.owlgame.data.db.BuildingWithAnimal
-import pro.progr.owlgame.data.db.BuildingWithData
-import pro.progr.owlgame.data.db.Garden
-import pro.progr.owlgame.data.db.RoomEntity
+import pro.progr.owlgame.data.db.entity.Building
+import pro.progr.owlgame.data.db.embedded.BuildingWithAnimal
+import pro.progr.owlgame.data.db.embedded.BuildingWithData
+import pro.progr.owlgame.data.db.entity.Garden
+import pro.progr.owlgame.data.db.entity.RoomEntity
 
 interface BuildingsRepository {
    fun getAvailableBuildings() : Flow<List<Building>>

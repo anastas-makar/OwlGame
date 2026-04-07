@@ -43,7 +43,7 @@ import kotlinx.coroutines.launch
 import pro.progr.diamondapi.PurchaseInterface
 import pro.progr.owlgame.R
 import androidx.compose.runtime.State
-import pro.progr.owlgame.data.db.Furniture
+import pro.progr.owlgame.data.db.entity.Furniture
 import pro.progr.owlgame.presentation.ui.fab.FabViewModel
 import pro.progr.owlgame.presentation.viewmodel.RoomViewModel
 

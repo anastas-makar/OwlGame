@@ -1,8 +1,8 @@
 package pro.progr.owlgame.domain.repository
 
 import kotlinx.coroutines.flow.Flow
-import pro.progr.owlgame.data.db.Animal
-import pro.progr.owlgame.data.db.AnimalStatus
+import pro.progr.owlgame.data.db.entity.Animal
+import pro.progr.owlgame.data.db.model.AnimalStatus
 
 interface AnimalsRepository {
     fun countAnimalsSearching() : Long

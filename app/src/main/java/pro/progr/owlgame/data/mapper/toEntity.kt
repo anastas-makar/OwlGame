@@ -1,7 +1,7 @@
 package pro.progr.owlgame.data.mapper
 
-import pro.progr.owlgame.data.db.Recipe
-import pro.progr.owlgame.data.db.Supply
+import pro.progr.owlgame.data.db.entity.Recipe
+import pro.progr.owlgame.data.db.entity.Supply
 import pro.progr.owlgame.data.web.inpouch.RecipeInPouch
 import pro.progr.owlgame.data.web.inpouch.SupplyInPouch
 

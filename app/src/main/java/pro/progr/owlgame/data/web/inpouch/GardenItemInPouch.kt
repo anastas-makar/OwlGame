@@ -1,7 +1,7 @@
 package pro.progr.owlgame.data.web.inpouch
 
-import pro.progr.owlgame.data.db.GardenType
-import pro.progr.owlgame.data.db.ItemType
+import pro.progr.owlgame.data.db.model.GardenType
+import pro.progr.owlgame.data.db.model.ItemType
 
 data class GardenItemInPouch (
     val id : String,

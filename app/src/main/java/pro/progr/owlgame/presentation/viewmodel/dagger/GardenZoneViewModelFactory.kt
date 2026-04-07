@@ -2,7 +2,7 @@ package pro.progr.owlgame.presentation.viewmodel.dagger
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import pro.progr.owlgame.data.db.GardenType
+import pro.progr.owlgame.data.db.model.GardenType
 import pro.progr.owlgame.domain.repository.GardenItemsRepository
 import pro.progr.owlgame.domain.repository.SuppliesRepository
 import pro.progr.owlgame.presentation.viewmodel.GardenZoneViewModel

@@ -1,9 +1,9 @@
 package pro.progr.owlgame.domain.repository
 
 import kotlinx.coroutines.flow.Flow
-import pro.progr.owlgame.data.db.Recipe
-import pro.progr.owlgame.data.db.Supply
-import pro.progr.owlgame.data.db.SupplyToRecipe
+import pro.progr.owlgame.data.db.entity.Recipe
+import pro.progr.owlgame.data.db.entity.Supply
+import pro.progr.owlgame.data.db.entity.SupplyToRecipe
 import pro.progr.owlgame.data.model.CraftResult
 
 interface SupplyToRecipeRepository {

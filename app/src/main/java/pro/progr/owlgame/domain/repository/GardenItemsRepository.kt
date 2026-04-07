@@ -1,8 +1,8 @@
 package pro.progr.owlgame.domain.repository
 
 import kotlinx.coroutines.flow.Flow
-import pro.progr.owlgame.data.db.GardenItem
-import pro.progr.owlgame.data.db.GardenType
+import pro.progr.owlgame.data.db.entity.GardenItem
+import pro.progr.owlgame.data.db.model.GardenType
 
 interface GardenItemsRepository {
     suspend fun insert(gardenItems: List<GardenItem>)

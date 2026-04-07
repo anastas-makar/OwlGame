@@ -14,8 +14,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.flow.Flow
-import pro.progr.owlgame.data.db.Plant
-import pro.progr.owlgame.data.db.Supply
+import pro.progr.owlgame.data.db.entity.Plant
+import pro.progr.owlgame.data.db.entity.Supply
 
 @Composable
 fun HarvestPlantDialog(

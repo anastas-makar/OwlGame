@@ -2,8 +2,8 @@ package pro.progr.owlgame.domain.repository
 
 import kotlinx.coroutines.flow.Flow
 import pro.progr.diamondapi.PurchaseInterface
-import pro.progr.owlgame.data.db.Expedition
-import pro.progr.owlgame.data.db.ExpeditionWithData
+import pro.progr.owlgame.data.db.entity.Expedition
+import pro.progr.owlgame.data.db.embedded.ExpeditionWithData
 import pro.progr.owlgame.data.model.StartExpeditionRequest
 
 interface ExpeditionsRepository {

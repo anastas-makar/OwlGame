@@ -1,8 +1,8 @@
 package pro.progr.owlgame.presentation.ui.model
 
-import pro.progr.owlgame.data.db.BuildingWithData
-import pro.progr.owlgame.data.db.Garden
-import pro.progr.owlgame.data.db.RoomEntity
+import pro.progr.owlgame.data.db.embedded.BuildingWithData
+import pro.progr.owlgame.data.db.entity.Garden
+import pro.progr.owlgame.data.db.entity.RoomEntity
 
 sealed interface GalleryItem {
     val key: String

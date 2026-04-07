@@ -1,9 +1,9 @@
 package pro.progr.owlgame.data.repository.impl
 
 import kotlinx.coroutines.flow.Flow
-import pro.progr.owlgame.data.db.Animal
-import pro.progr.owlgame.data.db.AnimalDao
-import pro.progr.owlgame.data.db.AnimalStatus
+import pro.progr.owlgame.data.db.entity.Animal
+import pro.progr.owlgame.data.db.dao.AnimalDao
+import pro.progr.owlgame.data.db.model.AnimalStatus
 import pro.progr.owlgame.domain.repository.AnimalsRepository
 import pro.progr.owlgame.domain.repository.ImageRepository
 import pro.progr.owlgame.data.web.AnimalApiService
