@@ -25,8 +25,8 @@ import pro.progr.owlgame.domain.repository.MapsRepository
 import pro.progr.owlgame.domain.repository.SlotsRepository
 import pro.progr.owlgame.domain.usecase.FoundTownUseCase
 import pro.progr.owlgame.presentation.ui.model.BuildingModel
-import pro.progr.owlgame.presentation.ui.model.MapData
-import pro.progr.owlgame.presentation.ui.model.MapTypeUI
+import pro.progr.owlgame.domain.model.MapWithDataModel
+import pro.progr.owlgame.domain.model.MapType
 import javax.inject.Inject
 
 class MapViewModel @Inject constructor(
@@ -39,10 +39,10 @@ class MapViewModel @Inject constructor(
 ) : ViewModel() {
 
     @OptIn(ExperimentalCoroutinesApi::class)
-    val map: StateFlow<MapData> = mapsRepository.getMapById(mapId)
+    val map: StateFlow<MapWithDataModel> = mapsRepository.getMapById(mapId)
         .flatMapLatest { mapWithData ->
             if (mapWithData == null) {
-                flowOf(MapData("", "", "", MapTypeUI.LOADING))
+                flowOf(MapWithDataModel("", "", "", MapType.LOADING))
             } else {
                 val mapEntity = mapWithData.mapEntity
 
@@ -64,7 +64,7 @@ class MapViewModel @Inject constructor(
                     }
 
                 combine(buildingsFlow, expeditionFlow) { buildingsMap, expeditionWithData ->
-                    MapData(
+                    MapWithDataModel(
                         id = mapEntity.id,
                         name = mapEntity.name,
                         imageUrl = mapEntity.imagePath,
@@ -80,7 +80,7 @@ class MapViewModel @Inject constructor(
         .stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(5000),
-            initialValue = MapData("", "", "", MapTypeUI.LOADING)
+            initialValue = MapWithDataModel("", "", "", MapType.LOADING)
         )
 
     val foundTown = MutableStateFlow(false)
@@ -99,7 +99,7 @@ class MapViewModel @Inject constructor(
         }
     }
 
-    fun foundTown(map: MapData, townName: String) {
+    fun foundTown(map: MapWithDataModel, townName: String) {
         foundTown.update { _ -> false }
         viewModelScope.launch (Dispatchers.IO) {
             foundTownUseCase(map.id, townName, "Улица Главная")

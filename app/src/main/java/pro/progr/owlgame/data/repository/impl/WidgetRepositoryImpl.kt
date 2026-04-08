@@ -8,7 +8,7 @@ import pro.progr.owlgame.data.db.dao.MapDao
 import pro.progr.owlgame.data.db.entity.MapEntity
 import pro.progr.owlgame.data.preferences.OwlPreferences
 import pro.progr.owlgame.domain.repository.WidgetRepository
-import pro.progr.owlgame.presentation.ui.model.UriWrapper
+import pro.progr.owlgame.data.util.UriWrapper
 import java.time.Clock
 import java.time.LocalDate
 import javax.inject.Inject

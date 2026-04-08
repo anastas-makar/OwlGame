@@ -10,7 +10,7 @@ import pro.progr.owlgame.data.db.embedded.MapWithData
 interface MapWithDataDao {
     @Transaction
     @Query("SELECT * FROM maps WHERE id = :mapId")
-    fun getMapWithData(mapId: String): Flow<MapWithData>
+    fun getMapWithData(mapId: String): Flow<MapWithData?>
     @Transaction
     @Query("SELECT * FROM maps")
     fun getMapsWithData(): Flow<List<MapWithData>>

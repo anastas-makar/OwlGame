@@ -22,6 +22,9 @@ interface MapDao {
     @Query("SELECT * FROM maps")
     suspend fun getAllMaps(): List<MapEntity>
 
+    @Query("SELECT * FROM maps")
+    fun getMaps(): Flow<List<MapEntity>>
+
     @Query("SELECT * FROM maps ORDER BY RANDOM() LIMIT 1")
     fun getRandomMap(): MapEntity?
 

@@ -5,7 +5,8 @@ import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.flow.Flow
 import pro.progr.owlgame.domain.repository.MapsRepository
 import pro.progr.owlgame.data.web.Map
-import pro.progr.owlgame.presentation.ui.model.MapData
+import pro.progr.owlgame.domain.model.MapModel
+import pro.progr.owlgame.domain.model.MapWithDataModel
 import javax.inject.Inject
 
 class MapsViewModel @Inject constructor(
@@ -14,7 +15,7 @@ class MapsViewModel @Inject constructor(
 
     var maps = mutableStateOf<List<Map>?>(emptyList())
 
-    fun loadMaps() : Flow<List<MapData>> {
+    fun loadMaps() : Flow<List<MapModel>> {
             return mapsRepository.getMaps()
     }
 }

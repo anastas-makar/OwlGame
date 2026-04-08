@@ -9,12 +9,12 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import pro.progr.owlgame.data.db.model.MapType
 import pro.progr.owlgame.presentation.viewmodel.MapViewModel
-import pro.progr.owlgame.presentation.ui.model.MapData
+import pro.progr.owlgame.domain.model.MapWithDataModel
 
 @Composable
 fun MapBar(navController: NavHostController, mapViewModel: MapViewModel) {
 
-    val mapState = mapViewModel.map.collectAsState(initial = MapData("", "", "", MapType.FREE))
+    val mapState = mapViewModel.map.collectAsState(initial = MapWithDataModel("", "", "", MapType.FREE))
 
     TopAppBar(
         title = {

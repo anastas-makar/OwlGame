@@ -41,7 +41,7 @@ import pro.progr.owlgame.presentation.ui.fab.ExpandableFloatingActionButton
 import pro.progr.owlgame.presentation.ui.fab.FabAction
 import pro.progr.owlgame.presentation.ui.mapicon.FixedImageOverlay
 import pro.progr.owlgame.presentation.ui.mapicon.enemyIconRes
-import pro.progr.owlgame.presentation.ui.model.MapData
+import pro.progr.owlgame.domain.model.MapWithDataModel
 import pro.progr.owlgame.presentation.viewmodel.ExpeditionPreparationViewModel
 import pro.progr.owlgame.presentation.viewmodel.MapViewModel
 
@@ -50,7 +50,7 @@ fun OccupiedMapScreen(
     navController: NavHostController,
     diamondDao: PurchaseInterface,
     mapViewModel: MapViewModel,
-    map: State<MapData>,
+    map: State<MapWithDataModel>,
     prepViewModel: ExpeditionPreparationViewModel
 ) {
     val snackbarHostState = remember { SnackbarHostState() }

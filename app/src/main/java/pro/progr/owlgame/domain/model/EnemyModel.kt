@@ -1,6 +1,6 @@
-package pro.progr.owlgame.presentation.ui.model
+package pro.progr.owlgame.domain.model
 
-data class EnemyModelUI (
+data class EnemyModel (
     val id: String,
     val expeditionId: String,
     val name: String,
@@ -10,5 +10,5 @@ data class EnemyModelUI (
     val damageAmount: Int,
     val x: Float,
     val y: Float,
-    val status: EnemyStatusUI
+    val status: EnemyStatus
 )

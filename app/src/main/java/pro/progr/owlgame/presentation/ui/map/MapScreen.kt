@@ -6,8 +6,8 @@ import androidx.compose.runtime.collectAsState
 import androidx.navigation.NavHostController
 import pro.progr.diamondapi.PurchaseInterface
 import pro.progr.owlgame.dagger.OwlGameComponent
-import pro.progr.owlgame.presentation.ui.model.MapData
-import pro.progr.owlgame.presentation.ui.model.MapTypeUI
+import pro.progr.owlgame.domain.model.MapWithDataModel
+import pro.progr.owlgame.domain.model.MapType
 import pro.progr.owlgame.presentation.viewmodel.MapViewModel
 import pro.progr.owlgame.presentation.viewmodel.dagger.DaggerExpeditionPreparationViewModel
 
@@ -17,30 +17,30 @@ fun MapScreen(
     diamondDao: PurchaseInterface,
     component: OwlGameComponent,
     mapViewModel: MapViewModel) {
-    val map = mapViewModel.map.collectAsState(initial = MapData("", "", "", MapTypeUI.LOADING))
+    val map = mapViewModel.map.collectAsState(initial = MapWithDataModel("", "", "", MapType.LOADING))
 
     when(map.value.type) {
-        MapTypeUI.FREE -> FreeMapScreen(
+        MapType.FREE -> FreeMapScreen(
             navController,
             diamondDao,
             mapViewModel,
             map)
-        MapTypeUI.TOWN -> TownScreen(
+        MapType.TOWN -> TownScreen(
             navController,
             diamondDao,
             mapViewModel,
             map)
-        MapTypeUI.OCCUPIED -> OccupiedMapScreen(
+        MapType.OCCUPIED -> OccupiedMapScreen(
             navController,
             diamondDao,
             mapViewModel,
             map,
             DaggerExpeditionPreparationViewModel(component, map.value.id))
-        MapTypeUI.EXPEDITION -> ExpeditionScreen(
+        MapType.EXPEDITION -> ExpeditionScreen(
             navController,
             diamondDao,
             mapViewModel,
             map)
-        MapTypeUI.LOADING -> Text("Загрузка")
+        MapType.LOADING -> Text("Загрузка")
     }
 }

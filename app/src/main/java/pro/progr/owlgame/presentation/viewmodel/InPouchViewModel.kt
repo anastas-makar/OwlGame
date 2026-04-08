@@ -10,7 +10,7 @@ import kotlinx.coroutines.withContext
 import pro.progr.diamondapi.PurchaseInterface
 import pro.progr.owlgame.domain.repository.PouchesRepository
 import pro.progr.owlgame.data.web.inpouch.InPouch
-import pro.progr.owlgame.data.web.inpouch.MapInPouchModel
+import pro.progr.owlgame.data.web.inpouch.MapInPouch
 import pro.progr.owlgame.domain.usecase.SaveBuildingsUseCase
 import pro.progr.owlgame.domain.usecase.SaveFurnitureUseCase
 import pro.progr.owlgame.domain.usecase.SaveGardenItemsUseCase
@@ -50,7 +50,7 @@ class InPouchViewModel @Inject constructor(
             val mapsWithLocalUrls = withContext(Dispatchers.IO) {
                 if (webPouch.maps.isNotEmpty()) {
                     saveMapsUseCase(webPouch.maps).map { ent ->
-                        MapInPouchModel(ent.id, ent.name, ent.imagePath, ent.type)
+                        MapInPouch(ent.id, ent.name, ent.imagePath, ent.type)
                     }
                 } else emptyList()
             }

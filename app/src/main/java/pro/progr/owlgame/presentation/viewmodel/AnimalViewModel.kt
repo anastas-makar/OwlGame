@@ -12,7 +12,7 @@ import pro.progr.owlgame.domain.repository.AnimalsRepository
 import pro.progr.owlgame.domain.repository.BuildingsRepository
 import pro.progr.owlgame.domain.repository.MapsRepository
 import pro.progr.owlgame.domain.usecase.GrantBuildingToAnimalUseCase
-import pro.progr.owlgame.presentation.ui.model.MapData
+import pro.progr.owlgame.domain.model.MapWithDataModel
 import javax.inject.Inject
 
 class AnimalViewModel @Inject constructor(
@@ -24,7 +24,7 @@ class AnimalViewModel @Inject constructor(
 ) : ViewModel() {
     val animal = animalsRepository.getAnimalById(animalId)
 
-    val mapsWithUninhabitedBuildings: StateFlow<List<MapData>> = combine(
+    val mapsWithUninhabitedBuildings: StateFlow<List<MapWithDataModel>> = combine(
         mapsRepository.getMapsWithUninhabitedBuildings(),
         buildingsRepository.getBuildingsWithAnimals()
     ) { mapsWithData, buildingsMap ->
@@ -32,7 +32,7 @@ class AnimalViewModel @Inject constructor(
         mapsWithData.map { mapWithData ->
             val mapId = mapWithData.mapEntity.id
 
-            MapData(
+            MapWithDataModel(
                 id = mapId,
                 name = mapWithData.mapEntity.name,
                 imageUrl = mapWithData.mapEntity.imagePath,

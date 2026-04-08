@@ -54,7 +54,7 @@ import pro.progr.owlgame.presentation.ui.fab.FabAction
 import pro.progr.owlgame.presentation.ui.mapicon.DraggableImageOverlay
 import pro.progr.owlgame.presentation.ui.mapicon.buildingIconRes
 import pro.progr.owlgame.presentation.ui.model.BuildingModel
-import pro.progr.owlgame.presentation.ui.model.MapData
+import pro.progr.owlgame.domain.model.MapWithDataModel
 import pro.progr.owlgame.presentation.viewmodel.MapViewModel
 
 @Composable
@@ -62,7 +62,7 @@ fun TownScreen(
     navController: NavHostController,
     diamondDao: PurchaseInterface,
     mapViewModel: MapViewModel,
-    map: State<MapData>
+    map: State<MapWithDataModel>
 ) {
     val foundTown = mapViewModel.foundTown.collectAsState(initial = false)
 
