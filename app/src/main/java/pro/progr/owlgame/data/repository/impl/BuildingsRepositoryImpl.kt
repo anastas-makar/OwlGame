@@ -3,18 +3,20 @@ package pro.progr.owlgame.data.repository.impl
 import androidx.room.withTransaction
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import pro.progr.owlgame.data.db.entity.Building
-import pro.progr.owlgame.data.db.embedded.BuildingWithAnimal
+import pro.progr.owlgame.data.db.OwlGameDatabase
 import pro.progr.owlgame.data.db.dao.BuildingWithAnimalDao
-import pro.progr.owlgame.data.db.embedded.BuildingWithData
 import pro.progr.owlgame.data.db.dao.BuildingWithDataDao
 import pro.progr.owlgame.data.db.dao.BuildingsDao
-import pro.progr.owlgame.data.db.entity.Garden
 import pro.progr.owlgame.data.db.dao.GardensDao
-import pro.progr.owlgame.data.db.OwlGameDatabase
-import pro.progr.owlgame.data.db.entity.RoomEntity
 import pro.progr.owlgame.data.db.dao.RoomsDao
+import pro.progr.owlgame.data.db.entity.Building
+import pro.progr.owlgame.data.mapper.toData
+import pro.progr.owlgame.data.mapper.toDomain
+import pro.progr.owlgame.domain.model.BuildingModel
+import pro.progr.owlgame.domain.model.BuildingWithAnimalModel
+import pro.progr.owlgame.domain.model.BuildingWithDataModel
 import pro.progr.owlgame.domain.repository.BuildingsRepository
+import pro.progr.owlgame.domain.repository.ImageRepository
 import javax.inject.Inject
 
 class BuildingsRepositoryImpl @Inject constructor(
@@ -23,25 +25,26 @@ class BuildingsRepositoryImpl @Inject constructor(
     private val gardensDao: GardensDao,
     private val roomsDao: RoomsDao,
     private val buildingWithAnimalDao: BuildingWithAnimalDao,
-    private val buildingWithDataDao: BuildingWithDataDao
+    private val buildingWithDataDao: BuildingWithDataDao,
+    private val imageRepository: ImageRepository
     ) : BuildingsRepository {
-   override fun getAvailableBuildings() : Flow<List<Building>> {
+   override fun getAvailableBuildings() : Flow<List<BuildingModel>> {
 
-       return buildingsDao.getAvailable()
+       return buildingsDao.getAvailable().map { it.map { b -> b.toDomain() } }
    }
 
-    override fun getBuildingsWithAnimals(mapId : String) : Flow<Map<String, BuildingWithAnimal>> {
+    override fun getBuildingsWithAnimals(mapId : String) : Flow<Map<String, BuildingWithAnimalModel>> {
         return buildingWithAnimalDao.getBuildingsWithAnimals(mapId).map {
-            it.associateBy { building ->
-                building.building.id
+            it.map { b -> b.toDomain() }.associateBy { building ->
+                building.id
             }
         }
     }
 
-    override fun getBuildingsWithAnimals() : Flow<Map<String, BuildingWithAnimal>> {
+    override fun getBuildingsWithAnimals() : Flow<Map<String, BuildingWithAnimalModel>> {
         return buildingWithAnimalDao.getBuildingsWithAnimals().map {
-            it.associateBy { building ->
-                building.building.id
+            it.map { b -> b.toDomain() }.associateBy { building ->
+                building.id
             }
         }
     }
@@ -54,20 +57,64 @@ class BuildingsRepositoryImpl @Inject constructor(
         return buildingsDao.updateAnimalId(buildingId, animalId)
     }
 
-    override suspend fun saveBuildings(buildings: List<Building>) {
-        buildingsDao.insert(buildings)
+    override suspend fun saveBuildings(buildings: List<BuildingModel>) {
+        buildingsDao.insert(buildings.map { it.toData() })
     }
 
     override suspend fun saveBuildingsBundle(
-        buildings: List<Building>,
-        gardens: List<Garden>,
-        rooms: List<RoomEntity>
-    ) = db.withTransaction {
-        buildingsDao.insert(buildings)   // важно: сначала здания
-        gardensDao.insert(gardens)       // потом зависимые сущности
-        roomsDao.insert(rooms)
+        buildings: List<BuildingWithDataModel>
+    ) : List<BuildingWithDataModel> {
+        // 1) делаем "локальную" копию DTO (для UI мешочка)
+        val buildingsWithLocalUrls: List<BuildingWithDataModel> = buildings.map { b ->
+            val buildingUrl = imageRepository.saveImageLocally(b.imageUrl)
+
+            val roomsLocal = b.rooms.map { r ->
+                r.copy(imageUrl = imageRepository.saveImageLocally(r.imageUrl))
+            }
+
+            val gardensLocal = b.gardens.map { g ->
+                g.copy(imageUrl = imageRepository.saveImageLocally(g.imageUrl))
+            }
+
+            b.copy(
+                imageUrl = buildingUrl,
+                rooms = roomsLocal,
+                gardens = gardensLocal
+            )
+        }
+
+        // 2) маппим в entities (используем уже локальные url)
+        val buildingsForLocal = buildingsWithLocalUrls.map { b ->
+            Building(
+                id = b.id,
+                name = b.name,
+                imageUrl = b.imageUrl,
+                price = b.price,
+                type = b.type.toData()
+            )
+        }
+
+        val roomsForLocal = buildingsWithLocalUrls.flatMap { b ->
+            b.rooms.map { r ->
+                r.toData()
+            }
+        }
+
+        val gardensForLocal = buildingsWithLocalUrls.flatMap { b ->
+            b.gardens.map { g ->
+                g.toData()
+            }
+        }
+
+        db.withTransaction {
+            buildingsDao.insert(buildingsForLocal)   // важно: сначала здания
+            gardensDao.insert(gardensForLocal)       // потом зависимые сущности
+            roomsDao.insert(roomsForLocal)
+        }
+
+        return buildingsWithLocalUrls
     }
 
-    override fun observe(buildingId: String): Flow<BuildingWithData> =
-        buildingWithDataDao.observeBuildingWithData(buildingId)
+    override fun observe(buildingId: String): Flow<BuildingWithDataModel> =
+        buildingWithDataDao.observeBuildingWithData(buildingId).map { it.toDomain() }
 }

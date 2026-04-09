@@ -1,30 +1,26 @@
 package pro.progr.owlgame.domain.repository
 
 import kotlinx.coroutines.flow.Flow
-import pro.progr.owlgame.data.db.entity.Building
-import pro.progr.owlgame.data.db.embedded.BuildingWithAnimal
-import pro.progr.owlgame.data.db.embedded.BuildingWithData
-import pro.progr.owlgame.data.db.entity.Garden
-import pro.progr.owlgame.data.db.entity.RoomEntity
+import pro.progr.owlgame.domain.model.BuildingModel
+import pro.progr.owlgame.domain.model.BuildingWithAnimalModel
+import pro.progr.owlgame.domain.model.BuildingWithDataModel
 
 interface BuildingsRepository {
-   fun getAvailableBuildings() : Flow<List<Building>>
+   fun getAvailableBuildings() : Flow<List<BuildingModel>>
 
-    fun getBuildingsWithAnimals(mapId : String) : Flow<Map<String, BuildingWithAnimal>>
+    fun getBuildingsWithAnimals(mapId : String) : Flow<Map<String, BuildingWithAnimalModel>>
 
-    fun getBuildingsWithAnimals() : Flow<Map<String, BuildingWithAnimal>>
+    fun getBuildingsWithAnimals() : Flow<Map<String, BuildingWithAnimalModel>>
 
     fun countUninhabited() : Long
 
     fun updateAnimalId(buildingId: String, animalId: String): Int
 
-    suspend fun saveBuildings(buildings: List<Building>)
+    suspend fun saveBuildings(buildings: List<BuildingModel>)
 
     suspend fun saveBuildingsBundle(
-        buildings: List<Building>,
-        gardens: List<Garden>,
-        rooms: List<RoomEntity>
-    )
+        buildings: List<BuildingWithDataModel>
+    ) : List<BuildingWithDataModel>
 
-    fun observe(buildingId: String): Flow<BuildingWithData>
+    fun observe(buildingId: String): Flow<BuildingWithDataModel>
 }

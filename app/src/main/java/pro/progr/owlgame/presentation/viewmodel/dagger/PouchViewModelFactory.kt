@@ -2,8 +2,8 @@ package pro.progr.owlgame.presentation.viewmodel.dagger
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import pro.progr.owlgame.domain.repository.BuildingsRepository
 import pro.progr.owlgame.domain.repository.PouchesRepository
-import pro.progr.owlgame.domain.usecase.SaveBuildingsUseCase
 import pro.progr.owlgame.domain.usecase.SaveFurnitureUseCase
 import pro.progr.owlgame.domain.usecase.SaveGardenItemsUseCase
 import pro.progr.owlgame.domain.usecase.SaveMapsUseCase
@@ -16,7 +16,7 @@ import javax.inject.Inject
 class PouchViewModelFactory @Inject constructor(
     private val pouchesRepository: PouchesRepository,
     private val saveMapsUseCase: SaveMapsUseCase,
-    private val saveBuildingsUseCase: SaveBuildingsUseCase,
+    private val buildingsRepository: BuildingsRepository,
     private val savePlantsUseCase: SavePlantsUseCase,
     private val saveGardenItemsUseCase: SaveGardenItemsUseCase,
     private val saveFurnitureUseCase: SaveFurnitureUseCase,
@@ -29,7 +29,7 @@ class PouchViewModelFactory @Inject constructor(
         } else if (modelClass.isAssignableFrom(InPouchViewModel::class.java)) {
             return InPouchViewModel(pouchesRepository,
                 saveMapsUseCase,
-                saveBuildingsUseCase,
+                buildingsRepository,
                 savePlantsUseCase,
                 saveGardenItemsUseCase,
                 saveFurnitureUseCase,
