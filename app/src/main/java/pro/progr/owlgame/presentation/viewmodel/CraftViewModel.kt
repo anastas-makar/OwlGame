@@ -13,12 +13,10 @@ import kotlinx.coroutines.launch
 import pro.progr.owlgame.data.model.CraftResult
 import pro.progr.owlgame.domain.repository.AnimalsRepository
 import pro.progr.owlgame.domain.repository.SupplyToRecipeRepository
-import pro.progr.owlgame.domain.usecase.ObserveRecipesUseCase
 import pro.progr.owlgame.domain.model.RecipeModel
 import javax.inject.Inject
 
 class CraftViewModel @Inject constructor(
-    observeRecipesUseCase: ObserveRecipesUseCase,
     private val supplyToRecipeRepository: SupplyToRecipeRepository,
     animalsRepository: AnimalsRepository,
     animalId: String
@@ -27,7 +25,7 @@ class CraftViewModel @Inject constructor(
     val animal = animalsRepository.getAnimalById(animalId)
 
     val recipes: StateFlow<List<RecipeModel>> =
-        observeRecipesUseCase()
+        supplyToRecipeRepository.observeRecipes()
             .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), emptyList())
 
     private val _selectedId = MutableStateFlow<String?>(null)

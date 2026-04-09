@@ -4,16 +4,20 @@ import pro.progr.owlgame.data.db.entity.Animal
 import pro.progr.owlgame.data.db.entity.Building
 import pro.progr.owlgame.data.db.entity.Garden
 import pro.progr.owlgame.data.db.entity.RoomEntity
+import pro.progr.owlgame.data.db.entity.Supply
 import pro.progr.owlgame.domain.model.AnimalModel
 import pro.progr.owlgame.domain.model.BuildingModel
 import pro.progr.owlgame.domain.model.GardenModel
 import pro.progr.owlgame.domain.model.RoomModel
+import pro.progr.owlgame.domain.model.SupplyModel
 import pro.progr.owlgame.data.db.model.AnimalStatus as DbAnimalStatus
 import pro.progr.owlgame.domain.model.AnimalStatus as DomainAnimalStatus
 import pro.progr.owlgame.data.db.model.BuildingType as DbBuildingType
 import pro.progr.owlgame.domain.model.BuildingType as DomainBuildingType
 import pro.progr.owlgame.data.db.model.GardenType as DbGardenType
 import pro.progr.owlgame.domain.model.GardenType as DomainGardenType
+import pro.progr.owlgame.data.db.model.EffectType as DbEffectType
+import pro.progr.owlgame.domain.model.EffectType as DomainEffectType
 
 
 fun DomainAnimalStatus.toData(): DbAnimalStatus =
@@ -36,6 +40,13 @@ fun DomainGardenType.toData(): DbGardenType =
         DomainGardenType.KITCHEN_GARDEN -> DbGardenType.KITCHEN_GARDEN
         DomainGardenType.GARDEN -> DbGardenType.GARDEN
         DomainGardenType.POOL -> DbGardenType.POOL
+    }
+
+fun DomainEffectType.toData(): DbEffectType =
+    when (this) {
+        DomainEffectType.NO_EFFECT -> DbEffectType.NO_EFFECT
+        DomainEffectType.DAMAGE -> DbEffectType.DAMAGE
+        DomainEffectType.HEAL -> DbEffectType.HEAL
     }
 
 fun AnimalModel.toData(): Animal =
@@ -77,4 +88,15 @@ fun BuildingModel.toData(): Building =
         x = x,
         y = y,
         type = type.toData()
+    )
+
+fun SupplyModel.toData(): Supply =
+    Supply(
+        id = id,
+        imageUrl = imageUrl,
+        name = name,
+        description = description,
+        amount = amount,
+        effectType = effectType.toData(),
+        effectAmount = effectAmount
     )

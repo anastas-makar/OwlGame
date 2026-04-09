@@ -12,11 +12,11 @@ import pro.progr.owlgame.domain.repository.PouchesRepository
 import pro.progr.owlgame.data.web.inpouch.InPouch
 import pro.progr.owlgame.data.web.inpouch.MapInPouch
 import pro.progr.owlgame.domain.repository.BuildingsRepository
+import pro.progr.owlgame.domain.repository.SupplyToRecipeRepository
 import pro.progr.owlgame.domain.usecase.SaveFurnitureUseCase
 import pro.progr.owlgame.domain.usecase.SaveGardenItemsUseCase
 import pro.progr.owlgame.domain.usecase.SaveMapsUseCase
 import pro.progr.owlgame.domain.usecase.SavePlantsUseCase
-import pro.progr.owlgame.domain.usecase.SaveRecipesUseCase
 import javax.inject.Inject
 
 class InPouchViewModel @Inject constructor(
@@ -26,7 +26,7 @@ class InPouchViewModel @Inject constructor(
     private val savePlantsUseCase: SavePlantsUseCase,
     private val saveGardenItemsUseCase: SaveGardenItemsUseCase,
     private val saveFurnitureUseCase: SaveFurnitureUseCase,
-    private val saveRecipesUseCase: SaveRecipesUseCase
+    private val toRecipeRepository: SupplyToRecipeRepository
 ) : ViewModel() {
 
     val inPouch = mutableStateOf<InPouch?>(null)
@@ -75,7 +75,7 @@ class InPouchViewModel @Inject constructor(
 
             if (webPouch.recipes.isNotEmpty()) {
                 viewModelScope.launch(Dispatchers.IO) {
-                    saveRecipesUseCase(webPouch.recipes)
+                    toRecipeRepository.saveRecipes(webPouch.recipes)
                 }
             }
 

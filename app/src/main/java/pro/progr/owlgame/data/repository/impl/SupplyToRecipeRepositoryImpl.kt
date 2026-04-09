@@ -5,13 +5,19 @@ import androidx.room.withTransaction
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import pro.progr.owlgame.data.db.OwlGameDatabase
-import pro.progr.owlgame.data.db.entity.Recipe
 import pro.progr.owlgame.data.db.dao.RecipesDao
 import pro.progr.owlgame.data.db.dao.SuppliesDao
+import pro.progr.owlgame.data.db.dao.SupplyToRecipeDao
+import pro.progr.owlgame.data.db.entity.Recipe
 import pro.progr.owlgame.data.db.entity.Supply
 import pro.progr.owlgame.data.db.entity.SupplyToRecipe
-import pro.progr.owlgame.data.db.dao.SupplyToRecipeDao
+import pro.progr.owlgame.data.mapper.linkId
+import pro.progr.owlgame.data.mapper.toData
 import pro.progr.owlgame.data.model.CraftResult
+import pro.progr.owlgame.domain.model.IngredientModel
+import pro.progr.owlgame.domain.model.RecipeModel
+import pro.progr.owlgame.domain.model.RecipeWithSuppliesModel
+import pro.progr.owlgame.domain.repository.ImageRepository
 import pro.progr.owlgame.domain.repository.SupplyToRecipeRepository
 import javax.inject.Inject
 
@@ -19,20 +25,57 @@ class SupplyToRecipeRepositoryImpl @Inject constructor(
     private val db: OwlGameDatabase,
     private val suppliesDao: SuppliesDao,
     private val recipesDao: RecipesDao,
-    private val supplyToRecipeDao: SupplyToRecipeDao
+    private val supplyToRecipeDao: SupplyToRecipeDao,
+    private val imageRepository: ImageRepository
 ) : SupplyToRecipeRepository {
 
     override suspend fun saveRecipes(
-        supplies: List<Supply>,
-        recipes: List<Recipe>,
-        links: List<SupplyToRecipe>
+        recipes: List<RecipeWithSuppliesModel>
     ) {
+        if (recipes.isEmpty()) return
+
+        val supplyEntities: List<Supply> =
+            buildList {
+                recipes.forEach { r ->
+                    add(r.resultSupply
+                        .copy(imageUrl = imageRepository.saveImageLocally(r.resultSupply.imageUrl))
+                        .toData())
+                    r.ingredients.forEach { ing -> add(ing.supplyModel
+                        .toData()
+                        .copy(imageUrl = ing.supplyModel.imageUrl)
+                    ) }
+                }
+            }
+                .distinctBy { it.id }
+
+        val recipeEntities = recipes.map { recipeWithSuppliesModel ->
+            Recipe(
+                id = recipeWithSuppliesModel.recipeId,
+                resSupplyId = recipeWithSuppliesModel.resultSupply.id,
+                description = recipeWithSuppliesModel.description
+            )
+        }
+
+        val links: List<SupplyToRecipe> =
+            recipes.flatMap { r ->
+                // на всякий случай: если один и тот же supply попался несколько раз — суммируем
+                r.ingredients
+                    .groupBy { it.supplyModel.id }
+                    .map { (supplyId, items) ->
+                        SupplyToRecipe(
+                            id = linkId(r.recipeId, supplyId),
+                            supplyId = supplyId,
+                            recipeId = r.recipeId,
+                            amount = items.sumOf { it.amount }
+                        )
+                    }
+            }
 
         db.withTransaction {
-            suppliesDao.insert(supplies)
-            recipesDao.upsertAll(recipes)
+            suppliesDao.insert(supplyEntities)
+            recipesDao.upsertAll(recipeEntities)
 
-            val recipeIds = recipes.map { it.id }
+            val recipeIds = recipes.map { it.recipeId }
             supplyToRecipeDao.markDeletedByRecipeIds(recipeIds)
 
             supplyToRecipeDao.upsertAll(
@@ -74,16 +117,41 @@ class SupplyToRecipeRepositoryImpl @Inject constructor(
         CraftResult.Success
     }
 
-    override fun <T>observeRecipes(mapFun: (recipes: List<Recipe>,
-                                            supplies: List<Supply>,
-                                            links: List<SupplyToRecipe>
-            ) -> List<T>): Flow<List<T>> {
+    override fun observeRecipes(): Flow<List<RecipeModel>> {
         return combine(
             recipesDao.observeAll(),
             suppliesDao.observeAll(),
             supplyToRecipeDao.observeAll()
         ) { recipes, supplies, links ->
-            mapFun(recipes, supplies, links)
+            val suppliesById = supplies.associateBy { it.id }
+            val linksByRecipe = links.groupBy { it.recipeId }
+
+            recipes.mapNotNull { recipe ->
+                val result = suppliesById[recipe.resSupplyId] ?: return@mapNotNull null
+
+                val ingLinks = linksByRecipe[recipe.id].orEmpty()
+
+                val ingredients = ingLinks.mapNotNull { ingredientLink ->
+                    val supply = suppliesById[ingredientLink.supplyId] ?: return@mapNotNull null
+
+                    IngredientModel(
+                        supplyId = supply.id,
+                        name = supply.name,
+                        imageUrl = supply.imageUrl,
+                        required = ingredientLink.amount,
+                        have = supply.amount
+                    )
+                }
+
+                RecipeModel(
+                    recipeId = recipe.id,
+                    resultSupplyId = result.id,
+                    resultName = result.name,
+                    resultImageUrl = result.imageUrl,
+                    description = recipe.description,
+                    ingredients = ingredients,
+                    craftable = ingredients.all { it.enough })
+            }
         }
     }
 }

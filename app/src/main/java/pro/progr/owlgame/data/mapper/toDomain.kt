@@ -8,6 +8,7 @@ import pro.progr.owlgame.data.db.entity.Building
 import pro.progr.owlgame.data.db.entity.Garden
 import pro.progr.owlgame.data.db.entity.MapEntity
 import pro.progr.owlgame.data.db.entity.RoomEntity
+import pro.progr.owlgame.data.db.entity.Supply
 import pro.progr.owlgame.domain.model.AnimalModel
 import pro.progr.owlgame.domain.model.BuildingModel
 import pro.progr.owlgame.domain.model.BuildingWithAnimalModel
@@ -16,6 +17,7 @@ import pro.progr.owlgame.domain.model.GardenModel
 import pro.progr.owlgame.domain.model.MapModel
 import pro.progr.owlgame.domain.model.MapWithBuildingsModel
 import pro.progr.owlgame.domain.model.RoomModel
+import pro.progr.owlgame.domain.model.SupplyModel
 import pro.progr.owlgame.data.db.model.MapType as DbMapType
 import pro.progr.owlgame.domain.model.MapType as DomainMapType
 import pro.progr.owlgame.data.db.model.BuildingType as DbBuildingType
@@ -24,6 +26,8 @@ import pro.progr.owlgame.data.db.model.AnimalStatus as DbAnimalStatus
 import pro.progr.owlgame.domain.model.AnimalStatus as DomainAnimalStatus
 import pro.progr.owlgame.data.db.model.GardenType as DbGardenType
 import pro.progr.owlgame.domain.model.GardenType as DomainGardenType
+import pro.progr.owlgame.data.db.model.EffectType as DbEffectType
+import pro.progr.owlgame.domain.model.EffectType as DomainEffectType
 
 fun DbMapType.toDomain(): DomainMapType =
     when (this) {
@@ -53,6 +57,13 @@ fun DbGardenType.toDomain(): DomainGardenType =
         DbGardenType.KITCHEN_GARDEN -> DomainGardenType.KITCHEN_GARDEN
         DbGardenType.GARDEN -> DomainGardenType.GARDEN
         DbGardenType.POOL -> DomainGardenType.POOL
+    }
+
+fun DbEffectType.toDomain() : DomainEffectType =
+    when (this) {
+        DbEffectType.NO_EFFECT -> DomainEffectType.NO_EFFECT
+        DbEffectType.HEAL -> DomainEffectType.HEAL
+        DbEffectType.DAMAGE -> DomainEffectType.DAMAGE
     }
 
 fun MapEntity.toDomain(): MapModel =
@@ -141,3 +152,13 @@ fun BuildingWithData.toDomain(): BuildingWithDataModel =
         type = building.type.toDomain(),
         rooms = rooms.map { it.toDomain() },
         gardens = gardens.map { it.toDomain() })
+
+fun Supply.toDomain(): SupplyModel =
+    SupplyModel(
+        id = id,
+        imageUrl = imageUrl,
+        name = name,
+        description = description,
+        effectType = effectType.toDomain(),
+        effectAmount = effectAmount
+    )
