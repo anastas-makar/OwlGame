@@ -64,7 +64,7 @@ class BuildingsRepositoryImpl @Inject constructor(
     override suspend fun saveBuildingsBundle(
         buildings: List<BuildingWithDataModel>
     ) : List<BuildingWithDataModel> {
-        // 1) делаем "локальную" копию DTO (для UI мешочка)
+        // 1) делаем "локальную" копию DTO (с локальным url)
         val buildingsWithLocalUrls: List<BuildingWithDataModel> = buildings.map { b ->
             val buildingUrl = imageRepository.saveImageLocally(b.imageUrl)
 

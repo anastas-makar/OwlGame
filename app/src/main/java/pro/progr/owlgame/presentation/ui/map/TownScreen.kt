@@ -46,14 +46,14 @@ import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import pro.progr.diamondapi.PurchaseInterface
-import pro.progr.owlgame.data.db.model.BuildingType
+import pro.progr.owlgame.domain.model.BuildingType
+import pro.progr.owlgame.domain.model.BuildingWithAnimalModel
 import pro.progr.owlgame.presentation.ui.MapBar
 import pro.progr.owlgame.presentation.ui.SelectBuildingScreen
 import pro.progr.owlgame.presentation.ui.fab.ExpandableFloatingActionButton
 import pro.progr.owlgame.presentation.ui.fab.FabAction
 import pro.progr.owlgame.presentation.ui.mapicon.DraggableImageOverlay
 import pro.progr.owlgame.presentation.ui.mapicon.buildingIconRes
-import pro.progr.owlgame.presentation.ui.model.BuildingModel
 import pro.progr.owlgame.domain.model.MapWithDataModel
 import pro.progr.owlgame.presentation.viewmodel.MapViewModel
 
@@ -158,12 +158,12 @@ fun TownScreen(
                             backgroundModel = map.value.imageUrl,
                             items = map.value.buildings,
                             modifier = Modifier.fillMaxWidth(),
-                            keyOf = { it.building.id },
-                            x01Of = { it.building.x },
-                            y01Of = { it.building.y },
-                            isNewOf = { it.building.x == 0f && it.building.y == 0f},
-                            iconPainterOf = { painterResource(buildingIconRes(it.building.type)) },
-                            onCommit01 = { item, x, y -> mapViewModel.updateSlot(item.building.id, x, y) },
+                            keyOf = { it.id },
+                            x01Of = { it.x },
+                            y01Of = { it.y },
+                            isNewOf = { it.x == 0f && it.y == 0f},
+                            iconPainterOf = { painterResource(buildingIconRes(it.type)) },
+                            onCommit01 = { item, x, y -> mapViewModel.updateSlot(item.id, x, y) },
                         )
                     }
                 }
@@ -176,14 +176,7 @@ fun TownScreen(
                     )
                 }
 
-                val buildings = map.value.buildings.map { s ->
-                    BuildingModel(
-                        s.building.id,
-                        s.building.name,
-                        s.building.imageUrl,
-                        s.animal
-                    )
-                }
+                val buildings = map.value.buildings
                 val rows = buildings.chunked(3)
 
                 items(rows) { row ->
@@ -240,13 +233,13 @@ fun TownScreen(
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-private fun BuildingCard(building: BuildingModel, modifier: Modifier = Modifier,
+private fun BuildingCard(building: BuildingWithAnimalModel, modifier: Modifier = Modifier,
                          navHostController: NavHostController) {
     Card(modifier = modifier, onClick = {navHostController.navigate("building/${building.id}")}) {
         Column {
             AsyncImage(
                 model = ImageRequest.Builder(LocalContext.current)
-                    .data(building.imageResource)
+                    .data(building.imageUrl)
                     .build(),
                 contentDescription = null,
                 contentScale = ContentScale.Crop,

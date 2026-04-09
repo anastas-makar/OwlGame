@@ -17,14 +17,12 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import pro.progr.diamondapi.PurchaseInterface
-import pro.progr.owlgame.data.db.entity.Building
-import pro.progr.owlgame.data.db.model.MapType
 import pro.progr.owlgame.domain.repository.BuildingsRepository
 import pro.progr.owlgame.domain.repository.ExpeditionsRepository
 import pro.progr.owlgame.domain.repository.MapsRepository
 import pro.progr.owlgame.domain.repository.SlotsRepository
 import pro.progr.owlgame.domain.usecase.FoundTownUseCase
-import pro.progr.owlgame.presentation.ui.model.BuildingModel
+import pro.progr.owlgame.domain.model.BuildingModel
 import pro.progr.owlgame.domain.model.MapWithDataModel
 import pro.progr.owlgame.domain.model.MapType
 import javax.inject.Inject
@@ -107,7 +105,7 @@ class MapViewModel @Inject constructor(
 
     }
 
-    fun getAvailableBuildings() : Flow<List<Building>> {
+    fun getAvailableBuildings() : Flow<List<BuildingModel>> {
         return buildingsRepository.getAvailableBuildings()
     }
 
@@ -125,7 +123,7 @@ class MapViewModel @Inject constructor(
         }
     }
 
-    fun purchase(diamondDao: PurchaseInterface, building: Building) {
+    fun purchase(diamondDao: PurchaseInterface, building: BuildingModel) {
         viewModelScope.launch {
             val result = withContext(Dispatchers.IO) {
                 diamondDao.spendDiamonds(building.price)

@@ -2,7 +2,7 @@ package pro.progr.owlgame.presentation.ui.mapicon
 
 import androidx.annotation.DrawableRes
 import pro.progr.owlgame.R
-import pro.progr.owlgame.data.db.model.BuildingType
+import pro.progr.owlgame.domain.model.BuildingType
 import pro.progr.owlgame.data.db.model.ItemType
 
 @DrawableRes

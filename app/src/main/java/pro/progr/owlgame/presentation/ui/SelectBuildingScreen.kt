@@ -34,8 +34,8 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import pro.progr.diamondapi.PurchaseInterface
 import pro.progr.owlgame.R
-import pro.progr.owlgame.data.db.entity.Building
-import pro.progr.owlgame.data.db.model.BuildingType
+import pro.progr.owlgame.domain.model.BuildingType
+import pro.progr.owlgame.domain.model.BuildingModel
 import pro.progr.owlgame.presentation.viewmodel.MapViewModel
 
 @Composable
@@ -65,7 +65,7 @@ fun SelectBuildingScreen(mapViewModel: MapViewModel,
             verticalArrangement = Arrangement.spacedBy(8.dp),
             horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            itemsIndexed(buildingsState.value.filter {building: Building ->
+            itemsIndexed(buildingsState.value.filter {building: BuildingModel ->
                 building.type == buildingType
             }) { _, building ->
 
