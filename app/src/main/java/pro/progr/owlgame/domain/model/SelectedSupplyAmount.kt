@@ -1,4 +1,4 @@
-package pro.progr.owlgame.data.model
+package pro.progr.owlgame.domain.model
 
 data class SelectedSupplyAmount(
     val supplyId: String,

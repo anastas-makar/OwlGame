@@ -6,5 +6,5 @@ data class MapWithDataModel (
     val imageUrl: String,
     val type: MapType,
     val buildings: List<BuildingWithAnimalModel> = emptyList(),
-    val expedition: ExpeditionModel? = null
+    val expedition: ExpeditionWithDataModel? = null
 )

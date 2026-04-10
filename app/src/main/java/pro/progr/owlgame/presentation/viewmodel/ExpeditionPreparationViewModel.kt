@@ -17,8 +17,8 @@ import pro.progr.diamondapi.PurchaseInterface
 import pro.progr.owlgame.data.db.entity.Animal
 import pro.progr.owlgame.data.db.model.AnimalStatus
 import pro.progr.owlgame.data.db.entity.Supply
-import pro.progr.owlgame.data.model.SelectedSupplyAmount
-import pro.progr.owlgame.data.model.StartExpeditionRequest
+import pro.progr.owlgame.domain.model.SelectedSupplyAmount
+import pro.progr.owlgame.domain.model.StartExpeditionRequest
 import pro.progr.owlgame.domain.repository.AnimalsRepository
 import pro.progr.owlgame.domain.repository.ExpeditionsRepository
 import pro.progr.owlgame.domain.repository.SuppliesRepository

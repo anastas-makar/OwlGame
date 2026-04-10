@@ -2,9 +2,12 @@ package pro.progr.owlgame.data.mapper
 
 import pro.progr.owlgame.data.db.embedded.BuildingWithAnimal
 import pro.progr.owlgame.data.db.embedded.BuildingWithData
+import pro.progr.owlgame.data.db.embedded.ExpeditionWithData
 import pro.progr.owlgame.data.db.embedded.MapWithData
 import pro.progr.owlgame.data.db.entity.Animal
 import pro.progr.owlgame.data.db.entity.Building
+import pro.progr.owlgame.data.db.entity.Enemy
+import pro.progr.owlgame.data.db.entity.Expedition
 import pro.progr.owlgame.data.db.entity.Garden
 import pro.progr.owlgame.data.db.entity.MapEntity
 import pro.progr.owlgame.data.db.entity.RoomEntity
@@ -13,6 +16,10 @@ import pro.progr.owlgame.domain.model.AnimalModel
 import pro.progr.owlgame.domain.model.BuildingModel
 import pro.progr.owlgame.domain.model.BuildingWithAnimalModel
 import pro.progr.owlgame.domain.model.BuildingWithDataModel
+import pro.progr.owlgame.domain.model.EnemyModel
+import pro.progr.owlgame.domain.model.EnemyStatus
+import pro.progr.owlgame.domain.model.ExpeditionModel
+import pro.progr.owlgame.domain.model.ExpeditionWithDataModel
 import pro.progr.owlgame.domain.model.GardenModel
 import pro.progr.owlgame.domain.model.MapModel
 import pro.progr.owlgame.domain.model.MapWithBuildingsModel
@@ -28,6 +35,8 @@ import pro.progr.owlgame.data.db.model.GardenType as DbGardenType
 import pro.progr.owlgame.domain.model.GardenType as DomainGardenType
 import pro.progr.owlgame.data.db.model.EffectType as DbEffectType
 import pro.progr.owlgame.domain.model.EffectType as DomainEffectType
+import pro.progr.owlgame.data.model.ExpeditionStatus as DbExpeditionStatus
+import pro.progr.owlgame.domain.model.ExpeditionStatus as DomainExpeditionStatus
 
 fun DbMapType.toDomain(): DomainMapType =
     when (this) {
@@ -64,6 +73,13 @@ fun DbEffectType.toDomain() : DomainEffectType =
         DbEffectType.NO_EFFECT -> DomainEffectType.NO_EFFECT
         DbEffectType.HEAL -> DomainEffectType.HEAL
         DbEffectType.DAMAGE -> DomainEffectType.DAMAGE
+    }
+
+fun DbExpeditionStatus.toDomain() : DomainExpeditionStatus =
+    when (this) {
+        DbExpeditionStatus.ACTIVE -> DomainExpeditionStatus.ACTIVE
+        DbExpeditionStatus.WIN -> DomainExpeditionStatus.WIN
+        DbExpeditionStatus.FAIL -> DomainExpeditionStatus.FAIL
     }
 
 fun MapEntity.toDomain(): MapModel =
@@ -161,4 +177,44 @@ fun Supply.toDomain(): SupplyModel =
         description = description,
         effectType = effectType.toDomain(),
         effectAmount = effectAmount
+    )
+
+fun Expedition.toDomain(): ExpeditionModel =
+    ExpeditionModel(
+        id = id,
+        title = title,
+        description = description,
+        mapId = mapId,
+        animalId = animalId,
+        healAmount = healAmount,
+        damageAmount = damageAmount,
+        status = status.toDomain()
+    )
+
+fun Enemy.toDomain() : EnemyModel =
+    EnemyModel(
+        id = id,
+        expeditionId = expeditionId,
+        name = name,
+        description = description,
+        imageUrl = imageUrl,
+        healAmount = healAmount,
+        damageAmount = damageAmount,
+        x = x,
+        y = y,
+        status = if (isDefeated) EnemyStatus.DEFEATED
+                        else EnemyStatus.UNTOUCHED
+    )
+
+fun ExpeditionWithData.toDomain(): ExpeditionWithDataModel =
+    ExpeditionWithDataModel(
+        id = expedition.id,
+        title = expedition.title,
+        description = expedition.description,
+        mapId = expedition.mapId,
+        animalId = expedition.animalId,
+        healAmount = expedition.healAmount,
+        damageAmount = expedition.damageAmount,
+        status = expedition.status.toDomain(),
+        enemies = enemies.map { it.toDomain() }
     )

@@ -2,22 +2,24 @@ package pro.progr.owlgame.data.repository.impl
 
 import androidx.room.withTransaction
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import pro.progr.diamondapi.PurchaseInterface
+import pro.progr.owlgame.data.db.OwlGameDatabase
 import pro.progr.owlgame.data.db.dao.AnimalDao
-import pro.progr.owlgame.data.db.model.AnimalStatus
-import pro.progr.owlgame.data.db.model.EffectType
-import pro.progr.owlgame.data.db.entity.Expedition
 import pro.progr.owlgame.data.db.dao.ExpeditionDao
-import pro.progr.owlgame.data.db.embedded.ExpeditionWithData
 import pro.progr.owlgame.data.db.dao.ExpeditionWithDataDao
 import pro.progr.owlgame.data.db.dao.MapDao
-import pro.progr.owlgame.data.db.model.MapType
-import pro.progr.owlgame.data.db.OwlGameDatabase
 import pro.progr.owlgame.data.db.dao.SuppliesDao
+import pro.progr.owlgame.data.db.model.AnimalStatus
+import pro.progr.owlgame.data.db.model.EffectType
+import pro.progr.owlgame.data.db.model.MapType
+import pro.progr.owlgame.data.mapper.toDomain
 import pro.progr.owlgame.data.model.ExpeditionStatus
-import pro.progr.owlgame.data.model.StartExpeditionRequest
+import pro.progr.owlgame.domain.model.ExpeditionModel
+import pro.progr.owlgame.domain.model.ExpeditionWithDataModel
+import pro.progr.owlgame.domain.model.StartExpeditionRequest
 import pro.progr.owlgame.domain.repository.ExpeditionsRepository
 import javax.inject.Inject
 
@@ -32,8 +34,8 @@ class ExpeditionsRepositoryImpl @Inject constructor(
 
     private val mutex = Mutex()
 
-    override fun getExpeditionWithData(mapId: String) : Flow<ExpeditionWithData> {
-        return expeditionWithDataDao.getExpeditionWithData(mapId)
+    override fun getExpeditionWithData(mapId: String) : Flow<ExpeditionWithDataModel> {
+        return expeditionWithDataDao.getExpeditionWithData(mapId).map { it.toDomain() }
     }
 
     override suspend fun startExpedition(
@@ -139,8 +141,8 @@ class ExpeditionsRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun getById(expeditionId: String) : Expedition? {
-        return expeditionsDao.getById(expeditionId);
+    override suspend fun getById(expeditionId: String) : ExpeditionModel? {
+        return expeditionsDao.getById(expeditionId)?.toDomain()
     }
 
     override suspend fun updateAnimalId(
