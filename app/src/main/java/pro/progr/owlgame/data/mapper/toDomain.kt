@@ -8,6 +8,7 @@ import pro.progr.owlgame.data.db.entity.Animal
 import pro.progr.owlgame.data.db.entity.Building
 import pro.progr.owlgame.data.db.entity.Enemy
 import pro.progr.owlgame.data.db.entity.Expedition
+import pro.progr.owlgame.data.db.entity.Furniture
 import pro.progr.owlgame.data.db.entity.Garden
 import pro.progr.owlgame.data.db.entity.MapEntity
 import pro.progr.owlgame.data.db.entity.RoomEntity
@@ -20,6 +21,7 @@ import pro.progr.owlgame.domain.model.EnemyModel
 import pro.progr.owlgame.domain.model.EnemyStatus
 import pro.progr.owlgame.domain.model.ExpeditionModel
 import pro.progr.owlgame.domain.model.ExpeditionWithDataModel
+import pro.progr.owlgame.domain.model.FurnitureModel
 import pro.progr.owlgame.domain.model.GardenModel
 import pro.progr.owlgame.domain.model.MapModel
 import pro.progr.owlgame.domain.model.MapWithBuildingsModel
@@ -37,6 +39,8 @@ import pro.progr.owlgame.data.db.model.EffectType as DbEffectType
 import pro.progr.owlgame.domain.model.EffectType as DomainEffectType
 import pro.progr.owlgame.data.model.ExpeditionStatus as DbExpeditionStatus
 import pro.progr.owlgame.domain.model.ExpeditionStatus as DomainExpeditionStatus
+import pro.progr.owlgame.data.db.model.FurnitureType as DbFurnitureType
+import pro.progr.owlgame.domain.model.FurnitureType as DomainFurnitureType
 
 fun DbMapType.toDomain(): DomainMapType =
     when (this) {
@@ -80,6 +84,12 @@ fun DbExpeditionStatus.toDomain() : DomainExpeditionStatus =
         DbExpeditionStatus.ACTIVE -> DomainExpeditionStatus.ACTIVE
         DbExpeditionStatus.WIN -> DomainExpeditionStatus.WIN
         DbExpeditionStatus.FAIL -> DomainExpeditionStatus.FAIL
+    }
+
+fun DbFurnitureType.toDomain(): DomainFurnitureType =
+    when (this) {
+        DbFurnitureType.REFRIGERATOR -> DomainFurnitureType.REFRIGERATOR
+        DbFurnitureType.OTHER -> DomainFurnitureType.OTHER
     }
 
 fun MapEntity.toDomain(): MapModel =
@@ -217,4 +227,18 @@ fun ExpeditionWithData.toDomain(): ExpeditionWithDataModel =
         damageAmount = expedition.damageAmount,
         status = expedition.status.toDomain(),
         enemies = enemies.map { it.toDomain() }
+    )
+
+fun Furniture.toDomain() : FurnitureModel =
+    FurnitureModel(
+        id = id,
+        name = name,
+        price = price,
+        imageUrl = imageUrl,
+        roomId = roomId,
+        x = x,
+        y = y,
+        height = height,
+        width = width,
+        type = type.toDomain()
     )

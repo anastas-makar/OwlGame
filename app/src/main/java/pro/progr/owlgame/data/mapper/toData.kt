@@ -2,11 +2,13 @@ package pro.progr.owlgame.data.mapper
 
 import pro.progr.owlgame.data.db.entity.Animal
 import pro.progr.owlgame.data.db.entity.Building
+import pro.progr.owlgame.data.db.entity.Furniture
 import pro.progr.owlgame.data.db.entity.Garden
 import pro.progr.owlgame.data.db.entity.RoomEntity
 import pro.progr.owlgame.data.db.entity.Supply
 import pro.progr.owlgame.domain.model.AnimalModel
 import pro.progr.owlgame.domain.model.BuildingModel
+import pro.progr.owlgame.domain.model.FurnitureModel
 import pro.progr.owlgame.domain.model.GardenModel
 import pro.progr.owlgame.domain.model.RoomModel
 import pro.progr.owlgame.domain.model.SupplyModel
@@ -18,6 +20,8 @@ import pro.progr.owlgame.data.db.model.GardenType as DbGardenType
 import pro.progr.owlgame.domain.model.GardenType as DomainGardenType
 import pro.progr.owlgame.data.db.model.EffectType as DbEffectType
 import pro.progr.owlgame.domain.model.EffectType as DomainEffectType
+import pro.progr.owlgame.data.db.model.FurnitureType as DbFurnitureType
+import pro.progr.owlgame.domain.model.FurnitureType as DomainFurnitureType
 
 
 fun DomainAnimalStatus.toData(): DbAnimalStatus =
@@ -47,6 +51,12 @@ fun DomainEffectType.toData(): DbEffectType =
         DomainEffectType.NO_EFFECT -> DbEffectType.NO_EFFECT
         DomainEffectType.DAMAGE -> DbEffectType.DAMAGE
         DomainEffectType.HEAL -> DbEffectType.HEAL
+    }
+
+fun DomainFurnitureType.toData() : DbFurnitureType  =
+    when (this) {
+        DomainFurnitureType.REFRIGERATOR -> DbFurnitureType.REFRIGERATOR
+        DomainFurnitureType.OTHER -> DbFurnitureType.OTHER
     }
 
 fun AnimalModel.toData(): Animal =
@@ -100,3 +110,16 @@ fun SupplyModel.toData(): Supply =
         effectType = effectType.toData(),
         effectAmount = effectAmount
     )
+
+fun FurnitureModel.toData(): Furniture =
+    Furniture(
+        id = id,
+        name = name,
+        price = price,
+        imageUrl = imageUrl,
+        roomId = roomId,
+        x = x,
+        y = y,
+        height = height,
+        width = width,
+        type = type.toData())

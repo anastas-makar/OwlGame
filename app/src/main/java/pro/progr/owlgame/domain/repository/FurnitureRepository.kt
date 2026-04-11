@@ -1,15 +1,15 @@
 package pro.progr.owlgame.domain.repository
 
 import kotlinx.coroutines.flow.Flow
-import pro.progr.owlgame.data.db.entity.Furniture
+import pro.progr.owlgame.domain.model.FurnitureModel
 
 interface FurnitureRepository {
 
-    suspend fun insert(items: List<Furniture>)
+    suspend fun insert(items: List<FurnitureModel>)
 
-    fun observeByRoomId(roomId: String) : Flow<List<Furniture>>
+    fun observeByRoomId(roomId: String) : Flow<List<FurnitureModel>>
 
-    fun getAvailableFurnitureItems() : Flow<List<Furniture>>
+    fun getAvailableFurnitureItems() : Flow<List<FurnitureModel>>
 
     fun updatePos(id: String, x: Float, y: Float)
 
