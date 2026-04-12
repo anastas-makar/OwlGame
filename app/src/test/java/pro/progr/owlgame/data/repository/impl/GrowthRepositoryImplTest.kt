@@ -6,7 +6,7 @@ import io.mockk.verify
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import pro.progr.owlgame.data.preferences.OwlPreferences
-import pro.progr.owlgame.data.model.GrowthState
+import pro.progr.owlgame.domain.model.GrowthState
 import java.time.Clock
 import java.time.Instant
 import java.time.ZoneOffset

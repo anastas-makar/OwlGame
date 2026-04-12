@@ -1,6 +1,6 @@
 package pro.progr.owlgame.domain.repository
 
-import pro.progr.owlgame.data.model.GrowthState
+import pro.progr.owlgame.domain.model.GrowthState
 
 interface GrowthRepository {
 
