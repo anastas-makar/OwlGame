@@ -10,6 +10,7 @@ import pro.progr.owlgame.data.db.entity.Enemy
 import pro.progr.owlgame.data.db.entity.Expedition
 import pro.progr.owlgame.data.db.entity.Furniture
 import pro.progr.owlgame.data.db.entity.Garden
+import pro.progr.owlgame.data.db.entity.GardenItem
 import pro.progr.owlgame.data.db.entity.MapEntity
 import pro.progr.owlgame.data.db.entity.RoomEntity
 import pro.progr.owlgame.data.db.entity.Supply
@@ -22,6 +23,7 @@ import pro.progr.owlgame.domain.model.EnemyStatus
 import pro.progr.owlgame.domain.model.ExpeditionModel
 import pro.progr.owlgame.domain.model.ExpeditionWithDataModel
 import pro.progr.owlgame.domain.model.FurnitureModel
+import pro.progr.owlgame.domain.model.GardenItemModel
 import pro.progr.owlgame.domain.model.GardenModel
 import pro.progr.owlgame.domain.model.MapModel
 import pro.progr.owlgame.domain.model.MapWithBuildingsModel
@@ -41,6 +43,8 @@ import pro.progr.owlgame.data.model.ExpeditionStatus as DbExpeditionStatus
 import pro.progr.owlgame.domain.model.ExpeditionStatus as DomainExpeditionStatus
 import pro.progr.owlgame.data.db.model.FurnitureType as DbFurnitureType
 import pro.progr.owlgame.domain.model.FurnitureType as DomainFurnitureType
+import pro.progr.owlgame.data.db.model.ItemType as DbItemType
+import pro.progr.owlgame.domain.model.ItemType as DomainItemType
 
 fun DbMapType.toDomain(): DomainMapType =
     when (this) {
@@ -90,6 +94,16 @@ fun DbFurnitureType.toDomain(): DomainFurnitureType =
     when (this) {
         DbFurnitureType.REFRIGERATOR -> DomainFurnitureType.REFRIGERATOR
         DbFurnitureType.OTHER -> DomainFurnitureType.OTHER
+    }
+
+fun DbItemType.toDomain(): DomainItemType =
+    when (this) {
+        DbItemType.TREE -> DomainItemType.TREE
+        DbItemType.FISH -> DomainItemType.FISH
+        DbItemType.WATER_PLANT -> DomainItemType.WATER_PLANT
+        DbItemType.HIVE -> DomainItemType.HIVE
+        DbItemType.ANIMAL_HOUSE -> DomainItemType.ANIMAL_HOUSE
+        DbItemType.NEST -> DomainItemType.NEST
     }
 
 fun MapEntity.toDomain(): MapModel =
@@ -241,4 +255,21 @@ fun Furniture.toDomain() : FurnitureModel =
         height = height,
         width = width,
         type = type.toDomain()
+    )
+
+fun GardenItem.toDomain(): GardenItemModel =
+    GardenItemModel(
+        id = id,
+        name = name,
+        description = description,
+        imageUrl = imageUrl,
+        gardenId = gardenId,
+        x = x,
+        y = y,
+        supplyId = supplyId,
+        supplyAmount = supplyAmount,
+        itemType = itemType.toDomain(),
+        gardenType = gardenType.toDomain(),
+        readiness = readiness,
+        deleted = deleted
     )

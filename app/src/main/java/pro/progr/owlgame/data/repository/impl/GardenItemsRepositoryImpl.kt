@@ -1,29 +1,32 @@
 package pro.progr.owlgame.data.repository.impl
 
 import kotlinx.coroutines.flow.Flow
-import pro.progr.owlgame.data.db.entity.GardenItem
+import kotlinx.coroutines.flow.map
 import pro.progr.owlgame.data.db.dao.GardenItemsDao
-import pro.progr.owlgame.data.db.model.GardenType
+import pro.progr.owlgame.data.mapper.toData
+import pro.progr.owlgame.data.mapper.toDomain
+import pro.progr.owlgame.domain.model.GardenItemModel
+import pro.progr.owlgame.domain.model.GardenType
 import pro.progr.owlgame.domain.repository.GardenItemsRepository
 import javax.inject.Inject
 
 class GardenItemsRepositoryImpl @Inject constructor(
     private val gardenItemsDao: GardenItemsDao
 ) : GardenItemsRepository {
-    override suspend fun insert(gardenItems: List<GardenItem>) {
-        gardenItemsDao.insert(gardenItems)
+    override suspend fun insert(gardenItems: List<GardenItemModel>) {
+        gardenItemsDao.insert(gardenItems.map {it.toData()})
     }
 
-    override fun observeByGardenId(gardenId: String) : Flow<List<GardenItem>> {
-        return gardenItemsDao.observeByGardenId(gardenId)
+    override fun observeByGardenId(gardenId: String) : Flow<List<GardenItemModel>> {
+        return gardenItemsDao.observeByGardenId(gardenId).map{ it.map{ item -> item.toDomain() } }
     }
 
     override fun updatePos(id: String, x: Float, y: Float) {
         gardenItemsDao. updatePosition(id, x, y)
     }
 
-    override fun getAvailableGardenItems(gardenType: GardenType) : Flow<List<GardenItem>> {
-        return gardenItemsDao.getAvailable(gardenType)
+    override fun getAvailableGardenItems(gardenType: GardenType) : Flow<List<GardenItemModel>> {
+        return gardenItemsDao.getAvailable(gardenType.toData()).map{ it.map{ item -> item.toDomain() } }
     }
 
     override suspend fun setGardenItem(id: String, gardenId: String) {

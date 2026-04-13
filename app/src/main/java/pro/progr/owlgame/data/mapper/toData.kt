@@ -4,11 +4,13 @@ import pro.progr.owlgame.data.db.entity.Animal
 import pro.progr.owlgame.data.db.entity.Building
 import pro.progr.owlgame.data.db.entity.Furniture
 import pro.progr.owlgame.data.db.entity.Garden
+import pro.progr.owlgame.data.db.entity.GardenItem
 import pro.progr.owlgame.data.db.entity.RoomEntity
 import pro.progr.owlgame.data.db.entity.Supply
 import pro.progr.owlgame.domain.model.AnimalModel
 import pro.progr.owlgame.domain.model.BuildingModel
 import pro.progr.owlgame.domain.model.FurnitureModel
+import pro.progr.owlgame.domain.model.GardenItemModel
 import pro.progr.owlgame.domain.model.GardenModel
 import pro.progr.owlgame.domain.model.RoomModel
 import pro.progr.owlgame.domain.model.SupplyModel
@@ -22,6 +24,8 @@ import pro.progr.owlgame.data.db.model.EffectType as DbEffectType
 import pro.progr.owlgame.domain.model.EffectType as DomainEffectType
 import pro.progr.owlgame.data.db.model.FurnitureType as DbFurnitureType
 import pro.progr.owlgame.domain.model.FurnitureType as DomainFurnitureType
+import pro.progr.owlgame.data.db.model.ItemType as DbItemType
+import pro.progr.owlgame.domain.model.ItemType as DomainItemType
 
 
 fun DomainAnimalStatus.toData(): DbAnimalStatus =
@@ -57,6 +61,16 @@ fun DomainFurnitureType.toData() : DbFurnitureType  =
     when (this) {
         DomainFurnitureType.REFRIGERATOR -> DbFurnitureType.REFRIGERATOR
         DomainFurnitureType.OTHER -> DbFurnitureType.OTHER
+    }
+
+fun DomainItemType.toData(): DbItemType =
+    when (this) {
+        DomainItemType.TREE -> DbItemType.TREE
+        DomainItemType.FISH -> DbItemType.FISH
+        DomainItemType.WATER_PLANT -> DbItemType.WATER_PLANT
+        DomainItemType.HIVE -> DbItemType.HIVE
+        DomainItemType.ANIMAL_HOUSE -> DbItemType.ANIMAL_HOUSE
+        DomainItemType.NEST -> DbItemType.NEST
     }
 
 fun AnimalModel.toData(): Animal =
@@ -123,3 +137,21 @@ fun FurnitureModel.toData(): Furniture =
         height = height,
         width = width,
         type = type.toData())
+
+
+fun GardenItemModel.toData(): GardenItem =
+    GardenItem(
+        id = id,
+        name = name,
+        description = description,
+        imageUrl = imageUrl,
+        gardenId = gardenId,
+        x = x,
+        y = y,
+        supplyId = supplyId,
+        supplyAmount = supplyAmount,
+        itemType = itemType.toData(),
+        gardenType = gardenType.toData(),
+        readiness = readiness,
+        deleted = deleted
+    )

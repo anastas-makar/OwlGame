@@ -1,0 +1,17 @@
+package pro.progr.owlgame.domain.model
+
+class GardenItemModel (
+    val id : String,
+    val name : String,
+    val description : String,
+    val imageUrl : String,
+    val gardenId : String? = null,
+    val x : Float = 0f,
+    val y : Float = 0f,
+    val supplyId : String,
+    val supplyAmount : Int,
+    val itemType : ItemType,
+    val gardenType: GardenType,
+    val readiness: Float = 0f,
+    val deleted: Boolean = false
+)
