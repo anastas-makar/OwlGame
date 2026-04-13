@@ -5,6 +5,7 @@ import pro.progr.owlgame.data.db.entity.Building
 import pro.progr.owlgame.data.db.entity.Furniture
 import pro.progr.owlgame.data.db.entity.Garden
 import pro.progr.owlgame.data.db.entity.GardenItem
+import pro.progr.owlgame.data.db.entity.Plant
 import pro.progr.owlgame.data.db.entity.RoomEntity
 import pro.progr.owlgame.data.db.entity.Supply
 import pro.progr.owlgame.domain.model.AnimalModel
@@ -12,6 +13,7 @@ import pro.progr.owlgame.domain.model.BuildingModel
 import pro.progr.owlgame.domain.model.FurnitureModel
 import pro.progr.owlgame.domain.model.GardenItemModel
 import pro.progr.owlgame.domain.model.GardenModel
+import pro.progr.owlgame.domain.model.PlantModel
 import pro.progr.owlgame.domain.model.RoomModel
 import pro.progr.owlgame.domain.model.SupplyModel
 import pro.progr.owlgame.data.db.model.AnimalStatus as DbAnimalStatus
@@ -152,6 +154,21 @@ fun GardenItemModel.toData(): GardenItem =
         supplyAmount = supplyAmount,
         itemType = itemType.toData(),
         gardenType = gardenType.toData(),
+        readiness = readiness,
+        deleted = deleted
+    )
+fun PlantModel.toData(): Plant =
+    Plant(
+        id = id,
+        name = name,
+        description = description,
+        imageUrl = imageUrl,
+        gardenId = gardenId,
+        x = x,
+        y = y,
+        supplyId = supplyId,
+        supplyAmount = supplyAmount,
+        seedAmount = seedAmount,
         readiness = readiness,
         deleted = deleted
     )

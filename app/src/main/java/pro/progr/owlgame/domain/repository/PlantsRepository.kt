@@ -1,17 +1,17 @@
 package pro.progr.owlgame.domain.repository
 
 import kotlinx.coroutines.flow.Flow
-import pro.progr.owlgame.data.db.entity.Plant
+import pro.progr.owlgame.domain.model.PlantModel
 
 interface PlantsRepository {
 
-    suspend fun insert(plants: List<Plant>)
+    suspend fun insert(plants: List<PlantModel>)
 
     suspend fun markDeleted(id: String)
 
-    fun observeByGardenId(gardenId: String) : Flow<List<Plant>>
+    fun observeByGardenId(gardenId: String) : Flow<List<PlantModel>>
 
-    fun getAvailablePlants() : Flow<List<Plant>>
+    fun getAvailablePlants() : Flow<List<PlantModel>>
 
     fun updatePos(id: String, x: Float, y: Float)
 

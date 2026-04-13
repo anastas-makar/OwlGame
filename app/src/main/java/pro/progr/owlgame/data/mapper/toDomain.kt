@@ -12,6 +12,7 @@ import pro.progr.owlgame.data.db.entity.Furniture
 import pro.progr.owlgame.data.db.entity.Garden
 import pro.progr.owlgame.data.db.entity.GardenItem
 import pro.progr.owlgame.data.db.entity.MapEntity
+import pro.progr.owlgame.data.db.entity.Plant
 import pro.progr.owlgame.data.db.entity.RoomEntity
 import pro.progr.owlgame.data.db.entity.Supply
 import pro.progr.owlgame.domain.model.AnimalModel
@@ -27,6 +28,7 @@ import pro.progr.owlgame.domain.model.GardenItemModel
 import pro.progr.owlgame.domain.model.GardenModel
 import pro.progr.owlgame.domain.model.MapModel
 import pro.progr.owlgame.domain.model.MapWithBuildingsModel
+import pro.progr.owlgame.domain.model.PlantModel
 import pro.progr.owlgame.domain.model.RoomModel
 import pro.progr.owlgame.domain.model.SupplyModel
 import pro.progr.owlgame.data.db.model.MapType as DbMapType
@@ -270,6 +272,22 @@ fun GardenItem.toDomain(): GardenItemModel =
         supplyAmount = supplyAmount,
         itemType = itemType.toDomain(),
         gardenType = gardenType.toDomain(),
+        readiness = readiness,
+        deleted = deleted
+    )
+
+fun Plant.toDomain(): PlantModel =
+    PlantModel(
+        id = id,
+        name = name,
+        description = description,
+        imageUrl = imageUrl,
+        gardenId = gardenId,
+        x = x,
+        y = y,
+        supplyId = supplyId,
+        supplyAmount = supplyAmount,
+        seedAmount = seedAmount,
         readiness = readiness,
         deleted = deleted
     )
