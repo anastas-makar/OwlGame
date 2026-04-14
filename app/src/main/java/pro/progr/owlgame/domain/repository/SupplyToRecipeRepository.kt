@@ -1,7 +1,7 @@
 package pro.progr.owlgame.domain.repository
 
 import kotlinx.coroutines.flow.Flow
-import pro.progr.owlgame.data.model.CraftResult
+import pro.progr.owlgame.domain.model.CraftResult
 import pro.progr.owlgame.domain.model.RecipeModel
 import pro.progr.owlgame.domain.model.RecipeWithSuppliesModel
 

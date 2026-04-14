@@ -13,7 +13,7 @@ import pro.progr.owlgame.data.db.entity.Supply
 import pro.progr.owlgame.data.db.entity.SupplyToRecipe
 import pro.progr.owlgame.data.mapper.linkId
 import pro.progr.owlgame.data.mapper.toData
-import pro.progr.owlgame.data.model.CraftResult
+import pro.progr.owlgame.domain.model.CraftResult
 import pro.progr.owlgame.domain.model.IngredientModel
 import pro.progr.owlgame.domain.model.RecipeModel
 import pro.progr.owlgame.domain.model.RecipeWithSuppliesModel
