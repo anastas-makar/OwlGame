@@ -12,7 +12,8 @@ import pro.progr.owlgame.data.db.entity.MapEntity
 import pro.progr.owlgame.data.db.dao.MapWithDataDao
 import pro.progr.owlgame.data.db.OwlGameDatabase
 import pro.progr.owlgame.data.db.embedded.MapWithData
-import pro.progr.owlgame.data.db.model.MapType
+import pro.progr.owlgame.data.mapper.toData
+import pro.progr.owlgame.domain.model.MapType
 import pro.progr.owlgame.data.mapper.toDomain
 import pro.progr.owlgame.domain.model.MapInPouchModel
 import pro.progr.owlgame.domain.model.MapModel
@@ -63,7 +64,7 @@ class MapsRepositoryImpl @Inject constructor(
                 id = mapModel.id,
                 name = mapModel.name,
                 imagePath = localImagePath,
-                type = mapModel.type
+                type = mapModel.type.toData()
             )
 
             if (mapModel.type == MapType.OCCUPIED) {

@@ -28,6 +28,8 @@ import pro.progr.owlgame.data.db.model.FurnitureType as DbFurnitureType
 import pro.progr.owlgame.domain.model.FurnitureType as DomainFurnitureType
 import pro.progr.owlgame.data.db.model.ItemType as DbItemType
 import pro.progr.owlgame.domain.model.ItemType as DomainItemType
+import pro.progr.owlgame.data.db.model.MapType as DbMapType
+import pro.progr.owlgame.domain.model.MapType as DomainMapType
 
 
 fun DomainAnimalStatus.toData(): DbAnimalStatus =
@@ -73,6 +75,15 @@ fun DomainItemType.toData(): DbItemType =
         DomainItemType.HIVE -> DbItemType.HIVE
         DomainItemType.ANIMAL_HOUSE -> DbItemType.ANIMAL_HOUSE
         DomainItemType.NEST -> DbItemType.NEST
+    }
+
+fun DomainMapType.toData(): DbMapType =
+    when (this) {
+        DomainMapType.FREE -> DbMapType.FREE
+        DomainMapType.OCCUPIED -> DbMapType.OCCUPIED
+        DomainMapType.EXPEDITION -> DbMapType.EXPEDITION
+        DomainMapType.TOWN -> DbMapType.TOWN
+        DomainMapType.LOADING -> error("Attempt to process unloaded map")
     }
 
 fun AnimalModel.toData(): Animal =
