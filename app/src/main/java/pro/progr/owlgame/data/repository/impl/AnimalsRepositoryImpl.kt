@@ -6,7 +6,6 @@ import pro.progr.owlgame.data.db.dao.AnimalDao
 import pro.progr.owlgame.data.mapper.toData
 import pro.progr.owlgame.data.mapper.toDomain
 import pro.progr.owlgame.domain.repository.AnimalsRepository
-import pro.progr.owlgame.domain.repository.ImageRepository
 import pro.progr.owlgame.data.web.AnimalApiService
 import pro.progr.owlgame.domain.model.AnimalModel
 import pro.progr.owlgame.domain.model.AnimalStatus as DomainAnimalStatus
@@ -15,8 +14,7 @@ import javax.inject.Inject
 
 class AnimalsRepositoryImpl @Inject constructor(
     private val animalDao: AnimalDao,
-    private val animalApiService: AnimalApiService,
-    private val imageRepository: ImageRepository
+    private val animalApiService: AnimalApiService
 ) : AnimalsRepository {
     override fun countAnimalsSearching() : Long {
         return animalDao.countSearching()
@@ -44,12 +42,8 @@ class AnimalsRepositoryImpl @Inject constructor(
         animalDao.setPet(animalId)
     }
 
-    override suspend fun saveAnimal(animal: AnimalModel) : AnimalModel {
-        val savedAnimal = animal.copy(
-            imagePath = imageRepository.saveImageLocally(animal.imagePath))
-        animalDao.insert(savedAnimal.toData())
-
-        return savedAnimal
+    override suspend fun saveAnimal(animal: AnimalModel) {
+        animalDao.insert(animal.toData())
     }
 
     override fun getPets(): Flow<List<AnimalModel>> {

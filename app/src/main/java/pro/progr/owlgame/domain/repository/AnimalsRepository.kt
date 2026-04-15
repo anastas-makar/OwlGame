@@ -15,7 +15,7 @@ interface AnimalsRepository {
 
     fun setPet(animalId: String)
 
-    suspend fun saveAnimal(animal: AnimalModel) : AnimalModel
+    suspend fun saveAnimal(animal: AnimalModel)
 
     fun getPets(): Flow<List<AnimalModel>>
 

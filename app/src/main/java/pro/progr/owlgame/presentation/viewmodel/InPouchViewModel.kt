@@ -8,24 +8,24 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import pro.progr.diamondapi.PurchaseInterface
-import pro.progr.owlgame.domain.repository.PouchesRepository
 import pro.progr.owlgame.domain.model.InPouchModel
-import pro.progr.owlgame.domain.repository.BuildingsRepository
-import pro.progr.owlgame.domain.repository.SupplyToRecipeRepository
+import pro.progr.owlgame.domain.repository.PouchesRepository
+import pro.progr.owlgame.domain.usecase.SaveBuildingsUseCase
 import pro.progr.owlgame.domain.usecase.SaveFurnitureUseCase
 import pro.progr.owlgame.domain.usecase.SaveGardenItemsUseCase
 import pro.progr.owlgame.domain.usecase.SaveMapsUseCase
 import pro.progr.owlgame.domain.usecase.SavePlantsUseCase
+import pro.progr.owlgame.domain.usecase.SaveRecipesUseCase
 import javax.inject.Inject
 
 class InPouchViewModel @Inject constructor(
     private val pouchesRepository: PouchesRepository,
     private val saveMapsUseCase: SaveMapsUseCase,
-    private val buildingsRepository: BuildingsRepository,
+    private val saveBuildingsUseCase: SaveBuildingsUseCase,
     private val savePlantsUseCase: SavePlantsUseCase,
     private val saveGardenItemsUseCase: SaveGardenItemsUseCase,
     private val saveFurnitureUseCase: SaveFurnitureUseCase,
-    private val toRecipeRepository: SupplyToRecipeRepository
+    private val saveRecipesUseCase: SaveRecipesUseCase
 ) : ViewModel() {
 
     val inPouch = mutableStateOf<InPouchModel?>(null)
@@ -54,7 +54,7 @@ class InPouchViewModel @Inject constructor(
 
             val buildingsWithLocalUrls = withContext(Dispatchers.IO) {
                 if (webPouch.buildings.isNotEmpty()) {
-                    buildingsRepository.saveBuildingsBundle(webPouch.buildings)
+                    saveBuildingsUseCase(webPouch.buildings)
                 } else emptyList()
             }
 
@@ -72,7 +72,7 @@ class InPouchViewModel @Inject constructor(
 
             if (webPouch.recipes.isNotEmpty()) {
                 viewModelScope.launch(Dispatchers.IO) {
-                    toRecipeRepository.saveRecipes(webPouch.recipes)
+                    saveRecipesUseCase(webPouch.recipes)
                 }
             }
 

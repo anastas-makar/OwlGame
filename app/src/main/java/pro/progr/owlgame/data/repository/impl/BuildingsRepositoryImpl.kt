@@ -16,7 +16,6 @@ import pro.progr.owlgame.domain.model.BuildingModel
 import pro.progr.owlgame.domain.model.BuildingWithAnimalModel
 import pro.progr.owlgame.domain.model.BuildingWithDataModel
 import pro.progr.owlgame.domain.repository.BuildingsRepository
-import pro.progr.owlgame.domain.repository.ImageRepository
 import javax.inject.Inject
 
 class BuildingsRepositoryImpl @Inject constructor(
@@ -25,8 +24,7 @@ class BuildingsRepositoryImpl @Inject constructor(
     private val gardensDao: GardensDao,
     private val roomsDao: RoomsDao,
     private val buildingWithAnimalDao: BuildingWithAnimalDao,
-    private val buildingWithDataDao: BuildingWithDataDao,
-    private val imageRepository: ImageRepository
+    private val buildingWithDataDao: BuildingWithDataDao
     ) : BuildingsRepository {
    override fun getAvailableBuildings() : Flow<List<BuildingModel>> {
 
@@ -63,28 +61,9 @@ class BuildingsRepositoryImpl @Inject constructor(
 
     override suspend fun saveBuildingsBundle(
         buildings: List<BuildingWithDataModel>
-    ) : List<BuildingWithDataModel> {
-        // 1) делаем "локальную" копию DTO (с локальным url)
-        val buildingsWithLocalUrls: List<BuildingWithDataModel> = buildings.map { b ->
-            val buildingUrl = imageRepository.saveImageLocally(b.imageUrl)
+    ) {
 
-            val roomsLocal = b.rooms.map { r ->
-                r.copy(imageUrl = imageRepository.saveImageLocally(r.imageUrl))
-            }
-
-            val gardensLocal = b.gardens.map { g ->
-                g.copy(imageUrl = imageRepository.saveImageLocally(g.imageUrl))
-            }
-
-            b.copy(
-                imageUrl = buildingUrl,
-                rooms = roomsLocal,
-                gardens = gardensLocal
-            )
-        }
-
-        // 2) маппим в entities (используем уже локальные url)
-        val buildingsForLocal = buildingsWithLocalUrls.map { b ->
+        val buildingsForLocal = buildings.map { b ->
             Building(
                 id = b.id,
                 name = b.name,
@@ -94,13 +73,13 @@ class BuildingsRepositoryImpl @Inject constructor(
             )
         }
 
-        val roomsForLocal = buildingsWithLocalUrls.flatMap { b ->
+        val roomsForLocal = buildings.flatMap { b ->
             b.rooms.map { r ->
                 r.toData()
             }
         }
 
-        val gardensForLocal = buildingsWithLocalUrls.flatMap { b ->
+        val gardensForLocal = buildings.flatMap { b ->
             b.gardens.map { g ->
                 g.toData()
             }
@@ -112,7 +91,6 @@ class BuildingsRepositoryImpl @Inject constructor(
             roomsDao.insert(roomsForLocal)
         }
 
-        return buildingsWithLocalUrls
     }
 
     override fun observe(buildingId: String): Flow<BuildingWithDataModel> =

@@ -19,7 +19,6 @@ import pro.progr.owlgame.domain.model.MapModel
 import pro.progr.owlgame.domain.model.MapWithBuildingsModel
 import pro.progr.owlgame.domain.model.MapWithDataModel
 import pro.progr.owlgame.domain.repository.MapsRepository
-import pro.progr.owlgame.domain.repository.ImageRepository
 import javax.inject.Inject
 import kotlin.collections.map
 import kotlin.collections.plusAssign

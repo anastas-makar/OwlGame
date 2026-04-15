@@ -20,7 +20,7 @@ interface BuildingsRepository {
 
     suspend fun saveBuildingsBundle(
         buildings: List<BuildingWithDataModel>
-    ) : List<BuildingWithDataModel>
+    )
 
     fun observe(buildingId: String): Flow<BuildingWithDataModel>
 }

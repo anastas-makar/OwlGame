@@ -17,7 +17,6 @@ import pro.progr.owlgame.domain.model.CraftResult
 import pro.progr.owlgame.domain.model.IngredientModel
 import pro.progr.owlgame.domain.model.RecipeModel
 import pro.progr.owlgame.domain.model.RecipeWithSuppliesModel
-import pro.progr.owlgame.domain.repository.ImageRepository
 import pro.progr.owlgame.domain.repository.SupplyToRecipeRepository
 import javax.inject.Inject
 
@@ -25,8 +24,7 @@ class SupplyToRecipeRepositoryImpl @Inject constructor(
     private val db: OwlGameDatabase,
     private val suppliesDao: SuppliesDao,
     private val recipesDao: RecipesDao,
-    private val supplyToRecipeDao: SupplyToRecipeDao,
-    private val imageRepository: ImageRepository
+    private val supplyToRecipeDao: SupplyToRecipeDao
 ) : SupplyToRecipeRepository {
 
     override suspend fun saveRecipes(
@@ -38,7 +36,6 @@ class SupplyToRecipeRepositoryImpl @Inject constructor(
             buildList {
                 recipes.forEach { r ->
                     add(r.resultSupply
-                        .copy(imageUrl = imageRepository.saveImageLocally(r.resultSupply.imageUrl))
                         .toData())
                     r.ingredients.forEach { ing -> add(ing.supplyModel
                         .toData()
