@@ -7,7 +7,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import pro.progr.owlgame.R
-import pro.progr.owlgame.data.db.model.AnimalStatus
+import pro.progr.owlgame.domain.model.AnimalStatus
 import pro.progr.owlgame.domain.repository.WidgetRepository
 import pro.progr.owlgame.presentation.ui.model.OwlMenuModel
 
@@ -63,7 +63,7 @@ class WidgetViewModel(
                 add(OwlMenuModel(
                     text = "Осмотреть владения",
                     navigateTo = "owl_navigation",
-                    imageUri = widgetRepository.getUri(randomMap.imagePath)
+                    imageUri = widgetRepository.getUri(randomMap.imageUrl)
                 ))
 
             }

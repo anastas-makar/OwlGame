@@ -2,13 +2,14 @@ package pro.progr.owlgame.data.repository.impl
 
 import android.content.Context
 import android.net.Uri
-import pro.progr.owlgame.data.db.entity.Animal
 import pro.progr.owlgame.data.db.dao.AnimalDao
 import pro.progr.owlgame.data.db.dao.MapDao
-import pro.progr.owlgame.data.db.entity.MapEntity
+import pro.progr.owlgame.data.mapper.toDomain
 import pro.progr.owlgame.data.preferences.OwlPreferences
 import pro.progr.owlgame.domain.repository.WidgetRepository
 import pro.progr.owlgame.data.util.UriWrapper
+import pro.progr.owlgame.domain.model.AnimalModel
+import pro.progr.owlgame.domain.model.MapModel
 import java.time.Clock
 import java.time.LocalDate
 import javax.inject.Inject
@@ -20,14 +21,14 @@ class WidgetRepositoryImpl @Inject constructor(
     private val context: Context,
     private val clock: Clock
 ) :  WidgetRepository {
-    override fun getRandomMap(): MapEntity? {
-        return mapDao.getRandomMap()
+    override fun getRandomMap(): MapModel? {
+        return mapDao.getRandomMap()?.toDomain()
     }
 
-    override fun getAnimal(): Animal? {
+    override fun getAnimal(): AnimalModel? {
         val animalId = preferences.getAnimalId()
         if (animalId != null) {
-            return animalDao.getAnimalById(animalId)
+            return animalDao.getAnimalById(animalId)?.toDomain()
         }
 
         return null

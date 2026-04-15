@@ -1,13 +1,13 @@
 package pro.progr.owlgame.domain.repository
 
 import android.net.Uri
-import pro.progr.owlgame.data.db.entity.Animal
-import pro.progr.owlgame.data.db.entity.MapEntity
+import pro.progr.owlgame.domain.model.AnimalModel
+import pro.progr.owlgame.domain.model.MapModel
 
 interface WidgetRepository {
-    fun getRandomMap(): MapEntity?
+    fun getRandomMap(): MapModel?
 
-    fun getAnimal(): Animal?
+    fun getAnimal(): AnimalModel?
 
     fun isPouchAvailable(): Boolean
 

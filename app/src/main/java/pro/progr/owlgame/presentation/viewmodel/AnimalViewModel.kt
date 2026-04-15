@@ -30,15 +30,15 @@ class AnimalViewModel @Inject constructor(
     ) { mapsWithData, buildingsMap ->
 
         mapsWithData.map { mapWithData ->
-            val mapId = mapWithData.mapEntity.id
+            val mapId = mapWithData.id
 
             MapWithDataModel(
                 id = mapId,
-                name = mapWithData.mapEntity.name,
-                imageUrl = mapWithData.mapEntity.imagePath,
-                type = mapWithData.mapEntity.type,
+                name = mapWithData.name,
+                imageUrl = mapWithData.imageUrl,
+                type = mapWithData.type,
                 buildings = buildingsMap.values
-                    .filter { it.building.mapId == mapId }
+                    .filter { it.mapId == mapId }
                     .toList()
             )
         }
