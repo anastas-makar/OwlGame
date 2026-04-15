@@ -14,13 +14,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.flow.Flow
-import pro.progr.owlgame.data.db.entity.GardenItem
-import pro.progr.owlgame.data.db.entity.Supply
+import pro.progr.owlgame.domain.model.GardenItemModel
+import pro.progr.owlgame.domain.model.SupplyModel
 
 @Composable
 fun HarvestGardenItemDialog(
-    gardenItem: GardenItem,
-    supplyFlow: Flow<Supply?>,
+    gardenItem: GardenItemModel,
+    supplyFlow: Flow<SupplyModel?>,
     onHarvestSupply: () -> Unit,
     onDismiss: () -> Unit
 ) {

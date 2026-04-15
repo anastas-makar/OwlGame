@@ -15,7 +15,7 @@ class WidgetViewModel(
     val widgetRepository: WidgetRepository,
     )  : ViewModel() {
 
-    val menuItems = mutableStateOf(ArrayList<OwlMenuModel>())
+    val menuItems = mutableStateOf(emptyList<OwlMenuModel>())
 
     fun updateMenuList() {
         viewModelScope.launch {

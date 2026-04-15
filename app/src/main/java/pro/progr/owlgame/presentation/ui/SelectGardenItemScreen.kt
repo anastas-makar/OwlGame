@@ -20,14 +20,14 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
-import pro.progr.owlgame.data.db.entity.GardenItem
+import pro.progr.owlgame.domain.model.GardenItemModel
 import pro.progr.owlgame.presentation.ui.fab.FabViewModel
 import pro.progr.owlgame.presentation.viewmodel.GardenZoneViewModel
 
 @Composable
 fun SelectGardenItemScreen(gardenZoneViewModel: GardenZoneViewModel,
                            fabViewModel: FabViewModel,
-                           availableItems:  State<List<GardenItem>>
+                           availableItems:  State<List<GardenItemModel>>
 ) {
     fabViewModel.showFab.value = false
 

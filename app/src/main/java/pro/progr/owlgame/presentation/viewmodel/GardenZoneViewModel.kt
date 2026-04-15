@@ -11,9 +11,9 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
-import pro.progr.owlgame.data.db.entity.GardenItem
-import pro.progr.owlgame.data.db.model.GardenType
-import pro.progr.owlgame.data.db.entity.Supply
+import pro.progr.owlgame.domain.model.GardenItemModel
+import pro.progr.owlgame.domain.model.GardenType
+import pro.progr.owlgame.domain.model.SupplyModel
 import pro.progr.owlgame.domain.repository.GardenItemsRepository
 import pro.progr.owlgame.domain.repository.SuppliesRepository
 
@@ -25,27 +25,27 @@ class GardenZoneViewModel @Inject constructor(
 ) : ViewModel() {
 
     val selectGardenItemsState: MutableState<Boolean> = mutableStateOf(false)
-    val gardenItems: StateFlow<List<GardenItem>> =
+    val gardenItems: StateFlow<List<GardenItemModel>> =
         gardenItemsRepo.observeByGardenId(gardenId)
             .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
-    val availableGardenItems: StateFlow<List<GardenItem>> = gardenItemsRepo.getAvailableGardenItems(gardenType)
+    val availableGardenItems: StateFlow<List<GardenItemModel>> = gardenItemsRepo.getAvailableGardenItems(gardenType)
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
     fun updateGardenItemPos(id: String, x: Float, y: Float) {
         viewModelScope.launch(Dispatchers.IO) { gardenItemsRepo.updatePos(id, x, y) }
     }
 
-    fun setGardenItem(gardenItem: GardenItem) {
+    fun setGardenItem(gardenItem: GardenItemModel) {
         viewModelScope.launch(Dispatchers.IO) {
             gardenItemsRepo.setGardenItem(gardenItem.id, gardenId)
         }
         selectGardenItemsState.value = false
     }
 
-    fun observeSupply(id: String): Flow<Supply?> = suppliesRepository.observeById(id)
+    fun observeSupply(id: String): Flow<SupplyModel?> = suppliesRepository.observeById(id)
 
-    fun harvestSupply(gardenItem: GardenItem) {
+    fun harvestSupply(gardenItem: GardenItemModel) {
         viewModelScope.launch(Dispatchers.IO) {
             suppliesRepository.updateAmount(gardenItem.supplyId, gardenItem.supplyAmount)
             gardenItemsRepo.flushReadinessForItem(gardenItem.id)

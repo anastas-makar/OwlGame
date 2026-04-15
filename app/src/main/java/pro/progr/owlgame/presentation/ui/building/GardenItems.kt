@@ -35,8 +35,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import pro.progr.owlgame.dagger.OwlGameComponent
-import pro.progr.owlgame.data.db.entity.Garden
-import pro.progr.owlgame.data.db.entity.GardenItem
+import pro.progr.owlgame.domain.model.GardenItemModel
+import pro.progr.owlgame.domain.model.GardenModel
 import pro.progr.owlgame.presentation.ui.SelectGardenItemScreen
 import pro.progr.owlgame.presentation.ui.fab.FabAction
 import pro.progr.owlgame.presentation.ui.fab.FabViewModel
@@ -48,7 +48,7 @@ import kotlin.math.roundToInt
 
 @Composable
 fun GardenItems(
-    garden: Garden,
+    garden: GardenModel,
     component: OwlGameComponent,
     fabViewModel: FabViewModel,
     onMap: Boolean = false
@@ -68,7 +68,7 @@ fun GardenItems(
 
     fabViewModel.showFab.value = onMap && availableItems.value.isNotEmpty()
 
-    var harvestGardenItem by remember { mutableStateOf<GardenItem?>(null) }
+    var harvestGardenItem by remember { mutableStateOf<GardenItemModel?>(null) }
 
     harvestGardenItem?.let { gItem ->
         HarvestGardenItemDialog (
@@ -85,7 +85,7 @@ fun GardenItems(
 
     val sorted = remember(items.value) {
         items.value
-            .sortedWith(compareBy<GardenItem>({ it.x }, { it.id }))
+            .sortedWith(compareBy<GardenItemModel>({ it.x }, { it.id }))
     }
     val rows = remember(sorted) { sorted.chunked(3) }
 
@@ -127,8 +127,8 @@ fun GardenItems(
 }
 
 @Composable
-private fun GardenItemCard(item: GardenItem,
-                           onReadyClick: (GardenItem) -> Unit, modifier: Modifier = Modifier) {
+private fun GardenItemCard(item: GardenItemModel,
+                           onReadyClick: (GardenItemModel) -> Unit, modifier: Modifier = Modifier) {
     val r = item.readiness.coerceIn(0f, 1f)
     val ready = r >= 0.999f
     val pct = (r * 100f).roundToInt()
