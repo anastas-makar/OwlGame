@@ -15,9 +15,9 @@ import pro.progr.owlgame.data.db.embedded.MapWithData
 import pro.progr.owlgame.data.mapper.toData
 import pro.progr.owlgame.domain.model.MapType
 import pro.progr.owlgame.data.mapper.toDomain
-import pro.progr.owlgame.domain.model.MapInPouchModel
 import pro.progr.owlgame.domain.model.MapModel
 import pro.progr.owlgame.domain.model.MapWithBuildingsModel
+import pro.progr.owlgame.domain.model.MapWithDataModel
 import pro.progr.owlgame.domain.repository.MapsRepository
 import pro.progr.owlgame.domain.repository.ImageRepository
 import javax.inject.Inject
@@ -29,7 +29,6 @@ class MapsRepositoryImpl @Inject constructor(
     private val mapsWithDataDao: MapWithDataDao,
     private val expeditionDao: ExpeditionDao,
     private val enemyDao: EnemyDao,
-    private val imageRepository: ImageRepository,
     private val database: OwlGameDatabase
 ) : MapsRepository {
 
@@ -52,18 +51,17 @@ class MapsRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun saveMaps(mapModels: List<MapInPouchModel>) {
+    override suspend fun saveMaps(mapModels: List<MapWithDataModel>) {
         val mapEntities = mutableListOf<MapEntity>()
         val expeditionEntities = mutableListOf<Expedition>()
         val enemyEntities = mutableListOf<Enemy>()
 
         mapModels.forEach { mapModel ->
-            val localImagePath = imageRepository.saveImageLocally(mapModel.imageUrl)
 
             mapEntities += MapEntity(
                 id = mapModel.id,
                 name = mapModel.name,
-                imagePath = localImagePath,
+                imagePath = mapModel.imageUrl,
                 type = mapModel.type.toData()
             )
 

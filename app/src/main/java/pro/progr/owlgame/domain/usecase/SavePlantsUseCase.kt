@@ -1,17 +1,17 @@
 package pro.progr.owlgame.domain.usecase
 
-import pro.progr.owlgame.data.db.entity.Plant
-import pro.progr.owlgame.data.db.entity.Supply
 import pro.progr.owlgame.domain.repository.ImageRepository
 import pro.progr.owlgame.domain.repository.PlantsRepository
 import pro.progr.owlgame.domain.repository.SuppliesRepository
-import pro.progr.owlgame.data.web.inpouch.PlantInPouch
+import pro.progr.owlgame.domain.model.PlantModel
+import pro.progr.owlgame.domain.model.PlantWithSupplyModel
+import pro.progr.owlgame.domain.model.SupplyModel
 import javax.inject.Inject
 
 class SavePlantsUseCase @Inject constructor(private val plantsRepository: PlantsRepository,
                                             private val imageRepository: ImageRepository,
                                             private val suppliesRepository: SuppliesRepository) {
-    suspend operator fun invoke(plantsInPouch: List<PlantInPouch>): List<PlantInPouch> {
+    suspend operator fun invoke(plantsInPouch: List<PlantWithSupplyModel>): List<PlantWithSupplyModel> {
         val plantsConverted = plantsInPouch.map {
             it.copy(
                 imageUrl = imageRepository.saveImageLocally(it.imageUrl),
@@ -23,7 +23,7 @@ class SavePlantsUseCase @Inject constructor(private val plantsRepository: Plants
 
         suppliesRepository.insert(
             plantsConverted.map { pConv ->
-                Supply(
+                SupplyModel(
                     id = pConv.supply.id,
                     imageUrl = pConv.supply.imageUrl,
                     name = pConv.supply.name,
@@ -37,7 +37,7 @@ class SavePlantsUseCase @Inject constructor(private val plantsRepository: Plants
 
         plantsRepository.insert(
             plantsConverted.map { pConv ->
-                Plant(
+                PlantModel(
                     id = pConv.id,
                     name = pConv.name,
                     description = pConv.description,

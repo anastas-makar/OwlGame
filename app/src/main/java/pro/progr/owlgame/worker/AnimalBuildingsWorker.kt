@@ -37,14 +37,16 @@ suspend fun doAnimalBuildingsWork(applicationContext: Context,
             val db = OwlGameDatabase.getDatabase(context = applicationContext)
             val animalDao = db.animalDao()
 
+            val imagesRepository = ImageRepositoryImpl(
+                context = applicationContext,
+                baseUrl = BuildConfig.API_BASE_URL
+            )
+
             val animalRepository = AnimalsRepositoryImpl(
                 db.animalDao(),
                 RetrofitProvider.provideRetrofit(BuildConfig.API_BASE_URL,
                     auth).create(AnimalApiService::class.java),
-                ImageRepositoryImpl(
-                    context = applicationContext,
-                    baseUrl = BuildConfig.API_BASE_URL
-                )
+                imagesRepository
             )
 
             Log.d("AnimalDao count searching: ", animalRepository.countAnimalsSearching().toString())
@@ -55,7 +57,8 @@ suspend fun doAnimalBuildingsWork(applicationContext: Context,
                     db.gardensDao(),
                     db.roomsDao(),
                     db.buildingWithAnimalDao(),
-                    db.buildingWithDataDao())
+                    db.buildingWithDataDao(),
+                    imagesRepository)
             )()?.let { animal ->
                 Log.d("Животное ищет дом", "${animal.name} ${animal.kind}")
 

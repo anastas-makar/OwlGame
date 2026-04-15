@@ -1,12 +1,12 @@
 package pro.progr.owlgame.domain.repository
 
-import pro.progr.owlgame.data.web.Pouch
-import pro.progr.owlgame.data.web.inpouch.InPouch
+import pro.progr.owlgame.domain.model.InPouchModel
+import pro.progr.owlgame.domain.model.PouchModel
 
 interface PouchesRepository {
 
-    suspend fun getPouches(): Result<List<Pouch>>
+    suspend fun getPouches(): Result<List<PouchModel>>
 
-    suspend fun getInPouch(pouchId: String): Result<InPouch>
+    suspend fun getInPouch(pouchId: String): Result<InPouchModel>
 }
 

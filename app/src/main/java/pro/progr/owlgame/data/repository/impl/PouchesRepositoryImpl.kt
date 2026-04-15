@@ -1,11 +1,13 @@
 package pro.progr.owlgame.data.repository.impl
 
 import android.util.Log
+import pro.progr.owlgame.data.mapper.toDomain
 import pro.progr.owlgame.data.preferences.OwlPreferences
-import pro.progr.owlgame.domain.repository.PouchesRepository
 import pro.progr.owlgame.data.web.MapApiService
 import pro.progr.owlgame.data.web.Pouch
-import pro.progr.owlgame.data.web.inpouch.InPouch
+import pro.progr.owlgame.domain.model.InPouchModel
+import pro.progr.owlgame.domain.model.PouchModel
+import pro.progr.owlgame.domain.repository.PouchesRepository
 import java.time.Clock
 import java.time.LocalDate
 import javax.inject.Inject
@@ -18,13 +20,13 @@ class PouchesRepositoryImpl
                                                 @Named("apiKey") private val apiKey: String)
     : PouchesRepository {
 
-    override suspend fun getPouches(): Result<List<Pouch>> {
+    override suspend fun getPouches(): Result<List<PouchModel>> {
         return try {
             val response = apiService.getPouches(apiKey)
             if (response.isSuccessful) {
-                val mapUrls = response.body() ?: emptyList()
-                val maps = mapUrls.map { pouchUrl -> Pouch("todo", pouchUrl) }
-                Result.success(maps)
+                val pouchUrls = response.body() ?: emptyList()
+                val pouches = pouchUrls.map { pouchUrl -> Pouch("todo", pouchUrl) }
+                Result.success(pouches.map {it.toDomain()})
             } else {
                 Log.e("pouch", "" + response.errorBody()?.string())
                 Result.failure(Exception("Failed to load pouches: ${response.errorBody()?.string()}"))
@@ -35,12 +37,12 @@ class PouchesRepositoryImpl
         }
     }
 
-    override suspend fun getInPouch(pouchId: String): Result<InPouch> {
+    override suspend fun getInPouch(pouchId: String): Result<InPouchModel> {
         return try {
             val response = apiService.getInPouch(pouchId, apiKey)
             if (response.isSuccessful) {
                 prefs.setLastPouchOpenDay(LocalDate.now(clock).toEpochDay())
-                val inPouch = response.body() ?: InPouch()
+                val inPouch = response.body()?.toDomain() ?: InPouchModel()
                 Result.success(inPouch)
             } else {
                 Result.failure(Exception("Failed to load inPouch: ${response.errorBody()?.string()}"))

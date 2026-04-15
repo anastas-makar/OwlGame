@@ -1,10 +1,6 @@
 package pro.progr.owlgame.domain.usecase
 
-import pro.progr.owlgame.data.db.entity.Enemy
-import pro.progr.owlgame.data.db.entity.Expedition
-import pro.progr.owlgame.data.db.entity.MapEntity
-import pro.progr.owlgame.data.db.model.MapType
-import pro.progr.owlgame.domain.model.MapInPouchModel
+import pro.progr.owlgame.domain.model.MapWithDataModel
 import pro.progr.owlgame.domain.repository.ImageRepository
 import pro.progr.owlgame.domain.repository.MapsRepository
 import javax.inject.Inject
@@ -13,15 +9,24 @@ class SaveMapsUseCase @Inject constructor(
     private val mapsRepository: MapsRepository,
     private val imageRepository: ImageRepository
 ) {
-    suspend operator fun invoke(maps: List<MapInPouchModel>): List<MapEntity> {
-
+    suspend operator fun invoke(maps: List<MapWithDataModel>): List<MapWithDataModel> {
+        val convertedMaps = maps.map { model ->
+            model.copy(
+                imageUrl = imageRepository.saveImageLocally(model.imageUrl),
+                expedition = model.expedition?.copy(
+                    enemies = model.expedition.enemies.map {
+                        it.copy(
+                            imageUrl = imageRepository.saveImageLocally(it.imageUrl)
+                        )
+                    }
+                )
+            )
+        }
 
         mapsRepository.saveMaps(
-            maps = mapEntities,
-            expeditions = expeditionEntities,
-            enemies = enemyEntities
+            convertedMaps
         )
 
-        return mapEntities
+        return convertedMaps
     }
 }

@@ -9,8 +9,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import pro.progr.diamondapi.PurchaseInterface
 import pro.progr.owlgame.domain.repository.PouchesRepository
-import pro.progr.owlgame.data.web.inpouch.InPouch
-import pro.progr.owlgame.data.web.inpouch.MapInPouch
+import pro.progr.owlgame.domain.model.InPouchModel
 import pro.progr.owlgame.domain.repository.BuildingsRepository
 import pro.progr.owlgame.domain.repository.SupplyToRecipeRepository
 import pro.progr.owlgame.domain.usecase.SaveFurnitureUseCase
@@ -29,7 +28,7 @@ class InPouchViewModel @Inject constructor(
     private val toRecipeRepository: SupplyToRecipeRepository
 ) : ViewModel() {
 
-    val inPouch = mutableStateOf<InPouch?>(null)
+    val inPouch = mutableStateOf<InPouchModel?>(null)
 
     private var lastLoadedPouchId: String? = null
     private var loadJob: Job? = null
@@ -49,9 +48,7 @@ class InPouchViewModel @Inject constructor(
 
             val mapsWithLocalUrls = withContext(Dispatchers.IO) {
                 if (webPouch.maps.isNotEmpty()) {
-                    saveMapsUseCase(webPouch.maps).map { ent ->
-                        MapInPouch(ent.id, ent.name, ent.imagePath, ent.type)
-                    }
+                    saveMapsUseCase(webPouch.maps)
                 } else emptyList()
             }
 
@@ -91,7 +88,7 @@ class InPouchViewModel @Inject constructor(
                 } else emptyList()
             }
 
-            inPouch.value = InPouch(
+            inPouch.value = InPouchModel(
                 buildings = buildingsWithLocalUrls,
                 maps = mapsWithLocalUrls,
                 plants = plantsWithLocalUrls,

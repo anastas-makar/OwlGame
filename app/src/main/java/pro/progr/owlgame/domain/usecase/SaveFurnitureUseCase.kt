@@ -1,14 +1,13 @@
 package pro.progr.owlgame.domain.usecase
 
-import pro.progr.owlgame.data.db.entity.Furniture
+import pro.progr.owlgame.domain.model.FurnitureModel
 import pro.progr.owlgame.domain.repository.FurnitureRepository
 import pro.progr.owlgame.domain.repository.ImageRepository
-import pro.progr.owlgame.data.web.inpouch.FurnitureInPouch
 import javax.inject.Inject
 
 class SaveFurnitureUseCase @Inject constructor(private val furnitureRepository: FurnitureRepository,
                                                private val imageRepository: ImageRepository) {
-    suspend operator fun invoke(furnitureInPouch: List<FurnitureInPouch>): List<FurnitureInPouch> {
+    suspend operator fun invoke(furnitureInPouch: List<FurnitureModel>): List<FurnitureModel> {
         val furnitureConverted = furnitureInPouch.map {
             it.copy(
                 imageUrl = imageRepository.saveImageLocally(it.imageUrl)
@@ -17,7 +16,7 @@ class SaveFurnitureUseCase @Inject constructor(private val furnitureRepository: 
 
         furnitureRepository.insert(
             furnitureConverted.map { pConv ->
-                Furniture(
+                FurnitureModel(
                     id = pConv.id,
                     name = pConv.name,
                     imageUrl = pConv.imageUrl,
