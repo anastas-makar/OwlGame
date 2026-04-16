@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import pro.progr.diamondapi.PurchaseInterface
-import pro.progr.owlgame.data.db.entity.Furniture
+import pro.progr.owlgame.domain.model.FurnitureModel
 import pro.progr.owlgame.domain.repository.FurnitureRepository
 
 class RoomViewModel @Inject constructor(
@@ -21,18 +21,18 @@ class RoomViewModel @Inject constructor(
 
     val selectFurnitureItemState: MutableState<Boolean> = mutableStateOf(false)
 
-    val furnitureItems: StateFlow<List<Furniture>> =
+    val furnitureItems: StateFlow<List<FurnitureModel>> =
         furnitureRepository.observeByRoomId(roomId)
             .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
-    val availableFurnitureItems: StateFlow<List<Furniture>> = furnitureRepository.getAvailableFurnitureItems()
+    val availableFurnitureItems: StateFlow<List<FurnitureModel>> = furnitureRepository.getAvailableFurnitureItems()
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
     fun updatePos(id: String, x: Float, y: Float) {
         viewModelScope.launch(Dispatchers.IO) { furnitureRepository.updatePos(id, x, y) }
     }
 
-    fun setFurnitureItem(furniture: Furniture, pI: PurchaseInterface) {
+    fun setFurnitureItem(furniture: FurnitureModel, pI: PurchaseInterface) {
         viewModelScope.launch(Dispatchers.IO) {
             val res = pI.spendDiamonds(furniture.price)
             if(res.isSuccess) {

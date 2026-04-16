@@ -14,9 +14,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import pro.progr.diamondapi.PurchaseInterface
 import pro.progr.owlgame.dagger.OwlGameComponent
-import pro.progr.owlgame.data.db.entity.Animal
-import pro.progr.owlgame.data.db.model.FurnitureType
-import pro.progr.owlgame.data.db.entity.RoomEntity
+import pro.progr.owlgame.domain.model.AnimalModel
+import pro.progr.owlgame.domain.model.FurnitureType
+import pro.progr.owlgame.domain.model.RoomModel
 import pro.progr.owlgame.presentation.ui.SelectFurnitureScreen
 import pro.progr.owlgame.presentation.ui.fab.FabAction
 import pro.progr.owlgame.presentation.ui.fab.FabViewModel
@@ -25,11 +25,11 @@ import pro.progr.owlgame.presentation.viewmodel.dagger.DaggerRoomViewModel
 
 @Composable
 fun InRoom(
-    room: RoomEntity,
+    room: RoomModel,
     component: OwlGameComponent,
     fabViewModel: FabViewModel,
     diamondDao: PurchaseInterface,
-    animal: Animal?,
+    animal: AnimalModel?,
     onOpenCraft: (animalId: String) -> Unit,
     onMap: Boolean = false,
 ) {

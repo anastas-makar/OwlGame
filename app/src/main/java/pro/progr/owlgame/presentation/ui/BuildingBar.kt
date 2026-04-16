@@ -6,13 +6,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
-import pro.progr.owlgame.data.db.embedded.BuildingWithData
+import pro.progr.owlgame.domain.model.BuildingWithDataModel
 
 @Composable
-fun BuildingBar(navController: NavHostController,  bWithData: BuildingWithData) {
+fun BuildingBar(navController: NavHostController,  bWithData: BuildingWithDataModel) {
     TopAppBar(
         title = {
-            Text(text = bWithData.building.name)
+            Text(text = bWithData.name)
         },
         navigationIcon = {
             NavIcon(navController)

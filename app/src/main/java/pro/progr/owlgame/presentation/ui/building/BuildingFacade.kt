@@ -28,17 +28,17 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
-import pro.progr.owlgame.data.db.entity.Animal
-import pro.progr.owlgame.data.db.model.AnimalStatus
-import pro.progr.owlgame.data.db.embedded.BuildingWithData
+import pro.progr.owlgame.domain.model.AnimalModel
+import pro.progr.owlgame.domain.model.AnimalStatus
+import pro.progr.owlgame.domain.model.BuildingWithDataModel
 import pro.progr.owlgame.presentation.ui.fab.FabViewModel
 
 @Composable
-fun BuildingFacade(data: BuildingWithData, fabViewModel: FabViewModel) {
+fun BuildingFacade(data: BuildingWithDataModel, fabViewModel: FabViewModel) {
     fabViewModel.showFab.value = false
 
     Column(Modifier.fillMaxSize()) {
-        LargeImage(imageUrl = data.building.imageUrl)
+        LargeImage(imageUrl = data.imageUrl)
 
         Spacer(Modifier.height(12.dp))
 
@@ -53,7 +53,7 @@ fun BuildingFacade(data: BuildingWithData, fabViewModel: FabViewModel) {
 
 @Composable
 private fun BuildingResidentCard(
-    animal: Animal?,
+    animal: AnimalModel?,
     modifier: Modifier = Modifier
 ) {
     var showDialog by remember { mutableStateOf(false) }

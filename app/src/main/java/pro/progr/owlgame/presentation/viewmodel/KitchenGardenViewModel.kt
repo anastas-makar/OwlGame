@@ -4,18 +4,18 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import javax.inject.Inject
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
-import pro.progr.owlgame.data.db.entity.Plant
-import pro.progr.owlgame.data.db.entity.Supply
+import pro.progr.owlgame.domain.model.PlantModel
+import pro.progr.owlgame.domain.model.SupplyModel
 import pro.progr.owlgame.domain.repository.PlantsRepository
 import pro.progr.owlgame.domain.repository.SuppliesRepository
 import java.util.UUID
+import javax.inject.Inject
 
 class KitchenGardenViewModel @Inject constructor(
     private val plantsRepo: PlantsRepository,
@@ -25,22 +25,22 @@ class KitchenGardenViewModel @Inject constructor(
 
     val selectPlantState: MutableState<Boolean> = mutableStateOf(false)
 
-    val plants: StateFlow<List<Plant>> =
+    val plants: StateFlow<List<PlantModel>> =
         plantsRepo.observeByGardenId(gardenId)
             .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
-    val availablePlants: StateFlow<List<Plant>> = plantsRepo.getAvailablePlants()
+    val availablePlants: StateFlow<List<PlantModel>> = plantsRepo.getAvailablePlants()
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
     fun updatePlantPos(id: String, x: Float, y: Float) {
         viewModelScope.launch(Dispatchers.IO) { plantsRepo.updatePos(id, x, y) }
     }
 
-    fun getAvailablePlants() : Flow<List<Plant>> {
+    fun getAvailablePlants() : Flow<List<PlantModel>> {
         return plantsRepo.getAvailablePlants()
     }
 
-    fun setPlant(plant: Plant) {
+    fun setPlant(plant: PlantModel) {
         viewModelScope.launch(Dispatchers.IO) {
             plantsRepo.setPlant(plant.id, gardenId)
         }
@@ -48,9 +48,9 @@ class KitchenGardenViewModel @Inject constructor(
     }
 
 
-    fun observeSupply(id: String): Flow<Supply?> = suppliesRepo.observeById(id)
+    fun observeSupply(id: String): Flow<SupplyModel?> = suppliesRepo.observeById(id)
 
-    fun harvestSeeds(plant: Plant) {
+    fun harvestSeeds(plant: PlantModel) {
         viewModelScope.launch(Dispatchers.IO) {
             val seeds = List(plant.seedAmount.coerceAtLeast(0)) {
                 plant.copy(
@@ -67,7 +67,7 @@ class KitchenGardenViewModel @Inject constructor(
         }
     }
 
-    fun harvestSupply(plant: Plant) {
+    fun harvestSupply(plant: PlantModel) {
         viewModelScope.launch(Dispatchers.IO) {
             suppliesRepo.updateAmount(plant.supplyId, plant.supplyAmount)
             plantsRepo.markDeleted(plant.id)

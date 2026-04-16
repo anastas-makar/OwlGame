@@ -1,24 +1,24 @@
 package pro.progr.owlgame.presentation.ui.model
 
-import pro.progr.owlgame.data.db.embedded.BuildingWithData
-import pro.progr.owlgame.data.db.entity.Garden
-import pro.progr.owlgame.data.db.entity.RoomEntity
+import pro.progr.owlgame.domain.model.BuildingWithDataModel
+import pro.progr.owlgame.domain.model.GardenModel
+import pro.progr.owlgame.domain.model.RoomModel
 
 sealed interface GalleryItem {
     val key: String
     val imageUrl: String
 
-    data class BuildingItem(val building: BuildingWithData) : GalleryItem {
-        override val key: String = "b:${building.building.id}"
-        override val imageUrl: String = building.building.imageUrl
+    data class BuildingItem(val building: BuildingWithDataModel) : GalleryItem {
+        override val key: String = "b:${building.id}"
+        override val imageUrl: String = building.imageUrl
     }
 
-    data class RoomItem(val room: RoomEntity) : GalleryItem {
+    data class RoomItem(val room: RoomModel) : GalleryItem {
         override val key: String = "r:${room.id}"
         override val imageUrl: String = room.imageUrl
     }
 
-    data class GardenItem(val garden: Garden) : GalleryItem {
+    data class GardenItem(val garden: GardenModel) : GalleryItem {
         override val key: String = "g:${garden.id}"
         override val imageUrl: String = garden.imageUrl
     }

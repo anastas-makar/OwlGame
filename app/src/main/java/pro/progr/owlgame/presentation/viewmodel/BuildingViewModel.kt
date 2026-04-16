@@ -5,7 +5,7 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
-import pro.progr.owlgame.data.db.embedded.BuildingWithData
+import pro.progr.owlgame.domain.model.BuildingWithDataModel
 import pro.progr.owlgame.domain.repository.BuildingsRepository
 import pro.progr.owlgame.domain.usecase.ApplyOfflineGrowthUseCase
 import javax.inject.Inject
@@ -22,6 +22,6 @@ class BuildingViewModel @Inject constructor(
         }
     }
 
-    fun observe(): Flow<BuildingWithData> =
+    fun observe(): Flow<BuildingWithDataModel> =
         buildingsRepository.observe(buildingId)
 }

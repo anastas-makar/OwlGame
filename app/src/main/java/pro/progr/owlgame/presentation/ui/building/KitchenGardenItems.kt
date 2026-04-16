@@ -35,8 +35,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import pro.progr.owlgame.dagger.OwlGameComponent
-import pro.progr.owlgame.data.db.entity.Garden
-import pro.progr.owlgame.data.db.entity.Plant
+import pro.progr.owlgame.domain.model.GardenModel
+import pro.progr.owlgame.domain.model.PlantModel
 import pro.progr.owlgame.presentation.ui.SelectPlantScreen
 import pro.progr.owlgame.presentation.ui.fab.FabAction
 import pro.progr.owlgame.presentation.ui.fab.FabViewModel
@@ -48,7 +48,7 @@ import kotlin.math.roundToInt
 
 @Composable
 fun KitchenGardenItems(
-    garden: Garden,
+    garden: GardenModel,
     component: OwlGameComponent,
     fabViewModel: FabViewModel,
     onMap: Boolean = false
@@ -57,7 +57,7 @@ fun KitchenGardenItems(
     val items = vm.plants.collectAsState(initial = emptyList())
     val availablePlants = vm.availablePlants.collectAsState(initial = emptyList())
 
-    var harvestPlant by remember { mutableStateOf<Plant?>(null) }
+    var harvestPlant by remember { mutableStateOf<PlantModel?>(null) }
 
     harvestPlant?.let { plant ->
         HarvestPlantDialog(
@@ -89,7 +89,7 @@ fun KitchenGardenItems(
 
     val sorted = remember(items.value) {
         items.value
-            .sortedWith(compareBy<Plant>({ it.x }, { it.id }))
+            .sortedWith(compareBy<PlantModel>({ it.x }, { it.id }))
     }
     val rows = remember(sorted) { sorted.chunked(3) }
 
@@ -132,9 +132,9 @@ fun KitchenGardenItems(
 
 @Composable
 private fun PlantCard(
-    item: Plant,
+    item: PlantModel,
     modifier: Modifier = Modifier,
-    onReadyClick: (Plant) -> Unit
+    onReadyClick: (PlantModel) -> Unit
 ) {
     val r = item.readiness.coerceIn(0f, 1f)
     val ready = r >= 0.999f

@@ -2,13 +2,13 @@ package pro.progr.owlgame.presentation.ui.building
 
 import androidx.compose.runtime.Composable
 import pro.progr.owlgame.dagger.OwlGameComponent
-import pro.progr.owlgame.data.db.entity.Garden
-import pro.progr.owlgame.data.db.model.GardenType
+import pro.progr.owlgame.domain.model.GardenModel
+import pro.progr.owlgame.domain.model.GardenType
 import pro.progr.owlgame.presentation.ui.fab.FabViewModel
 
 @Composable
 fun InGardenZone(
-    garden: Garden,
+    garden: GardenModel,
     component: OwlGameComponent,
     fabViewModel: FabViewModel,
     onMap: Boolean = false

@@ -18,13 +18,13 @@ import coil.compose.AsyncImage
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.min
-import pro.progr.owlgame.data.db.entity.Animal
-import pro.progr.owlgame.data.db.model.AnimalStatus
+import pro.progr.owlgame.domain.model.AnimalModel
+import pro.progr.owlgame.domain.model.AnimalStatus
 import kotlin.math.min
 
 @Composable
 fun AnimalProfileDialog(
-    animal: Animal,
+    animal: AnimalModel,
     onDismiss: () -> Unit
 ) {
     val cfg = LocalConfiguration.current

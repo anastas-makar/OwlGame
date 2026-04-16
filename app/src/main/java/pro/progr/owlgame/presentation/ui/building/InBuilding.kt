@@ -14,13 +14,13 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
 import pro.progr.diamondapi.PurchaseInterface
 import pro.progr.owlgame.dagger.OwlGameComponent
-import pro.progr.owlgame.data.db.embedded.BuildingWithData
+import pro.progr.owlgame.domain.model.BuildingWithDataModel
 import pro.progr.owlgame.presentation.ui.fab.FabViewModel
 import pro.progr.owlgame.presentation.ui.model.GalleryItem
 
 @Composable
 fun InBuilding(
-    data: BuildingWithData,
+    data: BuildingWithDataModel,
     component: OwlGameComponent,
     fabViewModel: FabViewModel,
     diamondDao: PurchaseInterface,
@@ -29,7 +29,7 @@ fun InBuilding(
     val rooms = remember(data.rooms) { data.rooms.sortedBy { it.roomNumber } }
     val gardens = remember(data.gardens) { data.gardens.sortedBy { it.gardenNumber } }
 
-    val items = remember(data.building, rooms, gardens) {
+    val items = remember(data.id, rooms, gardens) {
         buildList<GalleryItem> {
             add(GalleryItem.BuildingItem(data))
             addAll(rooms.map { GalleryItem.RoomItem(it) })
@@ -60,11 +60,11 @@ fun InBuilding(
             when (val s = selected) {
                 is GalleryItem.BuildingItem -> BuildingFacade(s.building, fabViewModel)
                 is GalleryItem.RoomItem -> InRoom(s.room, component, fabViewModel, diamondDao,
-                    onMap = data.building.mapId != null,
+                    onMap = data.mapId != null,
                     animal = data.animal,
                     onOpenCraft = { animalId -> navController.navigate("craft/$animalId")})
                 is GalleryItem.GardenItem -> InGardenZone(s.garden, component, fabViewModel,
-                    onMap = data.building.mapId != null)
+                    onMap = data.mapId != null)
                 null -> Unit
             }
         }

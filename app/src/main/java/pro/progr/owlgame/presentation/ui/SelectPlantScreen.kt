@@ -21,13 +21,14 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import pro.progr.owlgame.data.db.entity.Plant
+import pro.progr.owlgame.domain.model.PlantModel
 import pro.progr.owlgame.presentation.ui.fab.FabViewModel
 import pro.progr.owlgame.presentation.viewmodel.KitchenGardenViewModel
 
 @Composable
 fun SelectPlantScreen(gardenViewModel: KitchenGardenViewModel,
                       fabViewModel: FabViewModel,
-                      availablePlants: State<List<Plant>>
+                      availablePlants: State<List<PlantModel>>
 ) {
     fabViewModel.showFab.value = false
 
