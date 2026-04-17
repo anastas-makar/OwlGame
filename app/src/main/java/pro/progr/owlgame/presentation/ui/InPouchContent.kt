@@ -34,7 +34,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import pro.progr.owlgame.R
-import pro.progr.owlgame.data.web.Pouch
+import pro.progr.owlgame.domain.model.PouchModel
 import pro.progr.owlgame.presentation.ui.model.InPouchDescription
 import pro.progr.owlgame.presentation.viewmodel.InPouchViewModel
 
@@ -43,7 +43,7 @@ import pro.progr.owlgame.presentation.viewmodel.InPouchViewModel
 fun InPouchContent(
     navController: NavHostController,
     inPouchViewModel: InPouchViewModel,
-    pouch: Pouch
+    pouch: PouchModel
 ) {
 
     val density = LocalDensity.current

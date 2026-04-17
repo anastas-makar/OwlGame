@@ -24,7 +24,7 @@ import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import kotlinx.coroutines.delay
 import pro.progr.diamondapi.PurchaseInterface
-import pro.progr.owlgame.data.web.Pouch
+import pro.progr.owlgame.domain.model.PouchModel
 import pro.progr.owlgame.presentation.viewmodel.InPouchViewModel
 import pro.progr.owlgame.presentation.viewmodel.PouchesViewModel
 
@@ -97,7 +97,7 @@ enum class Direction { UP, DOWN }
 @Composable
 fun AnimatedPouchesColumn(
     modifier: Modifier = Modifier,
-    pouches: List<Pouch>,
+    pouches: List<PouchModel>,
     direction: Direction,
     pouchesViewModel: PouchesViewModel
 ) {

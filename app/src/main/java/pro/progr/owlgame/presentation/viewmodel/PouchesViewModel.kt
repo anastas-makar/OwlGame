@@ -6,17 +6,17 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import pro.progr.owlgame.domain.repository.PouchesRepository
-import pro.progr.owlgame.data.web.Pouch
+import pro.progr.owlgame.domain.model.PouchModel
 import javax.inject.Inject
 
 class PouchesViewModel @Inject constructor(
     private val pouchesRepository: PouchesRepository
 ) : ViewModel() {
 
-    var pouches = mutableStateOf<List<Pouch>>(emptyList())
+    var pouches = mutableStateOf<List<PouchModel>>(emptyList())
 
     val isPouchSelected = mutableStateOf(false)
-    var selectedPouch = mutableStateOf<Pouch?>(null)
+    var selectedPouch = mutableStateOf<PouchModel?>(null)
 
     fun loadPouches() {
         viewModelScope.launch {

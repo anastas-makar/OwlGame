@@ -3,10 +3,10 @@ package pro.progr.owlgame.presentation.ui.model
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
 import pro.progr.owlgame.R
-import pro.progr.owlgame.data.db.model.BuildingType
-import pro.progr.owlgame.data.web.inpouch.InPouch
+import pro.progr.owlgame.domain.model.BuildingType
+import pro.progr.owlgame.domain.model.InPouchModel
 
-class InPouchDescription constructor(val inPouch : InPouch) {
+class InPouchDescription constructor(val inPouch : InPouchModel) {
     private val content : ArrayList<String> = ArrayList()
 
     @Composable
