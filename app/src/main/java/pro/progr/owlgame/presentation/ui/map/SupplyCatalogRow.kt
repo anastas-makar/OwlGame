@@ -20,7 +20,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
-import pro.progr.owlgame.data.db.model.EffectType
+import pro.progr.owlgame.domain.model.EffectType
 import pro.progr.owlgame.presentation.ui.model.SupplySelectionUi
 
 @Composable

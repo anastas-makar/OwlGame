@@ -18,11 +18,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
-import pro.progr.owlgame.data.db.entity.Animal
+import pro.progr.owlgame.domain.model.AnimalModel
 
 @Composable
 fun ExpeditionAnimalBanner(
-    selectedAnimal: Animal?,
+    selectedAnimal: AnimalModel?,
     hasAnyPets: Boolean,
     canChooseAnotherPet: Boolean,
     onClick: () -> Unit

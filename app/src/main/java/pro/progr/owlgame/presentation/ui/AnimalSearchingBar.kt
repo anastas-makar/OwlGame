@@ -10,11 +10,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import pro.progr.owlgame.data.db.entity.Animal
+import pro.progr.owlgame.domain.model.AnimalModel
 
 @Composable
 fun AnimalSearchingBar(backToMain : () -> Unit,
-                       animalState: State<Animal?>
+                       animalState: State<AnimalModel?>
 ) {
 
     TopAppBar(

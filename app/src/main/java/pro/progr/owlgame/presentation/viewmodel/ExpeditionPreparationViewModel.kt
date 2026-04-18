@@ -14,11 +14,12 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import pro.progr.diamondapi.PurchaseInterface
-import pro.progr.owlgame.data.db.entity.Animal
-import pro.progr.owlgame.data.db.model.AnimalStatus
-import pro.progr.owlgame.data.db.entity.Supply
+import pro.progr.owlgame.domain.model.AnimalModel
+import pro.progr.owlgame.domain.model.AnimalStatus
+import pro.progr.owlgame.domain.model.ExpeditionWithDataModel
 import pro.progr.owlgame.domain.model.SelectedSupplyAmount
 import pro.progr.owlgame.domain.model.StartExpeditionRequest
+import pro.progr.owlgame.domain.model.SupplyModel
 import pro.progr.owlgame.domain.repository.AnimalsRepository
 import pro.progr.owlgame.domain.repository.ExpeditionsRepository
 import pro.progr.owlgame.domain.repository.SuppliesRepository
@@ -48,12 +49,12 @@ class ExpeditionPreparationViewModel @Inject constructor(
             animalsRepository.getPets(),
             expeditionsRepository.getExpeditionWithData(mapId),
             selectedAmounts
-        ) { supplies: List<Supply>,
-            pets: List<Animal>,
-            expeditionWithData,
+        ) { supplies: List<SupplyModel>,
+            pets: List<AnimalModel>,
+            expeditionWithData: ExpeditionWithDataModel,
             selected: Map<String, Int> ->
 
-            val selectedAnimalId = expeditionWithData?.expedition?.animalId
+            val selectedAnimalId = expeditionWithData.animalId
             val selectedAnimal = pets.firstOrNull { it.id == selectedAnimalId }
 
             Pair(

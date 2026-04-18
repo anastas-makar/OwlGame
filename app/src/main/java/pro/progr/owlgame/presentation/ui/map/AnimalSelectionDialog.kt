@@ -20,14 +20,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import coil.compose.AsyncImage
-import pro.progr.owlgame.data.db.entity.Animal
+import pro.progr.owlgame.domain.model.AnimalModel
 
 @Composable
 fun AnimalSelectionDialog(
-    animals: List<Animal>,
+    animals: List<AnimalModel>,
     selectedAnimalId: String?,
     onDismiss: () -> Unit,
-    onAnimalClick: (Animal) -> Unit
+    onAnimalClick: (AnimalModel) -> Unit
 ) {
     Dialog(onDismissRequest = onDismiss) {
         Card(

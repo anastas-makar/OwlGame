@@ -1,16 +1,15 @@
 package pro.progr.owlgame.presentation.ui.model
 
-import pro.progr.owlgame.data.db.model.EffectType
-
-import pro.progr.owlgame.data.db.entity.Animal
+import pro.progr.owlgame.domain.model.AnimalModel
+import pro.progr.owlgame.domain.model.EffectType
 
 data class ExpeditionPreparationUiState(
     val items: List<SupplySelectionUi> = emptyList(),
     val extraHealText: String = "",
     val extraDamageText: String = "",
 
-    val availablePets: List<Animal> = emptyList(),
-    val selectedAnimal: Animal? = null,
+    val availablePets: List<AnimalModel> = emptyList(),
+    val selectedAnimal: AnimalModel? = null,
 
     val isStarting: Boolean = false,
     val errorMessage: String? = null

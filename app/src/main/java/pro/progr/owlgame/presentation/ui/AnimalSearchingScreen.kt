@@ -112,14 +112,14 @@ fun AnimalSearchingScreen(
                                     }
                                 ) { _, building ->
                                         AsyncImage(
-                                            model = building.building.imageUrl,
+                                            model = building.imageUrl,
                                             contentDescription = "Дом",
                                             modifier = Modifier
                                                 .aspectRatio(1f)
                                                 .fillMaxWidth()
                                                 .clickable {
                                                     animalViewModel.saveAnimalInBuilding(
-                                                        building.building.id,
+                                                        building.id,
                                                         animalId
                                                     )
                                                     navController.navigate("map/${mapData.id}")

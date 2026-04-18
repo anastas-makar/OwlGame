@@ -1,8 +1,8 @@
 package pro.progr.owlgame.presentation.ui.model
 
-import pro.progr.owlgame.data.db.entity.Supply
+import pro.progr.owlgame.domain.model.SupplyModel
 
 data class SupplySelectionUi(
-    val supply: Supply,
+    val supply: SupplyModel,
     val selectedAmount: Int
 )
