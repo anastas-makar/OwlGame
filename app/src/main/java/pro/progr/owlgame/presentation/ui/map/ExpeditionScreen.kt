@@ -23,6 +23,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import pro.progr.diamondapi.PurchaseInterface
+import pro.progr.owlgame.domain.model.EnemyStatus
 import pro.progr.owlgame.presentation.ui.MapBar
 import pro.progr.owlgame.presentation.ui.fab.ExpandableFloatingActionButton
 import pro.progr.owlgame.presentation.ui.fab.FabAction
@@ -78,10 +79,10 @@ fun ExpeditionScreen(
             .fillMaxWidth()
             .heightIn(max = 420.dp)) {
 
-            map.value.expedition?.let { (expedition, enemies) ->
+            map.value.expedition?.let { expedition ->
                 FixedImageOverlay(
                     backgroundModel = map.value.imageUrl,
-                    items = enemies,
+                    items = expedition.enemies,
                     modifier = Modifier.fillMaxWidth(),
                     keyOf = { it.id },
                     x01Of = { it.x },

@@ -45,8 +45,7 @@ suspend fun doAnimalBuildingsWork(applicationContext: Context,
             val animalRepository = AnimalsRepositoryImpl(
                 db.animalDao(),
                 RetrofitProvider.provideRetrofit(BuildConfig.API_BASE_URL,
-                    auth).create(AnimalApiService::class.java),
-                imagesRepository
+                    auth).create(AnimalApiService::class.java)
             )
 
             Log.d("AnimalDao count searching: ", animalRepository.countAnimalsSearching().toString())
@@ -57,8 +56,8 @@ suspend fun doAnimalBuildingsWork(applicationContext: Context,
                     db.gardensDao(),
                     db.roomsDao(),
                     db.buildingWithAnimalDao(),
-                    db.buildingWithDataDao(),
-                    imagesRepository)
+                    db.buildingWithDataDao()),
+                imagesRepository
             )()?.let { animal ->
                 Log.d("Животное ищет дом", "${animal.name} ${animal.kind}")
 

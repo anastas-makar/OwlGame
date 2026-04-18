@@ -42,10 +42,9 @@ class MapViewModel @Inject constructor(
             if (mapWithData == null) {
                 flowOf(MapWithDataModel("", "", "", MapType.LOADING))
             } else {
-                val mapEntity = mapWithData.mapEntity
 
                 val buildingsFlow =
-                    if (mapEntity.type == MapType.TOWN) {
+                    if (mapWithData.type == MapType.TOWN) {
                         buildingsRepository.getBuildingsWithAnimals(mapId)
                     } else {
                         flowOf(emptyMap())
@@ -53,8 +52,8 @@ class MapViewModel @Inject constructor(
 
                 val expeditionFlow =
                     if (
-                        mapEntity.type == MapType.OCCUPIED ||
-                        mapEntity.type == MapType.EXPEDITION
+                        mapWithData.type == MapType.OCCUPIED ||
+                        mapWithData.type == MapType.EXPEDITION
                     ) {
                         expeditionsRepository.getExpeditionWithData(mapId)
                     } else {
@@ -63,13 +62,13 @@ class MapViewModel @Inject constructor(
 
                 combine(buildingsFlow, expeditionFlow) { buildingsMap, expeditionWithData ->
                     MapWithDataModel(
-                        id = mapEntity.id,
-                        name = mapEntity.name,
-                        imageUrl = mapEntity.imagePath,
-                        type = mapEntity.type,
+                        id = mapWithData.id,
+                        name = mapWithData.name,
+                        imageUrl = mapWithData.imageUrl,
+                        type = mapWithData.type,
                         buildings = buildingsMap.values
                             .toList()
-                            .sortedWith(compareBy({ it.building.x }, { it.building.id })),
+                            .sortedWith(compareBy({ it.x }, { it.id })),
                         expedition = expeditionWithData
                     )
                 }
@@ -133,11 +132,7 @@ class MapViewModel @Inject constructor(
                 selectHouseState.value = false
                 selectFortressState.value = false
 
-                selectedBuilding.value = BuildingModel(
-                    building.id,
-                    building.name,
-                    building.imageUrl
-                )
+                selectedBuilding.value = building
                 newHouseState.value = true
             }
         }
