@@ -73,6 +73,8 @@ dependencies {
     testImplementation("io.mockk:mockk:1.14.9")
     androidTestImplementation("androidx.test.ext:junit:1.3.0")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.7.0")
+    androidTestImplementation("androidx.test:core")
+    androidTestImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test")
 
     //retrofit
     implementation("com.squareup.retrofit2:retrofit:3.0.0")
