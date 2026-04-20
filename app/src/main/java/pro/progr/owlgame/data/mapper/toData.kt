@@ -95,22 +95,22 @@ fun AnimalModel.toData(): Animal =
         status = status.toData()
     )
 
-fun GardenModel.toData() : Garden =
+fun GardenModel.toData(buildingId : String) : Garden =
     Garden(
         id = id,
         name = name,
         imageUrl = imageUrl,
-        buildingId = id,
+        buildingId = buildingId,
         gardenNumber = gardenNumber,
         gardenType = gardenType.toData()
     )
 
-fun RoomModel.toData() : RoomEntity =
+fun RoomModel.toData(buildingId : String) : RoomEntity =
     RoomEntity(
         id = id,
         name = name,
         imageUrl = imageUrl,
-        buildingId = id,
+        buildingId = buildingId,
         roomNumber = roomNumber
     )
 

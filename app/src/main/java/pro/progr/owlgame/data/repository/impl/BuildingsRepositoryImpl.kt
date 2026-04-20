@@ -75,13 +75,13 @@ class BuildingsRepositoryImpl @Inject constructor(
 
         val roomsForLocal = buildings.flatMap { b ->
             b.rooms.map { r ->
-                r.toData()
+                r.toData(b.id)
             }
         }
 
         val gardensForLocal = buildings.flatMap { b ->
             b.gardens.map { g ->
-                g.toData()
+                g.toData(b.id)
             }
         }
 
