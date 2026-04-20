@@ -203,6 +203,7 @@ fun Supply.toDomain(): SupplyModel =
         imageUrl = imageUrl,
         name = name,
         description = description,
+        amount = amount,
         effectType = effectType.toDomain(),
         effectAmount = effectAmount
     )
