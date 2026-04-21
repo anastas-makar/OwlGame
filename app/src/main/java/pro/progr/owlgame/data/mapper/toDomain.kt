@@ -220,7 +220,7 @@ fun Expedition.toDomain(): ExpeditionModel =
         status = status.toDomain()
     )
 
-fun Enemy.toDomain() : EnemyModel =
+private fun Enemy.toDomain(activeEnemyId: String?): EnemyModel =
     EnemyModel(
         id = id,
         expeditionId = expeditionId,
@@ -231,12 +231,21 @@ fun Enemy.toDomain() : EnemyModel =
         damageAmount = damageAmount,
         x = x,
         y = y,
-        status = if (isDefeated) EnemyStatus.DEFEATED
-                        else EnemyStatus.UNTOUCHED
+        status = when {
+            isDefeated -> EnemyStatus.DEFEATED
+            id == activeEnemyId -> EnemyStatus.ACTIVE
+            else -> EnemyStatus.UNTOUCHED
+        }
     )
 
-fun ExpeditionWithData.toDomain(): ExpeditionWithDataModel =
-    ExpeditionWithDataModel(
+fun ExpeditionWithData.toDomain(): ExpeditionWithDataModel {
+    val sortedEnemies = enemies.sortedWith(compareBy<Enemy>({ it.x }, { it.id }))
+
+    val activeEnemyId = sortedEnemies
+        .firstOrNull { !it.isDefeated }
+        ?.id
+
+    return ExpeditionWithDataModel(
         id = expedition.id,
         title = expedition.title,
         description = expedition.description,
@@ -245,8 +254,9 @@ fun ExpeditionWithData.toDomain(): ExpeditionWithDataModel =
         healAmount = expedition.healAmount,
         damageAmount = expedition.damageAmount,
         status = expedition.status.toDomain(),
-        enemies = enemies.map { it.toDomain() }
+        enemies = sortedEnemies.map { it.toDomain(activeEnemyId) }
     )
+}
 
 fun Furniture.toDomain() : FurnitureModel =
     FurnitureModel(
