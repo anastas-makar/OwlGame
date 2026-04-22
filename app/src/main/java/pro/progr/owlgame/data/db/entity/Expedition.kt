@@ -35,5 +35,6 @@ data class Expedition(
     val animalId: String?,
     val healAmount: Int,
     val damageAmount: Int,
+    val lastBattleUpdateTime: Long? = null,
     val status: ExpeditionStatus = ExpeditionStatus.ACTIVE
 )

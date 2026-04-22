@@ -2,6 +2,8 @@ package pro.progr.owlgame.domain.repository
 
 import kotlinx.coroutines.flow.Flow
 import pro.progr.diamondapi.PurchaseInterface
+import pro.progr.owlgame.domain.model.BattleResolution
+import pro.progr.owlgame.domain.model.EnemyModel
 import pro.progr.owlgame.domain.model.ExpeditionModel
 import pro.progr.owlgame.domain.model.ExpeditionWithDataModel
 import pro.progr.owlgame.domain.model.StartExpeditionRequest
@@ -21,6 +23,12 @@ interface ExpeditionsRepository {
         expeditionId: String,
         animalId: String?
     ): Int
+
+    fun resolveBattle(
+        expedition: ExpeditionModel,
+        enemies: List<EnemyModel>,
+        availableTicks: Long
+    ): BattleResolution
 
 }
 
