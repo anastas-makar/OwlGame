@@ -7,8 +7,9 @@ import pro.progr.owlgame.domain.model.EnemyStatus
 import pro.progr.owlgame.domain.model.ExpeditionModel
 import pro.progr.owlgame.domain.model.ExpeditionStatus
 import pro.progr.owlgame.domain.model.MapType
+import javax.inject.Inject
 
-class ResolveBattleUseCase {
+class ResolveBattleUseCase @Inject constructor() {
     operator fun invoke(
         expedition: ExpeditionModel,
         enemies: List<EnemyModel>,
