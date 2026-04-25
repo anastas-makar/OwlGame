@@ -8,6 +8,7 @@ import kotlinx.coroutines.sync.withLock
 import pro.progr.diamondapi.PurchaseInterface
 import pro.progr.owlgame.data.db.OwlGameDatabase
 import pro.progr.owlgame.data.db.dao.AnimalDao
+import pro.progr.owlgame.data.db.dao.EnemyDao
 import pro.progr.owlgame.data.db.dao.ExpeditionDao
 import pro.progr.owlgame.data.db.dao.ExpeditionWithDataDao
 import pro.progr.owlgame.data.db.dao.MapDao
@@ -17,11 +18,18 @@ import pro.progr.owlgame.data.db.model.EffectType
 import pro.progr.owlgame.data.db.model.MapType
 import pro.progr.owlgame.data.mapper.toDomain
 import pro.progr.owlgame.data.model.ExpeditionStatus
+import pro.progr.owlgame.data.util.BattleResolver
 import pro.progr.owlgame.domain.model.ExpeditionModel
 import pro.progr.owlgame.domain.model.ExpeditionWithDataModel
 import pro.progr.owlgame.domain.model.StartExpeditionRequest
 import pro.progr.owlgame.domain.repository.ExpeditionsRepository
+import java.time.Clock
 import javax.inject.Inject
+
+private const val BATTLE_TICK_MILLIS = 2L * 60 * 1000 // 2 минуты
+private const val FUTURE_TOLERANCE = 1L * 60 * 1000   // 1 минута
+private const val FUTURE_RESET_THRESHOLD = 10L * 60 * 1000   // 10 минут
+private const val FUGITIVE_DURATION_MILLIS = 14L * 24 * 60 * 60 * 1000 // 14 дней
 
 class ExpeditionsRepositoryImpl @Inject constructor(
     private val expeditionWithDataDao: ExpeditionWithDataDao,
@@ -29,7 +37,10 @@ class ExpeditionsRepositoryImpl @Inject constructor(
     private val expeditionsDao: ExpeditionDao,
     private val suppliesDao: SuppliesDao,
     private val mapsDao: MapDao,
-    private val animalDao: AnimalDao
+    private val animalDao: AnimalDao,
+    private val enemyDao: EnemyDao,
+    private val resolveBattle: BattleResolver,
+    private val clock: Clock
 ) : ExpeditionsRepository {
 
     private val mutex = Mutex()
@@ -122,7 +133,8 @@ class ExpeditionsRepositoryImpl @Inject constructor(
                     healAmount = totalHeal,
                     damageAmount = totalDamage,
                     animalId = request.animalId,
-                    status = ExpeditionStatus.ACTIVE
+                    status = ExpeditionStatus.ACTIVE,
+                    lastBattleUpdateTime = clock.millis()
                 )
                 check(expeditionRows == 1) {
                     "Не удалось обновить экспедицию"
@@ -150,6 +162,124 @@ class ExpeditionsRepositoryImpl @Inject constructor(
         animalId: String?
     ): Int {
         return expeditionsDao.updateAnimalId(expeditionId, animalId)
+    }
+
+    override suspend fun resolveExpeditionProgress(
+        expeditionId: String
+    ): Result<Unit> = mutex.withLock {
+        runCatching {
+            val now = clock.millis()
+
+            val expeditionWithData = expeditionWithDataDao.getExpeditionWithDataById(expeditionId)
+                ?: error("Экспедиция не найдена")
+
+            val expedition = expeditionWithData.expedition
+
+            if (expedition.status != ExpeditionStatus.ACTIVE) {
+                return@runCatching
+            }
+
+            if (expedition.lastBattleUpdateTime == null)
+                error("У активной экспедиции не задано время последнего обновления")
+
+            //защита на случай перевода часов назад
+            val futureDelta = expedition.lastBattleUpdateTime - now
+
+            if (futureDelta > FUTURE_RESET_THRESHOLD) {
+                val rows = expeditionsDao.updateLastBattleUpdateTime(
+                    expeditionId = expedition.id,
+                    lastBattleUpdateTime = now
+                )
+                check(rows == 1) { "Не удалось ресинхронизировать время битвы" }
+                return@runCatching
+            }
+
+            if (futureDelta > FUTURE_TOLERANCE) {
+                return@runCatching
+            }
+
+            val elapsed = now - expedition.lastBattleUpdateTime
+            val availableTicks = elapsed / BATTLE_TICK_MILLIS
+
+            if (availableTicks <= 0L) {
+                return@runCatching
+            }
+
+            val resolution = resolveBattle(
+                expedition = expedition,
+                enemies = expeditionWithData.enemies,
+                availableTicks = availableTicks
+            )
+
+            val newLastUpdateTime =
+                expedition.lastBattleUpdateTime + resolution.appliedTicks * BATTLE_TICK_MILLIS
+
+            appDatabase.withTransaction {
+                enemyDao.updateEnemies(resolution.updatedEnemies)
+
+                expeditionsDao.updateBattleState(
+                    expeditionId = expedition.id,
+                    healAmount = resolution.expeditionHeal,
+                    damageAmount = resolution.expeditionDamage,
+                    animalId = expedition.animalId,
+                    status = resolution.expeditionStatus,
+                    lastBattleUpdateTime = newLastUpdateTime
+                )
+
+                mapsDao.updateType(
+                    mapId = expedition.mapId,
+                    type = resolution.mapType
+                )
+
+                expedition.animalId?.let { animalId ->
+                    applyAnimalStatus(animalId, resolution.animalStatus, now)
+                }
+
+                Unit
+            }
+        }
+    }
+
+    private suspend fun applyAnimalStatus(
+        animalId: String,
+        status: AnimalStatus,
+        now: Long
+    ) {
+        when (status) {
+            AnimalStatus.EXPEDITION -> {
+                val rows = animalDao.updateStatusWithUntilIfCurrent(
+                    animalId = animalId,
+                    newStatus = AnimalStatus.EXPEDITION,
+                    expectedOldStatus = AnimalStatus.EXPEDITION,
+                    statusExpiresAt = null
+                )
+                check(rows == 1) { "Не удалось подтвердить статус EXPEDITION у животного" }
+            }
+
+            AnimalStatus.PET -> {
+                val rows = animalDao.updateStatusWithUntilIfCurrent(
+                    animalId = animalId,
+                    newStatus = AnimalStatus.PET,
+                    expectedOldStatus = AnimalStatus.EXPEDITION,
+                    statusExpiresAt = null
+                )
+                check(rows == 1) { "Не удалось вернуть животное в PET" }
+            }
+
+            AnimalStatus.FUGITIVE -> {
+                val rows = animalDao.updateStatusWithUntilIfCurrent(
+                    animalId = animalId,
+                    newStatus = AnimalStatus.FUGITIVE,
+                    expectedOldStatus = AnimalStatus.EXPEDITION,
+                    statusExpiresAt = now + FUGITIVE_DURATION_MILLIS
+                )
+                check(rows == 1) { "Не удалось перевести животное в FUGITIVE" }
+            }
+
+            else -> {
+                error("Неподдерживаемый статус для applyAnimalStatus: $status")
+            }
+        }
     }
 
 }

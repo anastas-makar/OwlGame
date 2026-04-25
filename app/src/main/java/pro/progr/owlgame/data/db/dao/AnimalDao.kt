@@ -46,4 +46,19 @@ interface AnimalDao {
         newStatus: AnimalStatus,
         expectedOldStatus: AnimalStatus
     ): Int
+
+    @Query(
+        """
+    UPDATE animals
+    SET status = :newStatus,
+        statusExpiresAt = :statusExpiresAt
+    WHERE id = :animalId AND status = :expectedOldStatus
+"""
+    )
+    suspend fun updateStatusWithUntilIfCurrent(
+        animalId: String,
+        newStatus: AnimalStatus,
+        expectedOldStatus: AnimalStatus,
+        statusExpiresAt: Long?
+    ): Int
 }

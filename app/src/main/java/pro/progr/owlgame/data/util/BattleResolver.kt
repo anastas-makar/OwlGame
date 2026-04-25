@@ -1,18 +1,17 @@
-package pro.progr.owlgame.domain.usecase
+package pro.progr.owlgame.data.util
 
-import pro.progr.owlgame.domain.model.AnimalStatus
-import pro.progr.owlgame.domain.model.BattleResolution
-import pro.progr.owlgame.domain.model.EnemyModel
-import pro.progr.owlgame.domain.model.EnemyStatus
-import pro.progr.owlgame.domain.model.ExpeditionModel
-import pro.progr.owlgame.domain.model.ExpeditionStatus
-import pro.progr.owlgame.domain.model.MapType
+import pro.progr.owlgame.data.db.entity.Enemy
+import pro.progr.owlgame.data.db.entity.Expedition
+import pro.progr.owlgame.data.db.model.AnimalStatus
+import pro.progr.owlgame.data.db.model.MapType
+import pro.progr.owlgame.data.model.BattleResolution
+import pro.progr.owlgame.data.model.ExpeditionStatus
 import javax.inject.Inject
 
-class ResolveBattleUseCase @Inject constructor() {
+class BattleResolver @Inject constructor() {
     operator fun invoke(
-        expedition: ExpeditionModel,
-        enemies: List<EnemyModel>,
+        expedition: Expedition,
+        enemies: List<Enemy>,
         availableTicks: Long
     ): BattleResolution {
         var remainingTicks = availableTicks
@@ -20,14 +19,14 @@ class ResolveBattleUseCase @Inject constructor() {
         var expeditionDamage = expedition.damageAmount
 
         val sortedEnemies = enemies
-            .sortedWith(compareBy<EnemyModel>({ it.x }, { it.id }))
+            .sortedWith(compareBy<Enemy>({ it.x }, { it.id }))
             .map { it.copy() }
             .toMutableList()
 
         for (index in sortedEnemies.indices) {
             val enemy = sortedEnemies[index]
 
-            if (enemy.status == EnemyStatus.DEFEATED) {
+            if (enemy.isDefeated) {
                 continue
             }
 
@@ -63,7 +62,7 @@ class ResolveBattleUseCase @Inject constructor() {
             sortedEnemies[index] = enemy.copy(
                 healAmount = enemyHeal.coerceAtLeast(0),
                 damageAmount = enemyDamage.coerceAtLeast(0),
-                status = if (enemyDead) EnemyStatus.DEFEATED else enemy.status
+                isDefeated = enemyDead
             )
 
             if (expeditionDead) {
@@ -83,7 +82,7 @@ class ResolveBattleUseCase @Inject constructor() {
             }
         }
 
-        val allDefeated = sortedEnemies.all { it.status == EnemyStatus.DEFEATED }
+        val allDefeated = sortedEnemies.all { it.isDefeated }
 
         return if (allDefeated) {
             BattleResolution(

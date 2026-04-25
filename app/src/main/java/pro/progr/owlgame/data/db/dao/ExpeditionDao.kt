@@ -45,18 +45,30 @@ interface ExpeditionDao {
     ): Int
 
     @Query("""
-        UPDATE expeditions
-        SET healAmount = :healAmount,
-            damageAmount = :damageAmount,
-            animalId = :animalId,
-            status = :status
-        WHERE id = :expeditionId
-    """)
+    UPDATE expeditions
+    SET healAmount = :healAmount,
+        damageAmount = :damageAmount,
+        animalId = :animalId,
+        status = :status,
+        lastBattleUpdateTime = :lastBattleUpdateTime
+    WHERE id = :expeditionId
+""")
     suspend fun updateStartData(
         expeditionId: String,
         healAmount: Int,
         damageAmount: Int,
         animalId: String,
-        status: ExpeditionStatus
+        status: ExpeditionStatus,
+        lastBattleUpdateTime: Long
+    ): Int
+
+    @Query("""
+    UPDATE expeditions
+    SET lastBattleUpdateTime = :lastBattleUpdateTime
+    WHERE id = :expeditionId
+""")
+    suspend fun updateLastBattleUpdateTime(
+        expeditionId: String,
+        lastBattleUpdateTime: Long
     ): Int
 }

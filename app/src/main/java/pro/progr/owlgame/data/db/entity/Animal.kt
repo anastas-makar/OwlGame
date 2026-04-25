@@ -11,5 +11,6 @@ data class Animal(
     val kind : String,
     val name: String,
     val imagePath: String,
-    val status: AnimalStatus
+    val status: AnimalStatus,
+    val statusExpiresAt: Long? = null
 )

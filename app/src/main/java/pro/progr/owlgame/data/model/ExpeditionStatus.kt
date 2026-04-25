@@ -2,6 +2,6 @@ package pro.progr.owlgame.data.model
 
 enum class ExpeditionStatus {
     ACTIVE,
-    WIN,
-    FAIL
+    WON,
+    LOST
 }

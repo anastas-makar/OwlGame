@@ -90,8 +90,8 @@ fun DbEffectType.toDomain() : DomainEffectType =
 fun DbExpeditionStatus.toDomain() : DomainExpeditionStatus =
     when (this) {
         DbExpeditionStatus.ACTIVE -> DomainExpeditionStatus.ACTIVE
-        DbExpeditionStatus.WIN -> DomainExpeditionStatus.WON
-        DbExpeditionStatus.FAIL -> DomainExpeditionStatus.LOST
+        DbExpeditionStatus.WON -> DomainExpeditionStatus.WON
+        DbExpeditionStatus.LOST -> DomainExpeditionStatus.LOST
     }
 
 fun DbFurnitureType.toDomain(): DomainFurnitureType =

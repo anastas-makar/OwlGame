@@ -22,5 +22,7 @@ interface ExpeditionsRepository {
         animalId: String?
     ): Int
 
+    suspend fun resolveExpeditionProgress(expeditionId: String): Result<Unit>
+
 }
 
