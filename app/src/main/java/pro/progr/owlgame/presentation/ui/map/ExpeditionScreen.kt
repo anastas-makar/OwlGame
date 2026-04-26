@@ -53,6 +53,14 @@ fun ExpeditionScreen(
         }
     }
 
+    val expeditionId = map.value.expedition?.id
+
+    LaunchedEffect(expeditionId) {
+        if (expeditionId != null) {
+            mapViewModel.resolveExpeditionProgress(expeditionId)
+        }
+    }
+
     Scaffold(
         snackbarHost = { SnackbarHost(snackbarHostState, modifier = Modifier.navigationBarsPadding()) },
         topBar = { Box(Modifier.statusBarsPadding()) { MapBar(navController, mapViewModel) } },

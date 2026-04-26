@@ -138,4 +138,10 @@ class MapViewModel @Inject constructor(
         }
     }
 
+    fun resolveExpeditionProgress(expeditionId: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            expeditionsRepository.resolveExpeditionProgress(expeditionId)
+        }
+    }
+
 }
