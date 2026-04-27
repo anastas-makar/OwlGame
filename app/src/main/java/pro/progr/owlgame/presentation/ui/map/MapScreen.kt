@@ -10,6 +10,7 @@ import pro.progr.owlgame.domain.model.MapWithDataModel
 import pro.progr.owlgame.domain.model.MapType
 import pro.progr.owlgame.presentation.viewmodel.MapViewModel
 import pro.progr.owlgame.presentation.viewmodel.dagger.DaggerExpeditionPreparationViewModel
+import pro.progr.owlgame.presentation.viewmodel.dagger.DaggerExpeditionScreenViewModel
 
 @Composable
 fun MapScreen(
@@ -40,6 +41,7 @@ fun MapScreen(
             navController,
             diamondDao,
             mapViewModel,
+            DaggerExpeditionScreenViewModel(component, map.value.id),
             map)
         MapType.LOADING -> Text("Загрузка")
     }

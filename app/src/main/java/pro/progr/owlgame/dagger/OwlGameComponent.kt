@@ -11,6 +11,7 @@ import pro.progr.owlgame.presentation.viewmodel.dagger.AnimalViewModelFactory
 import pro.progr.owlgame.presentation.viewmodel.dagger.BuildingViewModelFactory
 import pro.progr.owlgame.presentation.viewmodel.dagger.CraftViewModelFactory
 import pro.progr.owlgame.presentation.viewmodel.dagger.ExpeditionPreparationViewModelFactory
+import pro.progr.owlgame.presentation.viewmodel.dagger.ExpeditionScreenViewModelFactory
 import pro.progr.owlgame.presentation.viewmodel.dagger.FabViewModelFactory
 import pro.progr.owlgame.presentation.viewmodel.dagger.GardenZoneViewModelFactory
 import pro.progr.owlgame.presentation.viewmodel.dagger.KitchenGardenViewModelFactory
@@ -38,6 +39,8 @@ interface OwlGameComponent {
     fun buildingViewModelFactory(): BuildingViewModelFactory
 
     fun expeditionPreparationViewModelFactory(): ExpeditionPreparationViewModelFactory
+
+    fun expeditionScreenViewModelFactory(): ExpeditionScreenViewModelFactory
 
     fun gardenZoneViewModelFactory(): GardenZoneViewModelFactory
 
