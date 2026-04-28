@@ -8,7 +8,7 @@ import pro.progr.owlgame.domain.model.StartExpeditionRequest
 
 interface ExpeditionsRepository {
 
-    fun getExpeditionWithData(mapId: String) : Flow<ExpeditionWithDataModel>
+    fun getExpeditionWithData(mapId: String) : Flow<ExpeditionWithDataModel?>
 
     suspend fun startExpedition(
         diamondDao: PurchaseInterface,

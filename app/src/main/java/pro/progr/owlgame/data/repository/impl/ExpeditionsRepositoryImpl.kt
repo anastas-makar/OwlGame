@@ -45,8 +45,9 @@ class ExpeditionsRepositoryImpl @Inject constructor(
 
     private val mutex = Mutex()
 
-    override fun getExpeditionWithData(mapId: String) : Flow<ExpeditionWithDataModel> {
-        return expeditionWithDataDao.getExpeditionWithData(mapId).map { it.toDomain() }
+    override fun getExpeditionWithData(mapId: String): Flow<ExpeditionWithDataModel?> {
+        return expeditionWithDataDao.getExpeditionWithData(mapId)
+            .map { expedition -> expedition?.toDomain() }
     }
 
     override suspend fun startExpedition(

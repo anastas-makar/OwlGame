@@ -12,7 +12,7 @@ interface ExpeditionWithDataDao {
     @Transaction
     @Query("SELECT * FROM expeditions WHERE mapId = :mapId AND status = :status LIMIT 1")
     fun getExpeditionWithData(mapId: String,
-                              status: ExpeditionStatus = ExpeditionStatus.ACTIVE): Flow<ExpeditionWithData>
+                              status: ExpeditionStatus = ExpeditionStatus.ACTIVE): Flow<ExpeditionWithData?>
 
     @Transaction
     @Query("SELECT * FROM expeditions WHERE id = :expeditionId LIMIT 1")

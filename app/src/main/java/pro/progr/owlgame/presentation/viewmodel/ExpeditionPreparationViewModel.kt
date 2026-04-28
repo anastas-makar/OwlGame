@@ -51,10 +51,10 @@ class ExpeditionPreparationViewModel @Inject constructor(
             selectedAmounts
         ) { supplies: List<SupplyModel>,
             pets: List<AnimalModel>,
-            expeditionWithData: ExpeditionWithDataModel,
+            expeditionWithData: ExpeditionWithDataModel?,
             selected: Map<String, Int> ->
 
-            val selectedAnimalId = expeditionWithData.animalId
+            val selectedAnimalId = expeditionWithData?.animalId
             val selectedAnimal = pets.firstOrNull { it.id == selectedAnimalId }
 
             Pair(
