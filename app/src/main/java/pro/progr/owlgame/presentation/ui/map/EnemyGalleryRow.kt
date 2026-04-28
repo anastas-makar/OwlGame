@@ -24,7 +24,7 @@ fun EnemyGalleryRow(
         contentPadding = PaddingValues(horizontal = 8.dp),
         horizontalArrangement = Arrangement.spacedBy(8.dp)
     ) {
-        items(enemies.size, key = { enemies }) { index ->
+        items(enemies.size, key = { index -> enemies[index].id }) { index ->
             val enemy = enemies[index]
             EnemyGalleryCard(
                 enemy = enemy,
