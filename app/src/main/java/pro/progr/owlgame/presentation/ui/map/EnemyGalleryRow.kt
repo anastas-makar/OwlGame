@@ -8,6 +8,7 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.compose.foundation.lazy.items
 import pro.progr.owlgame.domain.model.EnemyModel
 
 @Composable
@@ -24,8 +25,8 @@ fun EnemyGalleryRow(
         contentPadding = PaddingValues(horizontal = 8.dp),
         horizontalArrangement = Arrangement.spacedBy(8.dp)
     ) {
-        items(enemies.size, key = { index -> enemies[index].id }) { index ->
-            val enemy = enemies[index]
+        items(items = enemies,
+            key = { enemy -> enemy.id }) { enemy ->
             EnemyGalleryCard(
                 enemy = enemy,
                 onClick = { onEnemyClick(enemy) }
