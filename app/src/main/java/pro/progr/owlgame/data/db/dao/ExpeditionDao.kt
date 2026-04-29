@@ -48,6 +48,8 @@ interface ExpeditionDao {
     UPDATE expeditions
     SET healAmount = :healAmount,
         damageAmount = :damageAmount,
+        maxHealAmount = :maxHealAmount,
+        maxDamageAmount = :maxDamageAmount,
         animalId = :animalId,
         status = :status,
         lastBattleUpdateTime = :lastBattleUpdateTime
@@ -57,6 +59,8 @@ interface ExpeditionDao {
         expeditionId: String,
         healAmount: Int,
         damageAmount: Int,
+        maxHealAmount: Int,
+        maxDamageAmount: Int,
         animalId: String,
         status: ExpeditionStatus,
         lastBattleUpdateTime: Long

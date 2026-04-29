@@ -20,7 +20,7 @@ import androidx.room.PrimaryKey
         )
     ]
 )
-data class Enemy (
+data class Enemy(
     @PrimaryKey
     val id: String,
     val expeditionId: String,
@@ -29,6 +29,8 @@ data class Enemy (
     val imageUrl: String,
     val healAmount: Int,
     val damageAmount: Int,
+    val maxHealAmount: Int,
+    val maxDamageAmount: Int,
     val x: Float,
     val y: Float,
     val isDefeated: Boolean = false

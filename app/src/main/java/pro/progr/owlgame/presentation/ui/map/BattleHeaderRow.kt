@@ -31,7 +31,9 @@ fun BattleHeaderRow(
             title = animal?.let { "${it.kind} ${it.name}" } ?: "Животное",
             imageUrl = animal?.imagePath,
             heal = expedition?.healAmount,
+            maxHeal = expedition?.maxHealAmount,
             damage = expedition?.damageAmount,
+            maxDamage = expedition?.maxDamageAmount,
             subtitle = "Ваш боец",
             dimmed = false,
             onClick = onAnimalClick
@@ -43,7 +45,9 @@ fun BattleHeaderRow(
                 title = enemy.name,
                 imageUrl = enemy.imageUrl,
                 heal = enemy.healAmount,
+                maxHeal = enemy.maxHealAmount,
                 damage = enemy.damageAmount,
+                maxDamage = enemy.maxDamageAmount,
                 subtitle = "Активный враг",
                 dimmed = false,
                 onClick = onActiveEnemyClick

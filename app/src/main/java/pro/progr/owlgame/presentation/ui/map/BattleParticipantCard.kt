@@ -22,7 +22,9 @@ fun BattleParticipantCard(
     title: String,
     imageUrl: String?,
     heal: Int?,
+    maxHeal: Int?,
     damage: Int?,
+    maxDamage: Int?,
     subtitle: String,
     dimmed: Boolean,
     onClick: () -> Unit
@@ -47,9 +49,23 @@ fun BattleParticipantCard(
             Text(title, style = MaterialTheme.typography.subtitle1)
             Text(subtitle, style = MaterialTheme.typography.caption)
 
-            if (heal != null && damage != null) {
+            if (heal != null && damage != null
+                && maxHeal != null && maxDamage != null) {
                 Spacer(Modifier.height(8.dp))
                 Text("Heal: $heal")
+                BattleStatBar(
+                    label = "Heal",
+                    current = heal,
+                    max = maxHeal
+                )
+
+                Spacer(modifier = Modifier.height(8.dp))
+
+                BattleStatBar(
+                    label = "Damage",
+                    current = damage,
+                    max = maxDamage
+                )
                 Text("Damage: $damage")
             }
         }

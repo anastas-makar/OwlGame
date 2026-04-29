@@ -8,4 +8,7 @@ data class ExpeditionModel(
     val animalId: String?,
     val healAmount: Int,
     val damageAmount: Int,
-    val status: ExpeditionStatus = ExpeditionStatus.ACTIVE)
+    val maxHealAmount: Int,
+    val maxDamageAmount: Int,
+    val status: ExpeditionStatus = ExpeditionStatus.ACTIVE
+)

@@ -217,6 +217,8 @@ fun Expedition.toDomain(): ExpeditionModel =
         animalId = animalId,
         healAmount = healAmount,
         damageAmount = damageAmount,
+        maxHealAmount = maxHealAmount,
+        maxDamageAmount = maxDamageAmount,
         status = status.toDomain()
     )
 
@@ -229,6 +231,8 @@ private fun Enemy.toDomain(activeEnemyId: String?): EnemyModel =
         imageUrl = imageUrl,
         healAmount = healAmount,
         damageAmount = damageAmount,
+        maxHealAmount = maxHealAmount,
+        maxDamageAmount = maxDamageAmount,
         x = x,
         y = y,
         status = when {
@@ -253,6 +257,8 @@ fun ExpeditionWithData.toDomain(): ExpeditionWithDataModel {
         animalId = expedition.animalId,
         healAmount = expedition.healAmount,
         damageAmount = expedition.damageAmount,
+        maxHealAmount = expedition.maxHealAmount,
+        maxDamageAmount = expedition.maxDamageAmount,
         status = expedition.status.toDomain(),
         enemies = sortedEnemies.map { it.toDomain(activeEnemyId) }
     )

@@ -133,6 +133,8 @@ class ExpeditionsRepositoryImpl @Inject constructor(
                     expeditionId = expedition.id,
                     healAmount = totalHeal,
                     damageAmount = totalDamage,
+                    maxHealAmount = totalHeal,
+                    maxDamageAmount = totalDamage,
                     animalId = request.animalId,
                     status = ExpeditionStatus.ACTIVE,
                     lastBattleUpdateTime = clock.millis()

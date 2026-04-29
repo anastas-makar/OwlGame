@@ -6,7 +6,8 @@ import androidx.room.Index
 import androidx.room.PrimaryKey
 import pro.progr.owlgame.data.model.ExpeditionStatus
 
-@Entity(tableName = "expeditions",
+@Entity(
+    tableName = "expeditions",
     indices = [
         Index(value = ["mapId"])
     ],
@@ -25,7 +26,8 @@ import pro.progr.owlgame.data.model.ExpeditionStatus
             onDelete = ForeignKey.CASCADE,
             onUpdate = ForeignKey.CASCADE
         )
-    ])
+    ]
+)
 data class Expedition(
     @PrimaryKey
     val id: String,
@@ -35,6 +37,8 @@ data class Expedition(
     val animalId: String?,
     val healAmount: Int,
     val damageAmount: Int,
+    val maxHealAmount: Int,
+    val maxDamageAmount: Int,
     val lastBattleUpdateTime: Long? = null,
     val status: ExpeditionStatus = ExpeditionStatus.ACTIVE
 )
