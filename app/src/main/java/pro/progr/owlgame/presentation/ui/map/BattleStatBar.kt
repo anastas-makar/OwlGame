@@ -7,6 +7,7 @@ import androidx.compose.material.LinearProgressIndicator
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 
 @Composable
@@ -14,12 +15,14 @@ fun BattleStatBar(
     label: String,
     current: Int,
     max: Int,
+    color: Color,
     modifier: Modifier = Modifier
 ) {
     Column(modifier = modifier) {
         Text(text = "$label: $current / $max")
         LinearProgressIndicator(
             progress = progress(current, max),
+            color = color,
             modifier = Modifier
                 .fillMaxWidth()
                 .height(8.dp)

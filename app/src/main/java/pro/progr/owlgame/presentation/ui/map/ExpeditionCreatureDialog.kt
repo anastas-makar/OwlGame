@@ -12,6 +12,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.ColorMatrix
 import androidx.compose.ui.layout.ContentScale
@@ -52,8 +53,22 @@ fun ExpeditionCreatureDialog(
                         )
                         Text("Статус: в экспедиции")
                         Spacer(Modifier.height(8.dp))
-                        Text("Heal: ${target.expedition.healAmount}")
-                        Text("Damage: ${target.expedition.damageAmount}")
+                        Spacer(Modifier.height(8.dp))
+                        BattleStatBar(
+                            label = "Защита",
+                            current = target.expedition.healAmount,
+                            max = target.expedition.maxHealAmount,
+                            color = Color(0xFF4CAF50)
+                        )
+
+                        Spacer(modifier = Modifier.height(8.dp))
+
+                        BattleStatBar(
+                            label = "Атака",
+                            current = target.expedition.damageAmount,
+                            max = target.expedition.maxDamageAmount,
+                            color = Color(0xFFE53935)
+                        )
                     }
 
                     is ExpeditionCreatureDetails.EnemyDetails -> {
@@ -90,8 +105,21 @@ fun ExpeditionCreatureDialog(
 
                         if (enemy.status == EnemyStatus.ACTIVE) {
                             Spacer(Modifier.height(8.dp))
-                            Text("Heal: ${enemy.healAmount}")
-                            Text("Damage: ${enemy.damageAmount}")
+                            BattleStatBar(
+                                label = "Защита",
+                                current = target.enemy.healAmount,
+                                max = target.enemy.maxHealAmount,
+                                color = Color(0xFF4CAF50)
+                            )
+
+                            Spacer(modifier = Modifier.height(8.dp))
+
+                            BattleStatBar(
+                                label = "Атака",
+                                current = target.enemy.damageAmount,
+                                max = target.enemy.maxDamageAmount,
+                                color = Color(0xFFE53935)
+                            )
                         }
                     }
                 }

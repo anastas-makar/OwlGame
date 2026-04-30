@@ -12,6 +12,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
@@ -52,21 +53,21 @@ fun BattleParticipantCard(
             if (heal != null && damage != null
                 && maxHeal != null && maxDamage != null) {
                 Spacer(Modifier.height(8.dp))
-                Text("Heal: $heal")
                 BattleStatBar(
-                    label = "Heal",
+                    label = "Защита",
                     current = heal,
-                    max = maxHeal
+                    max = maxHeal,
+                    color = Color(0xFF4CAF50)
                 )
 
                 Spacer(modifier = Modifier.height(8.dp))
 
                 BattleStatBar(
-                    label = "Damage",
+                    label = "Атака",
                     current = damage,
-                    max = maxDamage
+                    max = maxDamage,
+                    color = Color(0xFFE53935)
                 )
-                Text("Damage: $damage")
             }
         }
     }
