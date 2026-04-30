@@ -75,7 +75,9 @@ class MapsRepositoryImpl @Inject constructor(
                     description = expeditionModel.description,
                     mapId = mapModel.id,
                     healAmount = 0,
+                    maxHealAmount = 0,
                     damageAmount = 0,
+                    maxDamageAmount = 0,
                     animalId = null
                 )
 
@@ -87,7 +89,9 @@ class MapsRepositoryImpl @Inject constructor(
                         description = enemyModel.description,
                         imageUrl = enemyModel.imageUrl,
                         healAmount = enemyModel.healAmount,
+                        maxHealAmount = enemyModel.maxHealAmount,
                         damageAmount = enemyModel.damageAmount,
+                        maxDamageAmount = enemyModel.maxDamageAmount,
                         x = enemyModel.x,
                         y = enemyModel.y
                     )

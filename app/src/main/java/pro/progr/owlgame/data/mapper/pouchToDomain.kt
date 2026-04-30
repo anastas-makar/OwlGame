@@ -94,7 +94,9 @@ fun ExpeditionInPouch.toDomain(mapId: String): ExpeditionWithDataModel =
         mapId = mapId,
         animalId = null,
         healAmount = 0,
+        maxHealAmount = 0,
         damageAmount = 0,
+        maxDamageAmount = 0,
         status = ExpeditionStatus.ACTIVE,
         enemies = enemies.map { it.toDomain(expeditionId = id) }
     )
@@ -107,7 +109,9 @@ fun EnemyInPouch.toDomain(expeditionId: String): EnemyModel =
         description = description,
         imageUrl = imageUrl,
         healAmount = healAmount,
+        maxHealAmount = healAmount,
         damageAmount = damageAmount,
+        maxDamageAmount = damageAmount,
         x = x,
         y = y,
         status = EnemyStatus.UNTOUCHED
