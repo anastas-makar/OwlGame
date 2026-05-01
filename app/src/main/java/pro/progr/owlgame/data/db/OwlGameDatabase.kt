@@ -23,6 +23,7 @@ import pro.progr.owlgame.data.db.dao.StreetsDao
 import pro.progr.owlgame.data.db.dao.SuppliesDao
 import pro.progr.owlgame.data.db.dao.SupplyToRecipeDao
 import pro.progr.owlgame.data.db.entity.Animal
+import pro.progr.owlgame.data.db.entity.AnimalMedal
 import pro.progr.owlgame.data.db.entity.Book
 import pro.progr.owlgame.data.db.entity.Building
 import pro.progr.owlgame.data.db.entity.Chapter
@@ -43,6 +44,7 @@ import pro.progr.owlgame.data.db.entity.SupplyToRecipe
     Building::class,
     MapEntity::class,
     Animal::class,
+    AnimalMedal::class,
     Street::class,
     Garden::class,
     GardenItem::class,
