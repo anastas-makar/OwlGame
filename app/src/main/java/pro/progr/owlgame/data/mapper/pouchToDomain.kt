@@ -4,6 +4,7 @@ import pro.progr.owlgame.data.web.inpouch.BuildingInPouch
 import pro.progr.owlgame.data.web.inpouch.DiamondsInPouch
 import pro.progr.owlgame.data.web.inpouch.EnemyInPouch
 import pro.progr.owlgame.data.web.inpouch.ExpeditionInPouch
+import pro.progr.owlgame.data.web.inpouch.ExpeditionMedalInPouch
 import pro.progr.owlgame.data.web.inpouch.FurnitureInPouch
 import pro.progr.owlgame.data.web.inpouch.GardenInPouch
 import pro.progr.owlgame.data.web.inpouch.GardenItemInPouch
@@ -18,6 +19,7 @@ import pro.progr.owlgame.domain.model.BuildingWithDataModel
 import pro.progr.owlgame.domain.model.DiamondsModel
 import pro.progr.owlgame.domain.model.EnemyModel
 import pro.progr.owlgame.domain.model.EnemyStatus
+import pro.progr.owlgame.domain.model.ExpeditionMedalModel
 import pro.progr.owlgame.domain.model.ExpeditionStatus
 import pro.progr.owlgame.domain.model.ExpeditionWithDataModel
 import pro.progr.owlgame.domain.model.FurnitureModel
@@ -86,6 +88,17 @@ fun MapInPouch.toDomain(): MapWithDataModel =
         expedition = expedition?.toDomain(mapId = id)
     )
 
+fun ExpeditionMedalInPouch.toDomain(mapId: String, expeditionId: String, animalId: String?): ExpeditionMedalModel =
+    ExpeditionMedalModel (
+        id = id,
+        mapId = mapId,
+        expeditionId = expeditionId,
+        animalId = animalId,
+        title = title,
+        description = description,
+        imageUrl = imageUrl
+    )
+
 fun ExpeditionInPouch.toDomain(mapId: String): ExpeditionWithDataModel =
     ExpeditionWithDataModel(
         id = id,
@@ -98,7 +111,8 @@ fun ExpeditionInPouch.toDomain(mapId: String): ExpeditionWithDataModel =
         damageAmount = 0,
         maxDamageAmount = 0,
         status = ExpeditionStatus.ACTIVE,
-        enemies = enemies.map { it.toDomain(expeditionId = id) }
+        enemies = enemies.map { it.toDomain(expeditionId = id) },
+        medal = medal.toDomain(mapId = mapId, expeditionId = id, animalId = null)
     )
 
 fun EnemyInPouch.toDomain(expeditionId: String): EnemyModel =

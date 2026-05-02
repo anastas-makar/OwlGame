@@ -11,7 +11,9 @@ import pro.progr.owlgame.data.db.dao.MapDao
 import pro.progr.owlgame.data.db.entity.MapEntity
 import pro.progr.owlgame.data.db.dao.MapWithDataDao
 import pro.progr.owlgame.data.db.OwlGameDatabase
+import pro.progr.owlgame.data.db.dao.ExpeditionMedalDao
 import pro.progr.owlgame.data.db.embedded.MapWithData
+import pro.progr.owlgame.data.db.entity.ExpeditionMedal
 import pro.progr.owlgame.data.mapper.toData
 import pro.progr.owlgame.domain.model.MapType
 import pro.progr.owlgame.data.mapper.toDomain
@@ -28,6 +30,7 @@ class MapsRepositoryImpl @Inject constructor(
     private val mapsWithDataDao: MapWithDataDao,
     private val expeditionDao: ExpeditionDao,
     private val enemyDao: EnemyDao,
+    private val expeditionMedalDao: ExpeditionMedalDao,
     private val database: OwlGameDatabase
 ) : MapsRepository {
 
@@ -54,6 +57,7 @@ class MapsRepositoryImpl @Inject constructor(
         val mapEntities = mutableListOf<MapEntity>()
         val expeditionEntities = mutableListOf<Expedition>()
         val enemyEntities = mutableListOf<Enemy>()
+        val medalEntities = mutableListOf<ExpeditionMedal>()
 
         mapModels.forEach { mapModel ->
 
@@ -96,6 +100,8 @@ class MapsRepositoryImpl @Inject constructor(
                         y = enemyModel.y
                     )
                 }
+
+                medalEntities += expeditionModel.medal.toData()
             }
         }
 
@@ -103,6 +109,7 @@ class MapsRepositoryImpl @Inject constructor(
             mapDao.insertMaps(mapEntities)
             expeditionDao.insert(expeditionEntities)
             enemyDao.insert(enemyEntities)
+            expeditionMedalDao.insert(medalEntities)
         }
     }
 

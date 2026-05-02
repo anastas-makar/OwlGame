@@ -89,7 +89,8 @@ class BattleResolver @Inject constructor() {
                 expeditionHeal = expeditionHeal,
                 expeditionDamage = expeditionDamage,
                 updatedEnemies = sortedEnemies,
-                expeditionStatus = ExpeditionStatus.WON,
+                expeditionStatus = ExpeditionStatus.LOOT_AVAILABLE,
+                medalForAnimal = true,
                 mapType = MapType.FREE,
                 animalStatus = AnimalStatus.PET,
                 appliedTicks = availableTicks - remainingTicks

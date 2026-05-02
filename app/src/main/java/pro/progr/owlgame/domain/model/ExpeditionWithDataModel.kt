@@ -11,5 +11,6 @@ data class ExpeditionWithDataModel(
     val maxHealAmount: Int,
     val maxDamageAmount: Int,
     val status: ExpeditionStatus = ExpeditionStatus.ACTIVE,
-    val enemies: List<EnemyModel>
+    val enemies: List<EnemyModel>,
+    val medal: ExpeditionMedalModel
 )

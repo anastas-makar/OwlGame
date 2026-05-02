@@ -10,6 +10,7 @@ import pro.progr.owlgame.data.db.OwlGameDatabase
 import pro.progr.owlgame.data.db.dao.AnimalDao
 import pro.progr.owlgame.data.db.dao.EnemyDao
 import pro.progr.owlgame.data.db.dao.ExpeditionDao
+import pro.progr.owlgame.data.db.dao.ExpeditionMedalDao
 import pro.progr.owlgame.data.db.dao.ExpeditionWithDataDao
 import pro.progr.owlgame.data.db.dao.MapDao
 import pro.progr.owlgame.data.db.dao.SuppliesDao
@@ -39,6 +40,7 @@ class ExpeditionsRepositoryImpl @Inject constructor(
     private val mapsDao: MapDao,
     private val animalDao: AnimalDao,
     private val enemyDao: EnemyDao,
+    private val expeditionMedalDao: ExpeditionMedalDao,
     private val resolveBattle: BattleResolver,
     private val clock: Clock
 ) : ExpeditionsRepository {
@@ -236,6 +238,10 @@ class ExpeditionsRepositoryImpl @Inject constructor(
 
                 expedition.animalId?.let { animalId ->
                     applyAnimalStatus(animalId, resolution.animalStatus, now)
+
+                    if (resolution.medalForAnimal) expeditionMedalDao.updateAnimalId(
+                        animalId = animalId,
+                        expeditionId = expedition.id)
                 }
 
                 Unit

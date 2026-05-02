@@ -11,5 +11,6 @@ data class BattleResolution(
     val expeditionStatus: ExpeditionStatus,
     val mapType: MapType,
     val animalStatus: AnimalStatus,
-    val appliedTicks: Long
+    val appliedTicks: Long,
+    val medalForAnimal: Boolean = false
 )

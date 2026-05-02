@@ -8,6 +8,7 @@ import pro.progr.owlgame.data.db.entity.Animal
 import pro.progr.owlgame.data.db.entity.Building
 import pro.progr.owlgame.data.db.entity.Enemy
 import pro.progr.owlgame.data.db.entity.Expedition
+import pro.progr.owlgame.data.db.entity.ExpeditionMedal
 import pro.progr.owlgame.data.db.entity.Furniture
 import pro.progr.owlgame.data.db.entity.Garden
 import pro.progr.owlgame.data.db.entity.GardenItem
@@ -22,6 +23,7 @@ import pro.progr.owlgame.domain.model.BuildingWithAnimalModel
 import pro.progr.owlgame.domain.model.BuildingWithDataModel
 import pro.progr.owlgame.domain.model.EnemyModel
 import pro.progr.owlgame.domain.model.EnemyStatus
+import pro.progr.owlgame.domain.model.ExpeditionMedalModel
 import pro.progr.owlgame.domain.model.ExpeditionModel
 import pro.progr.owlgame.domain.model.ExpeditionWithDataModel
 import pro.progr.owlgame.domain.model.FurnitureModel
@@ -92,6 +94,7 @@ fun DbExpeditionStatus.toDomain() : DomainExpeditionStatus =
         DbExpeditionStatus.ACTIVE -> DomainExpeditionStatus.ACTIVE
         DbExpeditionStatus.WON -> DomainExpeditionStatus.WON
         DbExpeditionStatus.LOST -> DomainExpeditionStatus.LOST
+        DbExpeditionStatus.LOOT_AVAILABLE -> DomainExpeditionStatus.LOOT_AVAILABLE
     }
 
 fun DbFurnitureType.toDomain(): DomainFurnitureType =
@@ -242,6 +245,17 @@ private fun Enemy.toDomain(activeEnemyId: String?): EnemyModel =
         }
     )
 
+fun ExpeditionMedal.toDomain() =
+    ExpeditionMedalModel(
+        id = id,
+        expeditionId = expeditionId,
+        mapId = mapId,
+        title = title,
+        description = description,
+        imageUrl = imageUrl,
+        animalId = animalId
+    )
+
 fun ExpeditionWithData.toDomain(): ExpeditionWithDataModel {
     val sortedEnemies = enemies.sortedWith(compareBy<Enemy>({ it.x }, { it.id }))
 
@@ -260,7 +274,8 @@ fun ExpeditionWithData.toDomain(): ExpeditionWithDataModel {
         maxHealAmount = expedition.maxHealAmount,
         maxDamageAmount = expedition.maxDamageAmount,
         status = expedition.status.toDomain(),
-        enemies = sortedEnemies.map { it.toDomain(activeEnemyId) }
+        enemies = sortedEnemies.map { it.toDomain(activeEnemyId) },
+        medal = medal.toDomain()
     )
 }
 

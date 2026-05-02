@@ -10,6 +10,7 @@ import pro.progr.owlgame.data.db.dao.BuildingWithDataDao
 import pro.progr.owlgame.data.db.dao.BuildingsDao
 import pro.progr.owlgame.data.db.dao.EnemyDao
 import pro.progr.owlgame.data.db.dao.ExpeditionDao
+import pro.progr.owlgame.data.db.dao.ExpeditionMedalDao
 import pro.progr.owlgame.data.db.dao.ExpeditionWithDataDao
 import pro.progr.owlgame.data.db.dao.FurnitureDao
 import pro.progr.owlgame.data.db.dao.GardenItemsDao
@@ -23,7 +24,7 @@ import pro.progr.owlgame.data.db.dao.StreetsDao
 import pro.progr.owlgame.data.db.dao.SuppliesDao
 import pro.progr.owlgame.data.db.dao.SupplyToRecipeDao
 import pro.progr.owlgame.data.db.entity.Animal
-import pro.progr.owlgame.data.db.entity.AnimalMedal
+import pro.progr.owlgame.data.db.entity.ExpeditionMedal
 import pro.progr.owlgame.data.db.entity.Book
 import pro.progr.owlgame.data.db.entity.Building
 import pro.progr.owlgame.data.db.entity.Chapter
@@ -44,7 +45,7 @@ import pro.progr.owlgame.data.db.entity.SupplyToRecipe
     Building::class,
     MapEntity::class,
     Animal::class,
-    AnimalMedal::class,
+    ExpeditionMedal::class,
     Street::class,
     Garden::class,
     GardenItem::class,
@@ -96,6 +97,7 @@ abstract class OwlGameDatabase : RoomDatabase() {
     abstract fun recipesDao(): RecipesDao
 
     abstract fun supplyToRecipesDao(): SupplyToRecipeDao
+    abstract fun expeditionMedalDao(): ExpeditionMedalDao
 
     companion object {
         @Volatile

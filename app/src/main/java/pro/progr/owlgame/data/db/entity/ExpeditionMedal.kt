@@ -3,10 +3,10 @@ package pro.progr.owlgame.data.db.entity
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "animal_medals")
-data class AnimalMedal(
+@Entity(tableName = "expedition_medals")
+data class ExpeditionMedal(
     @PrimaryKey val id: String,
-    val animalId: String,
+    val animalId: String?,
     val expeditionId: String,
     val mapId: String,
     val title: String,
