@@ -24,5 +24,6 @@ interface ExpeditionsRepository {
 
     suspend fun resolveExpeditionProgress(expeditionId: String): Result<Unit>
 
+    fun getLootAvailableExpedition(mapId: String): Flow<ExpeditionWithDataModel?>
 }
 

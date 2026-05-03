@@ -17,4 +17,15 @@ interface ExpeditionWithDataDao {
     @Transaction
     @Query("SELECT * FROM expeditions WHERE id = :expeditionId LIMIT 1")
     suspend fun getExpeditionWithDataById(expeditionId: String): ExpeditionWithData?
+
+    @Transaction
+    @Query("""
+    SELECT * FROM expeditions
+    WHERE mapId = :mapId AND status = :status
+    LIMIT 1
+""")
+    fun getExpeditionWithDataByStatus(
+        mapId: String,
+        status: ExpeditionStatus
+    ): Flow<ExpeditionWithData?>
 }

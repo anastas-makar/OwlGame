@@ -291,5 +291,11 @@ class ExpeditionsRepositoryImpl @Inject constructor(
         }
     }
 
+    override fun getLootAvailableExpedition(mapId: String): Flow<ExpeditionWithDataModel?> {
+        return expeditionWithDataDao
+            .getExpeditionWithDataByStatus(mapId, ExpeditionStatus.LOOT_AVAILABLE)
+            .map { it?.toDomain() }
+    }
+
 }
 
