@@ -11,6 +11,6 @@ interface ExpeditionMedalDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insert(expeditionMedals: List<ExpeditionMedal>): List<Long>
 
-    @Query("UPDATE expedition_medals SET animalId=:animalId WHERE id=:expeditionId")
+    @Query("UPDATE expedition_medals SET animalId=:animalId WHERE expeditionId=:expeditionId")
     fun updateAnimalId(animalId: String, expeditionId: String)
 }
