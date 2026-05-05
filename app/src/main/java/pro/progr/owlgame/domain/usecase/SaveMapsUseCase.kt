@@ -18,7 +18,10 @@ class SaveMapsUseCase @Inject constructor(
                         it.copy(
                             imageUrl = imageRepository.saveImageLocally(it.imageUrl)
                         )
-                    }
+                    },
+                    medal = model.expedition.medal.copy(
+                        imageUrl = imageRepository.saveImageLocally(model.expedition.medal.imageUrl)
+                    )
                 )
             )
         }
