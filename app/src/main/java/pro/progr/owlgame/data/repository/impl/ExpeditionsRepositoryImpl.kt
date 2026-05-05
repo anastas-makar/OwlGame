@@ -297,5 +297,9 @@ class ExpeditionsRepositoryImpl @Inject constructor(
             .map { it?.toDomain() }
     }
 
+    override fun claimExpeditionLoot(expeditionId: String) {
+        TODO("Not yet implemented")
+    }
+
 }
 

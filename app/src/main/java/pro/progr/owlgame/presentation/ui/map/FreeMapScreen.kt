@@ -46,6 +46,7 @@ import pro.progr.owlgame.presentation.ui.fab.FabAction
 import pro.progr.owlgame.presentation.ui.mapicon.DraggableImageOverlay
 import pro.progr.owlgame.presentation.ui.mapicon.enemyIconRes
 import pro.progr.owlgame.domain.model.MapWithDataModel
+import pro.progr.owlgame.presentation.viewmodel.FreeMapViewModel
 import pro.progr.owlgame.presentation.viewmodel.MapViewModel
 
 @Composable
@@ -53,6 +54,7 @@ fun FreeMapScreen(
     navController: NavHostController,
     diamondDao: PurchaseInterface,
     mapViewModel: MapViewModel,
+    freeMapViewModel: FreeMapViewModel,
     map: State<MapWithDataModel>
 ) {
     val foundTown = mapViewModel.foundTown.collectAsState(initial = false)
@@ -62,11 +64,17 @@ fun FreeMapScreen(
 
     var fabExpanded by rememberSaveable { mutableStateOf(false) }
 
-    // Показываем FAB только когда реально можно строить (подстрой под свою логику)
-    val showBuildFab =
-        map.value.id.isNotEmpty() &&
-                //(map.value.type == MapType.TOWN || map.value.type == MapType.FREE) &&
-                !foundTown.value
+    val lootState by freeMapViewModel.lootUiState.collectAsState()
+
+    if (lootState.shouldShowVictoryDialog) {
+        ExpeditionVictoryDialog(
+            expedition = lootState.expedition!!,
+            animal = lootState.animal!!,
+            onExploreClick = {
+                freeMapViewModel.exploreDungeon(lootState.expedition!!.id)
+            }
+        )
+    }
 
     // Если открылись оверлеи — FAB-меню закрываем
     LaunchedEffect(
