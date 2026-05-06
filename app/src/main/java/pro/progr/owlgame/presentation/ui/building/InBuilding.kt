@@ -17,6 +17,7 @@ import pro.progr.owlgame.dagger.OwlGameComponent
 import pro.progr.owlgame.domain.model.BuildingWithDataModel
 import pro.progr.owlgame.presentation.ui.fab.FabViewModel
 import pro.progr.owlgame.presentation.ui.model.GalleryItem
+import pro.progr.owlgame.presentation.viewmodel.dagger.DaggerBuildingFacadeViewModel
 
 @Composable
 fun InBuilding(
@@ -58,7 +59,9 @@ fun InBuilding(
                 .weight(1f)
         ) {
             when (val s = selected) {
-                is GalleryItem.BuildingItem -> BuildingFacade(s.building, fabViewModel)
+                is GalleryItem.BuildingItem -> BuildingFacade(s.building, fabViewModel,
+                    DaggerBuildingFacadeViewModel(component, data.animal?.id)
+                )
                 is GalleryItem.RoomItem -> InRoom(s.room, component, fabViewModel, diamondDao,
                     onMap = data.mapId != null,
                     animal = data.animal,

@@ -8,6 +8,7 @@ import pro.progr.owlgame.data.dagger.DatabaseModule
 import pro.progr.owlgame.data.dagger.NetworkModule
 import pro.progr.owlgame.data.dagger.RepositoryBindingsModule
 import pro.progr.owlgame.presentation.viewmodel.dagger.AnimalViewModelFactory
+import pro.progr.owlgame.presentation.viewmodel.dagger.BuildingFacadeViewModelFactory
 import pro.progr.owlgame.presentation.viewmodel.dagger.BuildingViewModelFactory
 import pro.progr.owlgame.presentation.viewmodel.dagger.CraftViewModelFactory
 import pro.progr.owlgame.presentation.viewmodel.dagger.ExpeditionPreparationViewModelFactory
@@ -60,6 +61,8 @@ interface OwlGameComponent {
     fun widgetViewModelFactory(): WidgetViewModelFactory
 
     fun mapsViewModelFactory() : MapsViewModelFactory
+
+    fun buildingFacadeViewModelFactory() : BuildingFacadeViewModelFactory
 
     @Component.Builder
     interface Builder {
