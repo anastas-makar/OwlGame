@@ -10,22 +10,12 @@ import kotlinx.coroutines.withContext
 import pro.progr.diamondapi.PurchaseInterface
 import pro.progr.owlgame.domain.model.InPouchModel
 import pro.progr.owlgame.domain.repository.PouchesRepository
-import pro.progr.owlgame.domain.usecase.SaveBuildingsUseCase
-import pro.progr.owlgame.domain.usecase.SaveFurnitureUseCase
-import pro.progr.owlgame.domain.usecase.SaveGardenItemsUseCase
-import pro.progr.owlgame.domain.usecase.SaveMapsUseCase
-import pro.progr.owlgame.domain.usecase.SavePlantsUseCase
-import pro.progr.owlgame.domain.usecase.SaveRecipesUseCase
+import pro.progr.owlgame.domain.usecase.SavePouchUseCase
 import javax.inject.Inject
 
 class InPouchViewModel @Inject constructor(
     private val pouchesRepository: PouchesRepository,
-    private val saveMapsUseCase: SaveMapsUseCase,
-    private val saveBuildingsUseCase: SaveBuildingsUseCase,
-    private val savePlantsUseCase: SavePlantsUseCase,
-    private val saveGardenItemsUseCase: SaveGardenItemsUseCase,
-    private val saveFurnitureUseCase: SaveFurnitureUseCase,
-    private val saveRecipesUseCase: SaveRecipesUseCase
+    private val savePouchUseCase: SavePouchUseCase
 ) : ViewModel() {
 
     val inPouch = mutableStateOf<InPouchModel?>(null)
@@ -46,57 +36,11 @@ class InPouchViewModel @Inject constructor(
                 pouchesRepository.getInPouch(pouchId).getOrNull()
             } ?: return@launch
 
-            val mapsWithLocalUrls = withContext(Dispatchers.IO) {
-                if (webPouch.maps.isNotEmpty()) {
-                    saveMapsUseCase(webPouch.maps)
-                } else emptyList()
+            viewModelScope.launch {
+                val newPouch = savePouchUseCase(webPouch, diamondDao)
+                inPouch.value = newPouch
             }
 
-            val buildingsWithLocalUrls = withContext(Dispatchers.IO) {
-                if (webPouch.buildings.isNotEmpty()) {
-                    saveBuildingsUseCase(webPouch.buildings)
-                } else emptyList()
-            }
-
-            val plantsWithLocalUrls = withContext(Dispatchers.IO) {
-                if (webPouch.plants.isNotEmpty()) {
-                    savePlantsUseCase(webPouch.plants)
-                } else emptyList()
-            }
-
-            if (webPouch.diamonds != null) {
-                viewModelScope.launch(Dispatchers.IO) {
-                    diamondDao.spendDiamonds(-webPouch.diamonds.amount)
-                }
-            }
-
-            if (webPouch.recipes.isNotEmpty()) {
-                viewModelScope.launch(Dispatchers.IO) {
-                    saveRecipesUseCase(webPouch.recipes)
-                }
-            }
-
-            val gardenItemsWithLocalUrls = withContext(Dispatchers.IO) {
-                if (webPouch.gardenItems.isNotEmpty()) {
-                    saveGardenItemsUseCase(webPouch.gardenItems)
-                } else emptyList()
-            }
-
-            val furnitureWithLocalUrls = withContext(Dispatchers.IO) {
-                if (webPouch.furniture.isNotEmpty()) {
-                    saveFurnitureUseCase(webPouch.furniture)
-                } else emptyList()
-            }
-
-            inPouch.value = InPouchModel(
-                buildings = buildingsWithLocalUrls,
-                maps = mapsWithLocalUrls,
-                plants = plantsWithLocalUrls,
-                gardenItems = gardenItemsWithLocalUrls,
-                diamonds = webPouch.diamonds,
-                furniture = furnitureWithLocalUrls,
-                recipes = webPouch.recipes
-            )
             lastLoadedPouchId = pouchId
         }
     }
