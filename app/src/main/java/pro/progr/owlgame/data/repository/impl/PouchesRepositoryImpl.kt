@@ -11,18 +11,16 @@ import pro.progr.owlgame.domain.repository.PouchesRepository
 import java.time.Clock
 import java.time.LocalDate
 import javax.inject.Inject
-import javax.inject.Named
 
 class PouchesRepositoryImpl
     @Inject constructor(private val apiService: MapApiService,
                                                 private val prefs: OwlPreferences,
-                                                private val clock: Clock,
-                                                @Named("apiKey") private val apiKey: String)
+                                                private val clock: Clock)
     : PouchesRepository {
 
     override suspend fun getPouches(): Result<List<PouchModel>> {
         return try {
-            val response = apiService.getPouches(apiKey)
+            val response = apiService.getPouches()
             if (response.isSuccessful) {
                 val pouchUrls = response.body() ?: emptyList()
                 val pouches = pouchUrls.map { pouchUrl -> Pouch("todo", pouchUrl) }
@@ -39,7 +37,7 @@ class PouchesRepositoryImpl
 
     override suspend fun getInPouch(pouchId: String): Result<InPouchModel> {
         return try {
-            val response = apiService.getInPouch(pouchId, apiKey)
+            val response = apiService.getInPouch(pouchId)
             if (response.isSuccessful) {
                 prefs.setLastPouchOpenDay(LocalDate.now(clock).toEpochDay())
                 val inPouch = response.body()?.toDomain() ?: InPouchModel()

@@ -6,17 +6,14 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 
 interface MapApiService {
-    @GET("maps")
-    suspend fun getMaps(
-        @Query("apiKey") apiKey: String
-    ): Response<List<Map>>
     @GET("pouches")
-    suspend fun getPouches(
-        @Query("apiKey") apiKey: String
-    ): Response<List<String>>
+    suspend fun getPouches(): Response<List<String>>
     @GET("inPouch")
     suspend fun getInPouch(
-        @Query("pouchId") pouchId: String,
-        @Query("apiKey") apiKey: String
+        @Query("pouchId") pouchId: String
+    ): Response<InPouch>
+    @GET("loot")
+    suspend fun getLoot(
+        @Query("expeditionId") expeditionId: String
     ): Response<InPouch>
 }
