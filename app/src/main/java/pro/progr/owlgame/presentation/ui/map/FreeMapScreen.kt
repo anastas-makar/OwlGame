@@ -25,6 +25,7 @@ import androidx.compose.material.Text
 import androidx.compose.material.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -35,17 +36,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
-import androidx.compose.runtime.State
+import coil.compose.AsyncImage
 import pro.progr.diamondapi.PurchaseInterface
+import pro.progr.owlgame.domain.model.MapWithDataModel
 import pro.progr.owlgame.presentation.ui.MapBar
 import pro.progr.owlgame.presentation.ui.fab.ExpandableFloatingActionButton
 import pro.progr.owlgame.presentation.ui.fab.FabAction
-import pro.progr.owlgame.presentation.ui.mapicon.DraggableImageOverlay
-import pro.progr.owlgame.presentation.ui.mapicon.enemyIconRes
-import pro.progr.owlgame.domain.model.MapWithDataModel
 import pro.progr.owlgame.presentation.viewmodel.FreeMapViewModel
 import pro.progr.owlgame.presentation.viewmodel.MapViewModel
 
@@ -168,18 +166,12 @@ fun FreeMapScreen(
                         }
                     }
 
-                    //todo: переделать на безиконочную
                     Box(Modifier.fillMaxWidth().heightIn(max = 420.dp)) {
-                        DraggableImageOverlay(
-                            backgroundModel = map.value.imageUrl,
-                            items = emptyList<Any>(),
-                            modifier = Modifier.fillMaxWidth(),
-                            keyOf = { 0 },
-                            x01Of = { 0f },
-                            y01Of = { 0f },
-                            isNewOf = { false },
-                            iconPainterOf = { painterResource(enemyIconRes()) },
-                            onCommit01 = { item, x, y ->  },
+                        AsyncImage(
+                            model = map.value.imageUrl,
+                            contentDescription = null,
+                            modifier = Modifier
+                                .fillMaxWidth()
                         )
                     }
                 }
