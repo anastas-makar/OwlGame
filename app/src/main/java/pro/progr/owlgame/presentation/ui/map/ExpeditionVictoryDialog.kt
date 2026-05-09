@@ -25,6 +25,7 @@ import pro.progr.owlgame.domain.model.ExpeditionWithDataModel
 fun ExpeditionVictoryDialog(
     expedition: ExpeditionWithDataModel,
     animal: AnimalModel,
+    isLoading: Boolean,
     onExploreClick: () -> Unit
 ) {
     Dialog(onDismissRequest = {}) {
@@ -72,9 +73,10 @@ fun ExpeditionVictoryDialog(
 
                 Button(
                     onClick = onExploreClick,
+                    enabled = !isLoading,
                     modifier = Modifier.fillMaxWidth()
                 ) {
-                    Text("Обшарить подземелья")
+                    Text(if (isLoading) "Идём в подземелья…" else "Обшарить подземелья")
                 }
             }
         }

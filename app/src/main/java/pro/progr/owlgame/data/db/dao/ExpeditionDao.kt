@@ -75,4 +75,15 @@ interface ExpeditionDao {
         expeditionId: String,
         lastBattleUpdateTime: Long
     ): Int
+
+    @Query("""
+    UPDATE expeditions
+    SET status = :newStatus
+    WHERE id = :expeditionId AND status = :oldStatus
+""")
+    suspend fun updateStatusIfCurrent(
+        expeditionId: String,
+        oldStatus: ExpeditionStatus,
+        newStatus: ExpeditionStatus
+    ): Int
 }

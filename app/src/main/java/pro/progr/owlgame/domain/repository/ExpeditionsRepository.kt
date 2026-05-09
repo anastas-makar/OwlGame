@@ -26,7 +26,7 @@ interface ExpeditionsRepository {
 
     fun getLootAvailableExpedition(mapId: String): Flow<ExpeditionWithDataModel?>
 
-    fun claimExpeditionLoot(expeditionId: String)
+    suspend fun markLootClaimed(expeditionId: String): Result<Unit>
 
 }
 

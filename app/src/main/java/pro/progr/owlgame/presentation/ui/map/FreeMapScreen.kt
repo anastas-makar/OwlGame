@@ -70,8 +70,34 @@ fun FreeMapScreen(
         ExpeditionVictoryDialog(
             expedition = lootState.expedition!!,
             animal = lootState.animal!!,
+            isLoading = lootState.isClaimingLoot,
             onExploreClick = {
-                freeMapViewModel.exploreDungeon(lootState.expedition!!.id)
+                freeMapViewModel.exploreDungeon(lootState.expedition!!.id, diamondDao)
+            }
+        )
+    }
+
+    lootState.claimedLoot?.let { loot ->
+        LootReceivedDialog(
+            loot = loot,
+            onDismiss = { freeMapViewModel.closeClaimedLootDialog() }
+        )
+    }
+
+    LaunchedEffect(lootState.errorMessage) {
+        lootState.errorMessage?.let {
+            snackbarHostState.showSnackbar(it)
+            freeMapViewModel.clearError()
+        }
+    }
+
+    if (lootState.shouldShowVictoryDialog) {
+        ExpeditionVictoryDialog(
+            expedition = lootState.expedition!!,
+            animal = lootState.animal!!,
+            isLoading = lootState.isClaimingLoot,
+            onExploreClick = {
+                freeMapViewModel.exploreDungeon(lootState.expedition!!.id, diamondDao)
             }
         )
     }

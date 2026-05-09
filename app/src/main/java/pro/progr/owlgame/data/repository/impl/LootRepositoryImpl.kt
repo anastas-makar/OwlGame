@@ -9,7 +9,7 @@ import javax.inject.Inject
 class LootRepositoryImpl @Inject constructor(
     private val apiService: MapApiService
 ) : LootRepository {
-    override suspend fun getLoot(expeditionId: String): Result<InPouchModel> {
+    override suspend fun claimExpeditionLoot(expeditionId: String): Result<InPouchModel> {
         return try {
             val response = apiService.getLoot(expeditionId)
             if (response.isSuccessful) {

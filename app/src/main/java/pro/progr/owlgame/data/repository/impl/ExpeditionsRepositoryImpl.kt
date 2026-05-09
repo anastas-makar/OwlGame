@@ -297,9 +297,15 @@ class ExpeditionsRepositoryImpl @Inject constructor(
             .map { it?.toDomain() }
     }
 
-    override fun claimExpeditionLoot(expeditionId: String) {
-        TODO("Not yet implemented")
-    }
+    override suspend fun markLootClaimed(expeditionId: String): Result<Unit> =
+        runCatching {
+            val rows = expeditionsDao.updateStatusIfCurrent(
+                expeditionId = expeditionId,
+                oldStatus = ExpeditionStatus.LOOT_AVAILABLE,
+                newStatus = ExpeditionStatus.WON
+            )
+            check(rows == 1) { "Не удалось закрыть награду экспедиции" }
+        }
 
 }
 
