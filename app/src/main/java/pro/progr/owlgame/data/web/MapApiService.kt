@@ -16,4 +16,9 @@ interface MapApiService {
     suspend fun getLoot(
         @Query("expeditionId") expeditionId: String
     ): Response<InPouch>
+
+    @GET("newExpedition")
+    suspend fun getNewExpedition(
+        @Query("mapId") mapId: String
+    ): Response<InPouch>
 }
