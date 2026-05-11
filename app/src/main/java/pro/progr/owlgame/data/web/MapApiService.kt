@@ -1,5 +1,6 @@
 package pro.progr.owlgame.data.web
 
+import pro.progr.owlgame.data.web.inpouch.ExpeditionInPouch
 import pro.progr.owlgame.data.web.inpouch.InPouch
 import retrofit2.Response
 import retrofit2.http.GET
@@ -20,5 +21,5 @@ interface MapApiService {
     @GET("newExpedition")
     suspend fun getNewExpedition(
         @Query("mapId") mapId: String
-    ): Response<InPouch>
+    ): Response<ExpeditionInPouch>
 }
