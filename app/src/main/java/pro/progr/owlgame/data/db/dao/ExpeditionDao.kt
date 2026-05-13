@@ -4,6 +4,9 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.Transaction
+import kotlinx.coroutines.flow.Flow
+import pro.progr.owlgame.data.db.embedded.ExpeditionWithData
 import pro.progr.owlgame.data.db.entity.Expedition
 import pro.progr.owlgame.data.model.ExpeditionStatus
 
@@ -86,4 +89,16 @@ interface ExpeditionDao {
         oldStatus: ExpeditionStatus,
         newStatus: ExpeditionStatus
     ): Int
+
+    @Transaction
+    @Query("""
+    SELECT * FROM expeditions
+    WHERE mapId = :mapId AND status = :status
+    ORDER BY lastBattleUpdateTime DESC
+    LIMIT 1
+""")
+    fun getLatestLostExpedition(
+        mapId: String,
+        status: ExpeditionStatus = ExpeditionStatus.LOST
+    ): Flow<ExpeditionWithData?>
 }

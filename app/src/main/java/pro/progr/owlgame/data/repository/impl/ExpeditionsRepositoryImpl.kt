@@ -18,8 +18,10 @@ import pro.progr.owlgame.data.db.model.AnimalStatus
 import pro.progr.owlgame.data.db.model.EffectType
 import pro.progr.owlgame.data.db.model.MapType
 import pro.progr.owlgame.data.mapper.toDomain
+import pro.progr.owlgame.data.mapper.toEntity
 import pro.progr.owlgame.data.model.ExpeditionStatus
 import pro.progr.owlgame.data.util.BattleResolver
+import pro.progr.owlgame.data.web.MapApiService
 import pro.progr.owlgame.domain.model.ExpeditionModel
 import pro.progr.owlgame.domain.model.ExpeditionWithDataModel
 import pro.progr.owlgame.domain.model.StartExpeditionRequest
@@ -42,7 +44,8 @@ class ExpeditionsRepositoryImpl @Inject constructor(
     private val enemyDao: EnemyDao,
     private val expeditionMedalDao: ExpeditionMedalDao,
     private val resolveBattle: BattleResolver,
-    private val clock: Clock
+    private val clock: Clock,
+    private val mapApiService: MapApiService
 ) : ExpeditionsRepository {
 
     private val mutex = Mutex()
@@ -306,6 +309,57 @@ class ExpeditionsRepositoryImpl @Inject constructor(
             )
             check(rows == 1) { "Не удалось закрыть награду экспедиции" }
         }
+
+    override fun getLatestLostExpedition(mapId: String): Flow<ExpeditionWithDataModel?> {
+        return expeditionsDao.getLatestLostExpedition(mapId).map {
+            expedition -> expedition?.toDomain() }
+    }
+
+    override suspend fun regroupEnemies(
+        mapId: String,
+        oldExpeditionId: String
+    ): Result<Unit> = mutex.withLock {
+        runCatching {
+            val response = mapApiService.getNewExpedition(mapId)
+
+            if (!response.isSuccessful) {
+                error("Не удалось загрузить новую экспедицию: ${response.errorBody()?.string()}")
+            }
+
+            val expedition = response.body()
+                ?: error("Сервер вернул пустую экспедицию")
+
+            appDatabase.withTransaction {
+
+                val expeditionRows = expeditionsDao.insert(listOf(expedition.toEntity(mapId)))
+                check(expeditionRows.firstOrNull() != -1L) {
+                    "Не удалось сохранить новую экспедицию"
+                }
+
+                val enemyRows = enemyDao.insert(
+                    expedition.enemies.map { it.toEntity(expedition.id) }
+                )
+                check(enemyRows.none { it == -1L }) {
+                    "Не удалось сохранить врагов новой экспедиции"
+                }
+
+                val medalRows = expeditionMedalDao.insert(
+                    listOf(expedition.medal.toEntity(mapId, expedition.id))
+                )
+                check(medalRows.firstOrNull() != -1L) {
+                    "Не удалось сохранить медаль новой экспедиции"
+                }
+
+                mapsDao.updateType(mapId, MapType.OCCUPIED)
+
+                Unit
+            }
+        }
+    }
+
+    override suspend fun escapeExpedition(expeditionId: String): Result<Unit> {
+        TODO("Not yet implemented")
+    }
 
 }
 

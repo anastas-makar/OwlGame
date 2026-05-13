@@ -28,5 +28,10 @@ interface ExpeditionsRepository {
 
     suspend fun markLootClaimed(expeditionId: String): Result<Unit>
 
+    fun getLatestLostExpedition(mapId: String): Flow<ExpeditionWithDataModel?>
+
+    suspend fun regroupEnemies(mapId: String, oldExpeditionId: String): Result<Unit>
+
+    suspend fun escapeExpedition(expeditionId: String): Result<Unit>
 }
 
