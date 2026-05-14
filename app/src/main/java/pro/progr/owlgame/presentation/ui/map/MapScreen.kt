@@ -12,6 +12,7 @@ import pro.progr.owlgame.presentation.viewmodel.MapViewModel
 import pro.progr.owlgame.presentation.viewmodel.dagger.DaggerExpeditionPreparationViewModel
 import pro.progr.owlgame.presentation.viewmodel.dagger.DaggerExpeditionScreenViewModel
 import pro.progr.owlgame.presentation.viewmodel.dagger.DaggerFreeMapViewModel
+import pro.progr.owlgame.presentation.viewmodel.dagger.DaggerOccupiedMapViewModel
 
 @Composable
 fun MapScreen(
@@ -38,7 +39,8 @@ fun MapScreen(
             diamondDao,
             mapViewModel,
             map,
-            DaggerExpeditionPreparationViewModel(component, map.value.id))
+            DaggerExpeditionPreparationViewModel(component, map.value.id),
+        DaggerOccupiedMapViewModel(component, map.value.id))
         MapType.EXPEDITION -> ExpeditionScreen(
             navController,
             diamondDao,

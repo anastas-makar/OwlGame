@@ -44,6 +44,7 @@ import pro.progr.owlgame.presentation.ui.mapicon.enemyIconRes
 import pro.progr.owlgame.domain.model.MapWithDataModel
 import pro.progr.owlgame.presentation.viewmodel.ExpeditionPreparationViewModel
 import pro.progr.owlgame.presentation.viewmodel.MapViewModel
+import pro.progr.owlgame.presentation.viewmodel.OccupiedMapViewModel
 
 @Composable
 fun OccupiedMapScreen(
@@ -51,13 +52,16 @@ fun OccupiedMapScreen(
     diamondDao: PurchaseInterface,
     mapViewModel: MapViewModel,
     map: State<MapWithDataModel>,
-    prepViewModel: ExpeditionPreparationViewModel
+    prepViewModel: ExpeditionPreparationViewModel,
+    occupiedMapViewModel: OccupiedMapViewModel
 ) {
     val snackbarHostState = remember { SnackbarHostState() }
 
     var fabExpanded by rememberSaveable { mutableStateOf(false) }
     var showPreparationDialog by rememberSaveable { mutableStateOf(false) }
     var showAnimalDialog by rememberSaveable { mutableStateOf(false) }
+    val failureState by occupiedMapViewModel.uiState.collectAsState()
+    val shouldShowFailureDialog = map.value.expedition == null && failureState.shouldShowDialog
 
     val diamonds by diamondDao.getDiamondsCount().collectAsState(initial = 0)
     val prepState by prepViewModel.uiState.collectAsState()
@@ -85,6 +89,13 @@ fun OccupiedMapScreen(
         prepState.errorMessage?.let { message ->
             snackbarHostState.showSnackbar(message)
             prepViewModel.clearError()
+        }
+    }
+
+    LaunchedEffect(failureState.errorMessage) {
+        failureState.errorMessage?.let { message ->
+            snackbarHostState.showSnackbar(message)
+            occupiedMapViewModel.clearError()
         }
     }
 
@@ -229,6 +240,18 @@ fun OccupiedMapScreen(
                         animalId = animal.id
                     )
                     showAnimalDialog = false
+                }
+            )
+        }
+
+        if (shouldShowFailureDialog) {
+            ExpeditionFailedDialog(
+                reason = failureState.reason,
+                animal = failureState.animal!!,
+                enemy = failureState.enemy,
+                isLoading = failureState.isLoading,
+                onRegroupClick = {
+                    occupiedMapViewModel.regroupEnemies()
                 }
             )
         }
