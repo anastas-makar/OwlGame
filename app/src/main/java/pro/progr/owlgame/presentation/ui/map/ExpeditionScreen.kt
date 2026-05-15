@@ -25,7 +25,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
-import pro.progr.diamondapi.PurchaseInterface
 import pro.progr.owlgame.domain.model.EnemyStatus
 import pro.progr.owlgame.presentation.ui.MapBar
 import pro.progr.owlgame.presentation.ui.fab.ExpandableFloatingActionButton
@@ -40,7 +39,6 @@ import pro.progr.owlgame.presentation.viewmodel.MapViewModel
 @Composable
 fun ExpeditionScreen(
     navController: NavHostController,
-    diamondDao: PurchaseInterface,
     mapViewModel: MapViewModel,
     expeditionScreenViewModel: ExpeditionScreenViewModel,
     map: State<MapWithDataModel>

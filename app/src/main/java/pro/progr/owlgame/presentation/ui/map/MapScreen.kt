@@ -43,7 +43,6 @@ fun MapScreen(
         DaggerOccupiedMapViewModel(component, map.value.id))
         MapType.EXPEDITION -> ExpeditionScreen(
             navController,
-            diamondDao,
             mapViewModel,
             DaggerExpeditionScreenViewModel(component, map.value.id),
             map)
