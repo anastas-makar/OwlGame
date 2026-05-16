@@ -46,7 +46,7 @@ fun ExpeditionEscapeConfirmDialog(
                 Spacer(Modifier.height(8.dp))
 
                 Text(
-                    text = "Стоит ли ${animal.kind} ${animal.name} бежать? Экспедиция будет проиграна, враги перегруппируются, но животное останется в строю."
+                    text = "${animal.kind.replaceFirstChar { it.uppercase() }} ${animal.name} может бежать. Экспедиция будет проиграна, враги перегруппируются, но животное останется в строю."
                 )
 
                 Spacer(Modifier.height(12.dp))
