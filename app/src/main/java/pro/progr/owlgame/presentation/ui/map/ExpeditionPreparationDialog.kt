@@ -66,7 +66,7 @@ fun ExpeditionPreparationDialog(
 
                 DiamondManualRow(
                     title = "Чешуйки",
-                    subtitle = "1 чешуйка = 1 heal, цена 1 бриллиант",
+                    subtitle = "1 чешуйка = 1 защиты, цена 1 бриллиант",
                     imageResource = R.drawable.ic_scale,
                     value = state.extraHealText,
                     onValueChange = onExtraHealChange
@@ -76,7 +76,7 @@ fun ExpeditionPreparationDialog(
 
                 DiamondManualRow(
                     title = "Бомбочки",
-                    subtitle = "1 бомбочка = 1 damage, цена 1 бриллиант",
+                    subtitle = "1 бомбочка = 1 атаки, цена 1 бриллиант",
                     imageResource = R.drawable.ic_bomb,
                     value = state.extraDamageText,
                     onValueChange = onExtraDamageChange
@@ -84,8 +84,8 @@ fun ExpeditionPreparationDialog(
 
                 Spacer(Modifier.height(16.dp))
 
-                Text("Итого heal: ${state.totalHeal}")
-                Text("Итого damage: ${state.totalDamage}")
+                Text("Итого защита: ${state.totalHeal}")
+                Text("Итого атака: ${state.totalDamage}")
                 Text("Цена: ${state.diamondsCost} бриллиантов")
                 Text("Есть: $diamondsAvailable")
 

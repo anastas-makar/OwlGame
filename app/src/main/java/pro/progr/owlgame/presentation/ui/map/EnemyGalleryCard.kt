@@ -73,8 +73,8 @@ fun EnemyGalleryCard(
 
             if (isActive) {
                 Spacer(Modifier.height(6.dp))
-                Text("Heal: ${enemy.healAmount}")
-                Text("Damage: ${enemy.damageAmount}")
+                Text("Защита: ${enemy.healAmount}")
+                Text("Атака: ${enemy.damageAmount}")
             }
         }
     }

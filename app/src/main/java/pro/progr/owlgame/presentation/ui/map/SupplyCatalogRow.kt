@@ -52,8 +52,8 @@ fun SupplyCatalogRow(
                 Text(item.supply.description, style = MaterialTheme.typography.body2)
 
                 val effectText = when (item.supply.effectType) {
-                    EffectType.HEAL -> "Heal +${item.supply.effectAmount}"
-                    EffectType.DAMAGE -> "Damage +${item.supply.effectAmount}"
+                    EffectType.HEAL -> "Защита +${item.supply.effectAmount}"
+                    EffectType.DAMAGE -> "Атака +${item.supply.effectAmount}"
                     EffectType.NO_EFFECT -> "Без эффекта"
                 }
 
