@@ -43,7 +43,7 @@ fun ExpeditionScreen(
     expeditionScreenViewModel: ExpeditionScreenViewModel,
     map: State<MapWithDataModel>
 ) {
-    var shouldRun by rememberSaveable { mutableStateOf(false) }
+    var showEscapeDialog by rememberSaveable { mutableStateOf(false) }
     var fabExpanded by rememberSaveable { mutableStateOf(false) }
     var detailsTarget by rememberSaveable { mutableStateOf<ExpeditionCreatureDetails?>(null) }
 
@@ -58,9 +58,16 @@ fun ExpeditionScreen(
         }
     }
 
-    LaunchedEffect(shouldRun) {
-        if (shouldRun) {
+    LaunchedEffect(showEscapeDialog) {
+        if (showEscapeDialog) {
             fabExpanded = false
+        }
+    }
+
+    LaunchedEffect(battleState.errorMessage) {
+        battleState.errorMessage?.let { message ->
+            snackbarHostState.showSnackbar(message)
+            expeditionScreenViewModel.clearError()
         }
     }
 
@@ -85,7 +92,7 @@ fun ExpeditionScreen(
                         text = "Бежать!",
                         color = Color.Red,
                         onClick = {
-                            shouldRun = true
+                            showEscapeDialog = true
                         }
                     )
                 ),
@@ -154,6 +161,17 @@ fun ExpeditionScreen(
             ExpeditionCreatureDialog(
                 target = target,
                 onDismiss = { detailsTarget = null }
+            )
+        }
+
+        if (showEscapeDialog && battleState.animal != null && expeditionId != null) {
+            ExpeditionEscapeConfirmDialog(
+                animal = battleState.animal!!,
+                isLoading = battleState.isEscaping,
+                onDismiss = { showEscapeDialog = false },
+                onConfirm = {
+                    expeditionScreenViewModel.escapeExpedition(expeditionId)
+                }
             )
         }
     }

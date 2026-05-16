@@ -94,6 +94,7 @@ fun DbExpeditionStatus.toDomain() : DomainExpeditionStatus =
         DbExpeditionStatus.ACTIVE -> DomainExpeditionStatus.ACTIVE
         DbExpeditionStatus.WON -> DomainExpeditionStatus.WON
         DbExpeditionStatus.LOST -> DomainExpeditionStatus.LOST
+        DbExpeditionStatus.ESCAPED -> DomainExpeditionStatus.ESCAPED
         DbExpeditionStatus.LOOT_AVAILABLE -> DomainExpeditionStatus.LOOT_AVAILABLE
     }
 

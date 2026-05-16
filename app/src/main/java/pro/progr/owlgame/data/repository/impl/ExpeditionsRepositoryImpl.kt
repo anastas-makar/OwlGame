@@ -357,8 +357,67 @@ class ExpeditionsRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun escapeExpedition(expeditionId: String): Result<Unit> {
-        TODO("Not yet implemented")
+    override suspend fun escapeExpedition(
+        expeditionId: String
+    ): Result<Unit> = mutex.withLock {
+        runCatching {
+            val oldExpedition = expeditionsDao.getById(expeditionId)
+                ?: error("Экспедиция не найдена")
+
+            check(oldExpedition.status == ExpeditionStatus.ACTIVE) {
+                "Экспедиция уже не активна"
+            }
+
+            val animalId = oldExpedition.animalId
+                ?: error("У экспедиции нет животного")
+
+            val response = mapApiService.getNewExpedition(oldExpedition.mapId)
+
+            if (!response.isSuccessful) {
+                error("Не удалось загрузить новую экспедицию: ${response.errorBody()?.string()}")
+            }
+
+            val newExpedition = response.body()
+                ?: error("Сервер вернул пустую экспедицию")
+
+            appDatabase.withTransaction {
+                val oldRows = expeditionsDao.updateStatusIfCurrent(
+                    expeditionId = oldExpedition.id,
+                    oldStatus = ExpeditionStatus.ACTIVE,
+                    newStatus = ExpeditionStatus.ESCAPED
+                )
+                check(oldRows == 1) {
+                    "Не удалось завершить старую экспедицию"
+                }
+
+                val animalRows = animalDao.updateStatusIfCurrent(
+                    animalId = animalId,
+                    newStatus = AnimalStatus.PET,
+                    expectedOldStatus = AnimalStatus.EXPEDITION
+                )
+                check(animalRows == 1) {
+                    "Не удалось вернуть животное в строй"
+                }
+
+                expeditionsDao.insert(listOf(newExpedition.toEntity(oldExpedition.mapId)))
+                enemyDao.insert(
+                    newExpedition.enemies.map { it.toEntity(newExpedition.id) }
+                )
+                expeditionMedalDao.insert(
+                    listOf(newExpedition.medal.toEntity(oldExpedition.mapId, newExpedition.id))
+                )
+
+                val mapRows = mapsDao.updateType(
+                    mapId = oldExpedition.mapId,
+                    type = MapType.OCCUPIED
+                )
+                check(mapRows == 1) {
+                    "Не удалось обновить карту"
+                }
+
+                Unit
+            }
+        }
     }
 
 }

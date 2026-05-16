@@ -8,5 +8,7 @@ data class ExpeditionBattleUiState(
     val expedition: ExpeditionWithDataModel? = null,
     val animal: AnimalModel? = null,
     val activeEnemy: EnemyModel? = null,
-    val enemies: List<EnemyModel> = emptyList()
+    val enemies: List<EnemyModel> = emptyList(),
+    val isEscaping: Boolean = false,
+    val errorMessage: String? = null
 )
