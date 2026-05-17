@@ -61,4 +61,18 @@ interface AnimalDao {
         expectedOldStatus: AnimalStatus,
         statusExpiresAt: Long?
     ): Int
+
+    @Query("""
+    UPDATE animals
+    SET status = :newStatus,
+        statusExpiresAt = NULL
+    WHERE status = :oldStatus
+      AND statusExpiresAt IS NOT NULL
+      AND statusExpiresAt <= :now
+""")
+    suspend fun releaseExpiredFugitives(
+        oldStatus: AnimalStatus = AnimalStatus.FUGITIVE,
+        newStatus: AnimalStatus = AnimalStatus.PET,
+        now: Long
+    ): Int
 }
