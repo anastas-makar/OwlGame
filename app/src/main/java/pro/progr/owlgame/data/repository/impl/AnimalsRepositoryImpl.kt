@@ -8,13 +8,15 @@ import pro.progr.owlgame.data.mapper.toDomain
 import pro.progr.owlgame.domain.repository.AnimalsRepository
 import pro.progr.owlgame.data.web.AnimalApiService
 import pro.progr.owlgame.domain.model.AnimalModel
+import java.time.Clock
 import pro.progr.owlgame.domain.model.AnimalStatus as DomainAnimalStatus
 import pro.progr.owlgame.data.db.model.AnimalStatus as DbAnimalStatus
 import javax.inject.Inject
 
 class AnimalsRepositoryImpl @Inject constructor(
     private val animalDao: AnimalDao,
-    private val animalApiService: AnimalApiService
+    private val animalApiService: AnimalApiService,
+    private val clock: Clock
 ) : AnimalsRepository {
     override fun countAnimalsSearching() : Long {
         return animalDao.countSearching()
@@ -67,6 +69,12 @@ class AnimalsRepositoryImpl @Inject constructor(
             animalId,
             newStatus.toData(),
             expectedOldStatus.toData()
+        )
+    }
+
+    override suspend fun releaseExpiredFugitives(): Int {
+        return animalDao.releaseExpiredFugitives(
+            now = clock.millis()
         )
     }
 }

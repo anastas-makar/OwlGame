@@ -28,4 +28,6 @@ interface AnimalsRepository {
         newStatus: AnimalStatus,
         expectedOldStatus: AnimalStatus
     ): Int
+
+    suspend fun releaseExpiredFugitives(): Int
 }
