@@ -15,6 +15,7 @@ import androidx.compose.ui.unit.dp
 import pro.progr.diamondapi.PurchaseInterface
 import pro.progr.owlgame.dagger.OwlGameComponent
 import pro.progr.owlgame.domain.model.AnimalModel
+import pro.progr.owlgame.domain.model.AnimalStatus
 import pro.progr.owlgame.domain.model.FurnitureType
 import pro.progr.owlgame.domain.model.RoomModel
 import pro.progr.owlgame.presentation.ui.SelectFurnitureScreen
@@ -53,7 +54,8 @@ fun InRoom(
     fabViewModel.showFab.value = onMap && availableFurniture.value.isNotEmpty()
 
     val hasRefrigerator = furniture.value.any { it.type == FurnitureType.REFRIGERATOR }
-    val canOpenCraft = hasRefrigerator && animal != null
+    val canOpenCraft = hasRefrigerator && animal != null && animal.status != AnimalStatus.FUGITIVE
+    val craftBlocked = hasRefrigerator && animal != null && animal.status == AnimalStatus.FUGITIVE
 
     Column(
         modifier = Modifier
@@ -87,6 +89,12 @@ fun InRoom(
                 onClick = {
                     onOpenCraft(animal.id)
                 }
+            )
+        }
+
+        if (craftBlocked) {
+            CraftNotAvailableBanner(
+                "${animal.kind} ${animal.name} в бегах."
             )
         }
     }
