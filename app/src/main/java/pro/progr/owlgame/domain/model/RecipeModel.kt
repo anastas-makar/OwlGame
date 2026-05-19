@@ -7,5 +7,7 @@ data class RecipeModel(
     val resultImageUrl: String,
     val description: String,
     val ingredients: List<IngredientModel>,
-    val craftable: Boolean
+    val craftable: Boolean,
+    val effectType: EffectType,
+    val effectAmount: Int
 )

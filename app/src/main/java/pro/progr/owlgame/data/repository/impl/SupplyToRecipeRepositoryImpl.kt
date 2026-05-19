@@ -13,6 +13,7 @@ import pro.progr.owlgame.data.db.entity.Supply
 import pro.progr.owlgame.data.db.entity.SupplyToRecipe
 import pro.progr.owlgame.data.mapper.linkId
 import pro.progr.owlgame.data.mapper.toData
+import pro.progr.owlgame.data.mapper.toDomain
 import pro.progr.owlgame.domain.model.CraftResult
 import pro.progr.owlgame.domain.model.IngredientModel
 import pro.progr.owlgame.domain.model.RecipeModel
@@ -147,7 +148,9 @@ class SupplyToRecipeRepositoryImpl @Inject constructor(
                     resultImageUrl = result.imageUrl,
                     description = recipe.description,
                     ingredients = ingredients,
-                    craftable = ingredients.all { it.enough })
+                    craftable = ingredients.all { it.enough },
+                    effectType = result.effectType.toDomain(),
+                    effectAmount = result.effectAmount)
             }
         }
     }
