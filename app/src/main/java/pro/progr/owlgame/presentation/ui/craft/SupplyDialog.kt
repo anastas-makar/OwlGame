@@ -45,13 +45,6 @@ fun SupplyDialog(
             Column(Modifier.fillMaxWidth()) {
                 Text(supply.description)
 
-                Spacer(Modifier.height(12.dp))
-
-                Text(
-                    text = "Количество: ${supply.amount}",
-                    style = MaterialTheme.typography.body2
-                )
-
                 supply.effectText()?.let { effect ->
                     Spacer(Modifier.height(8.dp))
 
@@ -60,6 +53,13 @@ fun SupplyDialog(
                         style = MaterialTheme.typography.body2
                     )
                 }
+
+                Spacer(Modifier.height(12.dp))
+
+                Text(
+                    text = "Количество: ${supply.amount}",
+                    style = MaterialTheme.typography.body2
+                )
             }
         },
         confirmButton = {

@@ -56,6 +56,15 @@ fun RecipeCard(
                 maxLines = 3
             )
 
+            val effectText = recipe.effectText()
+            if (effectText != null) {
+                Spacer(Modifier.height(4.dp))
+                Text(
+                    text = effectText,
+                    style = MaterialTheme.typography.caption
+                )
+            }
+
             if (!recipe.craftable) {
                 Spacer(Modifier.height(8.dp))
                 Text(

@@ -45,6 +45,15 @@ fun RecipeDialog(
                 Text(recipe.description)
                 Spacer(Modifier.height(12.dp))
 
+                recipe.effectText()?.let { effect ->
+
+                    Text(
+                        text = effect,
+                        style = MaterialTheme.typography.body2
+                    )
+                    Spacer(Modifier.height(8.dp))
+                }
+
                 Text("Ингредиенты", style = MaterialTheme.typography.subtitle2)
                 Spacer(Modifier.height(8.dp))
 

@@ -43,13 +43,6 @@ fun SupplyCard(
                 maxLines = 1
             )
 
-            Spacer(Modifier.height(4.dp))
-
-            Text(
-                text = "Количество: ${supply.amount}",
-                style = MaterialTheme.typography.body2
-            )
-
             val effectText = supply.effectText()
             if (effectText != null) {
                 Spacer(Modifier.height(4.dp))
@@ -58,6 +51,13 @@ fun SupplyCard(
                     style = MaterialTheme.typography.caption
                 )
             }
+
+            Spacer(Modifier.height(4.dp))
+
+            Text(
+                text = "Количество: ${supply.amount}",
+                style = MaterialTheme.typography.body2
+            )
         }
     }
 }
