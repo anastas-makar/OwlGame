@@ -11,6 +11,7 @@ import androidx.compose.runtime.State
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import pro.progr.owlgame.domain.model.AnimalModel
+import pro.progr.owlgame.domain.model.AnimalStatus
 
 @Composable
 fun AnimalSearchingBar(backToMain : () -> Unit,
@@ -19,9 +20,12 @@ fun AnimalSearchingBar(backToMain : () -> Unit,
 
     TopAppBar(
         title = {
-            Text(text = if (animalState.value != null)
-                "${animalState.value?.kind} ${animalState.value?.name} ищет дом"
-                else "")
+            Text(
+                text = if (animalState.value == null) ""
+                        else "${animalState.value?.kind} ${animalState.value?.name} " +
+                                if (animalState.value?.status == AnimalStatus.SEARCHING) "ищет дом"
+                                else "не ищет дом"
+            )
         },
         navigationIcon = {
             IconButton(onClick = { backToMain() }) {
