@@ -9,7 +9,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import pro.progr.diamondapi.PurchaseInterface
 import pro.progr.owlgame.dagger.OwlGameComponent
-import pro.progr.owlgame.presentation.ui.AnimalSearchingScreen
+import pro.progr.owlgame.presentation.ui.animal.AnimalSearchingScreen
 import pro.progr.owlgame.presentation.ui.BuildingScreen
 import pro.progr.owlgame.presentation.ui.map.MapScreen
 import pro.progr.owlgame.presentation.ui.MapsListScreen

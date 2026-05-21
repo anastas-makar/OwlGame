@@ -1,4 +1,4 @@
-package pro.progr.owlgame.presentation.ui
+package pro.progr.owlgame.presentation.ui.animal
 
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
