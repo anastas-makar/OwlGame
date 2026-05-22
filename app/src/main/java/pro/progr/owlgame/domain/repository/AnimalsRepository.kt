@@ -30,4 +30,8 @@ interface AnimalsRepository {
     ): Int
 
     suspend fun releaseExpiredFugitives(): Int
+
+    suspend fun updateAnimalName(animalId : String, newAnimalName : String)
+
+    suspend fun setAnimalGone(animalId : String)
 }

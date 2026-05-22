@@ -6,6 +6,7 @@ import pro.progr.owlgame.domain.repository.AnimalsRepository
 import pro.progr.owlgame.domain.repository.BuildingsRepository
 import pro.progr.owlgame.domain.repository.MapsRepository
 import pro.progr.owlgame.domain.usecase.GrantBuildingToAnimalUseCase
+import pro.progr.owlgame.domain.usecase.SendAnimalAwayUseCase
 import pro.progr.owlgame.presentation.viewmodel.AnimalViewModel
 import javax.inject.Inject
 
@@ -14,6 +15,7 @@ class AnimalViewModelFactory @Inject constructor(
     val mapsRepository: MapsRepository,
     val buildingsRepository: BuildingsRepository,
     val grantBuildingToAnimalUseCase: GrantBuildingToAnimalUseCase,
+    private val sendAnimalAwayUseCase: SendAnimalAwayUseCase,
 ) : ViewModelProvider.Factory {
     var animalId : String = ""
 
@@ -23,6 +25,7 @@ class AnimalViewModelFactory @Inject constructor(
                 mapsRepository,
                 buildingsRepository,
                 grantBuildingToAnimalUseCase,
+                sendAnimalAwayUseCase,
                 animalId) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")

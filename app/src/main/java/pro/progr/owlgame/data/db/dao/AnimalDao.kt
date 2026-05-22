@@ -24,6 +24,9 @@ interface AnimalDao {
     @Query("UPDATE animals SET status='GONE' WHERE id=:animalId")
     fun setGone(animalId: String)
 
+    @Query("UPDATE animals SET name=:name WHERE id=:animalId")
+    fun updateAnimalName(name: String, animalId: String)
+
     @Query("SELECT * FROM animals WHERE id=:id")
     fun getById(id: String): Flow<Animal?>
 

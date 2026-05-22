@@ -77,4 +77,14 @@ class AnimalsRepositoryImpl @Inject constructor(
             now = clock.millis()
         )
     }
+
+    override suspend fun updateAnimalName(animalId: String, newAnimalName: String) {
+        animalDao.updateAnimalName(name = newAnimalName, animalId = animalId)
+    }
+
+    override suspend fun setAnimalGone(
+        animalId: String
+    ) {
+        animalDao.setGone(animalId)
+    }
 }
