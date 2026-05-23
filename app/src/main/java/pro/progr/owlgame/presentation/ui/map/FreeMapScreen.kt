@@ -71,6 +71,9 @@ fun FreeMapScreen(
             isLoading = lootState.isClaimingLoot,
             onExploreClick = {
                 freeMapViewModel.exploreDungeon(lootState.expedition!!.id, diamondDao)
+            },
+            onExploreDismiss = {
+                freeMapViewModel.winWithoutLoot(lootState.expedition!!.id)
             }
         )
     }
@@ -96,6 +99,9 @@ fun FreeMapScreen(
             isLoading = lootState.isClaimingLoot,
             onExploreClick = {
                 freeMapViewModel.exploreDungeon(lootState.expedition!!.id, diamondDao)
+            },
+            onExploreDismiss = {
+                freeMapViewModel.winWithoutLoot(lootState.expedition!!.id)
             }
         )
     }

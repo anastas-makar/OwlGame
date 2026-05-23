@@ -102,6 +102,17 @@ class FreeMapViewModel @Inject constructor(
         }
     }
 
+    fun winWithoutLoot(expeditionId: String) {
+        viewModelScope.launch (Dispatchers.IO) {
+            val markResult = expeditionsRepository.markLootClaimed(expeditionId)
+            if (markResult.isFailure) {
+                errorMessage.value = markResult.exceptionOrNull()?.message
+                    ?: "Не удаётся закрыть экспедицию"
+                return@launch
+            }
+        }
+    }
+
     fun closeClaimedLootDialog() {
         claimedLoot.value = null
     }

@@ -12,6 +12,7 @@ import androidx.compose.material.Button
 import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
+import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
@@ -26,7 +27,8 @@ fun ExpeditionVictoryDialog(
     expedition: ExpeditionWithDataModel,
     animal: AnimalModel,
     isLoading: Boolean,
-    onExploreClick: () -> Unit
+    onExploreClick: () -> Unit,
+    onExploreDismiss: () -> Unit
 ) {
     Dialog(onDismissRequest = {}) {
         Card(
@@ -77,6 +79,19 @@ fun ExpeditionVictoryDialog(
                     modifier = Modifier.fillMaxWidth()
                 ) {
                     Text(if (isLoading) "Идём в подземелья…" else "Обшарить подземелья")
+                }
+
+                if (!isLoading) {
+
+                    Spacer(Modifier.height(16.dp))
+
+                    TextButton (
+                        onClick = onExploreDismiss,
+                        enabled = true,
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        Text("Не обшаривать")
+                    }
                 }
             }
         }
