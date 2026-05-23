@@ -25,9 +25,7 @@ import pro.progr.owlgame.data.db.dao.SuppliesDao
 import pro.progr.owlgame.data.db.dao.SupplyToRecipeDao
 import pro.progr.owlgame.data.db.entity.Animal
 import pro.progr.owlgame.data.db.entity.ExpeditionMedal
-import pro.progr.owlgame.data.db.entity.Book
 import pro.progr.owlgame.data.db.entity.Building
-import pro.progr.owlgame.data.db.entity.Chapter
 import pro.progr.owlgame.data.db.entity.Enemy
 import pro.progr.owlgame.data.db.entity.Expedition
 import pro.progr.owlgame.data.db.entity.Furniture
@@ -56,9 +54,7 @@ import pro.progr.owlgame.data.db.entity.SupplyToRecipe
     Enemy::class,
     RoomEntity::class,
     Supply::class,
-    SupplyToRecipe::class,
-    Book::class,
-    Chapter::class],
+    SupplyToRecipe::class],
     version = 1, exportSchema = false)
 abstract class OwlGameDatabase : RoomDatabase() {
 
