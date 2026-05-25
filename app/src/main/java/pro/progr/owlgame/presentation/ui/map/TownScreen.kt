@@ -55,6 +55,8 @@ import pro.progr.owlgame.presentation.ui.fab.FabAction
 import pro.progr.owlgame.presentation.ui.mapicon.DraggableImageOverlay
 import pro.progr.owlgame.presentation.ui.mapicon.buildingIconRes
 import pro.progr.owlgame.domain.model.MapWithDataModel
+import pro.progr.owlgame.domain.model.StreetDirection
+import pro.progr.owlgame.domain.model.StreetWithBuildingsModel
 import pro.progr.owlgame.presentation.viewmodel.MapViewModel
 
 @Composable
@@ -69,6 +71,41 @@ fun TownScreen(
     val snackbarHostState = remember { SnackbarHostState() }
     val scope = rememberCoroutineScope()
     val diamondBalance = diamondDao.getDiamondsCount().collectAsState(initial = 0)
+
+
+    val streetOptions = remember(map.value.streets) {
+        val hasMain = map.value.streets.any { it.isMain }
+
+        if (hasMain) {
+            map.value.streets
+        } else {
+            listOf(
+                StreetWithBuildingsModel(
+                    id = null,
+                    name = "Улица Главная",
+                    direction = StreetDirection.WEST_TO_EAST,
+                    isMain = true,
+                    buildings = emptyList()
+                )
+            ) + map.value.streets
+        }
+    }
+
+    var showCreateStreetDialog by rememberSaveable { mutableStateOf(false) }
+
+    if (showCreateStreetDialog) {
+        CreateStreetDialog(
+            onDismiss = { showCreateStreetDialog = false },
+            onCreate = { name, direction ->
+                showCreateStreetDialog = false
+                mapViewModel.createStreet(
+                    mapId = map.value.id,
+                    name = name,
+                    direction = direction
+                )
+            }
+        )
+    }
 
     var fabExpanded by rememberSaveable { mutableStateOf(false) }
 
@@ -108,6 +145,11 @@ fun TownScreen(
                             text = "Построить замок",
                             color = Color.DarkGray,
                             onClick = { mapViewModel.selectFortressState.value = true }
+                        ),
+                        FabAction(
+                            text = "Создать улицу",
+                            color = Color.DarkGray,
+                            onClick = { showCreateStreetDialog = true }
                         )
                     ),
                     modifier = Modifier.navigationBarsPadding()
@@ -168,26 +210,49 @@ fun TownScreen(
                     }
                 }
 
-                item {
-                    Text(
-                        text = "Улица Главная",
-                        modifier = Modifier.padding(top = 8.dp, bottom = 4.dp),
-                        fontWeight = FontWeight.Bold
-                    )
-                }
+                map.value.streets.forEach { street ->
+                    item {
+                        StreetHeader(
+                            street = street,
+                            onDeleteStreet = {
+                                street.id?.let { mapViewModel.deleteStreet(it) }
+                            }
+                        )
+                    }
 
-                val buildings = map.value.buildings
-                val rows = buildings.chunked(3)
-
-                items(rows) { row ->
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.spacedBy(8.dp)
-                    ) {
-                        row.forEach { b ->
-                            BuildingCard(b, Modifier.weight(1f), navController)
+                    if (street.buildings.isEmpty()) {
+                        item {
+                            Text(
+                                text = "Здесь пока нет домов. Перенесите сюда дома из меню домика.",
+                                modifier = Modifier.padding(vertical = 8.dp)
+                            )
                         }
-                        repeat(3 - row.size) { Spacer(Modifier.weight(1f)) }
+                    } else {
+
+                        val rows = street.buildings.chunked(3)
+
+                        items(rows) { row ->
+                            Row(
+                                modifier = Modifier.fillMaxWidth(),
+                                horizontalArrangement = Arrangement.spacedBy(8.dp)
+                            ) {
+                                row.forEach { building ->
+                                    TownBuildingCard(
+                                        building = building,
+                                        modifier = Modifier.weight(1f),
+                                        navHostController = navController,
+                                        streets = streetOptions,
+                                        onMoveToStreet = { buildingId, streetId ->
+                                            mapViewModel.moveBuildingToStreet(buildingId, streetId)
+                                        }
+                                    )
+                                }
+
+                                repeat(3 - row.size) {
+                                    Spacer(Modifier.weight(1f))
+                                }
+                            }
+                        }
                     }
                 }
             }

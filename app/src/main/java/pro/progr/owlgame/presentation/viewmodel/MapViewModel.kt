@@ -17,23 +17,31 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import pro.progr.diamondapi.PurchaseInterface
+import pro.progr.owlgame.domain.model.BuildingModel
+import pro.progr.owlgame.domain.model.BuildingWithAnimalModel
+import pro.progr.owlgame.domain.model.MapType
+import pro.progr.owlgame.domain.model.MapWithDataModel
+import pro.progr.owlgame.domain.model.StreetDirection
+import pro.progr.owlgame.domain.model.StreetModel
+import pro.progr.owlgame.domain.model.StreetWithBuildingsModel
 import pro.progr.owlgame.domain.repository.BuildingsRepository
 import pro.progr.owlgame.domain.repository.ExpeditionsRepository
 import pro.progr.owlgame.domain.repository.MapsRepository
 import pro.progr.owlgame.domain.repository.SlotsRepository
-import pro.progr.owlgame.domain.usecase.FoundTownUseCase
-import pro.progr.owlgame.domain.model.BuildingModel
-import pro.progr.owlgame.domain.model.MapWithDataModel
-import pro.progr.owlgame.domain.model.MapType
+import pro.progr.owlgame.domain.repository.StreetsRepository
 import javax.inject.Inject
 
+private const val MAIN_STREET_NAME = "Улица Главная"
+
+private val MAIN_STREET_DIRECTION = StreetDirection.WEST_TO_EAST
+
 class MapViewModel @Inject constructor(
-    mapsRepository: MapsRepository,
+    private val mapsRepository: MapsRepository,
     private val buildingsRepository: BuildingsRepository,
+    private val streetsRepository: StreetsRepository,
     private val slotsRepository: SlotsRepository,
     private val expeditionsRepository: ExpeditionsRepository,
-    mapId: String,
-    private val foundTownUseCase: FoundTownUseCase,
+    mapId: String
 ) : ViewModel() {
 
     @OptIn(ExperimentalCoroutinesApi::class)
@@ -60,15 +68,27 @@ class MapViewModel @Inject constructor(
                         flowOf(null)
                     }
 
-                combine(buildingsFlow, expeditionFlow) { buildingsMap, expeditionWithData ->
+                val streetsFlow =
+                    if (mapWithData.type == MapType.TOWN) {
+                        streetsRepository.getStreets(mapId)
+                    } else {
+                        flowOf(emptyList())
+                    }
+
+                combine(buildingsFlow, expeditionFlow, streetsFlow) { buildingsMap, expeditionWithData, streets ->
+                    val buildings = buildingsMap.values
+                        .toList()
+                        .sortedWith(compareBy({ it.x }, { it.id }))
                     MapWithDataModel(
                         id = mapWithData.id,
                         name = mapWithData.name,
                         imageUrl = mapWithData.imageUrl,
                         type = mapWithData.type,
-                        buildings = buildingsMap.values
-                            .toList()
-                            .sortedWith(compareBy({ it.x }, { it.id })),
+                        buildings = buildings,
+                        streets = buildStreetSections(
+                            buildings = buildings,
+                            streets = streets
+                        ),
                         expedition = expeditionWithData
                     )
                 }
@@ -79,6 +99,56 @@ class MapViewModel @Inject constructor(
             started = SharingStarted.WhileSubscribed(5000),
             initialValue = MapWithDataModel("", "", "", MapType.LOADING)
         )
+
+    private fun buildStreetSections(
+        buildings: List<BuildingWithAnimalModel>,
+        streets: List<StreetModel>
+    ): List<StreetWithBuildingsModel> {
+        val buildingsByStreetId = buildings.groupBy { it.streetId }
+
+        val mainBuildings = buildingsByStreetId[null].orEmpty()
+
+        val mainStreet = if (mainBuildings.isNotEmpty()) {
+            listOf(
+                StreetWithBuildingsModel(
+                    id = null,
+                    name = MAIN_STREET_NAME,
+                    direction = MAIN_STREET_DIRECTION,
+                    isMain = true,
+                    buildings = sortBuildings(mainBuildings, MAIN_STREET_DIRECTION)
+                )
+            )
+        } else {
+            emptyList()
+        }
+
+        val userStreets = streets.map { street ->
+            val streetBuildings = buildingsByStreetId[street.id].orEmpty()
+
+            StreetWithBuildingsModel(
+                id = street.id,
+                name = street.name,
+                direction = street.direction,
+                isMain = false,
+                buildings = sortBuildings(streetBuildings, street.direction)
+            )
+        }
+
+        return mainStreet + userStreets
+    }
+
+    private fun sortBuildings(
+        buildings: List<BuildingWithAnimalModel>,
+        direction: StreetDirection
+    ): List<BuildingWithAnimalModel> {
+        return when (direction) {
+            StreetDirection.WEST_TO_EAST ->
+                buildings.sortedWith(compareBy({ it.x }, { it.id }))
+
+            StreetDirection.NORTH_TO_SOUTH ->
+                buildings.sortedWith(compareBy({ it.y }, { it.id }))
+        }
+    }
 
     val foundTown = MutableStateFlow(false)
 
@@ -99,7 +169,10 @@ class MapViewModel @Inject constructor(
     fun foundTown(map: MapWithDataModel, townName: String) {
         foundTown.update { _ -> false }
         viewModelScope.launch (Dispatchers.IO) {
-            foundTownUseCase(map.id, townName, "Улица Главная")
+            mapsRepository.setTown(
+                name = townName,
+                mapId = map.id
+            )
         }
 
     }
@@ -144,4 +217,32 @@ class MapViewModel @Inject constructor(
         }
     }
 
+    fun createStreet(
+        mapId: String,
+        name: String,
+        direction: StreetDirection
+    ) {
+        viewModelScope.launch(Dispatchers.IO) {
+            streetsRepository.createStreet(
+                mapId = mapId,
+                name = name,
+                direction = direction
+            )
+        }
+    }
+
+    fun deleteStreet(streetId: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            streetsRepository.deleteStreet(streetId)
+        }
+    }
+
+    fun moveBuildingToStreet(buildingId: String, streetId: String?) {
+        viewModelScope.launch(Dispatchers.IO) {
+            streetsRepository.moveBuildingToStreet(
+                buildingId = buildingId,
+                streetId = streetId
+            )
+        }
+    }
 }

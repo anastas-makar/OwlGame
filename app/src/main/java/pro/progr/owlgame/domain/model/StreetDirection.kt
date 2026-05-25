@@ -1,4 +1,4 @@
-package pro.progr.owlgame.data.db.model
+package pro.progr.owlgame.domain.model
 
 enum class StreetDirection {
     WEST_TO_EAST,

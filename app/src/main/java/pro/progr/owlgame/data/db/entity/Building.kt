@@ -10,7 +10,8 @@ import pro.progr.owlgame.data.db.model.BuildingType
     tableName = "buildings",
     indices = [
         Index(value = ["animalId"], unique = true),
-        Index(value = ["mapId"])
+        Index(value = ["mapId"]),
+        Index(value = ["streetId"])
     ],
     foreignKeys = [
         ForeignKey(
@@ -26,6 +27,13 @@ import pro.progr.owlgame.data.db.model.BuildingType
             childColumns = ["mapId"],
             onDelete = ForeignKey.SET_NULL,
             onUpdate = ForeignKey.CASCADE
+        ),
+        ForeignKey(
+            entity = Street::class,
+            parentColumns = ["id"],
+            childColumns = ["streetId"],
+            onDelete = ForeignKey.SET_NULL,
+            onUpdate = ForeignKey.CASCADE
         )
     ]
 )
@@ -37,6 +45,7 @@ data class Building (
     val mapId : String? = null,
     val price : Int = 500,
     var animalId: String? = null,
+    val streetId: String? = null,
     val x : Float = 0f,
     val y : Float = 0f,
     val type: BuildingType = BuildingType.HOUSE

@@ -29,4 +29,10 @@ public interface BuildingsDao {
 
     @Query("SELECT COUNT(*) FROM buildings WHERE animalId IS NULL AND mapId IS NOT NULL")
     fun countUninhabited() : Long
+
+    @Query("UPDATE buildings SET streetId = NULL WHERE streetId = :streetId")
+    suspend fun clearStreetForBuildings(streetId: String)
+
+    @Query("UPDATE buildings SET streetId = :streetId WHERE id = :buildingId")
+    suspend fun updateStreetId(buildingId: String, streetId: String?)
 }

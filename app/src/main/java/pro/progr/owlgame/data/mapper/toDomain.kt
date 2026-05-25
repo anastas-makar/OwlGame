@@ -15,6 +15,7 @@ import pro.progr.owlgame.data.db.entity.GardenItem
 import pro.progr.owlgame.data.db.entity.MapEntity
 import pro.progr.owlgame.data.db.entity.Plant
 import pro.progr.owlgame.data.db.entity.RoomEntity
+import pro.progr.owlgame.data.db.entity.Street
 import pro.progr.owlgame.data.db.entity.Supply
 import pro.progr.owlgame.data.web.Pouch
 import pro.progr.owlgame.domain.model.AnimalModel
@@ -34,6 +35,7 @@ import pro.progr.owlgame.domain.model.MapWithBuildingsModel
 import pro.progr.owlgame.domain.model.PlantModel
 import pro.progr.owlgame.domain.model.PouchModel
 import pro.progr.owlgame.domain.model.RoomModel
+import pro.progr.owlgame.domain.model.StreetModel
 import pro.progr.owlgame.domain.model.SupplyModel
 import pro.progr.owlgame.data.db.model.MapType as DbMapType
 import pro.progr.owlgame.domain.model.MapType as DomainMapType
@@ -51,6 +53,8 @@ import pro.progr.owlgame.data.db.model.FurnitureType as DbFurnitureType
 import pro.progr.owlgame.domain.model.FurnitureType as DomainFurnitureType
 import pro.progr.owlgame.data.db.model.ItemType as DbItemType
 import pro.progr.owlgame.domain.model.ItemType as DomainItemType
+import pro.progr.owlgame.data.db.model.StreetDirection as DbStreetDirection
+import pro.progr.owlgame.domain.model.StreetDirection as DomainStreetDirection
 
 fun DbMapType.toDomain(): DomainMapType =
     when (this) {
@@ -112,6 +116,12 @@ fun DbItemType.toDomain(): DomainItemType =
         DbItemType.HIVE -> DomainItemType.HIVE
         DbItemType.ANIMAL_HOUSE -> DomainItemType.ANIMAL_HOUSE
         DbItemType.NEST -> DomainItemType.NEST
+    }
+
+fun DbStreetDirection.toDomain() : DomainStreetDirection =
+    when (this) {
+        DbStreetDirection.WEST_TO_EAST -> DomainStreetDirection.WEST_TO_EAST
+        DbStreetDirection.NORTH_TO_SOUTH -> DomainStreetDirection.NORTH_TO_SOUTH
     }
 
 fun MapEntity.toDomain(): MapModel =
@@ -181,6 +191,7 @@ fun BuildingWithAnimal.toDomain(): BuildingWithAnimalModel =
         imageUrl = building.imageUrl,
         mapId = building.mapId,
         price = building.price,
+        streetId = building.streetId,
         animal = animal?.toDomain(),
         x = building.x,
         y = building.y,
@@ -331,4 +342,12 @@ fun Pouch.toDomain() : PouchModel =
     PouchModel(
         id = id,
         imageUrl = imageUrl
+    )
+
+fun Street.toDomain() : StreetModel =
+    StreetModel(
+        id = id,
+        mapId = mapId,
+        name = name,
+        direction = direction.toDomain()
     )
