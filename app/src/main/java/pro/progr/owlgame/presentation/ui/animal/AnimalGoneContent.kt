@@ -10,7 +10,7 @@ fun AnimalGoneContent(
 ) {
     AnimalStatusMessageContent(
         animal = animal,
-        text = "${animal.kind.replaceFirstChar { it.uppercase() }} ${animal.name} не будет здесь жить",
+        text = "${animal.name.replaceFirstChar { it.uppercase() }} ${animal.kind} не будет здесь жить",
         buttonText = "На главную",
         onButtonClick = backToMain
     )

@@ -40,7 +40,7 @@ fun SearchingAnimalHeader(
         ) {
             AsyncImage(
                 model = animal.imagePath,
-                contentDescription = "Изображение ${animal.name}",
+                contentDescription = "Изображение ${animal.name} ${animal.kind}",
                 contentScale = ContentScale.Fit,
                 modifier = Modifier
                     .fillMaxWidth()
@@ -51,7 +51,7 @@ fun SearchingAnimalHeader(
             Spacer(modifier = Modifier.height(12.dp))
 
             Text(
-                text = "${animal.kind} ${animal.name}",
+                text = "${animal.name.replaceFirstChar { it.uppercase() }} ${animal.kind}",
                 style = MaterialTheme.typography.h6,
                 fontWeight = FontWeight.Bold,
                 textAlign = TextAlign.Center
