@@ -79,6 +79,7 @@ fun DomainItemType.toData(): DbItemType =
         DomainItemType.HIVE -> DbItemType.HIVE
         DomainItemType.ANIMAL_HOUSE -> DbItemType.ANIMAL_HOUSE
         DomainItemType.NEST -> DbItemType.NEST
+        DomainItemType.MUSHROOM -> DbItemType.MUSHROOM
     }
 
 fun DomainMapType.toData(): DbMapType =

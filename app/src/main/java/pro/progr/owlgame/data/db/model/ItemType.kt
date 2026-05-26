@@ -6,5 +6,6 @@ enum class ItemType {
     WATER_PLANT,
     HIVE,
     ANIMAL_HOUSE,
-    NEST
+    NEST,
+    MUSHROOM
 }

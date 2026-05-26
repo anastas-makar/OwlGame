@@ -19,6 +19,7 @@ fun gardenItemIconRes(type: ItemType): Int = when (type) {
     ItemType.HIVE -> R.drawable.ic_hive
     ItemType.ANIMAL_HOUSE -> R.drawable.ic_animal_house
     ItemType.NEST -> R.drawable.ic_nest
+    ItemType.MUSHROOM -> R.drawable.ic_mushroom
 }
 
 @DrawableRes

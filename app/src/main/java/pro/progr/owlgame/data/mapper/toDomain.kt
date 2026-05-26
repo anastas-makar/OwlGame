@@ -116,6 +116,7 @@ fun DbItemType.toDomain(): DomainItemType =
         DbItemType.HIVE -> DomainItemType.HIVE
         DbItemType.ANIMAL_HOUSE -> DomainItemType.ANIMAL_HOUSE
         DbItemType.NEST -> DomainItemType.NEST
+        DbItemType.MUSHROOM -> DomainItemType.MUSHROOM
     }
 
 fun DbStreetDirection.toDomain() : DomainStreetDirection =
