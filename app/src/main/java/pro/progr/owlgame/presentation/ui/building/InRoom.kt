@@ -54,8 +54,8 @@ fun InRoom(
     fabViewModel.showFab.value = onMap && availableFurniture.value.isNotEmpty()
 
     val hasRefrigerator = furniture.value.any { it.type == FurnitureType.REFRIGERATOR }
-    val canOpenCraft = hasRefrigerator && animal != null && animal.status != AnimalStatus.FUGITIVE
-    val craftBlocked = hasRefrigerator && animal != null && animal.status == AnimalStatus.FUGITIVE
+    val canOpenCraft = hasRefrigerator && animal != null && animal.status == AnimalStatus.PET
+    val craftBlocked = hasRefrigerator && animal != null && animal.status != AnimalStatus.PET
 
     Column(
         modifier = Modifier
@@ -94,7 +94,12 @@ fun InRoom(
 
         if (craftBlocked) {
             CraftNotAvailableBanner(
-                "${animal.kind} ${animal.name} в бегах."
+                "${animal.kind} ${animal.name} " +
+                        when (animal.status) {
+                            AnimalStatus.FUGITIVE -> "в бегах."
+                            AnimalStatus.EXPEDITION -> "в экспедиции."
+                            else -> "не уточнён"
+                        }
             )
         }
     }
