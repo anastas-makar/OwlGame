@@ -3,11 +3,11 @@ package pro.progr.owlgame.data.db.model
 enum class LocationType {
     PARK,
     MONUMENT,
-    COLUMN,
+    DECORATION,
     PAVILION,
     CAVE,
     FOUNTAIN,
-    PALM_TREE,
+    RESORT,
     WATERFALL,
     RUINS
 }
