@@ -31,6 +31,8 @@ import pro.progr.owlgame.data.db.entity.Expedition
 import pro.progr.owlgame.data.db.entity.Furniture
 import pro.progr.owlgame.data.db.entity.Garden
 import pro.progr.owlgame.data.db.entity.GardenItem
+import pro.progr.owlgame.data.db.entity.Location
+import pro.progr.owlgame.data.db.entity.LocationScene
 import pro.progr.owlgame.data.db.entity.MapEntity
 import pro.progr.owlgame.data.db.entity.Plant
 import pro.progr.owlgame.data.db.entity.Recipe
@@ -54,7 +56,9 @@ import pro.progr.owlgame.data.db.entity.SupplyToRecipe
     Enemy::class,
     RoomEntity::class,
     Supply::class,
-    SupplyToRecipe::class],
+    SupplyToRecipe::class,
+    Location::class,
+    LocationScene::class],
     version = 1, exportSchema = false)
 abstract class OwlGameDatabase : RoomDatabase() {
 
