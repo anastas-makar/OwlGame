@@ -34,6 +34,8 @@ import pro.progr.owlgame.data.db.model.MapType as DbMapType
 import pro.progr.owlgame.domain.model.MapType as DomainMapType
 import pro.progr.owlgame.data.db.model.StreetDirection as DbStreetDirection
 import pro.progr.owlgame.domain.model.StreetDirection as DomainStreetDirection
+import pro.progr.owlgame.data.db.model.LocationType as DbLocationType
+import pro.progr.owlgame.domain.model.LocationType as DomainLocationType
 
 
 fun DomainAnimalStatus.toData(): DbAnimalStatus =
@@ -89,6 +91,20 @@ fun DomainMapType.toData(): DbMapType =
         DomainMapType.EXPEDITION -> DbMapType.EXPEDITION
         DomainMapType.TOWN -> DbMapType.TOWN
         DomainMapType.LOADING -> error("Attempt to process unloaded map")
+    }
+
+fun DomainLocationType.toData(): DbLocationType =
+    when (this) {
+        DomainLocationType.WATER_ANOMALY -> DbLocationType.WATER_ANOMALY
+        DomainLocationType.FOUNTAIN -> DbLocationType.FOUNTAIN
+        DomainLocationType.WATERFALL -> DbLocationType.WATERFALL
+        DomainLocationType.LANDMARK -> DbLocationType.LANDMARK
+        DomainLocationType.MONUMENT -> DbLocationType.MONUMENT
+        DomainLocationType.CAVE -> DbLocationType.CAVE
+        DomainLocationType.PARK -> DbLocationType.PARK
+        DomainLocationType.PAVILION -> DbLocationType.PAVILION
+        DomainLocationType.RESORT -> DbLocationType.RESORT
+        DomainLocationType.RUINS -> DbLocationType.RUINS
     }
 
 fun DomainStreetDirection.toData() : DbStreetDirection =

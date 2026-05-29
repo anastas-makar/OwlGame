@@ -55,6 +55,8 @@ import pro.progr.owlgame.data.db.model.ItemType as DbItemType
 import pro.progr.owlgame.domain.model.ItemType as DomainItemType
 import pro.progr.owlgame.data.db.model.StreetDirection as DbStreetDirection
 import pro.progr.owlgame.domain.model.StreetDirection as DomainStreetDirection
+import pro.progr.owlgame.data.db.model.LocationType as DbLocationType
+import pro.progr.owlgame.domain.model.LocationType as DomainLocationType
 
 fun DbMapType.toDomain(): DomainMapType =
     when (this) {
@@ -117,6 +119,20 @@ fun DbItemType.toDomain(): DomainItemType =
         DbItemType.ANIMAL_HOUSE -> DomainItemType.ANIMAL_HOUSE
         DbItemType.NEST -> DomainItemType.NEST
         DbItemType.MUSHROOM -> DomainItemType.MUSHROOM
+    }
+
+fun DbLocationType.toDomain(): DomainLocationType =
+    when (this) {
+        DbLocationType.WATER_ANOMALY -> DomainLocationType.WATER_ANOMALY
+        DbLocationType.FOUNTAIN -> DomainLocationType.FOUNTAIN
+        DbLocationType.WATERFALL -> DomainLocationType.WATERFALL
+        DbLocationType.LANDMARK -> DomainLocationType.LANDMARK
+        DbLocationType.MONUMENT -> DomainLocationType.MONUMENT
+        DbLocationType.CAVE -> DomainLocationType.CAVE
+        DbLocationType.PARK -> DomainLocationType.PARK
+        DbLocationType.PAVILION -> DomainLocationType.PAVILION
+        DbLocationType.RESORT -> DomainLocationType.RESORT
+        DbLocationType.RUINS -> DomainLocationType.RUINS
     }
 
 fun DbStreetDirection.toDomain() : DomainStreetDirection =
