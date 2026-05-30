@@ -12,11 +12,16 @@ import pro.progr.owlgame.data.db.entity.MapEntity
 import pro.progr.owlgame.data.db.dao.MapWithDataDao
 import pro.progr.owlgame.data.db.OwlGameDatabase
 import pro.progr.owlgame.data.db.dao.ExpeditionMedalDao
+import pro.progr.owlgame.data.db.dao.LocationDao
+import pro.progr.owlgame.data.db.dao.LocationSceneDao
 import pro.progr.owlgame.data.db.embedded.MapWithData
 import pro.progr.owlgame.data.db.entity.ExpeditionMedal
+import pro.progr.owlgame.data.db.entity.Location
+import pro.progr.owlgame.data.db.entity.LocationScene
 import pro.progr.owlgame.data.mapper.toData
 import pro.progr.owlgame.domain.model.MapType
 import pro.progr.owlgame.data.mapper.toDomain
+import pro.progr.owlgame.data.mapper.toEntity
 import pro.progr.owlgame.domain.model.MapModel
 import pro.progr.owlgame.domain.model.MapWithBuildingsModel
 import pro.progr.owlgame.domain.model.MapWithDataModel
@@ -31,6 +36,8 @@ class MapsRepositoryImpl @Inject constructor(
     private val expeditionDao: ExpeditionDao,
     private val enemyDao: EnemyDao,
     private val expeditionMedalDao: ExpeditionMedalDao,
+    private val locationDao: LocationDao,
+    private val locationSceneDao: LocationSceneDao,
     private val database: OwlGameDatabase
 ) : MapsRepository {
 
@@ -58,6 +65,8 @@ class MapsRepositoryImpl @Inject constructor(
         val expeditionEntities = mutableListOf<Expedition>()
         val enemyEntities = mutableListOf<Enemy>()
         val medalEntities = mutableListOf<ExpeditionMedal>()
+        val locationEntities = mutableListOf<Location>()
+        val locationSceneEntities = mutableListOf<LocationScene>()
 
         mapModels.forEach { mapModel ->
 
@@ -67,6 +76,14 @@ class MapsRepositoryImpl @Inject constructor(
                 imagePath = mapModel.imageUrl,
                 type = mapModel.type.toData()
             )
+
+            for (location in mapModel.locations) {
+                locationEntities += location.toEntity(mapModel.id)
+
+                for (locationScene in location.scenes) {
+                    locationSceneEntities += locationScene.toData(location.id)
+                }
+            }
 
             if (mapModel.type == MapType.OCCUPIED) {
                 val expeditionModel = requireNotNull(mapModel.expedition) {
@@ -110,6 +127,8 @@ class MapsRepositoryImpl @Inject constructor(
             expeditionDao.insert(expeditionEntities)
             enemyDao.insert(enemyEntities)
             expeditionMedalDao.insert(medalEntities)
+            locationDao.insert(locationEntities)
+            locationSceneDao.insert(locationSceneEntities)
         }
     }
 

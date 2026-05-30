@@ -16,6 +16,8 @@ import pro.progr.owlgame.data.db.dao.GardensDao
 import pro.progr.owlgame.data.db.dao.MapDao
 import pro.progr.owlgame.data.db.OwlGameDatabase
 import pro.progr.owlgame.data.db.dao.ExpeditionMedalDao
+import pro.progr.owlgame.data.db.dao.LocationDao
+import pro.progr.owlgame.data.db.dao.LocationSceneDao
 import pro.progr.owlgame.data.db.dao.MapWithDataDao
 import pro.progr.owlgame.data.db.dao.PlantsDao
 import pro.progr.owlgame.data.db.dao.RecipesDao
@@ -127,5 +129,15 @@ object DatabaseModule {
     @Provides
     fun provideExpeditionMedalDao(database: OwlGameDatabase): ExpeditionMedalDao {
         return database.expeditionMedalDao()
+    }
+
+    @Provides
+    fun provideLocationDao(database: OwlGameDatabase): LocationDao {
+        return database.locationDao()
+    }
+
+    @Provides
+    fun provideLocationSceneDao(database: OwlGameDatabase): LocationSceneDao {
+        return database.locationSceneDao()
     }
 }

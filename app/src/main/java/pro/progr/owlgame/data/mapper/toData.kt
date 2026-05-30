@@ -6,6 +6,8 @@ import pro.progr.owlgame.data.db.entity.ExpeditionMedal
 import pro.progr.owlgame.data.db.entity.Furniture
 import pro.progr.owlgame.data.db.entity.Garden
 import pro.progr.owlgame.data.db.entity.GardenItem
+import pro.progr.owlgame.data.db.entity.Location
+import pro.progr.owlgame.data.db.entity.LocationScene
 import pro.progr.owlgame.data.db.entity.Plant
 import pro.progr.owlgame.data.db.entity.RoomEntity
 import pro.progr.owlgame.data.db.entity.Supply
@@ -15,6 +17,8 @@ import pro.progr.owlgame.domain.model.ExpeditionMedalModel
 import pro.progr.owlgame.domain.model.FurnitureModel
 import pro.progr.owlgame.domain.model.GardenItemModel
 import pro.progr.owlgame.domain.model.GardenModel
+import pro.progr.owlgame.domain.model.LocationSceneModel
+import pro.progr.owlgame.domain.model.LocationWithScenesModel
 import pro.progr.owlgame.domain.model.PlantModel
 import pro.progr.owlgame.domain.model.RoomModel
 import pro.progr.owlgame.domain.model.SupplyModel
@@ -222,4 +226,27 @@ fun ExpeditionMedalModel.toData() =
         title = title,
         description = description,
         imageUrl = imageUrl
+    )
+
+fun LocationWithScenesModel.toEntity(mapId : String?) =
+    Location(
+        id = id,
+        name = name,
+        description = description,
+        imageUrl = imageUrl,
+        mapId = mapId,
+        price = price,
+        x = x,
+        y = y,
+        type = type.toData()
+    )
+
+fun LocationSceneModel.toData(locationId : String) =
+    LocationScene(
+        id = id,
+        name = name,
+        description = description,
+        imageUrl = imageUrl,
+        locationId = locationId,
+        sceneNumber = sceneNumber
     )
