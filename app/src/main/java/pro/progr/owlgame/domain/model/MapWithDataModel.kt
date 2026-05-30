@@ -7,5 +7,6 @@ data class MapWithDataModel (
     val type: MapType,
     val buildings: List<BuildingWithAnimalModel> = emptyList(),
     val streets: List<StreetWithBuildingsModel> = emptyList(),
-    val expedition: ExpeditionWithDataModel? = null
+    val expedition: ExpeditionWithDataModel? = null,
+    val locations : List<LocationWithScenesModel> = emptyList()
 )

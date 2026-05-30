@@ -10,6 +10,8 @@ import pro.progr.owlgame.data.web.inpouch.GardenInPouch
 import pro.progr.owlgame.data.web.inpouch.GardenItemInPouch
 import pro.progr.owlgame.data.web.inpouch.InPouch
 import pro.progr.owlgame.data.web.inpouch.IngredientInPouch
+import pro.progr.owlgame.data.web.inpouch.LocationInPouch
+import pro.progr.owlgame.data.web.inpouch.LocationSceneInPouch
 import pro.progr.owlgame.data.web.inpouch.MapInPouch
 import pro.progr.owlgame.data.web.inpouch.PlantInPouch
 import pro.progr.owlgame.data.web.inpouch.RecipeInPouch
@@ -27,6 +29,8 @@ import pro.progr.owlgame.domain.model.GardenItemWithSupplyModel
 import pro.progr.owlgame.domain.model.GardenModel
 import pro.progr.owlgame.domain.model.InPouchModel
 import pro.progr.owlgame.domain.model.IngredientWithSupplyModel
+import pro.progr.owlgame.domain.model.LocationSceneModel
+import pro.progr.owlgame.domain.model.LocationWithScenesModel
 import pro.progr.owlgame.domain.model.MapWithDataModel
 import pro.progr.owlgame.domain.model.PlantWithSupplyModel
 import pro.progr.owlgame.domain.model.RecipeWithSuppliesModel
@@ -41,7 +45,8 @@ fun InPouch.toDomain(): InPouchModel =
         gardenItems = gardenItems.map { it.toDomain() },
         plants = plants.map { it.toDomain() },
         furniture = furniture.map { it.toDomain() },
-        recipes = recipes.map { it.toDomain() }
+        recipes = recipes.map { it.toDomain() },
+        locations = locations.map { it.toDomain(null) }
     )
 
 fun BuildingInPouch.toDomain(): BuildingWithDataModel =
@@ -78,6 +83,30 @@ fun GardenInPouch.toDomain(buildingId: String): GardenModel =
         gardenType = gardenType.toDomain()
     )
 
+fun LocationSceneInPouch.toDomain(locationId: String) : LocationSceneModel =
+    LocationSceneModel(
+        id = id,
+        name = name,
+        description = description,
+        imageUrl = imageUrl,
+        locationId = locationId,
+        sceneNumber = sceneNumber
+    )
+
+fun LocationInPouch.toDomain(mapId: String?): LocationWithScenesModel =
+    LocationWithScenesModel(
+        id = id,
+        name = name,
+        description = description,
+        imageUrl = imageUrl,
+        mapId = mapId,
+        price = price,
+        x = x,
+        y = y,
+        type = type.toDomain(),
+        scenes = scenes.map { it.toDomain(id) }
+    )
+
 fun MapInPouch.toDomain(): MapWithDataModel =
     MapWithDataModel(
         id = id,
@@ -85,7 +114,8 @@ fun MapInPouch.toDomain(): MapWithDataModel =
         imageUrl = imageUrl,
         type = type.toDomain(),
         buildings = emptyList(),
-        expedition = expedition?.toDomain(mapId = id)
+        expedition = expedition?.toDomain(mapId = id),
+        locations = locations.map { it.toDomain(id) }
     )
 
 fun ExpeditionMedalInPouch.toDomain(mapId: String, expeditionId: String, animalId: String?): ExpeditionMedalModel =
