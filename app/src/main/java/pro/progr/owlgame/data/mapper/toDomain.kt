@@ -55,7 +55,7 @@ import pro.progr.owlgame.data.db.model.ItemType as DbItemType
 import pro.progr.owlgame.domain.model.ItemType as DomainItemType
 import pro.progr.owlgame.data.db.model.StreetDirection as DbStreetDirection
 import pro.progr.owlgame.domain.model.StreetDirection as DomainStreetDirection
-import pro.progr.owlgame.data.db.model.LocationType as DbLocationType
+import pro.progr.owlgame.data.model.LocationType as DbLocationType
 import pro.progr.owlgame.domain.model.LocationType as DomainLocationType
 
 fun DbMapType.toDomain(): DomainMapType =

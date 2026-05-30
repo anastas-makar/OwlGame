@@ -34,7 +34,7 @@ import pro.progr.owlgame.data.db.model.MapType as DbMapType
 import pro.progr.owlgame.domain.model.MapType as DomainMapType
 import pro.progr.owlgame.data.db.model.StreetDirection as DbStreetDirection
 import pro.progr.owlgame.domain.model.StreetDirection as DomainStreetDirection
-import pro.progr.owlgame.data.db.model.LocationType as DbLocationType
+import pro.progr.owlgame.data.model.LocationType as DbLocationType
 import pro.progr.owlgame.domain.model.LocationType as DomainLocationType
 
 

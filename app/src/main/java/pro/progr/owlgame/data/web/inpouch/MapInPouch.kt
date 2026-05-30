@@ -7,5 +7,6 @@ data class MapInPouch(
     val name: String,
     val imageUrl: String,
     val type: MapType,
-    val expedition: ExpeditionInPouch? = null
+    val expedition: ExpeditionInPouch? = null,
+    val locations: List<LocationInPouch> = emptyList()
 )

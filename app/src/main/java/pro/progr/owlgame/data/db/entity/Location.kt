@@ -4,7 +4,7 @@ import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.Index
 import androidx.room.PrimaryKey
-import pro.progr.owlgame.data.db.model.LocationType
+import pro.progr.owlgame.data.model.LocationType
 
 @Entity(
     tableName = "locations",

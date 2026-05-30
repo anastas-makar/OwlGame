@@ -1,4 +1,4 @@
-package pro.progr.owlgame.data.db.model
+package pro.progr.owlgame.data.model
 
 enum class LocationType {
     PARK,
