@@ -10,20 +10,20 @@ import androidx.room.PrimaryKey
     indices = [Index("locationId")],
     foreignKeys = [
         ForeignKey(
-            entity = Building::class,
+            entity = Location::class,
             parentColumns = ["id"],
             childColumns = ["locationId"],
-            onDelete = ForeignKey.RESTRICT,
+            onDelete = ForeignKey.CASCADE,
             onUpdate = ForeignKey.CASCADE
         )
     ]
 )
-data class LocationScene (
+data class LocationScene(
     @PrimaryKey
-    val id : String,
-    val name : String? = null,
+    val id: String,
+    val name: String? = null,
     val description: String,
-    val imageUrl : String,
-    val locationId : String,
-    val sceneNumber : Int
+    val imageUrl: String,
+    val locationId: String,
+    val sceneNumber: Int
 )
