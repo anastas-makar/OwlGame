@@ -11,6 +11,7 @@ import pro.progr.owlgame.data.repository.impl.FurnitureRepositoryImpl
 import pro.progr.owlgame.data.repository.impl.GardenItemsRepositoryImpl
 import pro.progr.owlgame.data.repository.impl.GrowthRepositoryImpl
 import pro.progr.owlgame.data.repository.impl.ImageRepositoryImpl
+import pro.progr.owlgame.data.repository.impl.LocationRepositoryImpl
 import pro.progr.owlgame.data.repository.impl.LootRepositoryImpl
 import pro.progr.owlgame.data.repository.impl.MapsRepositoryImpl
 import pro.progr.owlgame.data.repository.impl.PlantsRepositoryImpl
@@ -29,6 +30,7 @@ import pro.progr.owlgame.domain.repository.FurnitureRepository
 import pro.progr.owlgame.domain.repository.GardenItemsRepository
 import pro.progr.owlgame.domain.repository.GrowthRepository
 import pro.progr.owlgame.domain.repository.ImageRepository
+import pro.progr.owlgame.domain.repository.LocationRepository
 import pro.progr.owlgame.domain.repository.LootRepository
 import pro.progr.owlgame.domain.repository.MapsRepository
 import pro.progr.owlgame.domain.repository.PlantsRepository
@@ -114,4 +116,8 @@ interface RepositoryBindingsModule {
     @Binds
     @Singleton
     fun bindLootRepository(impl: LootRepositoryImpl): LootRepository
+
+    @Binds
+    @Singleton
+    fun bindLocationRepository(impl: LocationRepositoryImpl): LocationRepository
 }

@@ -12,7 +12,8 @@ class SavePouchUseCase @Inject constructor(
     private val savePlantsUseCase: SavePlantsUseCase,
     private val saveGardenItemsUseCase: SaveGardenItemsUseCase,
     private val saveFurnitureUseCase: SaveFurnitureUseCase,
-    private val saveRecipesUseCase: SaveRecipesUseCase) {
+    private val saveRecipesUseCase: SaveRecipesUseCase,
+    private val saveLocationsUseCase: SaveLocationsUseCase) {
 
     suspend operator fun invoke(webPouch: InPouchModel,
                                 diamondDao: PurchaseInterface) : InPouchModel {
@@ -58,6 +59,12 @@ class SavePouchUseCase @Inject constructor(
             } else emptyList()
         }
 
+        val locationsWithLocalUrls = withContext(Dispatchers.IO) {
+            if (webPouch.locations.isNotEmpty()) {
+                saveLocationsUseCase(webPouch.locations)
+            } else emptyList()
+        }
+
         return InPouchModel(
             buildings = buildingsWithLocalUrls,
             maps = mapsWithLocalUrls,
@@ -65,7 +72,8 @@ class SavePouchUseCase @Inject constructor(
             gardenItems = gardenItemsWithLocalUrls,
             diamonds = webPouch.diamonds,
             furniture = furnitureWithLocalUrls,
-            recipes = recipesWithLocalUrls
+            recipes = recipesWithLocalUrls,
+            locations = locationsWithLocalUrls
         )
     }
 }
