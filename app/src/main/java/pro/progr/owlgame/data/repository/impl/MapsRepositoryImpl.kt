@@ -12,8 +12,8 @@ import pro.progr.owlgame.data.db.entity.MapEntity
 import pro.progr.owlgame.data.db.dao.MapWithDataDao
 import pro.progr.owlgame.data.db.OwlGameDatabase
 import pro.progr.owlgame.data.db.dao.ExpeditionMedalDao
-import pro.progr.owlgame.data.db.dao.LocationDao
-import pro.progr.owlgame.data.db.dao.LocationSceneDao
+import pro.progr.owlgame.data.db.dao.LocationsDao
+import pro.progr.owlgame.data.db.dao.LocationScenesDao
 import pro.progr.owlgame.data.db.embedded.MapWithData
 import pro.progr.owlgame.data.db.entity.ExpeditionMedal
 import pro.progr.owlgame.data.db.entity.Location
@@ -36,8 +36,8 @@ class MapsRepositoryImpl @Inject constructor(
     private val expeditionDao: ExpeditionDao,
     private val enemyDao: EnemyDao,
     private val expeditionMedalDao: ExpeditionMedalDao,
-    private val locationDao: LocationDao,
-    private val locationSceneDao: LocationSceneDao,
+    private val locationsDao: LocationsDao,
+    private val locationScenesDao: LocationScenesDao,
     private val database: OwlGameDatabase
 ) : MapsRepository {
 
@@ -127,8 +127,8 @@ class MapsRepositoryImpl @Inject constructor(
             expeditionDao.insert(expeditionEntities)
             enemyDao.insert(enemyEntities)
             expeditionMedalDao.insert(medalEntities)
-            locationDao.insert(locationEntities)
-            locationSceneDao.insert(locationSceneEntities)
+            locationsDao.insert(locationEntities)
+            locationScenesDao.insert(locationSceneEntities)
         }
     }
 

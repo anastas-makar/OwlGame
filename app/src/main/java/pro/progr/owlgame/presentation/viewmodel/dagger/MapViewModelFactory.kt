@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import pro.progr.owlgame.domain.repository.BuildingsRepository
 import pro.progr.owlgame.domain.repository.ExpeditionsRepository
+import pro.progr.owlgame.domain.repository.LocationsRepository
 import pro.progr.owlgame.domain.repository.MapsRepository
 import pro.progr.owlgame.domain.repository.SlotsRepository
 import pro.progr.owlgame.domain.repository.StreetsRepository
@@ -15,7 +16,8 @@ class MapViewModelFactory @Inject constructor(
     private val buildingsRepository: BuildingsRepository,
     private val slotsRepository: SlotsRepository,
     private val streetsRepository: StreetsRepository,
-    private val expeditionsRepository: ExpeditionsRepository
+    private val expeditionsRepository: ExpeditionsRepository,
+    private val locationsRepository: LocationsRepository
 ) : ViewModelProvider.Factory {
     var id : String = ""
 
@@ -27,6 +29,7 @@ class MapViewModelFactory @Inject constructor(
                 streetsRepository,
                 slotsRepository,
                 expeditionsRepository,
+                locationsRepository,
                 id) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")

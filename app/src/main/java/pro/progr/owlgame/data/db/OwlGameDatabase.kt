@@ -15,8 +15,8 @@ import pro.progr.owlgame.data.db.dao.ExpeditionWithDataDao
 import pro.progr.owlgame.data.db.dao.FurnitureDao
 import pro.progr.owlgame.data.db.dao.GardenItemsDao
 import pro.progr.owlgame.data.db.dao.GardensDao
-import pro.progr.owlgame.data.db.dao.LocationDao
-import pro.progr.owlgame.data.db.dao.LocationSceneDao
+import pro.progr.owlgame.data.db.dao.LocationsDao
+import pro.progr.owlgame.data.db.dao.LocationScenesDao
 import pro.progr.owlgame.data.db.dao.MapDao
 import pro.progr.owlgame.data.db.dao.MapWithDataDao
 import pro.progr.owlgame.data.db.dao.PlantsDao
@@ -101,9 +101,9 @@ abstract class OwlGameDatabase : RoomDatabase() {
     abstract fun supplyToRecipesDao(): SupplyToRecipeDao
     abstract fun expeditionMedalDao(): ExpeditionMedalDao
 
-    abstract fun locationDao(): LocationDao
+    abstract fun locationDao(): LocationsDao
 
-    abstract fun locationSceneDao(): LocationSceneDao
+    abstract fun locationSceneDao(): LocationScenesDao
 
     companion object {
         @Volatile

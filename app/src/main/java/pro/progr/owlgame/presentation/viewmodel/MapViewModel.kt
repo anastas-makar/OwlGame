@@ -19,6 +19,7 @@ import kotlinx.coroutines.withContext
 import pro.progr.diamondapi.PurchaseInterface
 import pro.progr.owlgame.domain.model.BuildingModel
 import pro.progr.owlgame.domain.model.BuildingWithAnimalModel
+import pro.progr.owlgame.domain.model.LocationWithScenesModel
 import pro.progr.owlgame.domain.model.MapType
 import pro.progr.owlgame.domain.model.MapWithDataModel
 import pro.progr.owlgame.domain.model.StreetDirection
@@ -26,6 +27,7 @@ import pro.progr.owlgame.domain.model.StreetModel
 import pro.progr.owlgame.domain.model.StreetWithBuildingsModel
 import pro.progr.owlgame.domain.repository.BuildingsRepository
 import pro.progr.owlgame.domain.repository.ExpeditionsRepository
+import pro.progr.owlgame.domain.repository.LocationsRepository
 import pro.progr.owlgame.domain.repository.MapsRepository
 import pro.progr.owlgame.domain.repository.SlotsRepository
 import pro.progr.owlgame.domain.repository.StreetsRepository
@@ -41,6 +43,7 @@ class MapViewModel @Inject constructor(
     private val streetsRepository: StreetsRepository,
     private val slotsRepository: SlotsRepository,
     private val expeditionsRepository: ExpeditionsRepository,
+    private val locationsRepository: LocationsRepository,
     mapId: String
 ) : ViewModel() {
 
@@ -75,10 +78,19 @@ class MapViewModel @Inject constructor(
                         flowOf(emptyList())
                     }
 
-                combine(buildingsFlow, expeditionFlow, streetsFlow) { buildingsMap, expeditionWithData, streets ->
+                val locationsFlow =
+                    locationsRepository.getLocationsWithScenesByMapId(mapId)
+
+                combine(buildingsFlow, expeditionFlow, streetsFlow,
+                    locationsFlow) { buildingsMap, expeditionWithData, streets, locations ->
+
                     val buildings = buildingsMap.values
                         .toList()
                         .sortedWith(compareBy({ it.x }, { it.id }))
+
+                    val sortedLocations = locations
+                        .sortedWith(compareBy({ it.x }, { it.id }))
+
                     MapWithDataModel(
                         id = mapWithData.id,
                         name = mapWithData.name,
@@ -89,6 +101,7 @@ class MapViewModel @Inject constructor(
                             buildings = buildings,
                             streets = streets
                         ),
+                        locations = sortedLocations,
                         expedition = expeditionWithData
                     )
                 }
@@ -159,6 +172,12 @@ class MapViewModel @Inject constructor(
     val selectFortressState = mutableStateOf(false)
 
     val selectedBuilding = mutableStateOf<BuildingModel?>(null)
+
+    val selectLocationState = mutableStateOf(false)
+
+    val newLocationState = mutableStateOf(false)
+
+    val selectedLocation = mutableStateOf<LocationWithScenesModel?>(null)
 
     fun startToFoundTown() {
         viewModelScope.launch (Dispatchers.Default) {
@@ -243,6 +262,43 @@ class MapViewModel @Inject constructor(
                 buildingId = buildingId,
                 streetId = streetId
             )
+        }
+    }
+
+    fun getAvailableLocations(): Flow<List<LocationWithScenesModel>> {
+        return locationsRepository.getAvailableLocations()
+    }
+
+    fun saveLocationSlot(x: Float, y: Float, mapId: String, locationId: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            locationsRepository.placeLocationOnMap(
+                locationId = locationId,
+                mapId = mapId,
+                x = x,
+                y = y
+            )
+        }
+        newLocationState.value = false
+        selectedLocation.value = null
+    }
+
+    fun updateLocationSlot(locationId: String, x: Float, y: Float) {
+        viewModelScope.launch(Dispatchers.IO) {
+            locationsRepository.updateLocationSlot(locationId, x, y)
+        }
+    }
+
+    fun purchaseLocation(diamondDao: PurchaseInterface, location: LocationWithScenesModel) {
+        viewModelScope.launch {
+            val result = withContext(Dispatchers.IO) {
+                diamondDao.spendDiamonds(location.price)
+            }
+
+            if (result.isSuccess) {
+                selectLocationState.value = false
+                selectedLocation.value = location
+                newLocationState.value = true
+            }
         }
     }
 }

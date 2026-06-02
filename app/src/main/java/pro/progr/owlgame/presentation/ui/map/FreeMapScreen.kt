@@ -36,14 +36,17 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
-import coil.compose.AsyncImage
 import pro.progr.diamondapi.PurchaseInterface
+import pro.progr.owlgame.domain.model.LocationWithScenesModel
 import pro.progr.owlgame.domain.model.MapWithDataModel
 import pro.progr.owlgame.presentation.ui.MapBar
 import pro.progr.owlgame.presentation.ui.fab.ExpandableFloatingActionButton
 import pro.progr.owlgame.presentation.ui.fab.FabAction
+import pro.progr.owlgame.presentation.ui.mapicon.FixedImageOverlay
+import pro.progr.owlgame.presentation.ui.mapicon.locationIconRes
 import pro.progr.owlgame.presentation.viewmodel.FreeMapViewModel
 import pro.progr.owlgame.presentation.viewmodel.MapViewModel
 
@@ -61,6 +64,8 @@ fun FreeMapScreen(
     val snackbarHostState = remember { SnackbarHostState() }
 
     var fabExpanded by rememberSaveable { mutableStateOf(false) }
+
+    var selectedLocation by remember { mutableStateOf<LocationWithScenesModel?>(null) }
 
     val lootState by freeMapViewModel.lootUiState.collectAsState()
 
@@ -156,31 +161,34 @@ fun FreeMapScreen(
                 }
 
                 item {
-                    LaunchedEffect(
-                        mapViewModel.newHouseState.value,
-                        mapViewModel.selectedBuilding.value?.id,
-                        map.value.id
-                    ) {
-                        val selected = mapViewModel.selectedBuilding.value
-                        if (mapViewModel.newHouseState.value && selected != null && map.value.id.isNotEmpty()) {
-                            mapViewModel.saveSlot(
-                                x = 0f,
-                                y = 0f,
-                                mapId = map.value.id,
-                                buildingId = selected.id
-                            )
-                        }
-                    }
 
                     Box(Modifier.fillMaxWidth().heightIn(max = 420.dp)) {
-                        AsyncImage(
-                            model = map.value.imageUrl,
-                            contentDescription = null,
-                            modifier = Modifier
-                                .fillMaxWidth()
+                        FixedImageOverlay (
+                            backgroundModel = map.value.imageUrl,
+                            items = map.value.locations,
+                            modifier = Modifier.fillMaxWidth(),
+                            keyOf = { it.id },
+                            x01Of = { it.x },
+                            y01Of = { it.y },
+                            iconPainterOf = { painterResource(locationIconRes(it.type)) }
                         )
                     }
                 }
+
+                item {
+                    LocationsSection(
+                        locations = map.value.locations,
+                        onLocationClick = { selectedLocation = it }
+                    )
+                }
+            }
+
+            //Просмотр локаций
+            selectedLocation?.let { location ->
+                LocationGalleryDialog(
+                    location = location,
+                    onDismiss = { selectedLocation = null }
+                )
             }
 
             // Scrim для FAB-меню (закрывать по тапу вне)

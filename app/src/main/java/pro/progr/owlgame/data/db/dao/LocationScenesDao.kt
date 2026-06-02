@@ -6,7 +6,7 @@ import androidx.room.OnConflictStrategy
 import pro.progr.owlgame.data.db.entity.LocationScene
 
 @Dao
-interface LocationSceneDao {
+interface LocationScenesDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insert(locationScenes: List<LocationScene>): List<Long>
 }

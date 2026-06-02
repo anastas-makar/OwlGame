@@ -3,6 +3,7 @@ package pro.progr.owlgame.data.mapper
 import pro.progr.owlgame.data.db.embedded.BuildingWithAnimal
 import pro.progr.owlgame.data.db.embedded.BuildingWithData
 import pro.progr.owlgame.data.db.embedded.ExpeditionWithData
+import pro.progr.owlgame.data.db.embedded.LocationWithScenes
 import pro.progr.owlgame.data.db.embedded.MapWithData
 import pro.progr.owlgame.data.db.entity.Animal
 import pro.progr.owlgame.data.db.entity.Building
@@ -12,6 +13,7 @@ import pro.progr.owlgame.data.db.entity.ExpeditionMedal
 import pro.progr.owlgame.data.db.entity.Furniture
 import pro.progr.owlgame.data.db.entity.Garden
 import pro.progr.owlgame.data.db.entity.GardenItem
+import pro.progr.owlgame.data.db.entity.LocationScene
 import pro.progr.owlgame.data.db.entity.MapEntity
 import pro.progr.owlgame.data.db.entity.Plant
 import pro.progr.owlgame.data.db.entity.RoomEntity
@@ -30,6 +32,8 @@ import pro.progr.owlgame.domain.model.ExpeditionWithDataModel
 import pro.progr.owlgame.domain.model.FurnitureModel
 import pro.progr.owlgame.domain.model.GardenItemModel
 import pro.progr.owlgame.domain.model.GardenModel
+import pro.progr.owlgame.domain.model.LocationSceneModel
+import pro.progr.owlgame.domain.model.LocationWithScenesModel
 import pro.progr.owlgame.domain.model.MapModel
 import pro.progr.owlgame.domain.model.MapWithBuildingsModel
 import pro.progr.owlgame.domain.model.PlantModel
@@ -367,4 +371,28 @@ fun Street.toDomain() : StreetModel =
         mapId = mapId,
         name = name,
         direction = direction.toDomain()
+    )
+
+fun LocationScene.toDomain() =
+    LocationSceneModel(
+        id = id,
+        name = name,
+        description = description,
+        imageUrl = imageUrl,
+        locationId = locationId,
+        sceneNumber = sceneNumber
+    )
+
+fun LocationWithScenes.toDomain() =
+    LocationWithScenesModel(
+        id = location.id,
+        name = location.name,
+        description = location.description,
+        imageUrl = location.imageUrl,
+        mapId = location.mapId,
+        price = location.price,
+        x = location.x,
+        y = location.y,
+        type =  location.type.toDomain(),
+        scenes = scenes.map { it.toDomain()}
     )
