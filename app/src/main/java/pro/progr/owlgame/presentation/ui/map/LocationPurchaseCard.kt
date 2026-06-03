@@ -1,5 +1,6 @@
 package pro.progr.owlgame.presentation.ui.map
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -11,16 +12,17 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.clipToBounds
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
@@ -30,6 +32,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
+import pro.progr.owlgame.domain.model.LocationType
 import pro.progr.owlgame.domain.model.LocationWithScenesModel
 import pro.progr.owlgame.presentation.ui.mapicon.locationIconRes
 
@@ -74,22 +77,12 @@ fun LocationPurchaseCard(
                     modifier = Modifier.fillMaxSize()
                 )
 
-                Box(
+                LocationTypeBadge(
+                    type = location.type,
                     modifier = Modifier
                         .align(Alignment.TopEnd)
                         .padding(4.dp)
-                        .size(26.dp)
-                        .clip(RoundedCornerShape(999.dp))
-                        .background(Color.White.copy(alpha = 0.85f)),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Icon(
-                        painter = painterResource(id = locationIconRes(location.type)),
-                        contentDescription = null,
-                        tint = Color.Unspecified,
-                        modifier = Modifier.size(18.dp)
-                    )
-                }
+                )
             }
 
             Spacer(Modifier.width(12.dp))
@@ -137,5 +130,29 @@ fun LocationPurchaseCard(
                 )
             }
         }
+    }
+}
+
+@Composable
+private fun LocationTypeBadge(
+    type: LocationType,
+    modifier: Modifier = Modifier
+) {
+    Box(
+        modifier = modifier
+            .size(34.dp)
+            .clip(CircleShape)
+            .background(Color.White.copy(alpha = 0.90f)),
+        contentAlignment = Alignment.TopCenter
+    ) {
+        Image(
+            painter = painterResource(id = locationIconRes(type)),
+            contentDescription = null,
+            contentScale = ContentScale.Crop,
+            alignment = Alignment.TopCenter,
+            modifier = Modifier
+                .fillMaxSize()
+                .clipToBounds()
+        )
     }
 }
