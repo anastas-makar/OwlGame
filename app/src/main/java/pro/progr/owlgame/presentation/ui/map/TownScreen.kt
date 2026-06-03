@@ -347,7 +347,10 @@ fun TownScreen(
                     diamondBalance = diamondBalance,
                     diamondDao = diamondDao,
                     scope = scope,
-                    snackbarHostState = snackbarHostState
+                    snackbarHostState = snackbarHostState,
+                    onDismiss = {
+                        mapViewModel.selectLocationState.value = false
+                    }
                 )
             }
         }
