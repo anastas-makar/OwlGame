@@ -4,11 +4,9 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -18,8 +16,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.Card
-import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Scaffold
 import androidx.compose.material.SnackbarHost
 import androidx.compose.material.SnackbarHostState
@@ -37,26 +33,24 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
-import coil.compose.AsyncImage
-import coil.request.ImageRequest
 import pro.progr.diamondapi.PurchaseInterface
 import pro.progr.owlgame.domain.model.BuildingType
-import pro.progr.owlgame.domain.model.BuildingWithAnimalModel
+import pro.progr.owlgame.domain.model.LocationWithScenesModel
+import pro.progr.owlgame.domain.model.MapWithDataModel
+import pro.progr.owlgame.domain.model.StreetDirection
+import pro.progr.owlgame.domain.model.StreetWithBuildingsModel
 import pro.progr.owlgame.presentation.ui.MapBar
 import pro.progr.owlgame.presentation.ui.SelectBuildingScreen
 import pro.progr.owlgame.presentation.ui.fab.ExpandableFloatingActionButton
 import pro.progr.owlgame.presentation.ui.fab.FabAction
 import pro.progr.owlgame.presentation.ui.mapicon.DraggableImageOverlay
 import pro.progr.owlgame.presentation.ui.mapicon.buildingIconRes
-import pro.progr.owlgame.domain.model.MapWithDataModel
-import pro.progr.owlgame.domain.model.StreetDirection
-import pro.progr.owlgame.domain.model.StreetWithBuildingsModel
+import pro.progr.owlgame.presentation.ui.mapicon.locationIconRes
+import pro.progr.owlgame.presentation.ui.model.TownBuildingMapItem
+import pro.progr.owlgame.presentation.ui.model.TownLocationMapItem
 import pro.progr.owlgame.presentation.viewmodel.MapViewModel
 
 @Composable
@@ -107,6 +101,8 @@ fun TownScreen(
         )
     }
 
+    var selectedLocation by remember { mutableStateOf<LocationWithScenesModel?>(null) }
+
     var fabExpanded by rememberSaveable { mutableStateOf(false) }
 
     // Показываем FAB только когда реально можно строить (подстрой под свою логику)
@@ -115,14 +111,17 @@ fun TownScreen(
                 //(map.value.type == MapType.TOWN || map.value.type == MapType.FREE) &&
                 !foundTown.value &&
                 !mapViewModel.selectHouseState.value &&
-                !mapViewModel.selectFortressState.value
+                !mapViewModel.selectFortressState.value &&
+                !mapViewModel.selectLocationState.value
 
     // Если открылись оверлеи — FAB-меню закрываем
     LaunchedEffect(
         mapViewModel.selectHouseState.value,
         mapViewModel.selectFortressState.value
     ) {
-        if (mapViewModel.selectHouseState.value || mapViewModel.selectFortressState.value) {
+        if (mapViewModel.selectHouseState.value
+            || mapViewModel.selectFortressState.value
+            || mapViewModel.selectLocationState.value) {
             fabExpanded = false
         }
     }
@@ -150,6 +149,11 @@ fun TownScreen(
                             text = "Создать улицу",
                             color = Color.DarkGray,
                             onClick = { showCreateStreetDialog = true }
+                        ),
+                        FabAction(
+                            text = "Добавить достопримечательность",
+                            color = Color.DarkGray,
+                            onClick = { mapViewModel.selectLocationState.value = true }
                         )
                     ),
                     modifier = Modifier.navigationBarsPadding()
@@ -195,19 +199,63 @@ fun TownScreen(
                         }
                     }
 
+                    LaunchedEffect(
+                        mapViewModel.newLocationState.value,
+                        mapViewModel.selectedLocation.value?.id,
+                        map.value.id
+                    ) {
+                        val selected = mapViewModel.selectedLocation.value
+                        if (mapViewModel.newLocationState.value && selected != null && map.value.id.isNotEmpty()) {
+                            mapViewModel.saveLocationSlot(
+                                x = 0f,
+                                y = 0f,
+                                mapId = map.value.id,
+                                locationId = selected.id
+                            )
+                        }
+                    }
+
+                    val townMapItems = remember(map.value.buildings, map.value.locations) {
+                        map.value.locations.map { TownLocationMapItem(it) } +
+                                map.value.buildings.map { TownBuildingMapItem(it) }
+                    }
+
                     Box(Modifier.fillMaxWidth().heightIn(max = 420.dp)) {
                         DraggableImageOverlay(
                             backgroundModel = map.value.imageUrl,
-                            items = map.value.buildings,
+                            items = townMapItems,
                             modifier = Modifier.fillMaxWidth(),
                             keyOf = { it.id },
                             x01Of = { it.x },
                             y01Of = { it.y },
                             isNewOf = { it.x == 0f && it.y == 0f},
-                            iconPainterOf = { painterResource(buildingIconRes(it.type)) },
-                            onCommit01 = { item, x, y -> mapViewModel.updateSlot(item.id, x, y) },
+                            iconPainterOf = { item ->
+                                when (item) {
+                                    is TownBuildingMapItem ->
+                                        painterResource(buildingIconRes(item.building.type))
+
+                                    is TownLocationMapItem ->
+                                        painterResource(locationIconRes(item.location.type))
+                                }
+                            },
+                            onCommit01 = { item, x, y ->
+                                when (item) {
+                                    is TownBuildingMapItem ->
+                                        mapViewModel.updateSlot(item.id, x, y)
+
+                                    is TownLocationMapItem ->
+                                        mapViewModel.updateLocationSlot(item.id, x, y)
+                                }
+                            },
                         )
                     }
+                }
+
+                item {
+                    LocationsSection(
+                        locations = map.value.locations,
+                        onLocationClick = { selectedLocation = it }
+                    )
                 }
 
                 map.value.streets.forEach { street ->
@@ -292,29 +340,23 @@ fun TownScreen(
                     buildingType = BuildingType.FORTRESS
                 )
             }
-        }
-    }
-}
 
-@OptIn(ExperimentalMaterialApi::class)
-@Composable
-private fun BuildingCard(building: BuildingWithAnimalModel, modifier: Modifier = Modifier,
-                         navHostController: NavHostController) {
-    Card(modifier = modifier, onClick = {navHostController.navigate("building/${building.id}")}) {
-        Column {
-            AsyncImage(
-                model = ImageRequest.Builder(LocalContext.current)
-                    .data(building.imageUrl)
-                    .build(),
-                contentDescription = null,
-                contentScale = ContentScale.Crop,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .aspectRatio(1f)
-            )
-            building.animal?.let {
-                Text("Живёт ${it.kind} ${it.name}", modifier = Modifier.padding(5.dp))
+            if (mapViewModel.selectLocationState.value) {
+                SelectLocationScreen(
+                    mapViewModel = mapViewModel,
+                    diamondBalance = diamondBalance,
+                    diamondDao = diamondDao,
+                    scope = scope,
+                    snackbarHostState = snackbarHostState
+                )
             }
+        }
+
+        selectedLocation?.let { location ->
+            LocationGalleryDialog(
+                location = location,
+                onDismiss = { selectedLocation = null }
+            )
         }
     }
 }
