@@ -162,7 +162,9 @@ fun FreeMapScreen(
 
                 item {
 
-                    Box(Modifier.fillMaxWidth().heightIn(max = 420.dp)) {
+                    Box(Modifier
+                        .fillMaxWidth()
+                        .heightIn(max = 420.dp)) {
                         FixedImageOverlay (
                             backgroundModel = map.value.imageUrl,
                             items = map.value.locations,
@@ -175,12 +177,10 @@ fun FreeMapScreen(
                     }
                 }
 
-                item {
-                    LocationsSection(
-                        locations = map.value.locations,
-                        onLocationClick = { selectedLocation = it }
-                    )
-                }
+                locationsSection(
+                    locations = map.value.locations,
+                    onLocationClick = { selectedLocation = it }
+                )
             }
 
             //Просмотр локаций

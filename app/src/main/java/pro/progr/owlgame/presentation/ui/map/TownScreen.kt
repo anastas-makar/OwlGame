@@ -220,7 +220,9 @@ fun TownScreen(
                                 map.value.buildings.map { TownBuildingMapItem(it) }
                     }
 
-                    Box(Modifier.fillMaxWidth().heightIn(max = 420.dp)) {
+                    Box(Modifier
+                        .fillMaxWidth()
+                        .heightIn(max = 420.dp)) {
                         DraggableImageOverlay(
                             backgroundModel = map.value.imageUrl,
                             items = townMapItems,
@@ -251,12 +253,10 @@ fun TownScreen(
                     }
                 }
 
-                item {
-                    LocationsSection(
-                        locations = map.value.locations,
-                        onLocationClick = { selectedLocation = it }
-                    )
-                }
+                locationsSection(
+                    locations = map.value.locations,
+                    onLocationClick = { selectedLocation = it }
+                )
 
                 map.value.streets.forEach { street ->
                     item {
