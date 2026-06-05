@@ -42,6 +42,9 @@ import pro.progr.owlgame.presentation.ui.fab.FabAction
 import pro.progr.owlgame.presentation.ui.mapicon.FixedImageOverlay
 import pro.progr.owlgame.presentation.ui.mapicon.enemyIconRes
 import pro.progr.owlgame.domain.model.MapWithDataModel
+import pro.progr.owlgame.presentation.ui.mapicon.locationIconRes
+import pro.progr.owlgame.presentation.ui.model.mapitem.EnemyMapItem
+import pro.progr.owlgame.presentation.ui.model.mapitem.OccupiedMapLocationItem
 import pro.progr.owlgame.presentation.viewmodel.ExpeditionPreparationViewModel
 import pro.progr.owlgame.presentation.viewmodel.MapViewModel
 import pro.progr.owlgame.presentation.viewmodel.OccupiedMapViewModel
@@ -157,6 +160,11 @@ fun OccupiedMapScreen(
         ) {
             map.value.expedition?.let { expedition ->
                 item {
+                    val mapItems = remember(expedition.enemies, map.value.locations) {
+                        map.value.locations.map { OccupiedMapLocationItem(it) } +
+                                expedition.enemies.map { EnemyMapItem(it) }
+                    }
+
                     Box(
                         Modifier
                             .fillMaxWidth()
@@ -164,13 +172,21 @@ fun OccupiedMapScreen(
                     ) {
                         FixedImageOverlay(
                             backgroundModel = map.value.imageUrl,
-                            items = expedition.enemies,
+                            items = mapItems,
                             modifier = Modifier.fillMaxWidth(),
                             keyOf = { it.id },
                             x01Of = { it.x },
                             y01Of = { it.y },
                             isJumping = { false },
-                            iconPainterOf = { painterResource(enemyIconRes()) }
+                            iconPainterOf = { item ->
+                                when (item) {
+                                    is OccupiedMapLocationItem ->
+                                        painterResource(locationIconRes(item.location.type))
+
+                                    is EnemyMapItem ->
+                                        painterResource(enemyIconRes())
+                                }
+                            }
                         )
                     }
                 }

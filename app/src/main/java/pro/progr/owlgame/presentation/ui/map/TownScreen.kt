@@ -49,8 +49,8 @@ import pro.progr.owlgame.presentation.ui.fab.FabAction
 import pro.progr.owlgame.presentation.ui.mapicon.DraggableImageOverlay
 import pro.progr.owlgame.presentation.ui.mapicon.buildingIconRes
 import pro.progr.owlgame.presentation.ui.mapicon.locationIconRes
-import pro.progr.owlgame.presentation.ui.model.TownBuildingMapItem
-import pro.progr.owlgame.presentation.ui.model.TownLocationMapItem
+import pro.progr.owlgame.presentation.ui.model.mapitem.TownBuildingMapItem
+import pro.progr.owlgame.presentation.ui.model.mapitem.TownLocationMapItem
 import pro.progr.owlgame.presentation.viewmodel.MapViewModel
 
 @Composable

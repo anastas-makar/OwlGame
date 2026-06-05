@@ -1,4 +1,4 @@
-package pro.progr.owlgame.presentation.ui.model
+package pro.progr.owlgame.presentation.ui.model.mapitem
 
 sealed interface TownMapItem {
     val id: String
