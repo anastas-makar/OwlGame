@@ -160,7 +160,7 @@ fun InPouchContent(
                 }
             }
 
-            // Список зданий
+            // Список мебели
             itemsIndexed(inPouch.furniture) { _, furnitureItem ->
                 Card(
                     modifier = Modifier
@@ -197,7 +197,7 @@ fun InPouchContent(
                 }
             }
 
-            // Список зданий
+            // Список садовых растений/построек
             itemsIndexed(inPouch.gardenItems) { _, gardenItem ->
                 Card(
                     modifier = Modifier
@@ -231,7 +231,7 @@ fun InPouchContent(
                 }
             }
 
-            // Список зданий
+            // Список растений
             itemsIndexed(inPouch.plants) { _, plant ->
                 Card(
                     modifier = Modifier
@@ -253,6 +253,86 @@ fun InPouchContent(
                         ) {
                             AsyncImage(
                                 model = plant.imageUrl,
+                                contentDescription = null,
+                                contentScale = ContentScale.FillWidth,
+                                modifier = Modifier
+                                    .widthIn(100.dp, 300.dp)
+                                    .align(Alignment.CenterEnd)
+                            )
+                        }
+
+                    }
+                }
+            }
+
+            // Список рецептов
+            if (inPouch.recipes.isNotEmpty()) {
+                item {
+                    Card(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(16.dp)
+                    ) {
+                        Text("Животное может готовить в комнате, в которой стоит холодильник. Поселите животное в домике и поставьте в этом домике холодильник, чтобы приступить к готовке.")
+                    }
+                }
+            }
+
+            itemsIndexed(inPouch.recipes) { _, recipe ->
+                Card(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp)
+                ) {
+                    Box {
+                        Text(
+                            text = recipe.resultName,
+                            fontWeight = FontWeight.Bold,
+                            modifier = Modifier
+                                .padding(16.dp)
+                                .align(Alignment.CenterStart)
+                        )
+                        Box(
+                            modifier = Modifier
+                                .align(Alignment.CenterEnd)
+                                .padding(2.dp)
+                        ) {
+                            AsyncImage(
+                                model = recipe.resultImageUrl,
+                                contentDescription = null,
+                                contentScale = ContentScale.FillWidth,
+                                modifier = Modifier
+                                    .widthIn(100.dp, 300.dp)
+                                    .align(Alignment.CenterEnd)
+                            )
+                        }
+
+                    }
+                }
+            }
+
+            // Список достопримечательностей
+            itemsIndexed(inPouch.locations) { _, location ->
+                Card(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp)
+                ) {
+                    Box {
+                        Text(
+                            text = location.name,
+                            fontWeight = FontWeight.Bold,
+                            modifier = Modifier
+                                .padding(16.dp)
+                                .align(Alignment.CenterStart)
+                        )
+                        Box(
+                            modifier = Modifier
+                                .align(Alignment.CenterEnd)
+                                .padding(2.dp)
+                        ) {
+                            AsyncImage(
+                                model = location.imageUrl,
                                 contentDescription = null,
                                 contentScale = ContentScale.FillWidth,
                                 modifier = Modifier
