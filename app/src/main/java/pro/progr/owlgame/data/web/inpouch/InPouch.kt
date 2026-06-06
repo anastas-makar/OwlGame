@@ -1,12 +1,12 @@
 package pro.progr.owlgame.data.web.inpouch
 
 data class InPouch(
-    val buildings : List<BuildingInPouch> = emptyList(),
-    val maps : List<MapInPouch> = emptyList(),
-    val diamonds : DiamondsInPouch? = null,
-    val gardenItems : List<GardenItemInPouch> = emptyList(),
-    val plants : List<PlantInPouch> = emptyList(),
-    val furniture : List<FurnitureInPouch> = emptyList(),
-    val recipes : List<RecipeInPouch> = emptyList(),
-    val locations: List<LocationInPouch> = emptyList()
+    val buildings: List<BuildingInPouch>? = null,
+    val maps: List<MapInPouch>? = null,
+    val diamonds: DiamondsInPouch? = null,
+    val gardenItems: List<GardenItemInPouch>? = null,
+    val plants: List<PlantInPouch>? = null,
+    val furniture: List<FurnitureInPouch>? = null,
+    val recipes: List<RecipeInPouch>? = null,
+    val locations: List<LocationInPouch>? = null
 )

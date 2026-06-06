@@ -39,14 +39,14 @@ import pro.progr.owlgame.domain.model.SupplyModel
 
 fun InPouch.toDomain(): InPouchModel =
     InPouchModel(
-        buildings = buildings.map { it.toDomain() },
-        maps = maps.map { it.toDomain() },
+        buildings = buildings.orEmpty().map { it.toDomain() },
+        maps = maps.orEmpty().map { it.toDomain() },
         diamonds = diamonds?.toDomain(),
-        gardenItems = gardenItems.map { it.toDomain() },
-        plants = plants.map { it.toDomain() },
-        furniture = furniture.map { it.toDomain() },
-        recipes = recipes.map { it.toDomain() },
-        locations = locations.map { it.toDomain(null) }
+        gardenItems = gardenItems.orEmpty().map { it.toDomain() },
+        plants = plants.orEmpty().map { it.toDomain() },
+        furniture = furniture.orEmpty().map { it.toDomain() },
+        recipes = recipes.orEmpty().map { it.toDomain() },
+        locations = locations.orEmpty().map { it.toDomain(null) }
     )
 
 fun BuildingInPouch.toDomain(): BuildingWithDataModel =
@@ -115,7 +115,7 @@ fun MapInPouch.toDomain(): MapWithDataModel =
         type = type.toDomain(),
         buildings = emptyList(),
         expedition = expedition?.toDomain(mapId = id),
-        locations = locations.map { it.toDomain(id) }
+        locations = locations.orEmpty().map { it.toDomain(id) }
     )
 
 fun ExpeditionMedalInPouch.toDomain(mapId: String, expeditionId: String, animalId: String?): ExpeditionMedalModel =
