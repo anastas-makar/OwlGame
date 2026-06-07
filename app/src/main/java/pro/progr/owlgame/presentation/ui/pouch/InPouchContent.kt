@@ -57,10 +57,8 @@ fun InPouchContent(
                 }
             }
 
-            if (inPouch.recipes.isNotEmpty()) {
-                item {
-                    RecipeHintCard()
-                }
+             items (items.mapNotNull { it.hint }.distinct()) { hint ->
+                 HintCard(hint)
             }
         }
     }

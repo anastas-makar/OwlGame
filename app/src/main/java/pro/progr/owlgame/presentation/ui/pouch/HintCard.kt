@@ -12,14 +12,14 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun RecipeHintCard() {
+fun HintCard(hint: String) {
     Card(
         modifier = Modifier.fillMaxWidth(),
         elevation = 2.dp,
         shape = RoundedCornerShape(16.dp)
     ) {
         Text(
-            text = "Животное может готовить в комнате, в которой стоит холодильник. Поселите животное в домике и поставьте в этом домике холодильник, чтобы приступить к готовке.",
+            text = hint,
             modifier = Modifier.padding(16.dp),
             style = MaterialTheme.typography.body2,
             color = Color.Gray
