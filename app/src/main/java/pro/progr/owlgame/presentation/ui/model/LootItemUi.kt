@@ -6,5 +6,6 @@ data class LootItemUi(
     val description: String? = null,
     val imageUrl: String? = null,
     val iconRes: Int? = null,
-    val amount: Int? = null
+    val amount: Int? = null,
+    val route: String? = null
 )

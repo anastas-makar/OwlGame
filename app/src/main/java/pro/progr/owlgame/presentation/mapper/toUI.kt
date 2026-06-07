@@ -24,7 +24,8 @@ fun InPouchModel.toLootItems(): List<LootItemUi> {
                     id = "building_${it.id}",
                     title = it.name,
                     description = "Здание",
-                    imageUrl = it.imageUrl
+                    imageUrl = it.imageUrl,
+                    route = "building/${it.id}"
                 )
             )
         }
@@ -35,7 +36,8 @@ fun InPouchModel.toLootItems(): List<LootItemUi> {
                     id = "map_${it.id}",
                     title = it.name,
                     description = "Здесь можно основать город и строить здания",
-                    imageUrl = it.imageUrl
+                    imageUrl = it.imageUrl,
+                    route = "map/${it.id}"
                 )
             )
         }
@@ -82,6 +84,17 @@ fun InPouchModel.toLootItems(): List<LootItemUi> {
                     title = it.resultName,
                     description = it.description,
                     imageUrl = it.resultImageUrl
+                )
+            )
+        }
+
+        locations.forEach {
+            add(
+                LootItemUi(
+                    id = "location_${it.id}",
+                    title = it.name,
+                    description = it.description.ifBlank { "Достопримечательность" },
+                    imageUrl = it.imageUrl
                 )
             )
         }

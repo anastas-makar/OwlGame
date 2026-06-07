@@ -1,4 +1,4 @@
-package pro.progr.owlgame.presentation.ui
+package pro.progr.owlgame.presentation.ui.pouch
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.scrollBy
@@ -25,6 +25,8 @@ import coil.compose.AsyncImage
 import kotlinx.coroutines.delay
 import pro.progr.diamondapi.PurchaseInterface
 import pro.progr.owlgame.domain.model.PouchModel
+import pro.progr.owlgame.presentation.ui.PouchesBar
+import pro.progr.owlgame.presentation.ui.PouchesList
 import pro.progr.owlgame.presentation.viewmodel.InPouchViewModel
 import pro.progr.owlgame.presentation.viewmodel.PouchesViewModel
 
