@@ -1,9 +1,11 @@
 package pro.progr.owlgame.presentation.mapper
 
 import pro.progr.owlgame.R
+3import pro.progr.owlgame.domain.model.BuildingType
 import pro.progr.owlgame.domain.model.GardenType
 import pro.progr.owlgame.domain.model.InPouchModel
 import pro.progr.owlgame.domain.model.MapType
+import pro.progr.owlgame.presentation.ui.model.LootHintType
 import pro.progr.owlgame.presentation.ui.model.LootItemUi
 
 fun InPouchModel.toLootItems(): List<LootItemUi> {
@@ -16,8 +18,7 @@ fun InPouchModel.toLootItems(): List<LootItemUi> {
                     description = "Они нужны, чтобы покупать вещи и строить здания",
                     iconRes = R.drawable.ic_diamond_bright,
                     amount = it.amount,
-                    hint = "Бриллианты нужны, чтобы строить здания и устанавливать мебель. " +
-                            "За бриллианты можно купить бомбочки и чешуйки, которые дают атаку и защиту в экспедиции. "
+                    hintType = LootHintType.DIAMONDS
                 )
             )
         }
@@ -25,19 +26,13 @@ fun InPouchModel.toLootItems(): List<LootItemUi> {
         buildings.forEach {
             add(
                 LootItemUi(
-                    id = it.id,
+                    id = "building_${it.id}",
                     title = it.name,
                     description = "Здание",
                     imageUrl = it.imageUrl,
                     route = "building/${it.id}",
-                    hint =
-                        "Домики и замки можно размещать в городах. Город можно основать на любой свободной карте. " +
-                            "В домиках и замках могут селиться животные. Туда можно войти, посетить " +
-                                "комнаты и огрод. В комнатах можно ставить мебель. " +
-                                "Если в комнате есть холодильник, в ней можно готовить. " +
-                                "В огороде можно выращивать растения. " +
-                                "Рядом с замком есть не только огород, но и сад и пруд, " +
-                                "в которых можно растить деревья, получать мёд, рыбу и многое другое."
+                    hintType = if (it.type == BuildingType.HOUSE) LootHintType.HOUSE
+                        else LootHintType.FORTRESS
                 )
             )
         }
@@ -45,22 +40,15 @@ fun InPouchModel.toLootItems(): List<LootItemUi> {
         maps.forEach {
             add(
                 LootItemUi(
-                    id = it.id,
+                    id = "map_${it.id}",
                     title = it.name,
                     description = "Здесь можно основать город и строить здания",
                     imageUrl = it.imageUrl,
                     route = "map/${it.id}",
-                    hint = when (it.type) {
-                        MapType.FREE -> "Эта местность свободна. Вы можете основать здесь город. " +
-                                "В городе можно строить дома, замки и создавать достопримечательности. " +
-                                "В домах и замках могут селиться животные. " +
-                                "В домах можно расставлять мебель. " +
-                                "В садах и огродах рядом с домами и замками можно выращивать растения, разводить рыбу и многое другое. "
-                        MapType.LOADING -> "Карта загружается."
-                        else -> "Эта местность оккупирована монстрами. Вы не можете основать здесь город, пока не освободите её. " +
-                                "Чтобы освободить карту, нужно отправить животное в экспедицию. Не забудьте снабдить животное " +
-                                "припасами, бомбочками или чешуйками, которые дают очки защиты и атаки. " +
-                                "Нужно много очков защиты и атаки, чтобы победить в бою!"
+                    hintType = when (it.type) {
+                        MapType.FREE -> LootHintType.FREE_MAP
+                        MapType.LOADING -> null
+                        else -> LootHintType.EXPEDITION_MAP
                     }
                 )
             )
