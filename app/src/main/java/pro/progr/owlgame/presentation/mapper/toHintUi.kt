@@ -2,6 +2,7 @@ package pro.progr.owlgame.presentation.mapper
 
 import pro.progr.owlgame.presentation.ui.model.LootHintType
 import pro.progr.owlgame.presentation.ui.model.LootHintUi
+import pro.progr.owlgame.presentation.ui.model.LootItemUi
 
 fun LootHintType.toHintUi(): LootHintUi =
     when (this) {
@@ -106,3 +107,8 @@ fun LootHintType.toHintUi(): LootHintUi =
             )
         )
     }
+
+fun List<LootItemUi>.toLootHints(): List<LootHintUi> =
+    mapNotNull { it.hintType }
+        .distinct()
+        .map { it.toHintUi() }
