@@ -1,78 +1,56 @@
 <resources>
     <plurals name="word_diamond">
-        <item quantity="one">бриллиант</item>
-        <item quantity="few">бриллианта</item>
-        <item quantity="many">бриллиантов</item>
-        <item quantity="other">бриллиантов</item>
+        <item quantity="one">diamond</item>
+        <item quantity="other">diamonds</item>
     </plurals>
 
     <plurals name="word_map">
-        <item quantity="one">карта</item>
-        <item quantity="few">карты</item>
-        <item quantity="many">карт</item>
-        <item quantity="other">карт</item>
+        <item quantity="one">map</item>
+        <item quantity="other">maps</item>
     </plurals>
 
     <plurals name="word_house">
-        <item quantity="one">домик</item>
-        <item quantity="few">домика</item>
-        <item quantity="many">домиков</item>
-        <item quantity="other">домиков</item>
+        <item quantity="one">house</item>
+        <item quantity="other">houses</item>
     </plurals>
 
     <plurals name="word_fortress">
-        <item quantity="one">замок</item>
-        <item quantity="few">замка</item>
-        <item quantity="many">замков</item>
-        <item quantity="other">замков</item>
+        <item quantity="one">castle</item>
+        <item quantity="other">castles</item>
     </plurals>
 
     <plurals name="word_location">
-        <item quantity="one">достопримечательность</item>
-        <item quantity="few">достопримечательности</item>
-        <item quantity="many">достопримечательностей</item>
-        <item quantity="other">достопримечательностей</item>
+        <item quantity="one">landmark</item>
+        <item quantity="other">landmarks</item>
     </plurals>
 
     <plurals name="word_furniture">
-        <item quantity="one">предмет мебели</item>
-        <item quantity="few">предмета мебели</item>
-        <item quantity="many">предметов мебели</item>
-        <item quantity="other">предметов мебели</item>
+        <item quantity="one">piece of furniture</item>
+        <item quantity="other">pieces of furniture</item>
     </plurals>
 
     <plurals name="word_recipe">
-        <item quantity="one">рецепт</item>
-        <item quantity="few">рецепта</item>
-        <item quantity="many">рецептов</item>
-        <item quantity="other">рецептов</item>
+        <item quantity="one">recipe</item>
+        <item quantity="other">recipes</item>
     </plurals>
 
     <plurals name="word_plant">
-        <item quantity="one">растение</item>
-        <item quantity="few">растения</item>
-        <item quantity="many">растений</item>
-        <item quantity="other">растений</item>
+        <item quantity="one">plant</item>
+        <item quantity="other">plants</item>
     </plurals>
 
     <plurals name="word_kitchen_garden_items">
-        <item quantity="one">находка для огорода</item>
-        <item quantity="few">находки для огорода</item>
-        <item quantity="many">находок для огорода</item>
-        <item quantity="other">находок для огорода</item>
+        <item quantity="one">garden item</item>
+        <item quantity="other">garden items</item>
     </plurals>
 
     <plurals name="word_garden_items">
-        <item quantity="one">находка для сада</item>
-        <item quantity="few">находки для сада</item>
-        <item quantity="many">находок для сада</item>
-        <item quantity="other">находок для сада</item>
+        <item quantity="one">garden item</item>
+        <item quantity="other">garden items</item>
     </plurals>
 
     <plurals name="word_pool_items">
-        <item quantity="one">находка для пруда</item>
-        <item quantity="few">находки для пруда</item>
-        <item quantity="many">находок для пруда</item>
-        <item quantity="other">находок для пруда</item>
+        <item quantity="one">pond item</item>
+        <item quantity="other">pond item</item>
     </plurals>
 </resources>
