@@ -1,4 +1,6 @@
 <resources>
+    <string name="loot_item_tap_to_open">Нажмите, чтобы открыть</string>
+
     <string name="in_pouch_hints_title">Подсказки</string>
 
     <string name="loot_received_dialog_title">Лут найден!</string>

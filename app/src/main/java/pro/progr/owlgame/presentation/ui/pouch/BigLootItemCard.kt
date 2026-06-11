@@ -28,6 +28,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import pro.progr.owlgame.presentation.ui.model.LootItemUi
+import androidx.compose.ui.res.stringResource
+import pro.progr.owlgame.R
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
@@ -116,7 +118,7 @@ fun BigLootItemCard(
                 Spacer(Modifier.height(8.dp))
 
                 Text(
-                    text = "Нажмите, чтобы открыть",
+                    text = stringResource(R.string.loot_item_tap_to_open),
                     style = MaterialTheme.typography.caption,
                     color = MaterialTheme.colors.primary
                 )

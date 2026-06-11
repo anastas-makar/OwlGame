@@ -1,7 +1,9 @@
 <resources>
+    <string name="loot_item_tap_to_open">Tap to open</string>
+
     <string name="in_pouch_hints_title">Tips</string>
 
-    <string name="loot_received_dialog_title">Loot found!</string>
+    <string name="loot_received_dialog_title">You found something!</string>
     <string name="loot_received_dialog_empty">Nothing was found in the dungeons.</string>
     <string name="loot_received_dialog_take_button">Take</string>
 
