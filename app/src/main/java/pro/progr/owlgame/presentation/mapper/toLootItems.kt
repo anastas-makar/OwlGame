@@ -6,15 +6,16 @@ import pro.progr.owlgame.domain.model.InPouchModel
 import pro.progr.owlgame.domain.model.MapType
 import pro.progr.owlgame.presentation.ui.model.LootHintType
 import pro.progr.owlgame.presentation.ui.model.LootItemUi
+import android.content.res.Resources
 
-fun InPouchModel.toLootItems(): List<LootItemUi> {
+fun InPouchModel.toLootItems(resources: Resources): List<LootItemUi> {
     return buildList {
         diamonds?.let {
             add(
                 LootItemUi(
                     id = "diamonds",
-                    title = "Бриллианты",
-                    description = "Они нужны, чтобы покупать вещи и строить здания",
+                    title = resources.getString(R.string.loot_diamonds_title),
+                    description = resources.getString(R.string.loot_diamonds_description),
                     iconRes = R.drawable.ic_diamond_bright,
                     amount = it.amount,
                     hintType = LootHintType.DIAMONDS
@@ -23,15 +24,20 @@ fun InPouchModel.toLootItems(): List<LootItemUi> {
         }
 
         buildings.forEach {
+            val isHouse = it.type == BuildingType.HOUSE
+
             add(
                 LootItemUi(
                     id = "building_${it.id}",
                     title = it.name,
-                    description = "Здание",
+                    description = resources.getString(
+                        if (isHouse) R.string.loot_house_description
+                        else R.string.loot_fortress_description
+                    ),
                     imageUrl = it.imageUrl,
                     route = "building/${it.id}",
-                    hintType = if (it.type == BuildingType.HOUSE) LootHintType.HOUSE
-                        else LootHintType.FORTRESS
+                    hintType = if (isHouse) LootHintType.HOUSE
+                    else LootHintType.FORTRESS
                 )
             )
         }
@@ -41,7 +47,13 @@ fun InPouchModel.toLootItems(): List<LootItemUi> {
                 LootItemUi(
                     id = "map_${it.id}",
                     title = it.name,
-                    description = "Здесь можно основать город и строить здания",
+                    description = resources.getString(
+                        when (it.type) {
+                            MapType.FREE -> R.string.loot_free_map_description
+                            MapType.LOADING -> R.string.loot_loading_map_description
+                            else -> R.string.loot_expedition_map_description
+                        }
+                    ),
                     imageUrl = it.imageUrl,
                     route = "map/${it.id}",
                     hintType = when (it.type) {
@@ -56,7 +68,7 @@ fun InPouchModel.toLootItems(): List<LootItemUi> {
         gardenItems.forEach {
             add(
                 LootItemUi(
-                    id = it.id,
+                    id = "garden_item_${it.id}",
                     title = it.name,
                     description = it.description,
                     imageUrl = it.imageUrl,
@@ -68,7 +80,7 @@ fun InPouchModel.toLootItems(): List<LootItemUi> {
         plants.forEach {
             add(
                 LootItemUi(
-                    id = it.id,
+                    id = "plant_${it.id}",
                     title = it.name,
                     description = it.description,
                     imageUrl = it.imageUrl,
@@ -80,9 +92,9 @@ fun InPouchModel.toLootItems(): List<LootItemUi> {
         furniture.forEach {
             add(
                 LootItemUi(
-                    id = it.id,
+                    id = "furniture_${it.id}",
                     title = it.name,
-                    description = "Можно поставить в комнате",
+                    description = resources.getString(R.string.loot_furniture_description),
                     imageUrl = it.imageUrl,
                     hintType = LootHintType.FURNITURE
                 )
@@ -92,7 +104,7 @@ fun InPouchModel.toLootItems(): List<LootItemUi> {
         recipes.forEach {
             add(
                 LootItemUi(
-                    id = it.recipeId,
+                    id = "recipe_${it.recipeId}",
                     title = it.resultName,
                     description = it.description,
                     imageUrl = it.resultImageUrl,
@@ -104,9 +116,11 @@ fun InPouchModel.toLootItems(): List<LootItemUi> {
         locations.forEach {
             add(
                 LootItemUi(
-                    id = it.id,
+                    id = "location_${it.id}",
                     title = it.name,
-                    description = it.description.ifBlank { "Достопримечательность" },
+                    description = it.description.ifBlank {
+                        resources.getString(R.string.loot_location_description)
+                    },
                     imageUrl = it.imageUrl,
                     hintType = LootHintType.LOCATION
                 )

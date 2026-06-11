@@ -28,6 +28,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
@@ -35,13 +36,21 @@ import coil.compose.AsyncImage
 import pro.progr.owlgame.domain.model.InPouchModel
 import pro.progr.owlgame.presentation.mapper.toLootItems
 import pro.progr.owlgame.presentation.ui.model.LootItemUi
+import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.res.stringResource
+import pro.progr.owlgame.R
 
 @Composable
 fun LootReceivedDialog(
     loot: InPouchModel,
     onDismiss: () -> Unit
 ) {
-    val items = remember(loot) { loot.toLootItems() }
+    val resources = LocalContext.current.resources
+    val configuration = LocalConfiguration.current
+
+    val items = remember(loot, configuration) {
+        loot.toLootItems(resources)
+    }
 
     Dialog(onDismissRequest = onDismiss) {
         Card(
@@ -50,12 +59,15 @@ fun LootReceivedDialog(
             shape = RoundedCornerShape(16.dp)
         ) {
             Column(modifier = Modifier.padding(16.dp)) {
-                Text("Лут найден!", style = MaterialTheme.typography.h6)
+                Text(
+                    text = stringResource(R.string.loot_received_dialog_title),
+                    style = MaterialTheme.typography.h6
+                )
 
                 Spacer(Modifier.height(8.dp))
 
                 if (items.isEmpty()) {
-                    Text("В подземельях ничего не нашлось.")
+                    Text(stringResource(R.string.loot_received_dialog_empty))
                 } else {
                     LazyColumn(
                         modifier = Modifier.heightIn(max = 420.dp),
@@ -76,7 +88,7 @@ fun LootReceivedDialog(
                     onClick = onDismiss,
                     modifier = Modifier.fillMaxWidth()
                 ) {
-                    Text("Забрать")
+                    Text(stringResource(R.string.loot_received_dialog_take_button))
                 }
             }
         }

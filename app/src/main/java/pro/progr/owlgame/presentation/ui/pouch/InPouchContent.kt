@@ -12,6 +12,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
@@ -20,6 +21,9 @@ import pro.progr.owlgame.presentation.mapper.toLootHints
 import pro.progr.owlgame.presentation.mapper.toLootItems
 import pro.progr.owlgame.presentation.ui.model.InPouchDescription
 import pro.progr.owlgame.presentation.viewmodel.InPouchViewModel
+import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.res.stringResource
+import pro.progr.owlgame.R
 
 @Composable
 fun InPouchContent(
@@ -28,8 +32,16 @@ fun InPouchContent(
     pouch: PouchModel
 ) {
     inPouchViewModel.inPouch.value?.let { inPouch ->
-        val items = remember(inPouch) { inPouch.toLootItems() }
-        val hints = remember(items) { items.toLootHints() }
+        val resources = LocalContext.current.resources
+        val configuration = LocalConfiguration.current
+
+        val items = remember(inPouch, configuration) {
+            inPouch.toLootItems(resources)
+        }
+
+        val hints = remember(items) {
+            items.toLootHints()
+        }
 
         LazyColumn(
             modifier = Modifier
@@ -66,7 +78,7 @@ fun InPouchContent(
             if (hints.isNotEmpty()) {
                 item {
                     Text(
-                        text = "Подсказки",
+                        text = stringResource(R.string.in_pouch_hints_title),
                         style = MaterialTheme.typography.h6,
                         fontWeight = FontWeight.Bold,
                         modifier = Modifier.padding(top = 8.dp)

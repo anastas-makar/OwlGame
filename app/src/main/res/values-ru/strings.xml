@@ -1,4 +1,26 @@
 <resources>
+    <string name="in_pouch_hints_title">Подсказки</string>
+
+    <string name="loot_received_dialog_title">Лут найден!</string>
+    <string name="loot_received_dialog_empty">В подземельях ничего не нашлось.</string>
+    <string name="loot_received_dialog_take_button">Забрать</string>
+
+    <string name="loot_diamonds_title">Бриллианты</string>
+    <string name="loot_diamonds_description">Они нужны, чтобы покупать вещи и строить здания</string>
+
+    <string name="loot_house_description">Домик</string>
+    <string name="loot_fortress_description">Замок</string>
+
+    <string name="loot_free_map_description">Здесь можно основать город</string>
+    <string name="loot_loading_map_description">Карта загружается</string>
+    <string name="loot_expedition_map_description">Эта местность занята монстрами</string>
+
+    <string name="loot_furniture_description">Можно поставить в комнате</string>
+    <string name="loot_location_description">Достопримечательность</string>
+
+    <string name="in_pouch_header_title">Что лежит в мешочке?</string>
+    <string name="in_pouch_image_content_description">Мешочек</string>
+
     <string name="in_pouch_contains">В мешочке %1$s</string>
     <string name="in_pouch_empty">В мешочке ничего нет</string>
 </resources>

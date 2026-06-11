@@ -1,4 +1,26 @@
 <resources>
+    <string name="in_pouch_hints_title">Tips</string>
+
+    <string name="loot_received_dialog_title">Loot found!</string>
+    <string name="loot_received_dialog_empty">Nothing was found in the dungeons.</string>
+    <string name="loot_received_dialog_take_button">Take</string>
+
+    <string name="loot_diamonds_title">Diamonds</string>
+    <string name="loot_diamonds_description">Used to buy items and build buildings</string>
+
+    <string name="loot_house_description">House</string>
+    <string name="loot_fortress_description">Castle</string>
+
+    <string name="loot_free_map_description">You can found a town here</string>
+    <string name="loot_loading_map_description">The map is loading</string>
+    <string name="loot_expedition_map_description">This area is occupied by monsters</string>
+
+    <string name="loot_furniture_description">Can be placed in a room</string>
+    <string name="loot_location_description">Landmark</string>
+
+    <string name="in_pouch_header_title">What is in the pouch?</string>
+    <string name="in_pouch_image_content_description">Pouch</string>
+
     <string name="in_pouch_contains">The pouch contains %1$s</string>
     <string name="in_pouch_empty">The pouch is empty</string>
 </resources>

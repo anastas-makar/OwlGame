@@ -22,6 +22,8 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import pro.progr.owlgame.domain.model.PouchModel
+import androidx.compose.ui.res.stringResource
+import pro.progr.owlgame.R
 
 @Composable
 fun InPouchHeader(
@@ -41,7 +43,7 @@ fun InPouchHeader(
         ) {
             AsyncImage(
                 model = pouch.imageUrl,
-                contentDescription = null,
+                contentDescription = stringResource(R.string.in_pouch_image_content_description),
                 contentScale = ContentScale.Fit,
                 modifier = Modifier
                     .size(112.dp)
@@ -53,7 +55,7 @@ fun InPouchHeader(
 
             Column(Modifier.weight(1f)) {
                 Text(
-                    text = "В мешочке нашлось:",
+                    text = stringResource(R.string.in_pouch_header_title),
                     style = MaterialTheme.typography.h6
                 )
 
@@ -62,7 +64,7 @@ fun InPouchHeader(
                 Text(
                     text = description,
                     style = MaterialTheme.typography.body2,
-                    color = Color.Gray
+                    color = MaterialTheme.colors.onSurface.copy(alpha = 0.75f)
                 )
             }
         }
