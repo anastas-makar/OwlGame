@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">OwlGame</string>
+    <string name="in_pouch_contains">The pouch contains %1$s</string>
+    <string name="in_pouch_empty">The pouch is empty</string>
 </resources>

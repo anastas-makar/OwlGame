@@ -1,56 +1,56 @@
 <resources>
     <plurals name="word_diamond">
-        <item quantity="one">diamond</item>
-        <item quantity="other">diamonds</item>
+        <item quantity="one">%d diamond</item>
+        <item quantity="other">%d diamonds</item>
     </plurals>
 
     <plurals name="word_map">
-        <item quantity="one">map</item>
-        <item quantity="other">maps</item>
+        <item quantity="one">%d map</item>
+        <item quantity="other">%d maps</item>
     </plurals>
 
     <plurals name="word_house">
-        <item quantity="one">house</item>
-        <item quantity="other">houses</item>
+        <item quantity="one">%d house</item>
+        <item quantity="other">%d houses</item>
     </plurals>
 
     <plurals name="word_fortress">
-        <item quantity="one">castle</item>
-        <item quantity="other">castles</item>
+        <item quantity="one">%d castle</item>
+        <item quantity="other">%d castles</item>
     </plurals>
 
     <plurals name="word_location">
-        <item quantity="one">landmark</item>
-        <item quantity="other">landmarks</item>
+        <item quantity="one">%d landmark</item>
+        <item quantity="other">%d landmarks</item>
     </plurals>
 
     <plurals name="word_furniture">
-        <item quantity="one">piece of furniture</item>
-        <item quantity="other">pieces of furniture</item>
+        <item quantity="one">%d piece of furniture</item>
+        <item quantity="other">%d pieces of furniture</item>
     </plurals>
 
     <plurals name="word_recipe">
-        <item quantity="one">recipe</item>
-        <item quantity="other">recipes</item>
+        <item quantity="one">%d recipe</item>
+        <item quantity="other">%d recipes</item>
     </plurals>
 
     <plurals name="word_plant">
-        <item quantity="one">plant</item>
-        <item quantity="other">plants</item>
+        <item quantity="one">%d plant</item>
+        <item quantity="other">%d plants</item>
     </plurals>
 
     <plurals name="word_kitchen_garden_items">
-        <item quantity="one">garden item</item>
-        <item quantity="other">garden items</item>
+        <item quantity="one">%d garden bed item</item>
+        <item quantity="other">%d garden bed items</item>
     </plurals>
 
     <plurals name="word_garden_items">
-        <item quantity="one">garden item</item>
-        <item quantity="other">garden items</item>
+        <item quantity="one">%d garden item</item>
+        <item quantity="other">%d garden items</item>
     </plurals>
 
     <plurals name="word_pool_items">
-        <item quantity="one">pond item</item>
-        <item quantity="other">pond item</item>
+        <item quantity="one">%d pond item</item>
+        <item quantity="other">%d pond items</item>
     </plurals>
 </resources>

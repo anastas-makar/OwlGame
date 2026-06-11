@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hint_diamonds_title">Зачем нужны бриллианты</string>
+    <string-array name="hint_diamonds_paragraphs">
+        <item>Бриллианты нужны, чтобы строить здания и устанавливать мебель.</item>
+        <item>Ещё за них можно купить бомбочки и чешуйки. Они дают атаку и защиту в экспедиции.</item>
+    </string-array>
+
+    <string name="hint_house_title">Для чего нужен домик</string>
+    <string-array name="hint_house_paragraphs">
+        <item>Домик можно разместить в городе. Город можно основать на свободной карте.</item>
+        <item>В домике может поселиться животное. Внутри есть комнаты и огород.</item>
+        <item>В комнатах можно ставить мебель. Если в комнате есть холодильник, животное сможет готовить.</item>
+        <item>В огороде можно выращивать растения и получать припасы.</item>
+    </string-array>
+
+    <string name="hint_fortress_title">Для чего нужен замок</string>
+    <string-array name="hint_fortress_paragraphs">
+        <item>Замок можно разместить в городе. Город можно основать на свободной карте.</item>
+        <item>В замке может поселиться животное. Внутри есть комнаты и огород.</item>
+        <item>Рядом с замком есть не только огород, но ещё сад и пруд.</item>
+        <item>В огороде можно выращивать растения.</item>
+        <item>В саду и пруду можно получать мёд, рыбу, грибы и другие припасы.</item>
+    </string-array>
+
+    <string name="hint_free_map_title">Что делать со свободной картой</string>
+    <string-array name="hint_free_map_paragraphs">
+        <item>На свободной карте можно основать город.</item>
+        <item>В городе можно строить дома, замки и достопримечательности.</item>
+        <item>В домах и замках могут жить животные. Рядом с ними можно выращивать растения и получать припасы.</item>
+    </string-array>
+
+    <string name="hint_expedition_map_title">Как освободить карту</string>
+    <string-array name="hint_expedition_map_paragraphs">
+        <item>Эта местность занята монстрами. Основать город здесь пока нельзя.</item>
+        <item>Чтобы освободить карту, нужно отправить животное в экспедицию.</item>
+        <item>Перед экспедицией дайте животному припасы, бомбочки или чешуйки. Они дают очки атаки и защиты.</item>
+    </string-array>
+
+    <string name="hint_garden_item_title">Для чего нужен сад и пруд</string>
+    <string-array name="hint_garden_item_paragraphs">
+        <item>Рядом с каждым замком есть сад и пруд. Там можно получать полезные припасы.</item>
+        <item>Например: мёд, яблоки, рыбу или грибы.</item>
+        <item>То, что находится в саду или пруду, не пропадает после сбора припасов.</item>
+    </string-array>
+
+    <string name="hint_plant_title">Что делать с растениями</string>
+    <string-array name="hint_plant_paragraphs">
+        <item>Растение можно посадить в огороде рядом с домиком или замком.</item>
+        <item>Когда растение вырастет, с него можно собрать семена или заготовить припасы.</item>
+        <item>Припасы пригодятся в экспедиции: они дают атаку или защиту.</item>
+    </string-array>
+
+    <string name="hint_furniture_title">Что делать с мебелью</string>
+    <string-array name="hint_furniture_paragraphs">
+        <item>Мебель можно размещать в комнатах домиков и замков.</item>
+        <item>Особенно важен холодильник. Если в домике живёт животное и в комнате стоит холодильник, животное сможет готовить.</item>
+    </string-array>
+
+    <string name="hint_recipe_title">Как работают рецепты</string>
+    <string-array name="hint_recipe_paragraphs">
+        <item>По рецептам можно готовить сложные припасы из простых.</item>
+        <item>Готовить можно только в комнате с холодильником.</item>
+        <item>Поселите животное в домике и поставьте холодильник в одной из комнат.</item>
+    </string-array>
+
+    <string name="hint_location_title">Что делать с достопримечательностями</string>
+    <string-array name="hint_location_paragraphs">
+        <item>Достопримечательности можно размещать в городе.</item>
+        <item>Внутрь можно заходить и смотреть, что там происходит.</item>
+        <item>Животные в достопримечательностях не живут. Для них нужны домики или замки.</item>
+    </string-array>
+</resources>

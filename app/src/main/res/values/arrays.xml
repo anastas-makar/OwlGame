@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hint_diamonds_title">What diamonds are for</string>
+    <string-array name="hint_diamonds_paragraphs">
+        <item>Diamonds are used to build buildings and place furniture.</item>
+        <item>You can also buy bombs and scales with diamonds. They add attack and defense in expeditions.</item>
+    </string-array>
+
+    <string name="hint_house_title">What a house is for</string>
+    <string-array name="hint_house_paragraphs">
+        <item>A house can be placed in a town. You can found a town on a free map.</item>
+        <item>An animal can live in a house. Inside, there are rooms and a garden bed.</item>
+        <item>You can place furniture in rooms. If there is a fridge in a room, the animal can cook there.</item>
+        <item>You can grow plants and collect supplies in the garden bed.</item>
+    </string-array>
+
+    <string name="hint_fortress_title">What a castle is for</string>
+    <string-array name="hint_fortress_paragraphs">
+        <item>A castle can be placed in a town. You can found a town on a free map.</item>
+        <item>An animal can live in a castle. Inside, there are rooms and a garden bed.</item>
+        <item>Next to a castle, there is not only a garden bed, but also a garden and a pond.</item>
+        <item>You can grow plants in the garden bed.</item>
+        <item>In the garden and pond, you can collect honey, fish, mushrooms, and other supplies.</item>
+    </string-array>
+
+    <string name="hint_free_map_title">What to do with a free map</string>
+    <string-array name="hint_free_map_paragraphs">
+        <item>You can found a town on a free map.</item>
+        <item>In a town, you can build houses, castles, and landmarks.</item>
+        <item>Animals can live in houses and castles. Nearby, you can grow plants and collect supplies.</item>
+    </string-array>
+
+    <string name="hint_expedition_map_title">How to free a map</string>
+    <string-array name="hint_expedition_map_paragraphs">
+        <item>This area is occupied by monsters. You cannot found a town here yet.</item>
+        <item>To free the map, send an animal on an expedition.</item>
+        <item>Before the expedition, give the animal supplies, bombs, or scales. They add attack and defense points.</item>
+    </string-array>
+
+    <string name="hint_garden_item_title">What the garden and pond are for</string>
+    <string-array name="hint_garden_item_paragraphs">
+        <item>Every castle has a garden and a pond nearby. You can collect useful supplies there.</item>
+        <item>For example: honey, apples, fish, or mushrooms.</item>
+        <item>Objects in the garden or pond do not disappear after you collect supplies.</item>
+    </string-array>
+
+    <string name="hint_plant_title">What to do with plants</string>
+    <string-array name="hint_plant_paragraphs">
+        <item>A plant can be planted in a garden bed next to a house or castle.</item>
+        <item>When it grows, you can collect seeds or prepare supplies from it.</item>
+        <item>Supplies are useful in expeditions: they add attack or defense.</item>
+    </string-array>
+
+    <string name="hint_furniture_title">What furniture is for</string>
+    <string-array name="hint_furniture_paragraphs">
+        <item>Furniture can be placed in rooms inside houses and castles.</item>
+        <item>The fridge is especially important. If an animal lives in the house and there is a fridge in a room, the animal can cook there.</item>
+    </string-array>
+
+    <string name="hint_recipe_title">How recipes work</string>
+    <string-array name="hint_recipe_paragraphs">
+        <item>Recipes let you cook complex supplies from simple ones.</item>
+        <item>Cooking is only possible in a room with a fridge.</item>
+        <item>Move an animal into a house and place a fridge in one of its rooms.</item>
+    </string-array>
+
+    <string name="hint_location_title">What landmarks are for</string>
+    <string-array name="hint_location_paragraphs">
+        <item>Landmarks can be placed in a town.</item>
+        <item>You can go inside and see what is happening there.</item>
+        <item>Animals do not live in landmarks. They need houses or castles.</item>
+    </string-array>
+</resources>

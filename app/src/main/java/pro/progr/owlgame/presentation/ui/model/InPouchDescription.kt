@@ -29,12 +29,14 @@ class InPouchDescription(
             addPoolItems(resources)
         }
 
-        return "В мешочке " +
-                if (content.isEmpty()) {
-                    "ничего нет"
-                } else {
-                    content.joinToString(", ")
-                }
+        return if (content.isEmpty()) {
+            resources.getString(R.string.in_pouch_empty)
+        } else {
+            resources.getString(
+                R.string.in_pouch_contains,
+                content.joinToString(", ")
+            )
+        }
     }
 
     private fun MutableList<String>.addCount(
@@ -45,8 +47,9 @@ class InPouchDescription(
         if (count <= 0) return
 
         add(
-            "$count " + resources.getQuantityString(
+            resources.getQuantityString(
                 pluralResId,
+                count,
                 count
             )
         )

@@ -1,0 +1,4 @@
+<resources>
+    <string name="in_pouch_contains">В мешочке %1$s</string>
+    <string name="in_pouch_empty">В мешочке ничего нет</string>
+</resources>

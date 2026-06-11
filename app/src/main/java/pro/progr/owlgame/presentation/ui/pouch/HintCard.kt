@@ -11,12 +11,17 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import pro.progr.owlgame.presentation.ui.model.LootHintUi
 
 @Composable
 fun HintCard(hint: LootHintUi) {
+    val resources = LocalContext.current.resources
+    val paragraphs = resources.getStringArray(hint.paragraphsRes)
+
     Card(
         modifier = Modifier.fillMaxWidth(),
         elevation = 3.dp,
@@ -27,7 +32,7 @@ fun HintCard(hint: LootHintUi) {
             modifier = Modifier.padding(16.dp)
         ) {
             Text(
-                text = hint.title,
+                text = stringResource(hint.titleRes),
                 style = MaterialTheme.typography.subtitle1,
                 fontWeight = FontWeight.Bold,
                 color = MaterialTheme.colors.onSurface
@@ -35,7 +40,7 @@ fun HintCard(hint: LootHintUi) {
 
             Spacer(Modifier.height(8.dp))
 
-            hint.paragraphs.forEachIndexed { index, paragraph ->
+            paragraphs.forEachIndexed { index, paragraph ->
                 if (index > 0) {
                     Spacer(Modifier.height(8.dp))
                 }

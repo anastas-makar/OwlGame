@@ -1,5 +1,6 @@
 package pro.progr.owlgame.presentation.mapper
 
+import pro.progr.owlgame.R
 import pro.progr.owlgame.presentation.ui.model.LootHintType
 import pro.progr.owlgame.presentation.ui.model.LootHintUi
 import pro.progr.owlgame.presentation.ui.model.LootItemUi
@@ -8,103 +9,62 @@ fun LootHintType.toHintUi(): LootHintUi =
     when (this) {
         LootHintType.DIAMONDS -> LootHintUi(
             id = "hint_diamonds",
-            title = "Зачем нужны бриллианты",
-            paragraphs = listOf(
-                "Бриллианты нужны, чтобы строить здания и устанавливать мебель.",
-                "Ещё за них можно купить бомбочки и чешуйки. Они дают атаку и защиту в экспедиции."
-            )
+            titleRes = R.string.hint_diamonds_title,
+            paragraphsRes = R.array.hint_diamonds_paragraphs
         )
 
         LootHintType.HOUSE -> LootHintUi(
             id = "hint_house",
-            title = "Для чего нужен домик",
-            paragraphs = listOf(
-                "Домик можно разместить в городе. Город можно основать на свободной карте.",
-                "В домике может поселиться животное. Внутри есть комнаты и огород.",
-                "В комнатах можно ставить мебель. Если в комнате есть холодильник, животное сможет готовить.",
-                "В огороде можно выращивать растения и получать припасы."
-            )
+            titleRes = R.string.hint_house_title,
+            paragraphsRes = R.array.hint_house_paragraphs
         )
 
         LootHintType.FORTRESS -> LootHintUi(
             id = "hint_castle",
-            title = "Для чего нужен замок",
-            paragraphs = listOf(
-                "Замок можно разместить в городе. Город можно основать на свободной карте.",
-                "В замке может поселиться животное. Внутри есть комнаты и огород.",
-                "Рядом с замком есть не только огород, но ещё сад и пруд.",
-                "В огороде можно выращивать растения.",
-                "В саду и пруду можно получать мёд, рыбу, грибы и другие припасы."
-            )
+            titleRes = R.string.hint_fortress_title,
+            paragraphsRes = R.array.hint_fortress_paragraphs
         )
 
         LootHintType.FREE_MAP -> LootHintUi(
             id = "hint_free_map",
-            title = "Что делать со свободной картой",
-            paragraphs = listOf(
-                "На свободной карте можно основать город.",
-                "В городе можно строить дома, замки и достопримечательности.",
-                "В домах и замках могут жить животные. Рядом с ними можно выращивать растения и получать припасы."
-            )
+            titleRes = R.string.hint_free_map_title,
+            paragraphsRes = R.array.hint_free_map_paragraphs
         )
 
         LootHintType.EXPEDITION_MAP -> LootHintUi(
             id = "hint_expedition_map",
-            title = "Как освободить карту",
-            paragraphs = listOf(
-                "Эта местность занята монстрами. Основать город здесь пока нельзя.",
-                "Чтобы освободить карту, нужно отправить животное в экспедицию.",
-                "Перед экспедицией дайте животному припасы, бомбочки или чешуйки. Они дают очки атаки и защиты."
-            )
+            titleRes = R.string.hint_expedition_map_title,
+            paragraphsRes = R.array.hint_expedition_map_paragraphs
         )
 
         LootHintType.GARDEN_ITEM -> LootHintUi(
             id = "hint_garden_item",
-            title = "Для чего нужен сад и пруд",
-            paragraphs = listOf(
-                "Рядом с каждым замком есть сад и пруд. Там можно получать полезные припасы.",
-                "Например: мёд, яблоки, рыбу или грибы.",
-                "То, что находится в саду или пруду, не пропадает после сбора припасов."
-            )
+            titleRes = R.string.hint_garden_item_title,
+            paragraphsRes = R.array.hint_garden_item_paragraphs
         )
 
         LootHintType.PLANT -> LootHintUi(
             id = "hint_plant",
-            title = "Что делать с растениями",
-            paragraphs = listOf(
-                "Растение можно посадить в огороде рядом с домиком или замком.",
-                "Когда растение вырастет, с него можно собрать семена или заготовить припасы.",
-                "Припасы пригодятся в экспедиции: они дают атаку или защиту."
-            )
+            titleRes = R.string.hint_plant_title,
+            paragraphsRes = R.array.hint_plant_paragraphs
         )
 
         LootHintType.FURNITURE -> LootHintUi(
             id = "hint_furniture",
-            title = "Что делать с мебелью",
-            paragraphs = listOf(
-                "Мебель можно размещать в комнатах домиков и замков.",
-                "Особенно важен холодильник. Если в домике живёт животное и в комнате стоит холодильник, животное сможет готовить."
-            )
+            titleRes = R.string.hint_furniture_title,
+            paragraphsRes = R.array.hint_furniture_paragraphs
         )
 
         LootHintType.RECIPE -> LootHintUi(
             id = "hint_recipe",
-            title = "Как работают рецепты",
-            paragraphs = listOf(
-                "По рецептам можно готовить сложные припасы из простых.",
-                "Готовить можно только в комнате с холодильником.",
-                "Поселите животное в домике и поставьте холодильник в одной из комнат."
-            )
+            titleRes = R.string.hint_recipe_title,
+            paragraphsRes = R.array.hint_recipe_paragraphs
         )
 
         LootHintType.LOCATION -> LootHintUi(
             id = "hint_location",
-            title = "Что делать с достопримечательностями",
-            paragraphs = listOf(
-                "Достопримечательности можно размещать в городе.",
-                "Внутрь можно заходить и смотреть, что там происходит.",
-                "Животные в достопримечательностях не живут. Для них нужны домики или замки."
-            )
+            titleRes = R.string.hint_location_title,
+            paragraphsRes = R.array.hint_location_paragraphs
         )
     }
 
