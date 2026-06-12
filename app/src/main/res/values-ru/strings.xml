@@ -25,4 +25,7 @@
 
     <string name="in_pouch_contains">В мешочке %1$s</string>
     <string name="in_pouch_empty">В мешочке ничего нет</string>
+    <string name="pouch_opened">Вы открыли мешочек</string>
+    <string name="choose_pouch">Выберите мешочек</string>
+    <string name="back">Назад</string>
 </resources>
