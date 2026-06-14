@@ -1,4 +1,25 @@
 <resources>
+    <string name="inventory_title">Inventory</string>
+    <string name="inventory_empty">Your inventory is empty</string>
+    <string name="inventory_empty_category">There is nothing here yet.</string>
+    <string name="inventory_item_amount">×%1$d</string>
+
+    <string name="inventory_tab_buildings">Buildings</string>
+    <string name="inventory_tab_locations">Landmarks</string>
+    <string name="inventory_tab_furniture">Furniture</string>
+    <string name="inventory_tab_plants">Plants</string>
+    <string name="inventory_tab_garden_items">Garden &amp; pond</string>
+    <string name="inventory_tab_recipes">Recipes</string>
+    <string name="inventory_tab_supplies">Supplies</string>
+
+    <string name="inventory_description_buildings">Buildings that are waiting to be placed in a town.</string>
+    <string name="inventory_description_locations">Landmarks that can be placed in a town.</string>
+    <string name="inventory_description_furniture">Furniture that can be placed in rooms.</string>
+    <string name="inventory_description_plants">Plants that can be planted in garden beds.</string>
+    <string name="inventory_description_garden_items">Useful objects for the garden bed, garden, and pond.</string>
+    <string name="inventory_description_recipes">Recipes for cooking supplies in a room with a fridge.</string>
+    <string name="inventory_description_supplies">Supplies for expeditions and recipes.</string>
+
     <string name="loot_item_tap_to_open">Tap to open</string>
 
     <string name="in_pouch_hints_title">Tips</string>

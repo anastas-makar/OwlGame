@@ -16,6 +16,7 @@ import pro.progr.owlgame.presentation.viewmodel.dagger.ExpeditionScreenViewModel
 import pro.progr.owlgame.presentation.viewmodel.dagger.FabViewModelFactory
 import pro.progr.owlgame.presentation.viewmodel.dagger.FreeMapViewModelFactory
 import pro.progr.owlgame.presentation.viewmodel.dagger.GardenZoneViewModelFactory
+import pro.progr.owlgame.presentation.viewmodel.dagger.InventoryViewModelFactory
 import pro.progr.owlgame.presentation.viewmodel.dagger.KitchenGardenViewModelFactory
 import pro.progr.owlgame.presentation.viewmodel.dagger.MapViewModelFactory
 import pro.progr.owlgame.presentation.viewmodel.dagger.PouchViewModelFactory
@@ -66,6 +67,8 @@ interface OwlGameComponent {
     fun occupiedMapViewModelFactory() : OccupiedMapViewModelFactory
 
     fun buildingFacadeViewModelFactory() : BuildingFacadeViewModelFactory
+
+    fun inventoryViewModelFactory(): InventoryViewModelFactory
 
     @Component.Builder
     interface Builder {

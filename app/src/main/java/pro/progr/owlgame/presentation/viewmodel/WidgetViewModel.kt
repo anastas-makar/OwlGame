@@ -34,6 +34,7 @@ class WidgetViewModel(
                     .withAnimalSearching()
                     .withPouch()
                     .withMaps()
+                    .withInventory()
             }
 
         private fun ArrayList<OwlMenuModel>.withAnimalSearching() : ArrayList<OwlMenuModel> {
@@ -79,6 +80,16 @@ class WidgetViewModel(
                     imageUri = widgetRepository.getUri(R.drawable.pouch)
                 ))
             }
+
+            return this
+        }
+
+        private fun ArrayList<OwlMenuModel>.withInventory() : ArrayList<OwlMenuModel> {
+            add(OwlMenuModel(
+                text = "Осмотреть инвентарь",
+                navigateTo = "owl_navigation/inventory",
+                imageUri = widgetRepository.getUri(R.drawable.pouch)
+            ))
 
             return this
         }
