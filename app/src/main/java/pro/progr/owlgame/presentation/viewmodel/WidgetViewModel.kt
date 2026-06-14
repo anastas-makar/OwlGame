@@ -62,7 +62,7 @@ class WidgetViewModel(
 
             if (randomMap != null) {
                 add(OwlMenuModel(
-                    text = "Осмотреть владения",
+                    text = "Посетить владения",
                     navigateTo = "owl_navigation",
                     imageUri = widgetRepository.getUri(randomMap.imageUrl)
                 ))
@@ -88,7 +88,7 @@ class WidgetViewModel(
             add(OwlMenuModel(
                 text = "Осмотреть инвентарь",
                 navigateTo = "owl_navigation/inventory",
-                imageUri = widgetRepository.getUri(R.drawable.pouch)
+                imageUri = widgetRepository.getUri(R.drawable.inventory)
             ))
 
             return this
