@@ -3,8 +3,12 @@ package pro.progr.owlgame.presentation.ui.inventory
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ExitToApp
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -17,7 +21,8 @@ import pro.progr.owlgame.presentation.viewmodel.InventoryViewModel
 
 @Composable
 fun InventoryScreen(
-    inventoryViewModel: InventoryViewModel
+    inventoryViewModel: InventoryViewModel,
+    backToMain : () -> Unit
 ) {
     val uiState by inventoryViewModel.uiState.collectAsState()
 
@@ -29,6 +34,11 @@ fun InventoryScreen(
         TopAppBar(
             title = {
                 Text(text = stringResource(R.string.inventory_title))
+            },
+            navigationIcon = {
+                IconButton(onClick = { backToMain() }) {
+                    Icon(Icons.AutoMirrored.Filled.ExitToApp, contentDescription = "Назад")
+                }
             },
             backgroundColor = Color.Transparent,
             elevation = 0.dp

@@ -55,7 +55,8 @@ fun OwlNavigation(startDestination : String = "towns",
                 mapsViewModel)
         }
         composable("inventory") {
-            InventoryScreen(inventoryViewModel)
+            InventoryScreen(inventoryViewModel,
+                backToMain)
         }
         composable("pouch") {
             PouchesScreen(backToMain,
