@@ -56,6 +56,7 @@ fun InRoom(
     val hasRefrigerator = furniture.value.any { it.type == FurnitureType.REFRIGERATOR }
     val canOpenCraft = hasRefrigerator && animal != null && animal.status == AnimalStatus.PET
     val craftBlocked = hasRefrigerator && animal != null && animal.status != AnimalStatus.PET
+    val hasRefrigeratorButNoAnimal = hasRefrigerator && animal == null
 
     Column(
         modifier = Modifier
@@ -102,6 +103,9 @@ fun InRoom(
                         }
             )
         }
+
+        if (hasRefrigeratorButNoAnimal) CraftNotAvailableBanner(
+            "В этом доме никто не живёт, поэтому никто не может готовить")
     }
 
     if (roomViewModel.selectFurnitureItemState.value) {
