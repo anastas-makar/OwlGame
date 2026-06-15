@@ -74,6 +74,7 @@ class MapsRepositoryImpl @Inject constructor(
                 id = mapModel.id,
                 name = mapModel.name,
                 imagePath = mapModel.imageUrl,
+                countryId = mapModel.countryId,
                 type = mapModel.type.toData()
             )
 

@@ -4,4 +4,5 @@ data class MapModel (
     val id: String,
     val name: String,
     val imageUrl: String,
-    val type: MapType)
+    val type: MapType,
+    val countryId: String? = null)

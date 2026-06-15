@@ -8,6 +8,7 @@ import pro.progr.owlgame.data.db.dao.AnimalDao
 import pro.progr.owlgame.data.db.dao.BuildingWithAnimalDao
 import pro.progr.owlgame.data.db.dao.BuildingWithDataDao
 import pro.progr.owlgame.data.db.dao.BuildingsDao
+import pro.progr.owlgame.data.db.dao.CountriesDao
 import pro.progr.owlgame.data.db.dao.EnemyDao
 import pro.progr.owlgame.data.db.dao.ExpeditionDao
 import pro.progr.owlgame.data.db.dao.ExpeditionMedalDao
@@ -28,6 +29,7 @@ import pro.progr.owlgame.data.db.dao.SupplyToRecipeDao
 import pro.progr.owlgame.data.db.entity.Animal
 import pro.progr.owlgame.data.db.entity.ExpeditionMedal
 import pro.progr.owlgame.data.db.entity.Building
+import pro.progr.owlgame.data.db.entity.Country
 import pro.progr.owlgame.data.db.entity.Enemy
 import pro.progr.owlgame.data.db.entity.Expedition
 import pro.progr.owlgame.data.db.entity.Furniture
@@ -60,7 +62,8 @@ import pro.progr.owlgame.data.db.entity.SupplyToRecipe
     Supply::class,
     SupplyToRecipe::class,
     Location::class,
-    LocationScene::class],
+    LocationScene::class,
+    Country::class],
     version = 1, exportSchema = false)
 abstract class OwlGameDatabase : RoomDatabase() {
 
@@ -104,6 +107,8 @@ abstract class OwlGameDatabase : RoomDatabase() {
     abstract fun locationDao(): LocationsDao
 
     abstract fun locationSceneDao(): LocationScenesDao
+
+    abstract fun countriesDao(): CountriesDao
 
     companion object {
         @Volatile

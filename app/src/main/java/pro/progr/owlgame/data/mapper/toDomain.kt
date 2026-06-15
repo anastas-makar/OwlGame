@@ -150,7 +150,8 @@ fun MapEntity.toDomain(): MapModel =
         id = id,
         name = name,
         imageUrl = imagePath,
-        type = type.toDomain()
+        type = type.toDomain(),
+        countryId = countryId
     )
 
 fun MapWithData.toDomain(): MapWithBuildingsModel =
