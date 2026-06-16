@@ -2,6 +2,7 @@ package pro.progr.owlgame.data.mapper
 
 import pro.progr.owlgame.data.db.entity.Animal
 import pro.progr.owlgame.data.db.entity.Building
+import pro.progr.owlgame.data.db.entity.Country
 import pro.progr.owlgame.data.db.entity.ExpeditionMedal
 import pro.progr.owlgame.data.db.entity.Furniture
 import pro.progr.owlgame.data.db.entity.Garden
@@ -13,6 +14,7 @@ import pro.progr.owlgame.data.db.entity.RoomEntity
 import pro.progr.owlgame.data.db.entity.Supply
 import pro.progr.owlgame.domain.model.AnimalModel
 import pro.progr.owlgame.domain.model.BuildingModel
+import pro.progr.owlgame.domain.model.CountryModel
 import pro.progr.owlgame.domain.model.ExpeditionMedalModel
 import pro.progr.owlgame.domain.model.FurnitureModel
 import pro.progr.owlgame.domain.model.GardenItemModel
@@ -249,4 +251,11 @@ fun LocationSceneModel.toData(locationId : String) =
         imageUrl = imageUrl,
         locationId = locationId,
         sceneNumber = sceneNumber
+    )
+
+fun CountryModel.toData() =
+    Country(
+        id = id,
+        name = name,
+        animalRulerId = animalRulerId
     )

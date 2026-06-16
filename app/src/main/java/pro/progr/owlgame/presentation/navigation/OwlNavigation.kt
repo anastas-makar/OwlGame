@@ -12,7 +12,7 @@ import pro.progr.owlgame.dagger.OwlGameComponent
 import pro.progr.owlgame.presentation.ui.animal.AnimalSearchingScreen
 import pro.progr.owlgame.presentation.ui.BuildingScreen
 import pro.progr.owlgame.presentation.ui.map.MapScreen
-import pro.progr.owlgame.presentation.ui.MapsListScreen
+import pro.progr.owlgame.presentation.ui.mapslist.MapsListScreen
 import pro.progr.owlgame.presentation.ui.pouch.PouchesScreen
 import pro.progr.owlgame.presentation.ui.craft.CraftScreen
 import pro.progr.owlgame.presentation.ui.fab.FabViewModel

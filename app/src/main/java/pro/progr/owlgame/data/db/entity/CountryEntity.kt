@@ -6,7 +6,8 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "countries")
 data class Country(
-    @PrimaryKey val id: String,
+    @PrimaryKey
+    val id: String,
     val name: String,
     val animalRulerId: String? = null,
     @ColumnInfo(defaultValue = "0")

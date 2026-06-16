@@ -7,6 +7,7 @@ import pro.progr.owlgame.data.db.embedded.LocationWithScenes
 import pro.progr.owlgame.data.db.embedded.MapWithData
 import pro.progr.owlgame.data.db.entity.Animal
 import pro.progr.owlgame.data.db.entity.Building
+import pro.progr.owlgame.data.db.entity.Country
 import pro.progr.owlgame.data.db.entity.Enemy
 import pro.progr.owlgame.data.db.entity.Expedition
 import pro.progr.owlgame.data.db.entity.ExpeditionMedal
@@ -24,6 +25,7 @@ import pro.progr.owlgame.domain.model.AnimalModel
 import pro.progr.owlgame.domain.model.BuildingModel
 import pro.progr.owlgame.domain.model.BuildingWithAnimalModel
 import pro.progr.owlgame.domain.model.BuildingWithDataModel
+import pro.progr.owlgame.domain.model.CountryModel
 import pro.progr.owlgame.domain.model.EnemyModel
 import pro.progr.owlgame.domain.model.EnemyStatus
 import pro.progr.owlgame.domain.model.ExpeditionMedalModel
@@ -41,26 +43,26 @@ import pro.progr.owlgame.domain.model.PouchModel
 import pro.progr.owlgame.domain.model.RoomModel
 import pro.progr.owlgame.domain.model.StreetModel
 import pro.progr.owlgame.domain.model.SupplyModel
-import pro.progr.owlgame.data.db.model.MapType as DbMapType
-import pro.progr.owlgame.domain.model.MapType as DomainMapType
-import pro.progr.owlgame.data.db.model.BuildingType as DbBuildingType
-import pro.progr.owlgame.domain.model.BuildingType as DomainBuildingType
 import pro.progr.owlgame.data.db.model.AnimalStatus as DbAnimalStatus
-import pro.progr.owlgame.domain.model.AnimalStatus as DomainAnimalStatus
-import pro.progr.owlgame.data.db.model.GardenType as DbGardenType
-import pro.progr.owlgame.domain.model.GardenType as DomainGardenType
+import pro.progr.owlgame.data.db.model.BuildingType as DbBuildingType
 import pro.progr.owlgame.data.db.model.EffectType as DbEffectType
-import pro.progr.owlgame.domain.model.EffectType as DomainEffectType
-import pro.progr.owlgame.data.model.ExpeditionStatus as DbExpeditionStatus
-import pro.progr.owlgame.domain.model.ExpeditionStatus as DomainExpeditionStatus
 import pro.progr.owlgame.data.db.model.FurnitureType as DbFurnitureType
-import pro.progr.owlgame.domain.model.FurnitureType as DomainFurnitureType
+import pro.progr.owlgame.data.db.model.GardenType as DbGardenType
 import pro.progr.owlgame.data.db.model.ItemType as DbItemType
-import pro.progr.owlgame.domain.model.ItemType as DomainItemType
+import pro.progr.owlgame.data.db.model.MapType as DbMapType
 import pro.progr.owlgame.data.db.model.StreetDirection as DbStreetDirection
-import pro.progr.owlgame.domain.model.StreetDirection as DomainStreetDirection
+import pro.progr.owlgame.data.model.ExpeditionStatus as DbExpeditionStatus
 import pro.progr.owlgame.data.model.LocationType as DbLocationType
+import pro.progr.owlgame.domain.model.AnimalStatus as DomainAnimalStatus
+import pro.progr.owlgame.domain.model.BuildingType as DomainBuildingType
+import pro.progr.owlgame.domain.model.EffectType as DomainEffectType
+import pro.progr.owlgame.domain.model.ExpeditionStatus as DomainExpeditionStatus
+import pro.progr.owlgame.domain.model.FurnitureType as DomainFurnitureType
+import pro.progr.owlgame.domain.model.GardenType as DomainGardenType
+import pro.progr.owlgame.domain.model.ItemType as DomainItemType
 import pro.progr.owlgame.domain.model.LocationType as DomainLocationType
+import pro.progr.owlgame.domain.model.MapType as DomainMapType
+import pro.progr.owlgame.domain.model.StreetDirection as DomainStreetDirection
 
 fun DbMapType.toDomain(): DomainMapType =
     when (this) {
@@ -396,4 +398,11 @@ fun LocationWithScenes.toDomain() =
         y = location.y,
         type =  location.type.toDomain(),
         scenes = scenes.map { it.toDomain()}
+    )
+
+fun Country.toDomain() =
+    CountryModel(
+        id = id,
+        name = name,
+        animalRulerId = animalRulerId
     )

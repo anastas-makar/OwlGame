@@ -5,6 +5,7 @@ import dagger.Module
 import pro.progr.owlgame.data.repository.impl.AnimalTimingRepositoryImpl
 import pro.progr.owlgame.data.repository.impl.AnimalsRepositoryImpl
 import pro.progr.owlgame.data.repository.impl.BuildingsRepositoryImpl
+import pro.progr.owlgame.data.repository.impl.CountriesRepositoryImpl
 import pro.progr.owlgame.data.repository.impl.ExpeditionMedalRepositoryImpl
 import pro.progr.owlgame.data.repository.impl.ExpeditionsRepositoryImpl
 import pro.progr.owlgame.data.repository.impl.FurnitureRepositoryImpl
@@ -24,6 +25,7 @@ import pro.progr.owlgame.data.repository.impl.WidgetRepositoryImpl
 import pro.progr.owlgame.domain.repository.AnimalTimingRepository
 import pro.progr.owlgame.domain.repository.AnimalsRepository
 import pro.progr.owlgame.domain.repository.BuildingsRepository
+import pro.progr.owlgame.domain.repository.CountriesRepository
 import pro.progr.owlgame.domain.repository.ExpeditionMedalRepository
 import pro.progr.owlgame.domain.repository.ExpeditionsRepository
 import pro.progr.owlgame.domain.repository.FurnitureRepository
@@ -120,4 +122,8 @@ interface RepositoryBindingsModule {
     @Binds
     @Singleton
     fun bindLocationRepository(impl: LocationsRepositoryImpl): LocationsRepository
+
+    @Binds
+    @Singleton
+    fun bindCountriesRepository(impl: CountriesRepositoryImpl): CountriesRepository
 }
