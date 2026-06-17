@@ -1,4 +1,9 @@
 <resources>
+    <string name="create_country">Create country</string>
+    <string name="free_towns">Free towns</string>
+    <string name="maps_found_town_section">You can found a town here</string>
+    <string name="maps_occupied_section">These lands are occupied. Free them!</string>
+
     <string name="inventory_title">Inventory</string>
     <string name="inventory_empty">Your inventory is empty</string>
     <string name="inventory_empty_category">There is nothing here yet.</string>
