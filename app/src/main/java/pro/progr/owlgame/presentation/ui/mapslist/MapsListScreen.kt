@@ -59,7 +59,7 @@ fun MapsListScreen(
                         color = Color.DarkGray,
                         onClick = {
                             fabExpanded = false
-                            // mapsViewModel.showCreateCountryDialog()
+                            mapsViewModel.openCreateCountryDialog()
                         }
                     )
                 ),
@@ -149,6 +149,17 @@ fun MapsListScreen(
                             .clickable { fabExpanded = false }
                     )
                 }
+            }
+
+            if (mapsViewModel.showCreateCountryDialog.value) {
+                CreateCountryDialog(
+                    onDismiss = {
+                        mapsViewModel.closeCreateCountryDialog()
+                    },
+                    onCreateCountry = { name ->
+                        mapsViewModel.createCountry(name)
+                    }
+                )
             }
         }
     )

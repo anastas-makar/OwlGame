@@ -4,6 +4,10 @@
     <string name="maps_found_town_section">Здесь можно основать город</string>
     <string name="maps_occupied_section">Эти земли оккупированы. Освободите их!</string>
 
+    <string name="country_name">Название страны</string>
+    <string name="create">Создать</string>
+    <string name="cancel">Отмена</string>
+
     <string name="inventory_title">Инвентарь</string>
     <string name="inventory_empty">Инвентарь пуст</string>
     <string name="inventory_empty_category">Здесь пока ничего нет.</string>

@@ -4,11 +4,11 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import pro.progr.owlgame.domain.model.CountryModel
 import pro.progr.owlgame.domain.repository.MapsRepository
 import pro.progr.owlgame.domain.model.MapModel
 import pro.progr.owlgame.domain.model.MapType
@@ -16,12 +16,13 @@ import pro.progr.owlgame.domain.repository.AnimalsRepository
 import pro.progr.owlgame.domain.repository.CountriesRepository
 import pro.progr.owlgame.presentation.ui.model.CountrySection
 import pro.progr.owlgame.presentation.ui.model.MapsScreenState
+import java.util.UUID
 import javax.inject.Inject
 
 class MapsViewModel @Inject constructor(
     private val mapsRepository: MapsRepository,
-    animalsRepository: AnimalsRepository,
-    countriesRepository: CountriesRepository
+    private val animalsRepository: AnimalsRepository,
+    private val countriesRepository: CountriesRepository
 ) : ViewModel() {
     init {
         viewModelScope.launch(Dispatchers.IO) {
@@ -61,7 +62,31 @@ class MapsViewModel @Inject constructor(
 
     var maps = mutableStateOf<List<MapModel>?>(emptyList())
 
-    fun loadMaps() : Flow<List<MapModel>> {
-            return mapsRepository.getMaps()
+    var showCreateCountryDialog = mutableStateOf(false)
+        private set
+
+    fun openCreateCountryDialog() {
+        showCreateCountryDialog.value = true
+    }
+
+    fun closeCreateCountryDialog() {
+        showCreateCountryDialog.value = false
+    }
+
+    fun createCountry(name: String) {
+        val trimmedName = name.trim()
+        if (trimmedName.isBlank()) return
+
+        showCreateCountryDialog.value = false
+
+        viewModelScope.launch(Dispatchers.IO) {
+            countriesRepository.insert(
+                CountryModel(
+                    id = UUID.randomUUID().toString(),
+                    name = trimmedName,
+                    animalRulerId = null
+                )
+            )
+        }
     }
 }
