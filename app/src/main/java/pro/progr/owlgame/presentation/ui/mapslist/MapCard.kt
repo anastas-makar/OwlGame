@@ -49,10 +49,8 @@ fun MapCard(
     var moveDialogVisible by remember { mutableStateOf(false) }
 
     val isTown = map.type == MapType.TOWN
-    val canMove = isTown && (
-            map.countryId != null ||
-                    countries.any { it.id != map.countryId }
-            )
+    val canMove = isTown &&
+            (countries.isNotEmpty() || map.countryId != null)
 
     val openMap = {
         navController.navigate("map/${map.id}")
