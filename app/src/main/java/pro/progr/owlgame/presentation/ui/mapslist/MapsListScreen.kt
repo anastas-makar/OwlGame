@@ -45,6 +45,14 @@ fun MapsListScreen(
 
     val createCountryText = stringResource(R.string.create_country)
 
+    var countryPendingDeletionId by rememberSaveable {
+        mutableStateOf<String?>(null)
+    }
+
+    val countryPendingDeletion = state.countries.firstOrNull {
+        it.country.id == countryPendingDeletionId
+    }
+
     Scaffold(
         topBar = {
             Box(modifier = Modifier.statusBarsPadding()) {
@@ -105,7 +113,7 @@ fun MapsListScreen(
                             CountryHeader(
                                 country = section.country,
                                 onDeleteCountry = {
-                                    // mapsViewModel.deleteCountry(section.country.id)
+                                    countryPendingDeletionId = section.country.id
                                 }
                             )
                         }
@@ -173,4 +181,18 @@ fun MapsListScreen(
             }
         }
     )
+
+    countryPendingDeletion?.let { section ->
+        DeleteCountryDialog(
+            countryName = section.country.name,
+            hasTowns = section.towns.isNotEmpty(),
+            onDismiss = {
+                countryPendingDeletionId = null
+            },
+            onConfirm = {
+                countryPendingDeletionId = null
+                mapsViewModel.deleteCountry(section.country.id)
+            }
+        )
+    }
 }

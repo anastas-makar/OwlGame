@@ -1,4 +1,9 @@
 <resources>
+    <string name="delete_country_title">Delete country?</string>
+    <string name="delete_country_with_towns_message">Delete %1$s? All its towns will become free.</string>
+    <string name="delete_empty_country_message">Delete %1$s?</string>
+    <string name="delete">Delete</string>
+
     <string name="town_menu">Town menu</string>
     <string name="move_to_country">Move to country</string>
     <string name="move_town_to_country">Move town to country</string>

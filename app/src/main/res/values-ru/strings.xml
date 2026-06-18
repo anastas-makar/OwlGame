@@ -1,4 +1,9 @@
 <resources>
+    <string name="delete_country_title">Удалить страну?</string>
+    <string name="delete_country_with_towns_message">Удалить страну «%1$s»? Все её города станут свободными.</string>
+    <string name="delete_empty_country_message">Удалить страну «%1$s»?</string>
+    <string name="delete">Удалить</string>
+
     <string name="town_menu">Меню города</string>
     <string name="move_to_country">Перенести в страну</string>
     <string name="move_town_to_country">Перенести город в страну</string>

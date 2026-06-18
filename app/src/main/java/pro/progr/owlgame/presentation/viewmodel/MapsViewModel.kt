@@ -101,4 +101,10 @@ class MapsViewModel @Inject constructor(
             )
         }
     }
+
+    fun deleteCountry(countryId: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            countriesRepository.deleteCountry(countryId)
+        }
+    }
 }
