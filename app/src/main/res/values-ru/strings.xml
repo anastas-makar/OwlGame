@@ -1,4 +1,10 @@
 <resources>
+    <string name="town_menu">Меню города</string>
+    <string name="move_to_country">Перенести в страну</string>
+    <string name="move_town_to_country">Перенести город в страну</string>
+    <string name="enter">Войти</string>
+    <string name="move">Перенести</string>
+
     <string name="create_country">Создать страну</string>
     <string name="free_towns">Свободные города</string>
     <string name="maps_found_town_section">Здесь можно основать город</string>

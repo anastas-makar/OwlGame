@@ -1,4 +1,10 @@
 <resources>
+    <string name="town_menu">Town menu</string>
+    <string name="move_to_country">Move to country</string>
+    <string name="move_town_to_country">Move town to country</string>
+    <string name="enter">Enter</string>
+    <string name="move">Move</string>
+
     <string name="create_country">Create country</string>
     <string name="free_towns">Free towns</string>
     <string name="maps_found_town_section">You can found a town here</string>

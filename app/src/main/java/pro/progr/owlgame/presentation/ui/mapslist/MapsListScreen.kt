@@ -39,6 +39,8 @@ fun MapsListScreen(
 ) {
     val state by mapsViewModel.screenState.collectAsState()
 
+    val countries = state.countries.map { it.country }
+
     var fabExpanded by rememberSaveable { mutableStateOf(false) }
 
     val createCountryText = stringResource(R.string.create_country)
@@ -88,7 +90,9 @@ fun MapsListScreen(
                         items(state.freeTowns, key = { it.id }) { town ->
                             MapCard(
                                 map = town,
-                                navController = navController
+                                navController = navController,
+                                countries = countries,
+                                onMoveToCountry = mapsViewModel::moveTownToCountry
                             )
                         }
                     }
@@ -109,7 +113,9 @@ fun MapsListScreen(
                         items(section.towns, key = { it.id }) { town ->
                             MapCard(
                                 map = town,
-                                navController = navController
+                                navController = navController,
+                                countries = countries,
+                                onMoveToCountry = mapsViewModel::moveTownToCountry
                             )
                         }
                     }
@@ -122,7 +128,9 @@ fun MapsListScreen(
                         items(state.freeMaps, key = { it.id }) { map ->
                             MapCard(
                                 map = map,
-                                navController = navController
+                                navController = navController,
+                                countries = countries,
+                                onMoveToCountry = mapsViewModel::moveTownToCountry
                             )
                         }
                     }
@@ -135,7 +143,9 @@ fun MapsListScreen(
                         items(state.occupiedMaps, key = { it.id }) { map ->
                             MapCard(
                                 map = map,
-                                navController = navController
+                                navController = navController,
+                                countries = countries,
+                                onMoveToCountry = mapsViewModel::moveTownToCountry
                             )
                         }
                     }

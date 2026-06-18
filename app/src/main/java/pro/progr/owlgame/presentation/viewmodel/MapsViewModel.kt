@@ -89,4 +89,16 @@ class MapsViewModel @Inject constructor(
             )
         }
     }
+
+    fun moveTownToCountry(
+        mapId: String,
+        countryId: String?
+    ) {
+        viewModelScope.launch(Dispatchers.IO) {
+            countriesRepository.moveTown(
+                mapId = mapId,
+                countryId = countryId
+            )
+        }
+    }
 }
