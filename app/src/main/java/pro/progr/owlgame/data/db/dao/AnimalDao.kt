@@ -78,4 +78,21 @@ interface AnimalDao {
         newStatus: AnimalStatus = AnimalStatus.PET,
         now: Long
     ): Int
+
+    @Query(
+        """
+    SELECT DISTINCT animals.*
+    FROM animals
+    INNER JOIN buildings
+        ON buildings.animalId = animals.id
+    INNER JOIN maps
+        ON maps.id = buildings.mapId
+    WHERE maps.countryId = :countryId
+      AND maps.type = 'TOWN'
+      AND buildings.type = 'FORTRESS'
+      AND animals.status IN ('PET', 'EXPEDITION', 'FUGITIVE')
+    ORDER BY animals.name
+    """
+    )
+    fun observeRulerCandidates(countryId: String): Flow<List<Animal>>
 }

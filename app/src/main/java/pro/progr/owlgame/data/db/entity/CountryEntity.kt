@@ -2,9 +2,12 @@ package pro.progr.owlgame.data.db.entity
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
+import androidx.room.Index
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "countries")
+@Entity(
+    tableName = "countries",
+    indices = [Index("rulerAnimalId")])
 data class Country(
     @PrimaryKey
     val id: String,

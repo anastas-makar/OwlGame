@@ -7,7 +7,9 @@ import pro.progr.owlgame.data.db.model.MapType
 
 @Entity(
     tableName = "maps",
-    indices = [Index("countryId")]
+    indices = [
+        Index("countryId"),
+        Index("mayorAnimalId")]
 )
 data class MapEntity(
     @PrimaryKey val id: String,
