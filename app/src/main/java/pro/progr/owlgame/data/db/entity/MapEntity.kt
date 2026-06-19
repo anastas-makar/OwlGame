@@ -14,5 +14,6 @@ data class MapEntity(
     val name: String,
     val imagePath: String,
     val type: MapType,
-    val countryId: String? = null
+    val countryId: String? = null,
+    val mayorAnimalId: String? = null
 )

@@ -97,6 +97,7 @@ class MapViewModel @Inject constructor(
                         imageUrl = mapWithData.imageUrl,
                         type = mapWithData.type,
                         buildings = buildings,
+                        mayorAnimalId = mapWithData.mayorAnimalId,
                         streets = buildStreetSections(
                             buildings = buildings,
                             streets = streets

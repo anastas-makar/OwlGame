@@ -9,7 +9,7 @@ data class Country(
     @PrimaryKey
     val id: String,
     val name: String,
-    val animalRulerId: String? = null,
+    val rulerAnimalId: String? = null,
     @ColumnInfo(defaultValue = "0")
     val deleted: Boolean = false
 )

@@ -257,5 +257,5 @@ fun CountryModel.toData() =
     Country(
         id = id,
         name = name,
-        animalRulerId = animalRulerId
+        rulerAnimalId = rulerAnimalId
     )

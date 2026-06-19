@@ -84,7 +84,7 @@ class MapsViewModel @Inject constructor(
                 CountryModel(
                     id = UUID.randomUUID().toString(),
                     name = trimmedName,
-                    animalRulerId = null
+                    rulerAnimalId = null
                 )
             )
         }

@@ -114,6 +114,7 @@ fun MapInPouch.toDomain(): MapWithDataModel =
         imageUrl = imageUrl,
         type = type.toDomain(),
         countryId = null,
+        mayorAnimalId = null,
         buildings = emptyList(),
         expedition = expedition?.toDomain(mapId = id),
         locations = locations.orEmpty().map { it.toDomain(id) }

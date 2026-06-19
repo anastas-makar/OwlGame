@@ -153,7 +153,8 @@ fun MapEntity.toDomain(): MapModel =
         name = name,
         imageUrl = imagePath,
         type = type.toDomain(),
-        countryId = countryId
+        countryId = countryId,
+        mayorAnimalId = mayorAnimalId
     )
 
 fun MapWithData.toDomain(): MapWithBuildingsModel =
@@ -161,6 +162,7 @@ fun MapWithData.toDomain(): MapWithBuildingsModel =
         id = mapEntity.id,
         name = mapEntity.name,
         imageUrl = mapEntity.imagePath,
+        mayorAnimalId = mapEntity.mayorAnimalId,
         type = mapEntity.type.toDomain(),
         buildings = buildings.map {
             it.toDomain()
@@ -404,5 +406,5 @@ fun Country.toDomain() =
     CountryModel(
         id = id,
         name = name,
-        animalRulerId = animalRulerId
+        rulerAnimalId = rulerAnimalId
     )

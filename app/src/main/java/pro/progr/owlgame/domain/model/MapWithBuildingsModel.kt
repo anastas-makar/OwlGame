@@ -5,6 +5,7 @@ data class MapWithBuildingsModel (
     val name: String,
     val imageUrl: String,
     val type: MapType,
+    val mayorAnimalId: String? = null,
     val buildings: List<BuildingModel> = emptyList(),
     val expeditionId: String? = null
 )
