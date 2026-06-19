@@ -9,15 +9,16 @@ import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import pro.progr.owlgame.R
 import pro.progr.owlgame.domain.model.CountryModel
 
 @Composable
 fun CountryHeader(
     country: CountryModel,
     modifier: Modifier = Modifier,
-    onMoveTownHere: (() -> Unit)? = null,
     onDeleteCountry: (() -> Unit)? = null
 ) {
     Row(
@@ -33,15 +34,9 @@ fun CountryHeader(
             modifier = Modifier.weight(1f)
         )
 
-        onMoveTownHere?.let {
-            TextButton(onClick = it) {
-                Text("Добавить город")
-            }
-        }
-
         onDeleteCountry?.let {
             TextButton(onClick = it) {
-                Text("Удалить")
+                stringResource(R.string.delete)
             }
         }
     }
