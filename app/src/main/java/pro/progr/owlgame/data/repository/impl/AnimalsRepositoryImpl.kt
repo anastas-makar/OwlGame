@@ -87,4 +87,10 @@ class AnimalsRepositoryImpl @Inject constructor(
     ) {
         animalDao.setGone(animalId)
     }
+
+    override fun observeRulerCandidates(countryId: String): Flow<List<AnimalModel>> {
+        return animalDao.observeRulerCandidates(countryId).map {
+            list -> list.map { it.toDomain() }
+        }
+    }
 }

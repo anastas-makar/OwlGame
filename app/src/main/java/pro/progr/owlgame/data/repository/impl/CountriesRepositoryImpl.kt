@@ -30,4 +30,18 @@ class CountriesRepositoryImpl @Inject constructor(
     override suspend fun deleteCountry(countryId: String) {
         countriesDao.deleteCountry(countryId)
     }
+
+    override suspend fun appointRuler(
+        countryId: String,
+        animalId: String
+    ): Int {
+        return countriesDao.appointRuler(
+            countryId = countryId,
+            animalId =  animalId
+        )
+    }
+
+    override suspend fun removeRuler(countryId: String) {
+        countriesDao.removeRuler(countryId)
+    }
 }

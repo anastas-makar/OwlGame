@@ -12,4 +12,11 @@ interface CountriesRepository {
     suspend fun moveTown(mapId: String, countryId: String?)
 
     suspend fun deleteCountry(countryId: String)
+
+    suspend fun appointRuler(
+        countryId: String,
+        animalId: String
+    ): Int
+
+    suspend fun removeRuler(countryId: String)
 }

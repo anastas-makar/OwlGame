@@ -34,4 +34,6 @@ interface AnimalsRepository {
     suspend fun updateAnimalName(animalId : String, newAnimalName : String)
 
     suspend fun setAnimalGone(animalId : String)
+
+    fun observeRulerCandidates(countryId: String) : Flow<List<AnimalModel>>
 }
