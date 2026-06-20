@@ -1,4 +1,21 @@
 <resources>
+    <string name="country_ruler">Правитель страны</string>
+    <string name="no_country_ruler">Правитель не назначен</string>
+    <string name="appoint_ruler">Назначить</string>
+    <string name="change_ruler">Сменить</string>
+    <string name="remove_ruler">Снять</string>
+    <string name="appoint_country_ruler">Назначить правителя страны</string>
+    <string name="no_ruler_candidates">Нет подходящих кандидатов. Правитель должен жить в замке в этой стране.</string>
+    <string name="appoint">Назначить</string>
+    <string name="can_be_ruler">Можно назначить</string>
+    <string name="cannot_appoint_expedition">Не сможет присутствовать на коронации: в экспедиции</string>
+    <string name="cannot_appoint_fugitive">Не сможет присутствовать на коронации: в бегах</string>
+    <string name="cannot_appoint_unavailable">Недоступно</string>
+    <string name="animal_status_expedition">В экспедиции</string>
+    <string name="animal_status_fugitive">В бегах</string>
+    <string name="animal_status_searching">Ищет дом</string>
+    <string name="animal_status_gone">Ушло</string>
+
     <string name="delete_country_title">Удалить страну?</string>
     <string name="delete_country_with_towns_message">Удалить страну «%1$s»? Все её города станут свободными.</string>
     <string name="delete_empty_country_message">Удалить страну «%1$s»?</string>

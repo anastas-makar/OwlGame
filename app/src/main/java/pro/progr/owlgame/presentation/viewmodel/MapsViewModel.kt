@@ -4,10 +4,12 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import pro.progr.owlgame.domain.model.AnimalModel
 import pro.progr.owlgame.domain.model.CountryModel
 import pro.progr.owlgame.domain.repository.MapsRepository
 import pro.progr.owlgame.domain.model.MapModel
@@ -105,6 +107,29 @@ class MapsViewModel @Inject constructor(
     fun deleteCountry(countryId: String) {
         viewModelScope.launch(Dispatchers.IO) {
             countriesRepository.deleteCountry(countryId)
+        }
+    }
+
+    fun observeRulerCandidates(countryId: String): Flow<List<AnimalModel>> {
+        return animalsRepository.observeRulerCandidates(countryId)
+    }
+
+    fun observeAnimal(animalId: String): Flow<AnimalModel?> {
+        return animalsRepository.getAnimalById(animalId)
+    }
+
+    fun appointRuler(countryId: String, animalId: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            countriesRepository.appointRuler(
+                countryId = countryId,
+                animalId = animalId
+            )
+        }
+    }
+
+    fun removeRuler(countryId: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            countriesRepository.removeRuler(countryId)
         }
     }
 }

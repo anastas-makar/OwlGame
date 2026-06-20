@@ -53,6 +53,14 @@ fun MapsListScreen(
         it.country.id == countryPendingDeletionId
     }
 
+    var countryForRulerDialogId by rememberSaveable {
+        mutableStateOf<String?>(null)
+    }
+
+    val countryForRulerDialog = state.countries.firstOrNull {
+        it.country.id == countryForRulerDialogId
+    }
+
     Scaffold(
         topBar = {
             Box(modifier = Modifier.statusBarsPadding()) {
@@ -114,6 +122,22 @@ fun MapsListScreen(
                                 country = section.country,
                                 onDeleteCountry = {
                                     countryPendingDeletionId = section.country.id
+                                }
+                            )
+                        }
+
+                        item(
+                            key = "ruler_${section.country.id}",
+                            span = { GridItemSpan(maxLineSpan) }
+                        ) {
+                            CountryRulerCard(
+                                country = section.country,
+                                mapsViewModel = mapsViewModel,
+                                onAppointRuler = {
+                                    countryForRulerDialogId = section.country.id
+                                },
+                                onRemoveRuler = {
+                                    mapsViewModel.removeRuler(section.country.id)
                                 }
                             )
                         }
@@ -192,6 +216,27 @@ fun MapsListScreen(
             onConfirm = {
                 countryPendingDeletionId = null
                 mapsViewModel.deleteCountry(section.country.id)
+            }
+        )
+    }
+
+    countryForRulerDialog?.let { section ->
+        val candidates by mapsViewModel
+            .observeRulerCandidates(section.country.id)
+            .collectAsState(initial = emptyList())
+
+        AppointRulerDialog(
+            country = section.country,
+            candidates = candidates,
+            onDismiss = {
+                countryForRulerDialogId = null
+            },
+            onAppoint = { animalId ->
+                countryForRulerDialogId = null
+                mapsViewModel.appointRuler(
+                    countryId = section.country.id,
+                    animalId = animalId
+                )
             }
         )
     }

@@ -1,4 +1,21 @@
 <resources>
+    <string name="country_ruler">Country ruler</string>
+    <string name="no_country_ruler">No ruler has been appointed</string>
+    <string name="appoint_ruler">Appoint</string>
+    <string name="change_ruler">Change</string>
+    <string name="remove_ruler">Remove</string>
+    <string name="appoint_country_ruler">Appoint country ruler</string>
+    <string name="no_ruler_candidates">No suitable candidates. A ruler must live in a fortress in this country.</string>
+    <string name="appoint">Appoint</string>
+    <string name="can_be_ruler">Can be appointed</string>
+    <string name="cannot_appoint_expedition">Cannot attend the coronation: in expedition</string>
+    <string name="cannot_appoint_fugitive">Cannot attend the coronation: fugitive</string>
+    <string name="cannot_appoint_unavailable">Unavailable</string>
+    <string name="animal_status_expedition">In expedition</string>
+    <string name="animal_status_fugitive">Fugitive</string>
+    <string name="animal_status_searching">Searching for a home</string>
+    <string name="animal_status_gone">Gone</string>
+
     <string name="delete_country_title">Delete country?</string>
     <string name="delete_country_with_towns_message">Delete %1$s? All its towns will become free.</string>
     <string name="delete_empty_country_message">Delete %1$s?</string>
