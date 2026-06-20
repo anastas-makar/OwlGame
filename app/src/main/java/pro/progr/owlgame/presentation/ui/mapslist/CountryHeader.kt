@@ -34,9 +34,12 @@ fun CountryHeader(
             modifier = Modifier.weight(1f)
         )
 
-        onDeleteCountry?.let {
-            TextButton(onClick = it) {
-                stringResource(R.string.delete)
+        onDeleteCountry?.let { deleteCountry ->
+            TextButton(onClick = deleteCountry) {
+                Text(
+                    text = stringResource(R.string.delete),
+                    color = MaterialTheme.colors.error
+                )
             }
         }
     }
