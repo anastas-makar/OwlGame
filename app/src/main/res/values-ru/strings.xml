@@ -1,4 +1,7 @@
 <resources>
+    <string name="depose_ruler">Сместить</string>
+    <string name="close">Закрыть</string>
+
     <string name="country_ruler">Правитель страны</string>
     <string name="no_country_ruler">Правитель не назначен</string>
     <string name="appoint_ruler">Назначить</string>

@@ -1,5 +1,6 @@
 package pro.progr.owlgame.presentation.ui.mapslist
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -15,7 +16,10 @@ import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -46,6 +50,10 @@ fun CountryRulerCard(
 
     val ruler by rulerFlow.collectAsState(initial = null)
 
+    var showRulerDialog by rememberSaveable(country.id, country.rulerAnimalId) {
+        mutableStateOf(false)
+    }
+
     Card(
         modifier = modifier
             .fillMaxWidth()
@@ -60,48 +68,42 @@ fun CountryRulerCard(
             verticalAlignment = Alignment.CenterVertically
         ) {
             if (ruler != null) {
-                AsyncImage(
-                    model = ruler!!.imagePath,
-                    contentDescription = ruler!!.name,
-                    contentScale = ContentScale.Crop,
+                Row(
                     modifier = Modifier
-                        .size(58.dp)
-                        .clip(RoundedCornerShape(12.dp))
-                )
-
-                Spacer(Modifier.width(10.dp))
-
-                Column(
-                    modifier = Modifier.weight(1f)
+                        .weight(1f)
+                        .clickable { showRulerDialog = true },
+                    verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Text(
-                        text = stringResource(R.string.country_ruler),
-                        style = MaterialTheme.typography.caption,
-                        color = Color.Gray
+                    AsyncImage(
+                        model = ruler!!.imagePath,
+                        contentDescription = ruler!!.name,
+                        contentScale = ContentScale.Crop,
+                        modifier = Modifier
+                            .size(58.dp)
+                            .clip(RoundedCornerShape(12.dp))
                     )
 
-                    Text(
-                        text = "${ruler!!.kind} ${ruler!!.name}",
-                        style = MaterialTheme.typography.subtitle1,
-                        fontWeight = FontWeight.Bold
-                    )
+                    Spacer(Modifier.width(10.dp))
 
-                    AnimalStatusLine(ruler!!.status)
+                    Column {
+                        Text(
+                            text = stringResource(R.string.country_ruler),
+                            style = MaterialTheme.typography.caption,
+                            color = Color.Gray
+                        )
+
+                        Text(
+                            text = "${ruler!!.kind} ${ruler!!.name}",
+                            style = MaterialTheme.typography.subtitle1,
+                            fontWeight = FontWeight.Bold
+                        )
+
+                        AnimalStatusLine(ruler!!.status)
+                    }
                 }
 
-                Column(
-                    horizontalAlignment = Alignment.End
-                ) {
-                    TextButton(onClick = onAppointRuler) {
-                        Text(stringResource(R.string.change_ruler))
-                    }
-
-                    TextButton(onClick = onRemoveRuler) {
-                        Text(
-                            text = stringResource(R.string.remove_ruler),
-                            color = MaterialTheme.colors.error
-                        )
-                    }
+                TextButton(onClick = onAppointRuler) {
+                    Text(stringResource(R.string.change_ruler))
                 }
             } else {
                 Column(
@@ -124,6 +126,17 @@ fun CountryRulerCard(
                 }
             }
         }
+    }
+
+    if (showRulerDialog && ruler != null) {
+        RulerProfileDialog(
+            animal = ruler!!,
+            onDismiss = { showRulerDialog = false },
+            onDepose = {
+                showRulerDialog = false
+                onRemoveRuler()
+            }
+        )
     }
 }
 

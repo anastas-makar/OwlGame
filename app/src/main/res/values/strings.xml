@@ -1,4 +1,7 @@
 <resources>
+    <string name="depose_ruler">Depose</string>
+    <string name="close">Close</string>
+
     <string name="country_ruler">Country ruler</string>
     <string name="no_country_ruler">No ruler has been appointed</string>
     <string name="appoint_ruler">Appoint</string>
