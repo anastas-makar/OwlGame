@@ -1,4 +1,13 @@
 <resources>
+    <string name="town_mayor">Town mayor</string>
+    <string name="no_town_mayor">No mayor has been appointed</string>
+    <string name="appoint_mayor">Appoint</string>
+    <string name="change_mayor">Change</string>
+    <string name="appoint_town_mayor">Appoint town mayor</string>
+    <string name="no_mayor_candidates">No suitable candidates. A mayor must live in this town.</string>
+    <string name="can_be_mayor">Can be appointed mayor</string>
+    <string name="remove_from_office">Remove from office</string>
+
     <string name="depose_ruler">Depose</string>
     <string name="close">Close</string>
 

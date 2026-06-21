@@ -17,5 +17,9 @@ interface MapsRepository {
 
     suspend fun saveMaps(mapModels: List<MapWithDataModel>)
 
+    suspend fun appointMayor(mapId: String, animalId: String): Int
+
+    suspend fun removeMayor(mapId: String)
+
 }
 

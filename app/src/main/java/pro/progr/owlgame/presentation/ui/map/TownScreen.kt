@@ -87,6 +87,10 @@ fun TownScreen(
 
     var showCreateStreetDialog by rememberSaveable { mutableStateOf(false) }
 
+    var showMayorDialog by rememberSaveable {
+        mutableStateOf(false)
+    }
+
     if (showCreateStreetDialog) {
         CreateStreetDialog(
             onDismiss = { showCreateStreetDialog = false },
@@ -253,6 +257,18 @@ fun TownScreen(
                     }
                 }
 
+                item {
+                    TownMayorCard(
+                        map = map.value,
+                        onAppointMayor = {
+                            showMayorDialog = true
+                        },
+                        onRemoveMayor = {
+                            mapViewModel.removeMayor(map.value.id)
+                        }
+                    )
+                }
+
                 locationsSection(
                     locations = map.value.locations,
                     onLocationClick = { selectedLocation = it }
@@ -359,6 +375,23 @@ fun TownScreen(
             LocationGalleryDialog(
                 location = location,
                 onDismiss = { selectedLocation = null }
+            )
+        }
+
+        if (showMayorDialog) {
+            AppointMayorDialog(
+                map = map.value,
+                candidates = map.value.getMayorCandidates(),
+                onDismiss = {
+                    showMayorDialog = false
+                },
+                onAppoint = { animalId ->
+                    showMayorDialog = false
+                    mapViewModel.appointMayor(
+                        mapId = map.value.id,
+                        animalId = animalId
+                    )
+                }
             )
         }
     }

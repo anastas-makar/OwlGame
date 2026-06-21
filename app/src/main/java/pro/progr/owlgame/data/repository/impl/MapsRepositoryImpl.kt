@@ -137,5 +137,16 @@ class MapsRepositoryImpl @Inject constructor(
         mapDao.setTown(mapId = mapId, name = name)
     }
 
+    override suspend fun appointMayor(mapId: String, animalId: String): Int {
+        return mapDao.appointMayor(
+            mapId = mapId,
+            animalId = animalId
+        )
+    }
+
+    override suspend fun removeMayor(mapId: String) {
+        mapDao.removeMayor(mapId)
+    }
+
 }
 

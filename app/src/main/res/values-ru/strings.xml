@@ -1,4 +1,13 @@
 <resources>
+    <string name="town_mayor">Мэр города</string>
+    <string name="no_town_mayor">Мэр не назначен</string>
+    <string name="appoint_mayor">Назначить</string>
+    <string name="change_mayor">Сменить</string>
+    <string name="appoint_town_mayor">Назначить мэра города</string>
+    <string name="no_mayor_candidates">Нет подходящих кандидатов. Мэр должен жить в этом городе.</string>
+    <string name="can_be_mayor">Можно назначить мэром</string>
+    <string name="remove_from_office">Снять с должности</string>
+
     <string name="depose_ruler">Сместить</string>
     <string name="close">Закрыть</string>
 

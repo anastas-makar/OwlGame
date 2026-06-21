@@ -37,4 +37,35 @@ interface MapDao {
         mapId: String,
         type: MapType
     ): Int
+
+    @Query(
+        """
+    UPDATE maps
+    SET mayorAnimalId = :animalId
+    WHERE id = :mapId
+      AND type = 'TOWN'
+      AND EXISTS (
+          SELECT 1
+          FROM buildings
+          INNER JOIN animals ON animals.id = buildings.animalId
+          WHERE buildings.mapId = :mapId
+            AND buildings.animalId = :animalId
+            AND animals.status = 'PET'
+      )
+    """
+    )
+    suspend fun appointMayor(
+        mapId: String,
+        animalId: String
+    ): Int
+
+    @Query(
+        """
+    UPDATE maps
+    SET mayorAnimalId = NULL
+    WHERE id = :mapId
+      AND type = 'TOWN'
+    """
+    )
+    suspend fun removeMayor(mapId: String)
 }

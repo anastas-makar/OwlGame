@@ -302,4 +302,22 @@ class MapViewModel @Inject constructor(
             }
         }
     }
+
+    fun appointMayor(
+        mapId: String,
+        animalId: String
+    ) {
+        viewModelScope.launch(Dispatchers.IO) {
+            mapsRepository.appointMayor(
+                mapId = mapId,
+                animalId = animalId
+            )
+        }
+    }
+
+    fun removeMayor(mapId: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            mapsRepository.removeMayor(mapId)
+        }
+    }
 }
