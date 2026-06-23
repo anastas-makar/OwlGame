@@ -1,4 +1,10 @@
 <resources>
+    <string name="notification_channel_animals_name">Animal notifications</string>
+    <string name="notification_channel_animals_description">Notifications about animals looking for a home</string>
+
+    <string name="notification_animal_searching_title">%1$s is looking for a home</string>
+    <string name="notification_animal_searching_text">Tap to learn more</string>
+
     <string name="animal_searching_title">%1$s is looking for a home</string>
     <string name="animal_not_searching_title">%1$s is not looking for a home</string>
 

@@ -25,6 +25,8 @@ import java.time.Clock
 import java.time.LocalDate
 import java.time.LocalTime
 
+private const val ANIMAL_CHANNEL_ID = "animal_channel_id"
+
 suspend fun doAnimalBuildingsWork(
     applicationContext: Context,
     auth: AuthInterface
@@ -62,7 +64,7 @@ suspend fun doAnimalBuildingsWork(
         ),
         imagesRepository
     )()?.let { animal ->
-        Log.d("Животное ищет дом", "${animal.name} ${animal.kind}")
+        Log.d("Животное ищет дом", animal.initialDisplayName)
 
         val currentEpochDay = LocalDate.now().toEpochDay()
         val savedId = prefs.getAnimalId()
@@ -85,16 +87,20 @@ suspend fun doAnimalBuildingsWork(
                 prefs.setAnimalIdAndDay(animal.id, currentEpochDay)
 
                 showNotification(
-                    applicationContext,
-                    animal.id, "${animal.name} ${animal.kind}", animal.imagePath
+                    applicationContext = applicationContext,
+                    animalId = animal.id,
+                    animalDisplayName = animal.initialDisplayName,
+                    animalIconPath = animal.imagePath
                 )
             }
         } else {
             prefs.setAnimalIdAndDay(animal.id, currentEpochDay)
 
             showNotification(
-                applicationContext,
-                animal.id, "${animal.name} ${animal.kind}", animal.imagePath
+                applicationContext = applicationContext,
+                animalId = animal.id,
+                animalDisplayName = animal.initialDisplayName,
+                animalIconPath = animal.imagePath
             )
         }
 
@@ -111,12 +117,9 @@ suspend fun doAnimalBuildingsWork(
 private fun showNotification(
     applicationContext: Context,
     animalId: String,
-    animalName: String,
+    animalDisplayName: String,
     animalIconPath: String
 ) {
-
-    //не показывать в неурочное время
-
     val now = LocalTime.now()
     val start = LocalTime.of(9, 0)
     val end = LocalTime.of(21, 0)
@@ -126,12 +129,14 @@ private fun showNotification(
     val notificationManager =
         applicationContext.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
-    val channelId = "animal_channel_id"
     val channel = NotificationChannel(
-        channelId,
-        "Animal Notifications",
+        ANIMAL_CHANNEL_ID,
+        applicationContext.getString(R.string.notification_channel_animals_name),
         NotificationManager.IMPORTANCE_HIGH
-    )
+    ).apply {
+        description = applicationContext.getString(R.string.notification_channel_animals_description)
+    }
+
     notificationManager.createNotificationChannel(channel)
 
     val deepLinkUri = "owlgame://animal/$animalId".toUri()
@@ -141,17 +146,25 @@ private fun showNotification(
 
     val pendingIntent = PendingIntent.getActivity(
         applicationContext,
-        0,
+        animalId.hashCode(),
         intent,
         PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
     )
 
     val bitmap = BitmapFactory.decodeFile(animalIconPath)
-    val notification = NotificationCompat.Builder(applicationContext, channelId)
+
+    val notification = NotificationCompat.Builder(applicationContext, ANIMAL_CHANNEL_ID)
         .setSmallIcon(R.drawable.ic_owl)
         .setLargeIcon(bitmap)
-        .setContentTitle("$animalName ищет дом")
-        .setContentText("Нажми, чтобы узнать больше")
+        .setContentTitle(
+            applicationContext.getString(
+                R.string.notification_animal_searching_title,
+                animalDisplayName
+            )
+        )
+        .setContentText(
+            applicationContext.getString(R.string.notification_animal_searching_text)
+        )
         .setContentIntent(pendingIntent)
         .setAutoCancel(true)
         .build()

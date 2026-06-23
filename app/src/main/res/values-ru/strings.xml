@@ -1,4 +1,10 @@
 <resources>
+    <string name="notification_channel_animals_name">Уведомления о животных</string>
+    <string name="notification_channel_animals_description">Уведомления о животных, которые ищут дом</string>
+
+    <string name="notification_animal_searching_title">%1$s ищет дом</string>
+    <string name="notification_animal_searching_text">Нажмите, чтобы узнать больше</string>
+
     <string name="animal_searching_title">%1$s ищет дом</string>
     <string name="animal_not_searching_title">%1$s не ищет дом</string>
 
