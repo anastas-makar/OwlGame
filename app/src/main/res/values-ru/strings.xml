@@ -1,4 +1,7 @@
 <resources>
+    <string name="animal_searching_title">%1$s ищет дом</string>
+    <string name="animal_not_searching_title">%1$s не ищет дом</string>
+
     <string name="animal_named_display_name">%2$s %1$s</string>
 
     <string name="town_mayor">Мэр города</string>
