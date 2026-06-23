@@ -126,6 +126,7 @@ fun AnimalModel.toData(): Animal =
         id = id,
         kind = kind,
         name = name,
+        initialDisplayName = initialDisplayName,
         imagePath = imagePath,
         status = status.toData()
     )
