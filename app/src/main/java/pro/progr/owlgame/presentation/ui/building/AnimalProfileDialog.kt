@@ -89,7 +89,7 @@ fun AnimalProfileDialog(
                     color = Color.Gray
                 )
                 Text(
-                    text = animal.name,
+                    text = animal.displayName,
                     style = MaterialTheme.typography.h6
                 )
 

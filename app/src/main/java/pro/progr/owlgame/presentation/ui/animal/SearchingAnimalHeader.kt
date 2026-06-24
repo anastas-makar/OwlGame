@@ -51,7 +51,7 @@ fun SearchingAnimalHeader(
             Spacer(modifier = Modifier.height(12.dp))
 
             Text(
-                text = "${animal.name.replaceFirstChar { it.uppercase() }} ${animal.kind}",
+                text = animal.initialDisplayName,
                 style = MaterialTheme.typography.h6,
                 fontWeight = FontWeight.Bold,
                 textAlign = TextAlign.Center

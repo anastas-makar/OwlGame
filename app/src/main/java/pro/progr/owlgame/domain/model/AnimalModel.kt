@@ -8,4 +8,6 @@ data class AnimalModel(
     val imagePath: String,
     val status: AnimalStatus,
     val statusExpiresAt: Long? = null
-)
+) {
+    val displayName = name ?: initialDisplayName
+}

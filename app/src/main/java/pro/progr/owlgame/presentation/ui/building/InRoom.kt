@@ -86,7 +86,7 @@ fun InRoom(
         if (canOpenCraft) {
             CraftAvailableBanner(
                 animalKind = animal.kind,
-                animalName = animal.name,
+                animalName = animal.displayName,
                 onClick = {
                     onOpenCraft(animal.id)
                 }
