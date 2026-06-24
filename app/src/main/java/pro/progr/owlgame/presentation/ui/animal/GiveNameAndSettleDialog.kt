@@ -16,7 +16,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import pro.progr.owlgame.R
 import pro.progr.owlgame.domain.model.AnimalModel
 
 @Composable
@@ -29,7 +31,7 @@ fun GiveNameAndSettleDialog(
 ) {
     if (animal == null) return
 
-    var name by remember(animal.id) {
+    var name by remember(animal.id, animal.name) {
         mutableStateOf(animal.nameForEditing())
     }
 
@@ -38,18 +40,20 @@ fun GiveNameAndSettleDialog(
             if (!isBusy) onDismiss()
         },
         title = {
-            Text("Поселить в дом")
+            Text(stringResource(R.string.give_name_dialog_title))
         },
         text = {
             Column {
-                Text("Перед заселением дайте животному имя.")
+                Text(stringResource(R.string.give_name_dialog_description))
 
                 Spacer(modifier = Modifier.height(12.dp))
 
                 OutlinedTextField(
                     value = name,
                     onValueChange = { name = it },
-                    label = { Text("Имя") },
+                    label = {
+                        Text(stringResource(R.string.give_name_dialog_name_label))
+                    },
                     singleLine = true,
                     enabled = !isBusy,
                     modifier = Modifier.fillMaxWidth()
@@ -58,7 +62,10 @@ fun GiveNameAndSettleDialog(
                 Spacer(modifier = Modifier.height(8.dp))
 
                 Text(
-                    text = "Дом: $buildingName",
+                    text = stringResource(
+                        R.string.give_name_dialog_building,
+                        buildingName
+                    ),
                     style = MaterialTheme.typography.body2
                 )
             }
@@ -66,11 +73,11 @@ fun GiveNameAndSettleDialog(
         confirmButton = {
             Button(
                 onClick = {
-                    onConfirm(name)
+                    onConfirm(name.trim())
                 },
                 enabled = !isBusy && name.isNotBlank()
             ) {
-                Text("Поселить")
+                Text(stringResource(R.string.give_name_dialog_confirm))
             }
         },
         dismissButton = {
@@ -78,14 +85,12 @@ fun GiveNameAndSettleDialog(
                 onClick = onDismiss,
                 enabled = !isBusy
             ) {
-                Text("Отмена")
+                Text(stringResource(R.string.cancel))
             }
         }
     )
 }
 
 private fun AnimalModel.nameForEditing(): String {
-    return name
-        .takeUnless { it.trim().startsWith("Одинок", ignoreCase = true) }
-        .orEmpty()
+    return name.orEmpty()
 }

@@ -188,6 +188,7 @@ fun Animal.toDomain(): AnimalModel =
         kind = kind,
         name = name,
         imagePath = imagePath,
+        initialDisplayName = initialDisplayName,
         status = status.toDomain()
     )
 

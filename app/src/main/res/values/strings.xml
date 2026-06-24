@@ -1,4 +1,18 @@
 <resources>
+    <string name="animal_gone_message">%1$s will not live here</string>
+    <string name="go_to_main">Go to main screen</string>
+
+    <string name="give_name_dialog_title">Move animal in</string>
+    <string name="give_name_dialog_description">Give the animal a name before it moves in.</string>
+    <string name="give_name_dialog_name_label">Name</string>
+    <string name="give_name_dialog_building">Home: %1$s</string>
+    <string name="give_name_dialog_confirm">Move in</string>
+
+    <string name="widget_menu_animal_searching_home">%1$s is looking for a home</string>
+    <string name="widget_menu_visit_lands">Visit your lands</string>
+    <string name="widget_menu_open_pouch">Open pouch</string>
+    <string name="widget_menu_open_inventory">Open inventory</string>
+
     <string name="notification_channel_animals_name">Animal notifications</string>
     <string name="notification_channel_animals_description">Notifications about animals looking for a home</string>
 
