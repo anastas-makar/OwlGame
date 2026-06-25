@@ -1,4 +1,6 @@
 <resources>
+    <string name="wandering_merchant_available">ришёл бродячий торговец</string>
+
     <string name="animal_gone_message">%1$s не будет здесь жить</string>
     <string name="go_to_main">На главную</string>
 

@@ -40,6 +40,7 @@ class WidgetViewModel(
             get() {
                 return ArrayList<OwlMenuModel>()
                     .withAnimalSearching()
+                    .withMerchant()
                     .withPouch()
                     .withMaps()
                     .withInventory()
@@ -105,6 +106,18 @@ class WidgetViewModel(
                     text = stringProvider.getString(R.string.widget_menu_open_inventory),
                     navigateTo = "owl_navigation/inventory",
                     imageUri = widgetRepository.getUri(R.drawable.inventory)
+                )
+            )
+
+            return this
+        }
+
+        private fun ArrayList<OwlMenuModel>.withMerchant(): ArrayList<OwlMenuModel> {
+            add(
+                OwlMenuModel(
+                    text = stringProvider.getString(R.string.wandering_merchant_available),
+                    navigateTo = "owl_navigation/inventory",
+                    imageUri = widgetRepository.getUri(R.drawable.merchant)
                 )
             )
 
