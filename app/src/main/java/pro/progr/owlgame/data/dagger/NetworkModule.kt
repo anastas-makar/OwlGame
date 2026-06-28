@@ -5,6 +5,7 @@ import dagger.Provides
 import pro.progr.authapi.AuthInterface
 import pro.progr.owlgame.BuildConfig
 import pro.progr.owlgame.data.web.AnimalApiService
+import pro.progr.owlgame.data.web.LootApiService
 import pro.progr.owlgame.data.web.MapApiService
 import pro.progr.owlgame.data.web.RetrofitProvider
 import retrofit2.Retrofit
@@ -35,6 +36,12 @@ class NetworkModule {
     @Singleton
     fun provideMapApiService(retrofit: Retrofit): MapApiService {
         return retrofit.create(MapApiService::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideLootApiService(retrofit: Retrofit): LootApiService {
+        return retrofit.create(LootApiService::class.java)
     }
 
     @Provides

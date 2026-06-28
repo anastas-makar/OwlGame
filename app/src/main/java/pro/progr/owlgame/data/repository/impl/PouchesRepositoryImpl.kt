@@ -3,7 +3,7 @@ package pro.progr.owlgame.data.repository.impl
 import android.util.Log
 import pro.progr.owlgame.data.mapper.toDomain
 import pro.progr.owlgame.data.preferences.OwlPreferences
-import pro.progr.owlgame.data.web.MapApiService
+import pro.progr.owlgame.data.web.LootApiService
 import pro.progr.owlgame.data.web.Pouch
 import pro.progr.owlgame.domain.model.InPouchModel
 import pro.progr.owlgame.domain.model.PouchModel
@@ -13,7 +13,7 @@ import java.time.LocalDate
 import javax.inject.Inject
 
 class PouchesRepositoryImpl
-    @Inject constructor(private val apiService: MapApiService,
+    @Inject constructor(private val apiService: LootApiService,
                                                 private val prefs: OwlPreferences,
                                                 private val clock: Clock)
     : PouchesRepository {
