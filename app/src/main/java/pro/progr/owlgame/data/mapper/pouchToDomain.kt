@@ -1,22 +1,22 @@
 package pro.progr.owlgame.data.mapper
 
-import pro.progr.owlgame.data.web.inpouch.BuildingInPouch
-import pro.progr.owlgame.data.web.inpouch.DiamondsInPouch
-import pro.progr.owlgame.data.web.inpouch.EnemyInPouch
-import pro.progr.owlgame.data.web.inpouch.ExpeditionInPouch
-import pro.progr.owlgame.data.web.inpouch.ExpeditionMedalInPouch
-import pro.progr.owlgame.data.web.inpouch.FurnitureInPouch
-import pro.progr.owlgame.data.web.inpouch.GardenInPouch
-import pro.progr.owlgame.data.web.inpouch.GardenItemInPouch
-import pro.progr.owlgame.data.web.inpouch.InPouch
-import pro.progr.owlgame.data.web.inpouch.IngredientInPouch
-import pro.progr.owlgame.data.web.inpouch.LocationInPouch
-import pro.progr.owlgame.data.web.inpouch.LocationSceneInPouch
-import pro.progr.owlgame.data.web.inpouch.MapInPouch
-import pro.progr.owlgame.data.web.inpouch.PlantInPouch
-import pro.progr.owlgame.data.web.inpouch.RecipeInPouch
-import pro.progr.owlgame.data.web.inpouch.RoomInPouch
-import pro.progr.owlgame.data.web.inpouch.SupplyInPouch
+import pro.progr.owlgame.data.web.pouchitems.BuildingInPouch
+import pro.progr.owlgame.data.web.pouchitems.DiamondsInPouch
+import pro.progr.owlgame.data.web.pouchitems.EnemyInPouch
+import pro.progr.owlgame.data.web.pouchitems.ExpeditionInPouch
+import pro.progr.owlgame.data.web.pouchitems.ExpeditionMedalInPouch
+import pro.progr.owlgame.data.web.pouchitems.FurnitureInPouch
+import pro.progr.owlgame.data.web.pouchitems.GardenInPouch
+import pro.progr.owlgame.data.web.pouchitems.GardenItemInPouch
+import pro.progr.owlgame.data.web.pouchitems.PouchItemsDto
+import pro.progr.owlgame.data.web.pouchitems.IngredientInPouch
+import pro.progr.owlgame.data.web.pouchitems.LocationInPouch
+import pro.progr.owlgame.data.web.pouchitems.LocationSceneInPouch
+import pro.progr.owlgame.data.web.pouchitems.MapInPouch
+import pro.progr.owlgame.data.web.pouchitems.PlantInPouch
+import pro.progr.owlgame.data.web.pouchitems.RecipeInPouch
+import pro.progr.owlgame.data.web.pouchitems.RoomInPouch
+import pro.progr.owlgame.data.web.pouchitems.SupplyInPouch
 import pro.progr.owlgame.domain.model.BuildingWithDataModel
 import pro.progr.owlgame.domain.model.DiamondsModel
 import pro.progr.owlgame.domain.model.EnemyModel
@@ -37,7 +37,7 @@ import pro.progr.owlgame.domain.model.RecipeWithSuppliesModel
 import pro.progr.owlgame.domain.model.RoomModel
 import pro.progr.owlgame.domain.model.SupplyModel
 
-fun InPouch.toDomain(): InPouchModel =
+fun PouchItemsDto.toDomain(): InPouchModel =
     InPouchModel(
         buildings = buildings.orEmpty().map { it.toDomain() },
         maps = maps.orEmpty().map { it.toDomain() },

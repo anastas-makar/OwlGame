@@ -4,9 +4,9 @@ import pro.progr.owlgame.data.db.entity.Enemy
 import pro.progr.owlgame.data.db.entity.Expedition
 import pro.progr.owlgame.data.db.entity.ExpeditionMedal
 import pro.progr.owlgame.data.model.ExpeditionStatus
-import pro.progr.owlgame.data.web.inpouch.EnemyInPouch
-import pro.progr.owlgame.data.web.inpouch.ExpeditionInPouch
-import pro.progr.owlgame.data.web.inpouch.ExpeditionMedalInPouch
+import pro.progr.owlgame.data.web.pouchitems.EnemyInPouch
+import pro.progr.owlgame.data.web.pouchitems.ExpeditionInPouch
+import pro.progr.owlgame.data.web.pouchitems.ExpeditionMedalInPouch
 
 fun ExpeditionInPouch.toEntity(mapId: String): Expedition =
     Expedition(

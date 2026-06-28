@@ -1,6 +1,6 @@
-package pro.progr.owlgame.data.web.inpouch
+package pro.progr.owlgame.data.web.pouchitems
 
-data class InPouch(
+data class PouchItemsDto(
     val buildings: List<BuildingInPouch>? = null,
     val maps: List<MapInPouch>? = null,
     val diamonds: DiamondsInPouch? = null,

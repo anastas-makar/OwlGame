@@ -1,4 +1,4 @@
-package pro.progr.owlgame.data.web.inpouch
+package pro.progr.owlgame.data.web.pouchitems
 
 data class PlantInPouch (
     val id : String,
