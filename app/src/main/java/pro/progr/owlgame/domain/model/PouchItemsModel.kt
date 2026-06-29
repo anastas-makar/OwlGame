@@ -1,6 +1,6 @@
 package pro.progr.owlgame.domain.model
 
-data class InPouchModel(
+data class PouchItemsModel(
     val buildings : List<BuildingWithDataModel> = emptyList(),
     val maps : List<MapWithDataModel> = emptyList(),
     val diamonds : DiamondsModel? = null,

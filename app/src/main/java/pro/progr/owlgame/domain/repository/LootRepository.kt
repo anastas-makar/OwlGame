@@ -1,7 +1,7 @@
 package pro.progr.owlgame.domain.repository
 
-import pro.progr.owlgame.domain.model.InPouchModel
+import pro.progr.owlgame.domain.model.PouchItemsModel
 
 interface LootRepository {
-    suspend fun claimExpeditionLoot(expeditionId: String) : Result<InPouchModel>
+    suspend fun claimExpeditionLoot(expeditionId: String) : Result<PouchItemsModel>
 }

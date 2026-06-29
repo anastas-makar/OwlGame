@@ -33,7 +33,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import coil.compose.AsyncImage
-import pro.progr.owlgame.domain.model.InPouchModel
+import pro.progr.owlgame.domain.model.PouchItemsModel
 import pro.progr.owlgame.presentation.mapper.toLootItems
 import pro.progr.owlgame.presentation.ui.model.LootItemUi
 import androidx.compose.ui.platform.LocalConfiguration
@@ -42,7 +42,7 @@ import pro.progr.owlgame.R
 
 @Composable
 fun LootReceivedDialog(
-    loot: InPouchModel,
+    loot: PouchItemsModel,
     onDismiss: () -> Unit
 ) {
     val resources = LocalContext.current.resources

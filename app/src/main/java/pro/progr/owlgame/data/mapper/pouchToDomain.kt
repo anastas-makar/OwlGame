@@ -27,7 +27,7 @@ import pro.progr.owlgame.domain.model.ExpeditionWithDataModel
 import pro.progr.owlgame.domain.model.FurnitureModel
 import pro.progr.owlgame.domain.model.GardenItemWithSupplyModel
 import pro.progr.owlgame.domain.model.GardenModel
-import pro.progr.owlgame.domain.model.InPouchModel
+import pro.progr.owlgame.domain.model.PouchItemsModel
 import pro.progr.owlgame.domain.model.IngredientWithSupplyModel
 import pro.progr.owlgame.domain.model.LocationSceneModel
 import pro.progr.owlgame.domain.model.LocationWithScenesModel
@@ -37,8 +37,8 @@ import pro.progr.owlgame.domain.model.RecipeWithSuppliesModel
 import pro.progr.owlgame.domain.model.RoomModel
 import pro.progr.owlgame.domain.model.SupplyModel
 
-fun PouchItemsDto.toDomain(): InPouchModel =
-    InPouchModel(
+fun PouchItemsDto.toDomain(): PouchItemsModel =
+    PouchItemsModel(
         buildings = buildings.orEmpty().map { it.toDomain() },
         maps = maps.orEmpty().map { it.toDomain() },
         diamonds = diamonds?.toDomain(),

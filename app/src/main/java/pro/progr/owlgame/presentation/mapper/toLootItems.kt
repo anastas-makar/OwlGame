@@ -2,13 +2,13 @@ package pro.progr.owlgame.presentation.mapper
 
 import pro.progr.owlgame.R
 import pro.progr.owlgame.domain.model.BuildingType
-import pro.progr.owlgame.domain.model.InPouchModel
+import pro.progr.owlgame.domain.model.PouchItemsModel
 import pro.progr.owlgame.domain.model.MapType
 import pro.progr.owlgame.presentation.ui.model.LootHintType
 import pro.progr.owlgame.presentation.ui.model.LootItemUi
 import android.content.res.Resources
 
-fun InPouchModel.toLootItems(resources: Resources): List<LootItemUi> {
+fun PouchItemsModel.toLootItems(resources: Resources): List<LootItemUi> {
     return buildList {
         diamonds?.let {
             add(

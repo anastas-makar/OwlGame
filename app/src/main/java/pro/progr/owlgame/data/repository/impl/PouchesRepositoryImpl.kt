@@ -5,7 +5,7 @@ import pro.progr.owlgame.data.mapper.toDomain
 import pro.progr.owlgame.data.preferences.OwlPreferences
 import pro.progr.owlgame.data.web.LootApiService
 import pro.progr.owlgame.data.web.Pouch
-import pro.progr.owlgame.domain.model.InPouchModel
+import pro.progr.owlgame.domain.model.PouchItemsModel
 import pro.progr.owlgame.domain.model.PouchModel
 import pro.progr.owlgame.domain.repository.PouchesRepository
 import java.time.Clock
@@ -35,12 +35,12 @@ class PouchesRepositoryImpl
         }
     }
 
-    override suspend fun getInPouch(pouchId: String): Result<InPouchModel> {
+    override suspend fun getInPouch(pouchId: String): Result<PouchItemsModel> {
         return try {
             val response = apiService.getInPouch(pouchId)
             if (response.isSuccessful) {
                 prefs.setLastPouchOpenDay(LocalDate.now(clock).toEpochDay())
-                val inPouch = response.body()?.toDomain() ?: InPouchModel()
+                val inPouch = response.body()?.toDomain() ?: PouchItemsModel()
                 Result.success(inPouch)
             } else {
                 Result.failure(Exception("Failed to load inPouch: ${response.errorBody()?.string()}"))

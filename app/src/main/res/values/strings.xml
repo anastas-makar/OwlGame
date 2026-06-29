@@ -1,4 +1,38 @@
 <resources>
+    <string name="merchant_shop_default_title">Wandering merchant</string>
+    <string name="merchant_shop_default_description">The merchant has brought useful things. You can add any item to your inventory.</string>
+    <string name="merchant_shop_merchant_content_description">Merchant</string>
+    <string name="merchant_shop_back">Back</string>
+
+    <string name="merchant_shop_price">Merchant price: %1$d diamonds</string>
+    <string name="merchant_shop_price_hint">The price increases after each purchase.</string>
+    <string name="merchant_shop_diamonds">Your diamonds: %1$d</string>
+    <string name="merchant_shop_not_enough_diamonds">Not enough diamonds</string>
+    <string name="merchant_shop_not_enough_short">Not enough</string>
+
+    <string name="merchant_shop_buy_for">Buy for %1$d</string>
+    <string name="merchant_shop_buy">Buy</string>
+    <string name="merchant_shop_cancel">Cancel</string>
+    <string name="merchant_shop_retry">Retry</string>
+
+    <string name="merchant_shop_confirm_title">Buy item?</string>
+    <string name="merchant_shop_confirm_message">Add “%1$s” to your inventory for %2$d diamonds?</string>
+
+    <string name="merchant_shop_empty">The merchant has nothing useful right now.</string>
+
+    <string name="merchant_shop_section_buildings">Houses and castles</string>
+    <string name="merchant_shop_section_maps">Maps</string>
+    <string name="merchant_shop_section_locations">Landmarks</string>
+    <string name="merchant_shop_section_furniture">Furniture</string>
+    <string name="merchant_shop_section_plants">Plants</string>
+    <string name="merchant_shop_section_garden_items">Garden and pond</string>
+    <string name="merchant_shop_section_recipes">Recipes</string>
+
+    <string name="merchant_shop_building_cost">Construction cost: %1$d</string>
+    <string name="merchant_shop_furniture_install_cost">Installation cost: %1$d</string>
+    <string name="merchant_shop_seed_amount">Seeds: %1$d</string>
+    <string name="merchant_shop_recipe_unlock">Unlocks a recipe</string>
+
     <string name="wandering_merchant_available">A wandering merchant has arrived</string>
 
     <string name="animal_gone_message">%1$s will not live here</string>

@@ -6,10 +6,10 @@ import androidx.compose.ui.platform.LocalContext
 import pro.progr.owlgame.R
 import pro.progr.owlgame.domain.model.BuildingType
 import pro.progr.owlgame.domain.model.GardenType
-import pro.progr.owlgame.domain.model.InPouchModel
+import pro.progr.owlgame.domain.model.PouchItemsModel
 
 class InPouchDescription(
-    private val inPouch: InPouchModel
+    private val inPouch: PouchItemsModel
 ) {
     @Composable
     fun compile(): String {

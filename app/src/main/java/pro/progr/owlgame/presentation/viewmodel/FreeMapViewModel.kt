@@ -15,7 +15,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import pro.progr.diamondapi.PurchaseInterface
-import pro.progr.owlgame.domain.model.InPouchModel
+import pro.progr.owlgame.domain.model.PouchItemsModel
 import pro.progr.owlgame.domain.repository.AnimalsRepository
 import pro.progr.owlgame.domain.repository.ExpeditionsRepository
 import pro.progr.owlgame.domain.repository.LootRepository
@@ -33,7 +33,7 @@ class FreeMapViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val isClaimingLoot = MutableStateFlow(false)
-    private val claimedLoot = MutableStateFlow<InPouchModel?>(null)
+    private val claimedLoot = MutableStateFlow<PouchItemsModel?>(null)
     private val errorMessage = MutableStateFlow<String?>(null)
 
     @OptIn(ExperimentalCoroutinesApi::class)

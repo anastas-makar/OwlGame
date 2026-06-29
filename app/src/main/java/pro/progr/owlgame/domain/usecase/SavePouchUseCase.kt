@@ -3,7 +3,7 @@ package pro.progr.owlgame.domain.usecase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import pro.progr.diamondapi.PurchaseInterface
-import pro.progr.owlgame.domain.model.InPouchModel
+import pro.progr.owlgame.domain.model.PouchItemsModel
 import javax.inject.Inject
 
 class SavePouchUseCase @Inject constructor(
@@ -15,8 +15,8 @@ class SavePouchUseCase @Inject constructor(
     private val saveRecipesUseCase: SaveRecipesUseCase,
     private val saveLocationsUseCase: SaveLocationsUseCase) {
 
-    suspend operator fun invoke(webPouch: InPouchModel,
-                                diamondDao: PurchaseInterface) : InPouchModel {
+    suspend operator fun invoke(webPouch: PouchItemsModel,
+                                diamondDao: PurchaseInterface) : PouchItemsModel {
         val mapsWithLocalUrls = withContext(Dispatchers.IO) {
             if (webPouch.maps.isNotEmpty()) {
                 saveMapsUseCase(webPouch.maps)
@@ -65,7 +65,7 @@ class SavePouchUseCase @Inject constructor(
             } else emptyList()
         }
 
-        return InPouchModel(
+        return PouchItemsModel(
             buildings = buildingsWithLocalUrls,
             maps = mapsWithLocalUrls,
             plants = plantsWithLocalUrls,

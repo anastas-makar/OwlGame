@@ -1,4 +1,38 @@
 <resources>
+    <string name="merchant_shop_default_title">Бродячий торговец</string>
+    <string name="merchant_shop_default_description">Торговец принёс полезные вещи. Любой предмет можно добавить себе в инвентарь.</string>
+    <string name="merchant_shop_merchant_content_description">Торговец</string>
+    <string name="merchant_shop_back">Назад</string>
+
+    <string name="merchant_shop_price">Цена у торговца: %1$d бриллиантов</string>
+    <string name="merchant_shop_price_hint">После каждой покупки торговец повышает цену.</string>
+    <string name="merchant_shop_diamonds">Ваши бриллианты: %1$d</string>
+    <string name="merchant_shop_not_enough_diamonds">Не хватает бриллиантов</string>
+    <string name="merchant_shop_not_enough_short">Не хватает</string>
+
+    <string name="merchant_shop_buy_for">Купить за %1$d</string>
+    <string name="merchant_shop_buy">Купить</string>
+    <string name="merchant_shop_cancel">Отмена</string>
+    <string name="merchant_shop_retry">Повторить</string>
+
+    <string name="merchant_shop_confirm_title">Купить предмет?</string>
+    <string name="merchant_shop_confirm_message">Добавить «%1$s» в инвентарь за %2$d бриллиантов?</string>
+
+    <string name="merchant_shop_empty">У торговца сейчас нет ничего полезного.</string>
+
+    <string name="merchant_shop_section_buildings">Дома и замки</string>
+    <string name="merchant_shop_section_maps">Карты</string>
+    <string name="merchant_shop_section_locations">Достопримечательности</string>
+    <string name="merchant_shop_section_furniture">Мебель</string>
+    <string name="merchant_shop_section_plants">Растения</string>
+    <string name="merchant_shop_section_garden_items">Сад и пруд</string>
+    <string name="merchant_shop_section_recipes">Рецепты</string>
+
+    <string name="merchant_shop_building_cost">Стоимость постройки: %1$d</string>
+    <string name="merchant_shop_furniture_install_cost">Стоимость установки: %1$d</string>
+    <string name="merchant_shop_seed_amount">Семян: %1$d</string>
+    <string name="merchant_shop_recipe_unlock">Открывает рецепт</string>
+
     <string name="wandering_merchant_available">Пришёл бродячий торговец</string>
 
     <string name="animal_gone_message">%1$s не будет здесь жить</string>
