@@ -116,7 +116,7 @@ class WidgetViewModel(
             add(
                 OwlMenuModel(
                     text = stringProvider.getString(R.string.wandering_merchant_available),
-                    navigateTo = "owl_navigation/inventory",
+                    navigateTo = "owl_navigation/merchant",
                     imageUri = widgetRepository.getUri(R.drawable.merchant)
                 )
             )
