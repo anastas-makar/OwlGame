@@ -4,6 +4,7 @@ import android.app.Application
 import dagger.BindsInstance
 import dagger.Component
 import pro.progr.authapi.AuthInterface
+import pro.progr.diamondapi.PurchaseInterface
 import pro.progr.owlgame.data.dagger.DatabaseModule
 import pro.progr.owlgame.data.dagger.NetworkModule
 import pro.progr.owlgame.data.dagger.RepositoryBindingsModule
@@ -28,13 +29,15 @@ import pro.progr.owlgame.presentation.viewmodel.dagger.WidgetViewModelFactory
 import javax.inject.Singleton
 
 @Singleton
-@Component(modules = [
-    NetworkModule::class,
-    OwlGameModule::class,
-    DatabaseModule::class,
-    RepositoryBindingsModule::class,
-    TimeModule::class
-])
+@Component(
+    modules = [
+        NetworkModule::class,
+        OwlGameModule::class,
+        DatabaseModule::class,
+        RepositoryBindingsModule::class,
+        TimeModule::class
+    ]
+)
 interface OwlGameComponent {
 
     fun pouchViewModelFactory(): PouchViewModelFactory
@@ -63,11 +66,11 @@ interface OwlGameComponent {
 
     fun widgetViewModelFactory(): WidgetViewModelFactory
 
-    fun mapsViewModelFactory() : MapsViewModelFactory
+    fun mapsViewModelFactory(): MapsViewModelFactory
 
-    fun occupiedMapViewModelFactory() : OccupiedMapViewModelFactory
+    fun occupiedMapViewModelFactory(): OccupiedMapViewModelFactory
 
-    fun buildingFacadeViewModelFactory() : BuildingFacadeViewModelFactory
+    fun buildingFacadeViewModelFactory(): BuildingFacadeViewModelFactory
 
     fun inventoryViewModelFactory(): InventoryViewModelFactory
 
@@ -80,6 +83,9 @@ interface OwlGameComponent {
 
         @BindsInstance
         fun auth(auth: AuthInterface): Builder
+
+        @BindsInstance
+        fun purchaseInterface(purchaseInterface: PurchaseInterface): Builder
 
         fun appModule(owlGameModule: OwlGameModule): Builder
 
