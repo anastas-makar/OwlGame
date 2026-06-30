@@ -1,6 +1,6 @@
 package pro.progr.owlgame.data.web
 
-import pro.progr.owlgame.data.web.merchant.MerchantShopDto
+import pro.progr.owlgame.data.web.merchant.MerchantShopApiModel
 import pro.progr.owlgame.data.web.pouchitems.PouchItemsDto
 import retrofit2.Response
 import retrofit2.http.GET
@@ -21,5 +21,5 @@ interface LootApiService {
     ): Response<PouchItemsDto>
 
     @GET("merchantShop")
-    suspend fun getMerchantShop(): Response<MerchantShopDto>
+    suspend fun getMerchantShop(): Response<MerchantShopApiModel>
 }

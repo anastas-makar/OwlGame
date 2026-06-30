@@ -21,6 +21,7 @@ import pro.progr.owlgame.presentation.viewmodel.dagger.KitchenGardenViewModelFac
 import pro.progr.owlgame.presentation.viewmodel.dagger.MapViewModelFactory
 import pro.progr.owlgame.presentation.viewmodel.dagger.PouchViewModelFactory
 import pro.progr.owlgame.presentation.viewmodel.dagger.MapsViewModelFactory
+import pro.progr.owlgame.presentation.viewmodel.dagger.MerchantShopViewModelFactory
 import pro.progr.owlgame.presentation.viewmodel.dagger.OccupiedMapViewModelFactory
 import pro.progr.owlgame.presentation.viewmodel.dagger.RoomViewModelFactory
 import pro.progr.owlgame.presentation.viewmodel.dagger.WidgetViewModelFactory
@@ -69,6 +70,8 @@ interface OwlGameComponent {
     fun buildingFacadeViewModelFactory() : BuildingFacadeViewModelFactory
 
     fun inventoryViewModelFactory(): InventoryViewModelFactory
+
+    fun merchantShopViewModelFactory(): MerchantShopViewModelFactory
 
     @Component.Builder
     interface Builder {

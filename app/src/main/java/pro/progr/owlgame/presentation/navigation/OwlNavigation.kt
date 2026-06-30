@@ -17,6 +17,7 @@ import pro.progr.owlgame.presentation.ui.pouch.PouchesScreen
 import pro.progr.owlgame.presentation.ui.craft.CraftScreen
 import pro.progr.owlgame.presentation.ui.fab.FabViewModel
 import pro.progr.owlgame.presentation.ui.inventory.InventoryScreen
+import pro.progr.owlgame.presentation.ui.route.MerchantShopRoute
 import pro.progr.owlgame.presentation.viewmodel.AnimalViewModel
 import pro.progr.owlgame.presentation.viewmodel.BuildingViewModel
 import pro.progr.owlgame.presentation.viewmodel.CraftViewModel
@@ -32,6 +33,7 @@ import pro.progr.owlgame.presentation.viewmodel.dagger.DaggerFabViewModel
 import pro.progr.owlgame.presentation.viewmodel.dagger.DaggerInventoryViewModel
 import pro.progr.owlgame.presentation.viewmodel.dagger.DaggerMapViewModel
 import pro.progr.owlgame.presentation.viewmodel.dagger.DaggerMapsViewModel
+import pro.progr.owlgame.presentation.viewmodel.dagger.DaggerMerchantShopViewModel
 import pro.progr.owlgame.presentation.viewmodel.dagger.DaggerPouchesViewModel
 
 @Composable
@@ -64,6 +66,12 @@ fun OwlNavigation(startDestination : String = "towns",
                 pouchesViewModel,
                 inPouchViewModel,
                 diamondDao
+            )
+        }
+        composable("merchant") {
+            MerchantShopRoute (
+                viewModel = DaggerMerchantShopViewModel(component),
+                onBack = backToMain
             )
         }
         composable(
