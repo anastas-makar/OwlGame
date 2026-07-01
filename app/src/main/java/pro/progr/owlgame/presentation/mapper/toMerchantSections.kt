@@ -8,7 +8,8 @@ import pro.progr.owlgame.presentation.ui.model.merchant.MerchantShopSectionType
 import pro.progr.owlgame.presentation.ui.model.merchant.MerchantShopSectionUi
 
 fun PouchItemsModel.toMerchantSections(
-    knownRecipeIds: Set<String> = emptySet()
+    knownRecipeIds: Set<String> = emptySet(),
+    baseUrl: String
 ): List<MerchantShopSectionUi> {
     return buildList {
         if (buildings.isNotEmpty()) {
@@ -20,7 +21,7 @@ fun PouchItemsModel.toMerchantSections(
                             key = MerchantItemKey.Building(building.id),
                             title = building.name,
                             description = null,
-                            imageUrl = building.imageUrl,
+                            imageUrl = baseUrl + building.imageUrl,
                             extraInfo = MerchantItemExtraInfo.BuildingCost(building.price)
                         )
                     }
@@ -37,7 +38,7 @@ fun PouchItemsModel.toMerchantSections(
                             key = MerchantItemKey.Map(map.id),
                             title = map.name,
                             description = null,
-                            imageUrl = map.imageUrl
+                            imageUrl = baseUrl + map.imageUrl
                         )
                     }
                 )
@@ -53,7 +54,7 @@ fun PouchItemsModel.toMerchantSections(
                             key = MerchantItemKey.Location(location.id),
                             title = location.name,
                             description = location.description,
-                            imageUrl = location.imageUrl
+                            imageUrl = baseUrl + location.imageUrl
                         )
                     }
                 )
@@ -69,7 +70,7 @@ fun PouchItemsModel.toMerchantSections(
                             key = MerchantItemKey.Furniture(furnitureItem.id),
                             title = furnitureItem.name,
                             description = null,
-                            imageUrl = furnitureItem.imageUrl,
+                            imageUrl = baseUrl + furnitureItem.imageUrl,
                             extraInfo = MerchantItemExtraInfo.FurnitureInstallCost(
                                 furnitureItem.price
                             )
@@ -88,7 +89,7 @@ fun PouchItemsModel.toMerchantSections(
                             key = MerchantItemKey.Plant(plant.id),
                             title = plant.name,
                             description = plant.description,
-                            imageUrl = plant.imageUrl,
+                            imageUrl = baseUrl + plant.imageUrl,
                             extraInfo = MerchantItemExtraInfo.SeedAmount(plant.seedAmount)
                         )
                     }
@@ -105,7 +106,7 @@ fun PouchItemsModel.toMerchantSections(
                             key = MerchantItemKey.GardenItem(gardenItem.id),
                             title = gardenItem.name,
                             description = gardenItem.description,
-                            imageUrl = gardenItem.imageUrl
+                            imageUrl = baseUrl + gardenItem.imageUrl
                         )
                     }
                 )
@@ -123,7 +124,7 @@ fun PouchItemsModel.toMerchantSections(
                             key = MerchantItemKey.Recipe(recipe.recipeId),
                             title = recipe.resultSupply.name,
                             description = recipe.description,
-                            imageUrl = recipe.resultSupply.imageUrl,
+                            imageUrl = baseUrl + recipe.resultSupply.imageUrl,
                             extraInfo = MerchantItemExtraInfo.RecipeUnlock
                         )
                     }
