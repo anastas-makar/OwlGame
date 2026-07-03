@@ -113,13 +113,16 @@ class WidgetViewModel(
         }
 
         private fun ArrayList<OwlMenuModel>.withMerchant(): ArrayList<OwlMenuModel> {
-            add(
-                OwlMenuModel(
-                    text = stringProvider.getString(R.string.wandering_merchant_available),
-                    navigateTo = "owl_navigation/merchant",
-                    imageUri = widgetRepository.getUri(R.drawable.merchant)
+            if (widgetRepository.isMerchantAvailable()) {
+                add(
+                    OwlMenuModel(
+                        text = stringProvider.getString(R.string.wandering_merchant_available),
+                        navigateTo = "owl_navigation/merchant",
+                        imageUri = widgetRepository.getUri(R.drawable.merchant)
+                    )
                 )
-            )
+
+            }
 
             return this
         }

@@ -14,6 +14,10 @@ import java.time.Clock
 import java.time.LocalDate
 import javax.inject.Inject
 
+private const val NO_DAY = -1L
+private const val MAX_FUTURE_DAYS = 4L
+private const val MISSED_DAYS_LIMIT = 2L
+
 class WidgetRepositoryImpl @Inject constructor(
     private val preferences: OwlPreferences,
     private val animalDao: AnimalDao,
@@ -49,5 +53,61 @@ class WidgetRepositoryImpl @Inject constructor(
 
     override fun getUri(path : String) : Uri {
         return UriWrapper(path).uri
+    }
+
+    override fun isMerchantAvailable(): Boolean {
+        val today = LocalDate.now(clock).toEpochDay()
+        val storedDay = preferences.getNextMerchantDay()
+
+        val nextMerchantDay = normalizeMerchantDay(
+            storedDay = storedDay,
+            today = today
+        )
+
+        return nextMerchantDay == today
+    }
+
+    override fun markMerchantOpened() {
+        val today = LocalDate.now(clock).toEpochDay()
+        preferences.setNextMerchantDay(today + merchantDelayDays())
+    }
+
+    private fun normalizeMerchantDay(
+        storedDay: Long,
+        today: Long
+    ): Long {
+        if (storedDay == NO_DAY) {
+            preferences.setNextMerchantDay(today)
+            return today
+        }
+
+        if (storedDay > today + MAX_FUTURE_DAYS) {
+            preferences.setNextMerchantDay(today)
+            return today
+        }
+
+        if (storedDay < today - MISSED_DAYS_LIMIT) {
+            preferences.setNextMerchantDay(today)
+            return today
+        }
+
+        if (storedDay == today) {
+            return today
+        }
+
+        if (storedDay > today) {
+            return storedDay
+        }
+
+        // Вчера или позавчера: торговец был пропущен,
+        // двигаем следующую дату от дня, когда он был доступен.
+        val newDay = storedDay + merchantDelayDays()
+        preferences.setNextMerchantDay(newDay)
+
+        return newDay
+    }
+
+    private fun merchantDelayDays(): Long {
+        return if (kotlin.random.Random.nextBoolean()) 2L else 3L
     }
 }

@@ -15,4 +15,8 @@ interface WidgetRepository {
     fun clearAnimalDayAndId()
 
     fun getUri(path : String) : Uri
+
+    fun isMerchantAvailable() : Boolean
+
+    fun markMerchantOpened()
 }

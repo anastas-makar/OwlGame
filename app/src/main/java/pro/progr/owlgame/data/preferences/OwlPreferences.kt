@@ -50,4 +50,14 @@ class OwlPreferences @Inject constructor(
     fun setGrowthUpdate(updateTime: Long) {
         prefs.edit().putLong(GROWTH_UPDATE, updateTime).apply()
     }
+
+    private companion object {
+        const val NEXT_MERCHANT_DAY = "next_merchant_day"
+    }
+
+    fun getNextMerchantDay(): Long = prefs.getLong(NEXT_MERCHANT_DAY, -1L)
+
+    fun setNextMerchantDay(epochDay: Long) {
+        prefs.edit().putLong(NEXT_MERCHANT_DAY, epochDay).apply()
+    }
 }
