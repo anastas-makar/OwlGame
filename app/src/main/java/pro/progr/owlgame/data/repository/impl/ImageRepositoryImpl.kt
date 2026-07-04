@@ -19,10 +19,12 @@ class ImageRepositoryImpl @Inject constructor(
         val fileName = imageUrl.substringAfterLast("/")
         val file = File(context.filesDir, fileName)
 
+        val remoteUrl = baseUrl + imageUrl
+
         if (!file.exists()) {
             try {
                 val request = ImageRequest.Builder(context)
-                    .data(baseUrl + imageUrl)
+                    .data(remoteUrl)
                     .build()
 
                 // Выполняем запрос через imageLoader
@@ -41,7 +43,7 @@ class ImageRepositoryImpl @Inject constructor(
                     bitmap.compress(Bitmap.CompressFormat.WEBP, 100, outputStream)
                 }
             } catch (e: Exception) {
-                throw Exception("Error saving image locally: ${e.message}", e)
+                throw Exception("Failed to load image: $remoteUrl; ${e.message}")
             }
         }
 
