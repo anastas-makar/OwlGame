@@ -386,7 +386,9 @@ fun LocationScene.toDomain() =
         description = description,
         imageUrl = imageUrl,
         locationId = locationId,
-        sceneNumber = sceneNumber
+        sceneNumber = sceneNumber,
+        questId = questId,
+        questButtonText = questButtonText
     )
 
 fun LocationWithScenes.toDomain() =

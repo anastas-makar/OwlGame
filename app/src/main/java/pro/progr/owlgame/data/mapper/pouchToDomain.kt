@@ -90,7 +90,9 @@ fun LocationSceneInPouch.toDomain(locationId: String) : LocationSceneModel =
         description = description,
         imageUrl = imageUrl,
         locationId = locationId,
-        sceneNumber = sceneNumber
+        sceneNumber = sceneNumber,
+        questId = questId,
+        questButtonText = questButtonText
     )
 
 fun LocationInPouch.toDomain(mapId: String?): LocationWithScenesModel =

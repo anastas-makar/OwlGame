@@ -5,4 +5,6 @@ data class LocationSceneInPouch(
     val name : String? = null,
     val description: String,
     val imageUrl : String,
-    val sceneNumber : Int)
+    val sceneNumber : Int,
+    val questId : String? = null,
+    val questButtonText : String? = null)
