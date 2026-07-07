@@ -26,6 +26,6 @@ data class LocationScene(
     val imageUrl: String,
     val locationId: String,
     val sceneNumber: Int,
-    val questId: String?,
-    val questButtonText: String?
+    val questId: String? = null,
+    val questButtonText: String? = null
 )
