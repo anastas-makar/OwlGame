@@ -7,6 +7,7 @@ import pro.progr.owlgame.BuildConfig
 import pro.progr.owlgame.data.web.AnimalApiService
 import pro.progr.owlgame.data.web.LootApiService
 import pro.progr.owlgame.data.web.MapApiService
+import pro.progr.owlgame.data.web.QuestApiService
 import pro.progr.owlgame.data.web.RetrofitProvider
 import retrofit2.Retrofit
 import javax.inject.Named
@@ -42,6 +43,12 @@ class NetworkModule {
     @Singleton
     fun provideLootApiService(retrofit: Retrofit): LootApiService {
         return retrofit.create(LootApiService::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideQuestApiService(retrofit: Retrofit): QuestApiService {
+        return retrofit.create(QuestApiService::class.java)
     }
 
     @Provides
