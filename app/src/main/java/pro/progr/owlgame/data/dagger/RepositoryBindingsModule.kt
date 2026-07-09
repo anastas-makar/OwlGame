@@ -18,6 +18,7 @@ import pro.progr.owlgame.data.repository.impl.MapsRepositoryImpl
 import pro.progr.owlgame.data.repository.impl.MerchantRepositoryImpl
 import pro.progr.owlgame.data.repository.impl.PlantsRepositoryImpl
 import pro.progr.owlgame.data.repository.impl.PouchesRepositoryImpl
+import pro.progr.owlgame.data.repository.impl.QuestsRepositoryImpl
 import pro.progr.owlgame.data.repository.impl.SlotsRepositoryImpl
 import pro.progr.owlgame.data.repository.impl.StreetsRepositoryImpl
 import pro.progr.owlgame.data.repository.impl.SuppliesRepositoryImpl
@@ -39,6 +40,7 @@ import pro.progr.owlgame.domain.repository.MapsRepository
 import pro.progr.owlgame.domain.repository.MerchantRepository
 import pro.progr.owlgame.domain.repository.PlantsRepository
 import pro.progr.owlgame.domain.repository.PouchesRepository
+import pro.progr.owlgame.domain.repository.QuestsRepository
 import pro.progr.owlgame.domain.repository.SlotsRepository
 import pro.progr.owlgame.domain.repository.StreetsRepository
 import pro.progr.owlgame.domain.repository.SuppliesRepository
@@ -132,4 +134,8 @@ interface RepositoryBindingsModule {
     @Binds
     @Singleton
     fun bindMerchantRepository(impl: MerchantRepositoryImpl): MerchantRepository
+
+    @Binds
+    @Singleton
+    fun bindQuestRepository(impl: QuestsRepositoryImpl): QuestsRepository
 }
