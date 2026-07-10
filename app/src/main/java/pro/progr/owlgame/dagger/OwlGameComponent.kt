@@ -24,6 +24,7 @@ import pro.progr.owlgame.presentation.viewmodel.dagger.PouchViewModelFactory
 import pro.progr.owlgame.presentation.viewmodel.dagger.MapsViewModelFactory
 import pro.progr.owlgame.presentation.viewmodel.dagger.MerchantShopViewModelFactory
 import pro.progr.owlgame.presentation.viewmodel.dagger.OccupiedMapViewModelFactory
+import pro.progr.owlgame.presentation.viewmodel.dagger.QuestViewModelFactory
 import pro.progr.owlgame.presentation.viewmodel.dagger.RoomViewModelFactory
 import pro.progr.owlgame.presentation.viewmodel.dagger.WidgetViewModelFactory
 import javax.inject.Singleton
@@ -75,6 +76,8 @@ interface OwlGameComponent {
     fun inventoryViewModelFactory(): InventoryViewModelFactory
 
     fun merchantShopViewModelFactory(): MerchantShopViewModelFactory
+
+    fun questViewModelFactory(): QuestViewModelFactory
 
     @Component.Builder
     interface Builder {
