@@ -6,11 +6,14 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import pro.progr.owlgame.dagger.OwlGameComponent
 
 @Composable
-inline fun <reified VM : ViewModel> DaggerFreeMapViewModel(component: OwlGameComponent, mapId: String) : VM {
+inline fun <reified VM : ViewModel> DaggerQuestViewModel(component: OwlGameComponent,
+                                                         questId: String,
+                                                         locationSceneId: String) : VM {
 
     val factory = component
-        .freeMapViewModelFactory()
-    factory.mapId = mapId
+        .questViewModelFactory()
+    factory.questId = questId
+    factory.locationSceneId = locationSceneId
 
     return viewModel(factory = factory)
 }

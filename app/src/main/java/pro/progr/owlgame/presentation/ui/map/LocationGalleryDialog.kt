@@ -16,6 +16,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
@@ -33,12 +34,14 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
+import pro.progr.owlgame.R
 import pro.progr.owlgame.domain.model.LocationSceneModel
 import pro.progr.owlgame.domain.model.LocationWithScenesModel
 import pro.progr.owlgame.presentation.ui.building.Thumbnail
@@ -46,7 +49,8 @@ import pro.progr.owlgame.presentation.ui.building.Thumbnail
 @Composable
 fun LocationGalleryDialog(
     location: LocationWithScenesModel,
-    onDismiss: () -> Unit
+    onDismiss: () -> Unit,
+    onOpenQuest: (LocationSceneModel) -> Unit
 ) {
     val scenes = remember(location.scenes) {
         location.scenes.sortedBy { it.sceneNumber }
@@ -155,6 +159,22 @@ fun LocationGalleryDialog(
                             text = scene.description,
                             style = MaterialTheme.typography.body2
                         )
+
+                        if (scene.questId != null) {
+                            Spacer(Modifier.height(12.dp))
+
+                            Button(
+                                onClick = {
+                                    onOpenQuest(scene)
+                                },
+                                modifier = Modifier.fillMaxWidth()
+                            ) {
+                                Text(
+                                    text = scene.questButtonText
+                                        ?: stringResource(R.string.open_quest)
+                                )
+                            }
+                        }
                     }
                 }
 
