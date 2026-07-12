@@ -1,5 +1,6 @@
 package pro.progr.owlgame.presentation.ui.map
 
+import android.net.Uri
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Arrangement
@@ -187,7 +188,16 @@ fun FreeMapScreen(
             selectedLocation?.let { location ->
                 LocationGalleryDialog(
                     location = location,
-                    onDismiss = { selectedLocation = null }
+                    onDismiss = { selectedLocation = null },
+                    onOpenQuest = { scene ->
+                        val questId = scene.questId ?: return@LocationGalleryDialog
+
+                        selectedLocation = null
+
+                        navController.navigate(
+                            "quest/${Uri.encode(questId)}/${Uri.encode(scene.id)}"
+                        )
+                    }
                 )
             }
 

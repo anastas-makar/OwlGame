@@ -1,4 +1,9 @@
 <resources>
+    <string name="quest">Quest</string>
+    <string name="open_quest">Open quest</string>
+    <string name="complete_quest">Complete quest</string>
+    <string name="quest_page_not_found">Quest page not found</string>
+
     <string name="merchant_shop_default_title">Wandering merchant</string>
     <string name="merchant_shop_default_description">The merchant has brought useful things. You can add any item to your inventory.</string>
     <string name="merchant_shop_merchant_content_description">Merchant</string>

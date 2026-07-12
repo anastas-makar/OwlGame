@@ -1,4 +1,9 @@
 <resources>
+    <string name="quest">Квест</string>
+    <string name="open_quest">Начать квест</string>
+    <string name="complete_quest">Завершить квест</string>
+    <string name="quest_page_not_found">Страница квеста не найдена</string>
+
     <string name="merchant_shop_default_title">Бродячий торговец</string>
     <string name="merchant_shop_default_description">Торговец принёс полезные вещи. Любой предмет можно добавить себе в инвентарь.</string>
     <string name="merchant_shop_merchant_content_description">Торговец</string>

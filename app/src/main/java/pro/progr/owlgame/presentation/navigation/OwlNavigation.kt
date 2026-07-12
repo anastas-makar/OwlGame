@@ -17,6 +17,7 @@ import pro.progr.owlgame.presentation.ui.pouch.PouchesScreen
 import pro.progr.owlgame.presentation.ui.craft.CraftScreen
 import pro.progr.owlgame.presentation.ui.fab.FabViewModel
 import pro.progr.owlgame.presentation.ui.inventory.InventoryScreen
+import pro.progr.owlgame.presentation.ui.quest.QuestScreen
 import pro.progr.owlgame.presentation.ui.route.MerchantShopRoute
 import pro.progr.owlgame.presentation.viewmodel.AnimalViewModel
 import pro.progr.owlgame.presentation.viewmodel.BuildingViewModel
@@ -35,6 +36,7 @@ import pro.progr.owlgame.presentation.viewmodel.dagger.DaggerMapViewModel
 import pro.progr.owlgame.presentation.viewmodel.dagger.DaggerMapsViewModel
 import pro.progr.owlgame.presentation.viewmodel.dagger.DaggerMerchantShopViewModel
 import pro.progr.owlgame.presentation.viewmodel.dagger.DaggerPouchesViewModel
+import pro.progr.owlgame.presentation.viewmodel.dagger.DaggerQuestViewModel
 
 @Composable
 fun OwlNavigation(startDestination : String = "towns",
@@ -130,6 +132,22 @@ fun OwlNavigation(startDestination : String = "towns",
                     animalViewModel
                     )
             }
+        }
+
+        composable(
+            route = "quest/{questId}/{sceneId}"
+        ) { backStackEntry ->
+            val questId = backStackEntry.arguments?.getString("questId") ?: return@composable
+            val sceneId = backStackEntry.arguments?.getString("sceneId") ?: return@composable
+
+            QuestScreen(
+                navController = navController,
+                questViewModel = DaggerQuestViewModel(
+                    component = component,
+                    questId = questId,
+                    locationSceneId = sceneId
+                )
+            )
         }
 
     }
