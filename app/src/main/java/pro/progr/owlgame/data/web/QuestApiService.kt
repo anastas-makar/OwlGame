@@ -16,7 +16,7 @@ interface QuestApiService {
         @Path("questId") questId: String
     ): Response<QuestApiModel>
 
-    @POST("quests/{questId}/complete")
+    @POST("quests/{questId}/complete/")
     suspend fun completeQuest(
         @Path("questId") questId: String,
         @Body request: CompleteQuestRequest

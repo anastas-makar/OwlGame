@@ -1,8 +1,11 @@
 package pro.progr.owlgame.data.web.quest
 
-import pro.progr.owlgame.data.web.pouchitems.PouchItemsDto
-
 data class CompleteQuestResponse(
-    val scenePatch: QuestScenePatchApiModel,
-    val loot: PouchItemsDto? = null
+    val questId: String? = null,
+    val locationSceneId: String? = null,
+    val endingId: String? = null,
+    val scenePatch: QuestScenePatchApiModel? = null,
+    val lootAvailable: Boolean = false,
+    val lootButtonText: String? = null,
+    val error: String? = null
 )

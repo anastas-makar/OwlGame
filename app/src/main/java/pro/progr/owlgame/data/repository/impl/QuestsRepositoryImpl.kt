@@ -1,6 +1,5 @@
 package pro.progr.owlgame.data.repository.impl
 
-import androidx.room.withTransaction
 import pro.progr.owlgame.data.db.OwlGameDatabase
 import pro.progr.owlgame.data.db.dao.LocationScenesDao
 import pro.progr.owlgame.data.mapper.toDomain
@@ -58,18 +57,12 @@ class QuestsRepositoryImpl @Inject constructor(
             val body = response.body()
                 ?: return Result.failure(IllegalStateException("Quest completion response is empty"))
 
-            database.withTransaction {
+            body.scenePatch?.let { scenePatch ->
                 locationScenesDao.applyQuestResult(
                     sceneId = locationSceneId,
-                    imageUrl = body.scenePatch.imageUrl,
-                    description = body.scenePatch.description
+                    imageUrl = scenePatch.imageUrl,
+                    description = scenePatch.description
                 )
-
-                body.loot?.let { loot ->
-                    // Здесь вызови свой существующий метод сохранения лута.
-                    // Например:
-                    // pouchRepository.saveLoot(loot)
-                }
             }
 
             Result.success(Unit)
