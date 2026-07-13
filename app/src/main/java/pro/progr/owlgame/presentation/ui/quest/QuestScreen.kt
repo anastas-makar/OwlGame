@@ -21,7 +21,9 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import pro.progr.owlgame.R
 import pro.progr.owlgame.presentation.viewmodel.QuestViewModel
@@ -66,7 +68,9 @@ fun QuestScreen(
                             contentDescription = stringResource(R.string.back)
                         )
                     }
-                }
+                },
+                backgroundColor = Color.Transparent,
+                elevation = 0.dp
             )
         }
     ) { innerPadding ->
