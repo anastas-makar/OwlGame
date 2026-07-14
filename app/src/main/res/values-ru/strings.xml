@@ -1,4 +1,10 @@
 <resources>
+    <string name="quest_completed_title">Квест завершён</string>
+    <string name="quest_completed_with_loot_message">Вы завершили квест. Здесь нашлась награда.</string>
+    <string name="quest_completed_without_loot_message">Вы завершили квест. Это место изменилось.</string>
+    <string name="claim_quest_loot">Забрать лут</string>
+    <string name="back_to_location">Вернуться к локации</string>
+
     <string name="quest">Квест</string>
     <string name="open_quest">Начать квест</string>
     <string name="complete_quest">Завершить квест</string>

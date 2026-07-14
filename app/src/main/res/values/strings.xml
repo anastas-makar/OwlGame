@@ -1,4 +1,10 @@
 <resources>
+    <string name="quest_completed_title">Quest completed</string>
+    <string name="quest_completed_with_loot_message">You completed the quest. A reward was found here.</string>
+    <string name="quest_completed_without_loot_message">You completed the quest. This place has changed.</string>
+    <string name="claim_quest_loot">Claim loot</string>
+    <string name="back_to_location">Back to location</string>
+
     <string name="quest">Quest</string>
     <string name="open_quest">Open quest</string>
     <string name="complete_quest">Complete quest</string>

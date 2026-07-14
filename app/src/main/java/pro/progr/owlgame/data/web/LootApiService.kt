@@ -20,6 +20,12 @@ interface LootApiService {
         @Query("expeditionId") expeditionId: String
     ): Response<PouchItemsDto>
 
+    @GET("loot")
+    suspend fun getQuestLoot(
+        @Query("questId") questId: String,
+        @Query("endingId") endingId: String
+    ): Response<PouchItemsDto>
+
     @GET("merchantShop")
     suspend fun getMerchantShop(): Response<MerchantShopApiModel>
 }

@@ -146,7 +146,8 @@ fun OwlNavigation(startDestination : String = "towns",
                     component = component,
                     questId = questId,
                     locationSceneId = sceneId
-                )
+                ),
+                diamondDao = diamondDao
             )
         }
 

@@ -9,14 +9,20 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import pro.progr.diamondapi.PurchaseInterface
 import pro.progr.owlgame.domain.model.QuestOptionModel
 import pro.progr.owlgame.domain.model.QuestPageModel
+import pro.progr.owlgame.domain.repository.LootRepository
 import pro.progr.owlgame.domain.repository.QuestsRepository
+import pro.progr.owlgame.domain.usecase.SavePouchUseCase
+import pro.progr.owlgame.presentation.ui.model.QuestRewardPrompt
 import pro.progr.owlgame.presentation.ui.model.QuestUiState
 import javax.inject.Inject
 
 class QuestViewModel @Inject constructor(
     private val questsRepository: QuestsRepository,
+    private val lootRepository: LootRepository,
+    private val savePouchUseCase: SavePouchUseCase,
     private val questId: String,
     private val locationSceneId: String
 ) : ViewModel() {
@@ -101,11 +107,20 @@ class QuestViewModel @Inject constructor(
             }
 
             result
-                .onSuccess {
+                .onSuccess { completion ->
                     _uiState.update {
                         it.copy(
                             isCompleting = false,
-                            isCompleted = true
+                            isQuestCompleted = true,
+                            rewardPrompt = if (completion.lootAvailable) {
+                                QuestRewardPrompt(
+                                    questId = completion.questId,
+                                    endingId = completion.endingId,
+                                    buttonText = completion.lootButtonText
+                                )
+                            } else {
+                                null
+                            }
                         )
                     }
                 }
@@ -117,6 +132,53 @@ class QuestViewModel @Inject constructor(
                         )
                     }
                 }
+        }
+    }
+
+    fun claimQuestLoot(diamondDao: PurchaseInterface) {
+        val rewardPrompt = _uiState.value.rewardPrompt ?: return
+
+        viewModelScope.launch(Dispatchers.IO) {
+            _uiState.update {
+                it.copy(isClaimingLoot = true, errorMessage = null)
+            }
+
+            try {
+                val lootResult = lootRepository.claimQuestLoot(
+                    questId = rewardPrompt.questId,
+                    endingId = rewardPrompt.endingId
+                )
+
+                if (lootResult.isFailure) {
+                    _uiState.update {
+                        it.copy(
+                            errorMessage = lootResult.exceptionOrNull()?.message
+                                ?: "Не удалось получить лут"
+                        )
+                    }
+                    return@launch
+                }
+
+                val loot = lootResult.getOrThrow()
+                val savedLoot = savePouchUseCase(loot, diamondDao)
+
+                _uiState.update {
+                    it.copy(
+                        claimedLoot = savedLoot,
+                        rewardPrompt = null
+                    )
+                }
+            } finally {
+                _uiState.update {
+                    it.copy(isClaimingLoot = false)
+                }
+            }
+        }
+    }
+
+    fun closeClaimedLootDialog() {
+        _uiState.update {
+            it.copy(claimedLoot = null)
         }
     }
 

@@ -22,4 +22,27 @@ class LootRepositoryImpl @Inject constructor(
             Result.failure(e)
         }
     }
+
+    override suspend fun claimQuestLoot(
+        questId: String,
+        endingId: String
+    ): Result<PouchItemsModel> {
+        return try {
+            val response = apiService.getQuestLoot(
+                questId = questId,
+                endingId = endingId
+            )
+
+            if (response.isSuccessful) {
+                val inPouch = response.body()?.toDomain() ?: PouchItemsModel()
+                Result.success(inPouch)
+            } else {
+                Result.failure(
+                    Exception("Failed to load quest loot: ${response.errorBody()?.string()}")
+                )
+            }
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+    }
 }

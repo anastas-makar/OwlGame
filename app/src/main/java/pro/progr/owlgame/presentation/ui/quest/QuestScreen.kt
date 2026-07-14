@@ -25,13 +25,16 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import pro.progr.diamondapi.PurchaseInterface
 import pro.progr.owlgame.R
+import pro.progr.owlgame.presentation.ui.map.LootReceivedDialog
 import pro.progr.owlgame.presentation.viewmodel.QuestViewModel
 
 @Composable
 fun QuestScreen(
     navController: NavHostController,
-    questViewModel: QuestViewModel
+    questViewModel: QuestViewModel,
+    diamondDao: PurchaseInterface
 ) {
     val state by questViewModel.uiState.collectAsState()
     val snackbarHostState = remember { SnackbarHostState() }
@@ -40,12 +43,6 @@ fun QuestScreen(
         state.errorMessage?.let { message ->
             snackbarHostState.showSnackbar(message)
             questViewModel.clearError()
-        }
-    }
-
-    LaunchedEffect(state.isCompleted) {
-        if (state.isCompleted) {
-            navController.popBackStack()
         }
     }
 
@@ -86,6 +83,22 @@ fun QuestScreen(
                 }
             }
 
+            state.isQuestCompleted -> {
+                QuestCompletedContent(
+                    rewardPrompt = state.rewardPrompt,
+                    isClaimingLoot = state.isClaimingLoot,
+                    onClaimLoot = {
+                        questViewModel.claimQuestLoot(diamondDao)
+                    },
+                    onBackToLocation = {
+                        navController.popBackStack()
+                    },
+                    modifier = Modifier
+                        .padding(innerPadding)
+                        .fillMaxSize()
+                )
+            }
+
             state.currentPage == null -> {
                 Box(
                     modifier = Modifier
@@ -109,5 +122,15 @@ fun QuestScreen(
                 )
             }
         }
+    }
+
+    state.claimedLoot?.let { loot ->
+        LootReceivedDialog(
+            loot = loot,
+            onDismiss = {
+                questViewModel.closeClaimedLootDialog()
+                navController.popBackStack()
+            }
+        )
     }
 }
