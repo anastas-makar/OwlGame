@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -23,6 +24,7 @@ import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -34,6 +36,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -82,6 +85,41 @@ fun LocationGalleryDialog(
         items.firstOrNull { it.id == selectedId } ?: items.firstOrNull()
     }
 
+    val galleryListState = rememberLazyListState()
+
+    val spaceForNextItemPx = with(LocalDensity.current) {
+        80.dp.roundToPx() // Thumbnail 72.dp + промежуток 8.dp
+    }
+
+     LaunchedEffect(selectedId, items) {
+        val selectedIndex = items.indexOfFirst { it.id == selectedId }
+
+        if (selectedIndex == -1) {
+            return@LaunchedEffect
+        }
+
+        val selectedItemInfo =
+            galleryListState.layoutInfo.visibleItemsInfo.firstOrNull {
+                it.index == selectedIndex
+            }
+
+        val selectedItemEnd =
+            selectedItemInfo?.let { it.offset + it.size }
+
+        val viewportEnd = galleryListState.layoutInfo.viewportEndOffset
+
+        val shouldScroll =
+            selectedItemInfo == null ||
+                    selectedItemEnd == null ||
+                    selectedItemEnd + spaceForNextItemPx > viewportEnd
+
+        if (shouldScroll) {
+            val targetIndex = (selectedIndex - 1).coerceAtLeast(0)
+
+            galleryListState.animateScrollToItem(targetIndex)
+        }
+    }
+
     Dialog(onDismissRequest = onDismiss) {
         Surface(
             shape = RoundedCornerShape(16.dp),
@@ -105,11 +143,15 @@ fun LocationGalleryDialog(
                 Spacer(Modifier.height(10.dp))
 
                 LazyRow(
+                    state = galleryListState,
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.spacedBy(8.dp),
                     contentPadding = PaddingValues(horizontal = 4.dp)
                 ) {
-                    items(items) { item ->
+                    items(
+                        items = items,
+                        key = { item -> item.id }
+                    ) { item ->
                         val isSelected = item.id == selected?.id
 
                         Thumbnail(
