@@ -1,5 +1,6 @@
 package pro.progr.owlgame.domain.repository
 
+import pro.progr.owlgame.domain.model.QuestCompletionResultModel
 import pro.progr.owlgame.domain.model.QuestModel
 
 interface QuestsRepository {
@@ -10,5 +11,5 @@ interface QuestsRepository {
         questId: String,
         locationSceneId: String,
         endingId: String
-    ): Result<Unit>
+    ): Result<QuestCompletionResultModel>
 }
