@@ -12,6 +12,7 @@ import kotlinx.coroutines.withContext
 import pro.progr.diamondapi.PurchaseInterface
 import pro.progr.owlgame.domain.model.QuestOptionModel
 import pro.progr.owlgame.domain.model.QuestPageModel
+import pro.progr.owlgame.domain.repository.LocationsRepository
 import pro.progr.owlgame.domain.repository.LootRepository
 import pro.progr.owlgame.domain.repository.QuestsRepository
 import pro.progr.owlgame.domain.usecase.SavePouchUseCase
@@ -22,6 +23,7 @@ import javax.inject.Inject
 class QuestViewModel @Inject constructor(
     private val questsRepository: QuestsRepository,
     private val lootRepository: LootRepository,
+    private val locationsRepository: LocationsRepository,
     private val savePouchUseCase: SavePouchUseCase,
     private val questId: String,
     private val locationSceneId: String
@@ -91,47 +93,61 @@ class QuestViewModel @Inject constructor(
 
     fun completeQuest() {
         val page = _uiState.value.currentPage ?: return
-        val endingId = page.endingId ?: return
+        val endingId = page.endingId
+
+        if (endingId == null) {
+            _uiState.update {
+                it.copy(errorMessage = "Quest page is not final")
+            }
+            return
+        }
+
+        val scenePatch = page.scenePatch
+
+        if (scenePatch == null) {
+            _uiState.update {
+                it.copy(errorMessage = "Quest ending has no scene patch")
+            }
+            return
+        }
 
         viewModelScope.launch {
             _uiState.update {
                 it.copy(isCompleting = true, errorMessage = null)
             }
 
-            val result = withContext(Dispatchers.IO) {
-                questsRepository.completeQuest(
-                    questId = questId,
-                    locationSceneId = locationSceneId,
-                    endingId = endingId
-                )
-            }
+            try {
+                withContext(Dispatchers.IO) {
+                    locationsRepository.applyQuestResult(
+                        locationSceneId = locationSceneId,
+                        imageUrl = scenePatch.imageUrl,
+                        description = scenePatch.description
+                    )
+                }
 
-            result
-                .onSuccess { completion ->
-                    _uiState.update {
-                        it.copy(
-                            isCompleting = false,
-                            isQuestCompleted = true,
-                            rewardPrompt = if (completion.lootAvailable) {
-                                QuestRewardPrompt(
-                                    questId = completion.questId,
-                                    endingId = completion.endingId,
-                                    buttonText = completion.lootButtonText
-                                )
-                            } else {
-                                null
-                            }
-                        )
-                    }
+                _uiState.update {
+                    it.copy(
+                        isCompleting = false,
+                        isQuestCompleted = true,
+                        rewardPrompt = if (page.lootAvailable) {
+                            QuestRewardPrompt(
+                                questId = questId,
+                                endingId = endingId,
+                                buttonText = page.lootButtonText
+                            )
+                        } else {
+                            null
+                        }
+                    )
                 }
-                .onFailure { error ->
-                    _uiState.update {
-                        it.copy(
-                            isCompleting = false,
-                            errorMessage = error.message ?: "Quest completion error"
-                        )
-                    }
+            } catch (e: Exception) {
+                _uiState.update {
+                    it.copy(
+                        isCompleting = false,
+                        errorMessage = e.message ?: "Quest completion error"
+                    )
                 }
+            }
         }
     }
 

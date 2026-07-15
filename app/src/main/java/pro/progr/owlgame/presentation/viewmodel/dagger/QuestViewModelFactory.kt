@@ -2,6 +2,7 @@ package pro.progr.owlgame.presentation.viewmodel.dagger
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import pro.progr.owlgame.domain.repository.LocationsRepository
 import pro.progr.owlgame.domain.repository.LootRepository
 import pro.progr.owlgame.domain.repository.QuestsRepository
 import pro.progr.owlgame.domain.usecase.SavePouchUseCase
@@ -11,6 +12,7 @@ import javax.inject.Inject
 class QuestViewModelFactory @Inject constructor(
     private val questsRepository: QuestsRepository,
     private val lootRepository: LootRepository,
+    private val locationsRepository: LocationsRepository,
     private val savePouchUseCase: SavePouchUseCase,
 ) : ViewModelProvider.Factory {
 
@@ -24,6 +26,7 @@ class QuestViewModelFactory @Inject constructor(
                 questId = questId,
                 locationSceneId = locationSceneId,
                 lootRepository = lootRepository,
+                locationsRepository = locationsRepository,
                 savePouchUseCase = savePouchUseCase) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")

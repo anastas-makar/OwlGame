@@ -76,4 +76,16 @@ class LocationsRepositoryImpl @Inject constructor(
         )
     }
 
+    override suspend fun applyQuestResult(
+        locationSceneId: String,
+        imageUrl: String,
+        description: String
+    ) {
+        locationScenesDao.applyQuestResult (
+            sceneId = locationSceneId,
+            imageUrl = imageUrl,
+            description = description
+        )
+    }
+
 }

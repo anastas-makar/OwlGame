@@ -6,5 +6,9 @@ data class QuestPageApiModel(
     val description: String,
     val imageUrl: String,
     val options: List<QuestOptionApiModel> = emptyList(),
-    val endingId: String? = null
+
+    val endingId: String? = null,
+    val scenePatch: QuestScenePatchApiModel? = null,
+    val lootAvailable: Boolean = false,
+    val lootButtonText: String? = null
 )

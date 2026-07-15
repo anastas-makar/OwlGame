@@ -22,4 +22,10 @@ interface LocationsRepository {
         x: Float,
         y: Float
     )
+
+    suspend fun applyQuestResult(
+        locationSceneId: String,
+        imageUrl: String,
+        description: String
+    )
 }

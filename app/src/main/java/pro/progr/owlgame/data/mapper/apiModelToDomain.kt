@@ -6,6 +6,7 @@ import pro.progr.owlgame.data.web.merchant.MerchantShopApiModel
 import pro.progr.owlgame.data.web.quest.QuestApiModel
 import pro.progr.owlgame.data.web.quest.QuestOptionApiModel
 import pro.progr.owlgame.data.web.quest.QuestPageApiModel
+import pro.progr.owlgame.data.web.quest.QuestScenePatchApiModel
 import pro.progr.owlgame.domain.model.AnimalModel
 import pro.progr.owlgame.domain.model.AnimalStatus
 import pro.progr.owlgame.domain.model.MerchantPricePolicyModel
@@ -13,6 +14,7 @@ import pro.progr.owlgame.domain.model.MerchantShopModel
 import pro.progr.owlgame.domain.model.QuestModel
 import pro.progr.owlgame.domain.model.QuestOptionModel
 import pro.progr.owlgame.domain.model.QuestPageModel
+import pro.progr.owlgame.domain.model.QuestScenePatchModel
 
 fun AnimalApiModel.toDomain() =
     AnimalModel(
@@ -49,6 +51,12 @@ fun QuestApiModel.toDomain(): QuestModel {
     )
 }
 
+fun QuestScenePatchApiModel.toDomain() =
+    QuestScenePatchModel(
+        description = description,
+        imageUrl = imageUrl
+    )
+
 fun QuestPageApiModel.toDomain(): QuestPageModel {
     return QuestPageModel(
         number = number,
@@ -56,7 +64,10 @@ fun QuestPageApiModel.toDomain(): QuestPageModel {
         description = description,
         imageUrl = imageUrl,
         options = options.map { it.toDomain() },
-        endingId = endingId
+        endingId = endingId,
+        scenePatch = scenePatch?.toDomain(),
+        lootAvailable = lootAvailable,
+        lootButtonText = lootButtonText
     )
 }
 

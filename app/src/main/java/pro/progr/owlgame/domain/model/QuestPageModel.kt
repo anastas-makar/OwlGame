@@ -6,5 +6,10 @@ data class QuestPageModel(
     val description: String,
     val imageUrl: String,
     val options: List<QuestOptionModel> = emptyList(),
-    val endingId: String? = null
+    val endingId: String? = null,
+
+
+    val scenePatch: QuestScenePatchModel? = null,
+    val lootAvailable: Boolean = false,
+    val lootButtonText: String? = null
 )
