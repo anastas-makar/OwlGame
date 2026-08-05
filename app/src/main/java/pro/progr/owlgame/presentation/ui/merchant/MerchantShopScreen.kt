@@ -3,6 +3,7 @@ package pro.progr.owlgame.presentation.ui.merchant
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
@@ -50,7 +51,9 @@ fun MerchantShopScreen(
     }
 
     Scaffold(
-        modifier = modifier,
+        modifier = modifier
+            .fillMaxSize()
+            .safeDrawingPadding(),
         topBar = {
             TopAppBar(
                 title = {

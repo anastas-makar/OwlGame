@@ -2,7 +2,7 @@ package pro.progr.owlgame.presentation.ui.inventory
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.Text
@@ -29,7 +29,7 @@ fun InventoryScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .navigationBarsPadding()
+            .safeDrawingPadding()
     ) {
         TopAppBar(
             title = {

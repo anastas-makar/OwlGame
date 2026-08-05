@@ -2,8 +2,8 @@ package pro.progr.owlgame.presentation.ui.quest
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
@@ -47,11 +47,11 @@ fun QuestScreen(
     }
 
     Scaffold(
+        modifier = Modifier
+            .fillMaxSize()
+            .safeDrawingPadding(),
         snackbarHost = {
-            SnackbarHost(
-                snackbarHostState,
-                modifier = Modifier.navigationBarsPadding()
-            )
+            SnackbarHost(snackbarHostState)
         },
         topBar = {
             TopAppBar(
