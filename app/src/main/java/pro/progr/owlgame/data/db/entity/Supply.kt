@@ -13,5 +13,7 @@ data class Supply (
     val description: String,
     val amount : Int = 0,
     val effectType : EffectType,
-    val effectAmount : Int
+    val effectAmount : Int,
+    val templateId: String? = null,
+    val imageKey: String? = null
 )

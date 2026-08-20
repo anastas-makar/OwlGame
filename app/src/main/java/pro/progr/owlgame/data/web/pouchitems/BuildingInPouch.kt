@@ -9,5 +9,7 @@ data class BuildingInPouch (
     val name: String,
     val imageUrl: String,
     val rooms: List<RoomInPouch>,
-    val gardens: List<GardenInPouch>
+    val gardens: List<GardenInPouch>,
+    val templateId: String? = null,
+    val imageKey: String? = null
 )

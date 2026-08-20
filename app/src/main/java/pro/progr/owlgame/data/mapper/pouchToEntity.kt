@@ -36,7 +36,9 @@ fun EnemyInPouch.toEntity(expeditionId: String): Enemy =
         maxDamageAmount = damageAmount,
         x = x,
         y = y,
-        isDefeated = false
+        isDefeated = false,
+        templateId = templateId,
+        imageKey = imageKey
     )
 
 fun ExpeditionMedalInPouch.toEntity(
@@ -50,5 +52,7 @@ fun ExpeditionMedalInPouch.toEntity(
         title = title,
         description = description,
         imageUrl = imageUrl,
-        animalId = null
+        animalId = null,
+        templateId = templateId,
+        imageKey = imageKey
     )

@@ -4,5 +4,7 @@ data class AnimalApiModel(
     val id: String,
     val kind: String,
     val initialDisplayName: String,
-    val imagePath: String
+    val imagePath: String,
+    val templateId: String? = null,
+    val imageKey: String? = null
 )

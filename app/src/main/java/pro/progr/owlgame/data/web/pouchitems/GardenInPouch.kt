@@ -7,5 +7,7 @@ data class GardenInPouch (
     val name : String,
     val imageUrl : String,
     val gardenNumber : Int,
-    val gardenType : GardenType
+    val gardenType : GardenType,
+    val templateId: String? = null,
+    val imageKey: String? = null
 )

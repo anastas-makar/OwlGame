@@ -22,5 +22,6 @@ data class Recipe (
     @PrimaryKey
     val id : String,
     val resSupplyId : String,
-    val description: String
+    val description: String,
+    val templateId: String? = null
 )

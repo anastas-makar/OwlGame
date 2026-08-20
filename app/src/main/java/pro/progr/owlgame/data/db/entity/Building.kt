@@ -48,5 +48,7 @@ data class Building (
     val streetId: String? = null,
     val x : Float = 0f,
     val y : Float = 0f,
-    val type: BuildingType = BuildingType.HOUSE
+    val type: BuildingType = BuildingType.HOUSE,
+    val templateId: String? = null,
+    val imageKey: String? = null
 )

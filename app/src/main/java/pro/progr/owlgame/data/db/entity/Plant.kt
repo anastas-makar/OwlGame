@@ -42,5 +42,7 @@ data class Plant (
     val supplyAmount : Int,
     val seedAmount : Int,
     val readiness: Float = 0f,
-    val deleted: Boolean = false
+    val deleted: Boolean = false,
+    val templateId: String? = null,
+    val imageKey: String? = null
 )

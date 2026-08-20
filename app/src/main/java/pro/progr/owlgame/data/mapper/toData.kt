@@ -121,36 +121,56 @@ fun DomainStreetDirection.toData() : DbStreetDirection =
 
 
 
-fun AnimalModel.toData(): Animal =
+fun AnimalModel.toData(
+    templateId: String? = null,
+    imageKey: String? = null
+): Animal =
     Animal(
         id = id,
         kind = kind,
         name = name,
         initialDisplayName = initialDisplayName,
         imagePath = imagePath,
-        status = status.toData()
+        status = status.toData(),
+        templateId = templateId,
+        imageKey = imageKey
     )
 
-fun GardenModel.toData(buildingId : String) : Garden =
+fun GardenModel.toData(
+    buildingId: String,
+    templateId: String? = null,
+    imageKey: String? = null
+): Garden =
     Garden(
         id = id,
         name = name,
         imageUrl = imageUrl,
         buildingId = buildingId,
         gardenNumber = gardenNumber,
-        gardenType = gardenType.toData()
+        gardenType = gardenType.toData(),
+        templateId = templateId,
+        imageKey = imageKey
     )
 
-fun RoomModel.toData(buildingId : String) : RoomEntity =
+fun RoomModel.toData(
+    buildingId: String,
+    templateId: String? = null,
+    imageKey: String? = null
+): RoomEntity =
     RoomEntity(
         id = id,
         name = name,
         imageUrl = imageUrl,
         buildingId = buildingId,
-        roomNumber = roomNumber
+        roomNumber = roomNumber,
+        templateId = templateId,
+        imageKey = imageKey
     )
 
-fun BuildingModel.toData(): Building =
+fun BuildingModel.toData(
+    templateId: String? = null,
+    imageKey: String? = null
+): Building =
     Building(
         id = id,
         name = name,
@@ -160,10 +180,15 @@ fun BuildingModel.toData(): Building =
         animalId = animalId,
         x = x,
         y = y,
-        type = type.toData()
+        type = type.toData(),
+        templateId = templateId,
+        imageKey = imageKey
     )
 
-fun SupplyModel.toData(): Supply =
+fun SupplyModel.toData(
+    templateId: String? = null,
+    imageKey: String? = null
+): Supply =
     Supply(
         id = id,
         imageUrl = imageUrl,
@@ -171,10 +196,15 @@ fun SupplyModel.toData(): Supply =
         description = description,
         amount = amount,
         effectType = effectType.toData(),
-        effectAmount = effectAmount
+        effectAmount = effectAmount,
+        templateId = templateId,
+        imageKey = imageKey
     )
 
-fun FurnitureModel.toData(): Furniture =
+fun FurnitureModel.toData(
+    templateId: String? = null,
+    imageKey: String? = null
+): Furniture =
     Furniture(
         id = id,
         name = name,
@@ -185,10 +215,16 @@ fun FurnitureModel.toData(): Furniture =
         y = y,
         height = height,
         width = width,
-        type = type.toData())
+        type = type.toData(),
+        templateId = templateId,
+        imageKey = imageKey
+    )
 
 
-fun GardenItemModel.toData(): GardenItem =
+fun GardenItemModel.toData(
+    templateId: String? = null,
+    imageKey: String? = null
+): GardenItem =
     GardenItem(
         id = id,
         name = name,
@@ -202,9 +238,14 @@ fun GardenItemModel.toData(): GardenItem =
         itemType = itemType.toData(),
         gardenType = gardenType.toData(),
         readiness = readiness,
-        deleted = deleted
+        deleted = deleted,
+        templateId = templateId,
+        imageKey = imageKey
     )
-fun PlantModel.toData(): Plant =
+fun PlantModel.toData(
+    templateId: String? = null,
+    imageKey: String? = null
+): Plant =
     Plant(
         id = id,
         name = name,
@@ -217,10 +258,15 @@ fun PlantModel.toData(): Plant =
         supplyAmount = supplyAmount,
         seedAmount = seedAmount,
         readiness = readiness,
-        deleted = deleted
+        deleted = deleted,
+        templateId = templateId,
+        imageKey = imageKey
     )
 
-fun ExpeditionMedalModel.toData() =
+fun ExpeditionMedalModel.toData(
+    templateId: String? = null,
+    imageKey: String? = null
+) =
     ExpeditionMedal(
         id = id,
         animalId = animalId,
@@ -228,10 +274,16 @@ fun ExpeditionMedalModel.toData() =
         mapId = mapId,
         title = title,
         description = description,
-        imageUrl = imageUrl
+        imageUrl = imageUrl,
+        templateId = templateId,
+        imageKey = imageKey
     )
 
-fun LocationWithScenesModel.toEntity(mapId : String?) =
+fun LocationWithScenesModel.toEntity(
+    mapId: String?,
+    templateId: String? = null,
+    imageKey: String? = null
+) =
     Location(
         id = id,
         name = name,
@@ -241,10 +293,16 @@ fun LocationWithScenesModel.toEntity(mapId : String?) =
         price = price,
         x = x,
         y = y,
-        type = type.toData()
+        type = type.toData(),
+        templateId = templateId,
+        imageKey = imageKey
     )
 
-fun LocationSceneModel.toData(locationId : String) =
+fun LocationSceneModel.toData(
+    locationId: String,
+    templateId: String? = null,
+    imageKey: String? = null
+) =
     LocationScene(
         id = id,
         name = name,
@@ -253,7 +311,9 @@ fun LocationSceneModel.toData(locationId : String) =
         locationId = locationId,
         sceneNumber = sceneNumber,
         questId = questId,
-        questButtonText = questButtonText
+        questButtonText = questButtonText,
+        templateId = templateId,
+        imageKey = imageKey
     )
 
 fun CountryModel.toData() =

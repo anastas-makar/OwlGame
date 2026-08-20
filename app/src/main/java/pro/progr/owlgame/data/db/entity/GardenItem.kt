@@ -45,5 +45,7 @@ data class GardenItem (
     val itemType : ItemType,
     val gardenType: GardenType,
     val readiness: Float = 0f,
-    val deleted: Boolean = false
+    val deleted: Boolean = false,
+    val templateId: String? = null,
+    val imageKey: String? = null
 )

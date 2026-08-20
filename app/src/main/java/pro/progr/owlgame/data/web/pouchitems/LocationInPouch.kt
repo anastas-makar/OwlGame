@@ -11,4 +11,7 @@ data class LocationInPouch(
     val x : Float = 0f,
     val y : Float = 0f,
     val type: LocationType,
-    val scenes: List<LocationSceneInPouch>)
+    val scenes: List<LocationSceneInPouch>,
+    val templateId: String? = null,
+    val imageKey: String? = null
+)

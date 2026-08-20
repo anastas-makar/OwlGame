@@ -8,5 +8,7 @@ data class EnemyInPouch (
     val healAmount: Int,
     val damageAmount: Int,
     val x: Float,
-    val y: Float
+    val y: Float,
+    val templateId: String? = null,
+    val imageKey: String? = null
 )

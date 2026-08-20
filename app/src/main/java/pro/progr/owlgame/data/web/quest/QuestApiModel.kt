@@ -4,6 +4,7 @@ data class QuestApiModel(
     val questId: String,
     val title: String? = null,
     val startPageNumber: Int = 0,
-    val pages: List<QuestPageApiModel>
+    val pages: List<QuestPageApiModel>,
+    val templateId: String? = null
 )
 

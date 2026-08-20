@@ -10,5 +10,6 @@ data class QuestPageApiModel(
     val endingId: String? = null,
     val scenePatch: QuestScenePatchApiModel? = null,
     val lootAvailable: Boolean = false,
-    val lootButtonText: String? = null
+    val lootButtonText: String? = null,
+    val imageKey: String? = null
 )

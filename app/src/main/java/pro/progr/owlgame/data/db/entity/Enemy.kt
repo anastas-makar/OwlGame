@@ -33,5 +33,7 @@ data class Enemy(
     val maxDamageAmount: Int,
     val x: Float,
     val y: Float,
-    val isDefeated: Boolean = false
+    val isDefeated: Boolean = false,
+    val templateId: String? = null,
+    val imageKey: String? = null
 )

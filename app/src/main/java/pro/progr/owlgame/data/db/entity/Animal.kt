@@ -13,5 +13,7 @@ data class Animal(
     val initialDisplayName: String,
     val imagePath: String,
     val status: AnimalStatus,
-    val statusExpiresAt: Long? = null
+    val statusExpiresAt: Long? = null,
+    val templateId: String? = null,
+    val imageKey: String? = null
 )
