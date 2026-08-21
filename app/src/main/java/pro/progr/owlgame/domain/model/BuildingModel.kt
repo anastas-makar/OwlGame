@@ -10,5 +10,7 @@ data class BuildingModel (
     var animalId: String? = null,
     val x : Float = 0f,
     val y : Float = 0f,
-    val type: BuildingType
+    val type: BuildingType,
+    val templateId: String,
+    val imageKey: String
 )

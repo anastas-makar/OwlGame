@@ -12,4 +12,6 @@ data class PlantModel(
     val supplyAmount : Int,
     val seedAmount : Int,
     val readiness: Float = 0f,
-    val deleted: Boolean = false)
+    val deleted: Boolean = false,
+    val templateId: String,
+    val imageKey: String)

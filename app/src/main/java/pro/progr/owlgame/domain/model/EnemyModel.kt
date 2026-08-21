@@ -12,5 +12,7 @@ data class EnemyModel(
     val maxDamageAmount: Int,
     val x: Float,
     val y: Float,
-    val status: EnemyStatus
+    val status: EnemyStatus,
+    val templateId: String,
+    val imageKey: String
 )

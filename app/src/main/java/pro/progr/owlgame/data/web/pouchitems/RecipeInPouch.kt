@@ -5,5 +5,5 @@ data class RecipeInPouch(
     val description: String,
     val resultSupply: SupplyInPouch,
     val ingredients: List<IngredientInPouch>,
-    val templateId: String? = null
+    val templateId: String
 )

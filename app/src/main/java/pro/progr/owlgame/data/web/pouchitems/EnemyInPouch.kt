@@ -9,6 +9,6 @@ data class EnemyInPouch (
     val damageAmount: Int,
     val x: Float,
     val y: Float,
-    val templateId: String? = null,
-    val imageKey: String? = null
+    val templateId: String,
+    val imageKey: String
 )

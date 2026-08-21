@@ -9,6 +9,6 @@ data class SupplyInPouch (
     val description : String,
     val effectType : EffectType,
     val effectAmount : Int,
-    val templateId: String? = null,
-    val imageKey: String? = null
+    val templateId: String,
+    val imageKey: String
 )

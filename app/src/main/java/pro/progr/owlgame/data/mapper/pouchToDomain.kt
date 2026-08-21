@@ -61,7 +61,9 @@ fun BuildingInPouch.toDomain(): BuildingWithDataModel =
         type = type.toDomain(),
         animal = null,
         rooms = rooms.map { it.toDomain(buildingId = id) },
-        gardens = gardens.map { it.toDomain(buildingId = id) }
+        gardens = gardens.map { it.toDomain(buildingId = id) },
+        templateId = templateId,
+        imageKey = imageKey
     )
 
 fun RoomInPouch.toDomain(buildingId: String): RoomModel =
@@ -70,7 +72,9 @@ fun RoomInPouch.toDomain(buildingId: String): RoomModel =
         name = name,
         imageUrl = imageUrl,
         buildingId = buildingId,
-        roomNumber = roomNumber
+        roomNumber = roomNumber,
+        templateId = templateId,
+        imageKey = imageKey
     )
 
 fun GardenInPouch.toDomain(buildingId: String): GardenModel =
@@ -80,7 +84,9 @@ fun GardenInPouch.toDomain(buildingId: String): GardenModel =
         imageUrl = imageUrl,
         buildingId = buildingId,
         gardenNumber = gardenNumber,
-        gardenType = gardenType.toDomain()
+        gardenType = gardenType.toDomain(),
+        templateId = templateId,
+        imageKey = imageKey
     )
 
 fun LocationSceneInPouch.toDomain(locationId: String) : LocationSceneModel =
@@ -92,7 +98,9 @@ fun LocationSceneInPouch.toDomain(locationId: String) : LocationSceneModel =
         locationId = locationId,
         sceneNumber = sceneNumber,
         questId = questId,
-        questButtonText = questButtonText
+        questButtonText = questButtonText,
+        templateId = templateId,
+        imageKey = imageKey
     )
 
 fun LocationInPouch.toDomain(mapId: String?): LocationWithScenesModel =
@@ -106,7 +114,9 @@ fun LocationInPouch.toDomain(mapId: String?): LocationWithScenesModel =
         x = x,
         y = y,
         type = type.toDomain(),
-        scenes = scenes.map { it.toDomain(id) }
+        scenes = scenes.map { it.toDomain(id) },
+        templateId = templateId,
+        imageKey = imageKey
     )
 
 fun MapInPouch.toDomain(): MapWithDataModel =
@@ -119,7 +129,9 @@ fun MapInPouch.toDomain(): MapWithDataModel =
         mayorAnimalId = null,
         buildings = emptyList(),
         expedition = expedition?.toDomain(mapId = id),
-        locations = locations.orEmpty().map { it.toDomain(id) }
+        locations = locations.orEmpty().map { it.toDomain(id) },
+        templateId = templateId,
+        imageKey = imageKey
     )
 
 fun ExpeditionMedalInPouch.toDomain(mapId: String, expeditionId: String, animalId: String?): ExpeditionMedalModel =
@@ -130,7 +142,9 @@ fun ExpeditionMedalInPouch.toDomain(mapId: String, expeditionId: String, animalI
         animalId = animalId,
         title = title,
         description = description,
-        imageUrl = imageUrl
+        imageUrl = imageUrl,
+        templateId = templateId,
+        imageKey = imageKey
     )
 
 fun ExpeditionInPouch.toDomain(mapId: String): ExpeditionWithDataModel =
@@ -162,7 +176,9 @@ fun EnemyInPouch.toDomain(expeditionId: String): EnemyModel =
         maxDamageAmount = damageAmount,
         x = x,
         y = y,
-        status = EnemyStatus.UNTOUCHED
+        status = EnemyStatus.UNTOUCHED,
+        templateId = templateId,
+        imageKey = imageKey
     )
 
 fun DiamondsInPouch.toDomain(): DiamondsModel =
@@ -179,7 +195,9 @@ fun GardenItemInPouch.toDomain(): GardenItemWithSupplyModel =
         supply = supply.toDomain(),
         supplyAmount = supplyAmount,
         itemType = itemType.toDomain(),
-        gardenType = gardenType.toDomain()
+        gardenType = gardenType.toDomain(),
+        templateId = templateId,
+        imageKey = imageKey
     )
 
 fun SupplyInPouch.toDomain(): SupplyModel =
@@ -190,7 +208,9 @@ fun SupplyInPouch.toDomain(): SupplyModel =
         description = description,
         amount = 0,
         effectType = effectType.toDomain(),
-        effectAmount = effectAmount
+        effectAmount = effectAmount,
+        templateId = templateId,
+        imageKey = imageKey
     )
 
 fun PlantInPouch.toDomain(): PlantWithSupplyModel =
@@ -201,7 +221,9 @@ fun PlantInPouch.toDomain(): PlantWithSupplyModel =
         imageUrl = imageUrl,
         supply = supply.toDomain(),
         supplyAmount = supplyAmount,
-        seedAmount = seedAmount
+        seedAmount = seedAmount,
+        templateId = templateId,
+        imageKey = imageKey
     )
 
 fun FurnitureInPouch.toDomain(): FurnitureModel =
@@ -215,7 +237,9 @@ fun FurnitureInPouch.toDomain(): FurnitureModel =
         y = 0f,
         height = height,
         width = width,
-        type = type.toDomain()
+        type = type.toDomain(),
+        templateId = templateId,
+        imageKey = imageKey
     )
 
 fun RecipeInPouch.toDomain(): RecipeWithSuppliesModel =
@@ -226,7 +250,8 @@ fun RecipeInPouch.toDomain(): RecipeWithSuppliesModel =
         resultImageUrl = resultSupply.imageUrl,
         description = description,
         ingredients = ingredients.map { it.toDomain() },
-        craftable = false
+        craftable = false,
+        templateId = templateId
     )
 
 fun IngredientInPouch.toDomain(): IngredientWithSupplyModel =

@@ -10,6 +10,6 @@ data class FurnitureInPouch (
     val height : Float,
     val width : Float,
     val type : FurnitureType,
-    val templateId: String? = null,
-    val imageKey: String? = null
+    val templateId: String,
+    val imageKey: String
 )

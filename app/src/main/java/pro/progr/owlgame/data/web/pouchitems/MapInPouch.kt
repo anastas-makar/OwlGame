@@ -9,6 +9,6 @@ data class MapInPouch(
     val type: MapType,
     val expedition: ExpeditionInPouch? = null,
     val locations: List<LocationInPouch>? = null,
-    val templateId: String? = null,
-    val imageKey: String? = null
+    val templateId: String,
+    val imageKey: String
 )

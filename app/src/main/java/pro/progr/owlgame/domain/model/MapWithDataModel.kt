@@ -10,5 +10,7 @@ data class MapWithDataModel (
     val buildings: List<BuildingWithAnimalModel> = emptyList(),
     val streets: List<StreetWithBuildingsModel> = emptyList(),
     val expedition: ExpeditionWithDataModel? = null,
-    val locations : List<LocationWithScenesModel> = emptyList()
+    val locations : List<LocationWithScenesModel> = emptyList(),
+    val templateId: String,
+    val imageKey: String
 )

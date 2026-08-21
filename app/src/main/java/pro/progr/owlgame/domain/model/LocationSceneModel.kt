@@ -8,4 +8,6 @@ data class LocationSceneModel(
     val locationId : String,
     val sceneNumber : Int,
     val questId : String?,
-    val questButtonText : String?)
+    val questButtonText : String?,
+    val templateId: String,
+    val imageKey: String)

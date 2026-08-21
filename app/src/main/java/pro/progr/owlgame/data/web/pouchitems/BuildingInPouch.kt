@@ -10,6 +10,6 @@ data class BuildingInPouch (
     val imageUrl: String,
     val rooms: List<RoomInPouch>,
     val gardens: List<GardenInPouch>,
-    val templateId: String? = null,
-    val imageKey: String? = null
+    val templateId: String,
+    val imageKey: String
 )

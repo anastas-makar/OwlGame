@@ -154,7 +154,9 @@ fun MapEntity.toDomain(): MapModel =
         imageUrl = imagePath,
         type = type.toDomain(),
         countryId = countryId,
-        mayorAnimalId = mayorAnimalId
+        mayorAnimalId = mayorAnimalId,
+        templateId = templateId,
+        imageKey = imageKey
     )
 
 fun MapWithData.toDomain(): MapWithBuildingsModel =
@@ -164,6 +166,8 @@ fun MapWithData.toDomain(): MapWithBuildingsModel =
         imageUrl = mapEntity.imagePath,
         mayorAnimalId = mapEntity.mayorAnimalId,
         type = mapEntity.type.toDomain(),
+        templateId = mapEntity.templateId,
+        imageKey = mapEntity.imageKey,
         buildings = buildings.map {
             it.toDomain()
         }
@@ -179,7 +183,9 @@ fun Building.toDomain(): BuildingModel =
         animalId = animalId,
         x = x,
         y = y,
-        type = type.toDomain()
+        type = type.toDomain(),
+        templateId = templateId,
+        imageKey = imageKey
     )
 
 fun Animal.toDomain(): AnimalModel =
@@ -189,7 +195,9 @@ fun Animal.toDomain(): AnimalModel =
         name = name,
         imagePath = imagePath,
         initialDisplayName = initialDisplayName,
-        status = status.toDomain()
+        status = status.toDomain(),
+        templateId = templateId,
+        imageKey = imageKey
     )
 
 fun RoomEntity.toDomain(): RoomModel =
@@ -198,7 +206,9 @@ fun RoomEntity.toDomain(): RoomModel =
         name = name,
         imageUrl = imageUrl,
         buildingId = buildingId,
-        roomNumber = roomNumber
+        roomNumber = roomNumber,
+        templateId = templateId,
+        imageKey = imageKey
     )
 
 fun Garden.toDomain(): GardenModel =
@@ -208,7 +218,9 @@ fun Garden.toDomain(): GardenModel =
         imageUrl = imageUrl,
         buildingId = buildingId,
         gardenNumber = gardenNumber,
-        gardenType = gardenType.toDomain()
+        gardenType = gardenType.toDomain(),
+        templateId = templateId,
+        imageKey = imageKey
     )
 
 fun BuildingWithAnimal.toDomain(): BuildingWithAnimalModel =
@@ -222,7 +234,9 @@ fun BuildingWithAnimal.toDomain(): BuildingWithAnimalModel =
         animal = animal?.toDomain(),
         x = building.x,
         y = building.y,
-        type = building.type.toDomain()
+        type = building.type.toDomain(),
+        templateId = building.templateId,
+        imageKey = building.imageKey
     )
 
 fun BuildingWithData.toDomain(): BuildingWithDataModel =
@@ -237,7 +251,9 @@ fun BuildingWithData.toDomain(): BuildingWithDataModel =
         y = building.y,
         type = building.type.toDomain(),
         rooms = rooms.map { it.toDomain() },
-        gardens = gardens.map { it.toDomain() })
+        gardens = gardens.map { it.toDomain() },
+        templateId = building.templateId,
+        imageKey = building.imageKey)
 
 fun Supply.toDomain(): SupplyModel =
     SupplyModel(
@@ -247,7 +263,9 @@ fun Supply.toDomain(): SupplyModel =
         description = description,
         amount = amount,
         effectType = effectType.toDomain(),
-        effectAmount = effectAmount
+        effectAmount = effectAmount,
+        templateId = templateId,
+        imageKey = imageKey
     )
 
 fun Expedition.toDomain(): ExpeditionModel =
@@ -281,7 +299,9 @@ private fun Enemy.toDomain(activeEnemyId: String?): EnemyModel =
             isDefeated -> EnemyStatus.DEFEATED
             id == activeEnemyId -> EnemyStatus.ACTIVE
             else -> EnemyStatus.UNTOUCHED
-        }
+        },
+        templateId = templateId,
+        imageKey = imageKey
     )
 
 fun ExpeditionMedal.toDomain() =
@@ -292,7 +312,9 @@ fun ExpeditionMedal.toDomain() =
         title = title,
         description = description,
         imageUrl = imageUrl,
-        animalId = animalId
+        animalId = animalId,
+        templateId = templateId,
+        imageKey = imageKey
     )
 
 fun ExpeditionWithData.toDomain(): ExpeditionWithDataModel {
@@ -329,7 +351,9 @@ fun Furniture.toDomain() : FurnitureModel =
         y = y,
         height = height,
         width = width,
-        type = type.toDomain()
+        type = type.toDomain(),
+        templateId = templateId,
+        imageKey = imageKey
     )
 
 fun GardenItem.toDomain(): GardenItemModel =
@@ -346,7 +370,9 @@ fun GardenItem.toDomain(): GardenItemModel =
         itemType = itemType.toDomain(),
         gardenType = gardenType.toDomain(),
         readiness = readiness,
-        deleted = deleted
+        deleted = deleted,
+        templateId = templateId,
+        imageKey = imageKey
     )
 
 fun Plant.toDomain(): PlantModel =
@@ -362,7 +388,9 @@ fun Plant.toDomain(): PlantModel =
         supplyAmount = supplyAmount,
         seedAmount = seedAmount,
         readiness = readiness,
-        deleted = deleted
+        deleted = deleted,
+        templateId = templateId,
+        imageKey = imageKey
     )
 
 fun Pouch.toDomain() : PouchModel =
@@ -388,7 +416,9 @@ fun LocationScene.toDomain() =
         locationId = locationId,
         sceneNumber = sceneNumber,
         questId = questId,
-        questButtonText = questButtonText
+        questButtonText = questButtonText,
+        templateId = templateId,
+        imageKey = imageKey
     )
 
 fun LocationWithScenes.toDomain() =
@@ -402,7 +432,9 @@ fun LocationWithScenes.toDomain() =
         x = location.x,
         y = location.y,
         type =  location.type.toDomain(),
-        scenes = scenes.map { it.toDomain()}
+        scenes = scenes.map { it.toDomain()},
+        templateId = location.templateId,
+        imageKey = location.imageKey
     )
 
 fun Country.toDomain() =

@@ -7,5 +7,7 @@ data class ExpeditionMedalModel (
     val title: String,
     val description: String,
     val imageUrl: String,
-    val animalId: String?
+    val animalId: String?,
+    val templateId: String,
+    val imageKey: String
 )

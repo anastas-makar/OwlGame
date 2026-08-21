@@ -34,7 +34,9 @@ class SaveGardenItemsUseCase @Inject constructor(private val gardenItemsReposito
                     supplyId = gI.supply.id,
                     supplyAmount = gI.supplyAmount,
                     itemType = gI.itemType,
-                    gardenType = gI.gardenType
+                    gardenType = gI.gardenType,
+                    templateId = gI.templateId,
+                    imageKey = gI.imageKey
                 )
             }
         )

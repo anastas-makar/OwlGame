@@ -24,7 +24,9 @@ fun AnimalApiModel.toDomain() =
         initialDisplayName = initialDisplayName,
         imagePath = imagePath,
         status = AnimalStatus.SEARCHING,
-        statusExpiresAt = null
+        statusExpiresAt = null,
+        templateId = templateId,
+        imageKey = imageKey
     )
 
 fun MerchantPricePolicyApiModel.toDomain() =
@@ -47,14 +49,16 @@ fun QuestApiModel.toDomain(): QuestModel {
         questId = questId,
         title = title,
         startPageNumber = startPageNumber,
-        pages = pages.map { it.toDomain() }
+        pages = pages.map { it.toDomain() },
+        templateId = templateId
     )
 }
 
 fun QuestScenePatchApiModel.toDomain() =
     QuestScenePatchModel(
         description = description,
-        imageUrl = imageUrl
+        imageUrl = imageUrl,
+        imageKey = imageKey
     )
 
 fun QuestPageApiModel.toDomain(): QuestPageModel {
@@ -67,7 +71,8 @@ fun QuestPageApiModel.toDomain(): QuestPageModel {
         endingId = endingId,
         scenePatch = scenePatch?.toDomain(),
         lootAvailable = lootAvailable,
-        lootButtonText = lootButtonText
+        lootButtonText = lootButtonText,
+        imageKey = imageKey
     )
 }
 

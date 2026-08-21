@@ -8,5 +8,7 @@ data class GardenItemWithSupplyModel (
     val supply : SupplyModel,
     val supplyAmount : Int,
     val itemType : ItemType,
-    val gardenType: GardenType
+    val gardenType: GardenType,
+    val templateId: String,
+    val imageKey: String
 )

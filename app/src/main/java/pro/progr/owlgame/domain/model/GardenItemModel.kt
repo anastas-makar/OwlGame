@@ -13,5 +13,7 @@ class GardenItemModel (
     val itemType : ItemType,
     val gardenType: GardenType,
     val readiness: Float = 0f,
-    val deleted: Boolean = false
+    val deleted: Boolean = false,
+    val templateId: String,
+    val imageKey: String
 )

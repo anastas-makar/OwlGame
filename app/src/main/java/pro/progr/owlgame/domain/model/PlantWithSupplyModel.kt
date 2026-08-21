@@ -7,4 +7,6 @@ data class PlantWithSupplyModel(
     val imageUrl : String,
     val supply : SupplyModel,
     val supplyAmount : Int,
-    val seedAmount : Int)
+    val seedAmount : Int,
+    val templateId: String,
+    val imageKey: String)

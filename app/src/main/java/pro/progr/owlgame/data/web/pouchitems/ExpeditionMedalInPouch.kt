@@ -5,6 +5,6 @@ data class ExpeditionMedalInPouch (
     val title: String,
     val description: String,
     val imageUrl: String,
-    val templateId: String? = null,
-    val imageKey: String? = null
+    val templateId: String,
+    val imageKey: String
 )

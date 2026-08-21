@@ -75,7 +75,9 @@ class MapsRepositoryImpl @Inject constructor(
                 name = mapModel.name,
                 imagePath = mapModel.imageUrl,
                 countryId = mapModel.countryId,
-                type = mapModel.type.toData()
+                type = mapModel.type.toData(),
+                templateId = mapModel.templateId,
+                imageKey = mapModel.imageKey
             )
 
             for (location in mapModel.locations) {
@@ -115,7 +117,9 @@ class MapsRepositoryImpl @Inject constructor(
                         damageAmount = enemyModel.damageAmount,
                         maxDamageAmount = enemyModel.maxDamageAmount,
                         x = enemyModel.x,
-                        y = enemyModel.y
+                        y = enemyModel.y,
+                        templateId = enemyModel.templateId,
+                        imageKey = enemyModel.imageKey
                     )
                 }
 

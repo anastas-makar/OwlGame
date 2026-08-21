@@ -9,5 +9,6 @@ data class RecipeModel(
     val ingredients: List<IngredientModel>,
     val craftable: Boolean,
     val effectType: EffectType,
-    val effectAmount: Int
+    val effectAmount: Int,
+    val templateId: String
 )

@@ -7,5 +7,7 @@ data class MapWithBuildingsModel (
     val type: MapType,
     val mayorAnimalId: String? = null,
     val buildings: List<BuildingModel> = emptyList(),
-    val expeditionId: String? = null
+    val expeditionId: String? = null,
+    val templateId: String,
+    val imageKey: String
 )

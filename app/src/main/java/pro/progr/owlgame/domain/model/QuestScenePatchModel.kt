@@ -2,5 +2,6 @@ package pro.progr.owlgame.domain.model
 
 data class QuestScenePatchModel(
     val description: String,
-    val imageUrl: String
+    val imageUrl: String,
+    val imageKey: String
 )

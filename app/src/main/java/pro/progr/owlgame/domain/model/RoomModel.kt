@@ -5,5 +5,7 @@ data class RoomModel(
     val name : String,
     val imageUrl : String,
     val buildingId : String,
-    val roomNumber : Int
+    val roomNumber : Int,
+    val templateId: String,
+    val imageKey: String
 )

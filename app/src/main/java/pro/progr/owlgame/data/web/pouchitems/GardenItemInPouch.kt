@@ -12,6 +12,6 @@ data class GardenItemInPouch (
     val supplyAmount : Int,
     val itemType : ItemType,
     val gardenType: GardenType,
-    val templateId: String? = null,
-    val imageKey: String? = null
+    val templateId: String,
+    val imageKey: String
 )

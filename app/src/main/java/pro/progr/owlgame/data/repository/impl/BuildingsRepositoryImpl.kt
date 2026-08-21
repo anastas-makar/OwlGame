@@ -69,7 +69,9 @@ class BuildingsRepositoryImpl @Inject constructor(
                 name = b.name,
                 imageUrl = b.imageUrl,
                 price = b.price,
-                type = b.type.toData()
+                type = b.type.toData(),
+                templateId = b.templateId,
+                imageKey = b.imageKey
             )
         }
 

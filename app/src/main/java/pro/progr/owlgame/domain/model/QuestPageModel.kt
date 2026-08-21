@@ -11,5 +11,6 @@ data class QuestPageModel(
 
     val scenePatch: QuestScenePatchModel? = null,
     val lootAvailable: Boolean = false,
-    val lootButtonText: String? = null
+    val lootButtonText: String? = null,
+    val imageKey: String
 )

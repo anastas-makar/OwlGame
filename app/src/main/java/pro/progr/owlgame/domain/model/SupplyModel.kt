@@ -7,4 +7,6 @@ data class SupplyModel(
     val description : String,
     val amount : Int = 0,
     val effectType : EffectType,
-    val effectAmount : Int)
+    val effectAmount : Int,
+    val templateId: String,
+    val imageKey: String)

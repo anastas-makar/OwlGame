@@ -7,5 +7,6 @@ data class RecipeWithSuppliesModel(
     val resultImageUrl: String,
     val description: String,
     val ingredients: List<IngredientWithSupplyModel>,
-    val craftable: Boolean
+    val craftable: Boolean,
+    val templateId: String
 )

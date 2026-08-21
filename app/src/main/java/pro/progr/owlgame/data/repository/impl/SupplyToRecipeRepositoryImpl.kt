@@ -50,7 +50,8 @@ class SupplyToRecipeRepositoryImpl @Inject constructor(
             Recipe(
                 id = recipeWithSuppliesModel.recipeId,
                 resSupplyId = recipeWithSuppliesModel.resultSupply.id,
-                description = recipeWithSuppliesModel.description
+                description = recipeWithSuppliesModel.description,
+                templateId = recipeWithSuppliesModel.templateId
             )
         }
 
@@ -150,7 +151,8 @@ class SupplyToRecipeRepositoryImpl @Inject constructor(
                     ingredients = ingredients,
                     craftable = ingredients.all { it.enough },
                     effectType = result.effectType.toDomain(),
-                    effectAmount = result.effectAmount)
+                    effectAmount = result.effectAmount,
+                    templateId = recipe.templateId)
             }
         }
     }

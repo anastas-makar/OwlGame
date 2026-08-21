@@ -6,4 +6,6 @@ data class GardenModel(
     val imageUrl : String,
     val buildingId : String,
     val gardenNumber : Int,
-    val gardenType : GardenType)
+    val gardenType : GardenType,
+    val templateId: String,
+    val imageKey: String)

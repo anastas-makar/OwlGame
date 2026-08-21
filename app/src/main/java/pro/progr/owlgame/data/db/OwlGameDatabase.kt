@@ -111,6 +111,7 @@ abstract class OwlGameDatabase : RoomDatabase() {
     abstract fun countriesDao(): CountriesDao
 
     companion object {
+
         @Volatile
         private var INSTANCE: OwlGameDatabase? = null
 

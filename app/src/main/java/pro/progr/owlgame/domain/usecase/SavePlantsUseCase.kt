@@ -30,7 +30,9 @@ class SavePlantsUseCase @Inject constructor(private val plantsRepository: Plants
                     description = pConv.supply.description,
                     amount = 0,
                     effectType = pConv.supply.effectType,
-                    effectAmount = pConv.supply.effectAmount
+                    effectAmount = pConv.supply.effectAmount,
+                    templateId = pConv.supply.templateId,
+                    imageKey = pConv.supply.imageKey
                 )
             }
         )
@@ -44,7 +46,9 @@ class SavePlantsUseCase @Inject constructor(private val plantsRepository: Plants
                     imageUrl = pConv.imageUrl,
                     supplyId = pConv.supply.id,
                     supplyAmount = pConv.supplyAmount,
-                    seedAmount = pConv.seedAmount
+                    seedAmount = pConv.seedAmount,
+                    templateId = pConv.templateId,
+                    imageKey = pConv.imageKey
                 )
             }
         )

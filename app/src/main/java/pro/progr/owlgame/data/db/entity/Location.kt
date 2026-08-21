@@ -32,6 +32,6 @@ data class Location (
     val x : Float = 0f,
     val y : Float = 0f,
     val type: LocationType,
-    val templateId: String? = null,
-    val imageKey: String? = null
+    val templateId: String,
+    val imageKey: String
 )

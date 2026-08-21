@@ -10,5 +10,7 @@ data class FurnitureModel (
     val y : Float = 0f,
     val height : Float,
     val width : Float,
-    val type : FurnitureType
+    val type : FurnitureType,
+    val templateId: String,
+    val imageKey: String
 )

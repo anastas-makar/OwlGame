@@ -5,6 +5,6 @@ data class RoomInPouch (
     val name : String,
     val imageUrl : String,
     val roomNumber : Int,
-    val templateId: String? = null,
-    val imageKey: String? = null
+    val templateId: String,
+    val imageKey: String
 )

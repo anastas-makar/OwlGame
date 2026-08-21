@@ -11,5 +11,7 @@ data class BuildingWithDataModel(
     val type: BuildingType,
     var animal: AnimalModel? = null,
     val rooms: List<RoomModel>,
-    val gardens: List<GardenModel>
+    val gardens: List<GardenModel>,
+    val templateId: String,
+    val imageKey: String
 )

@@ -23,5 +23,5 @@ data class Recipe (
     val id : String,
     val resSupplyId : String,
     val description: String,
-    val templateId: String? = null
+    val templateId: String
 )

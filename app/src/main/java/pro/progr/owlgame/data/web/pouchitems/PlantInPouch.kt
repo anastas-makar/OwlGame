@@ -8,6 +8,6 @@ data class PlantInPouch (
     val supply : SupplyInPouch,
     val supplyAmount : Int,
     val seedAmount : Int,
-    val templateId: String? = null,
-    val imageKey: String? = null
+    val templateId: String,
+    val imageKey: String
 )

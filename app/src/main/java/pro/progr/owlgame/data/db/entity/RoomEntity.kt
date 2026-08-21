@@ -23,6 +23,6 @@ data class RoomEntity (
     val imageUrl : String,
     val buildingId : String,
     val roomNumber : Int,
-    val templateId: String? = null,
-    val imageKey: String? = null
+    val templateId: String,
+    val imageKey: String
 )

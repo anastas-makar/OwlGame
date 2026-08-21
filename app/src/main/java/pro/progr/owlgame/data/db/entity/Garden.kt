@@ -27,6 +27,6 @@ data class Garden (
     val buildingId : String,
     val gardenNumber : Int,
     val gardenType : GardenType,
-    val templateId: String? = null,
-    val imageKey: String? = null
+    val templateId: String,
+    val imageKey: String
 )

@@ -10,5 +10,7 @@ data class LocationWithScenesModel(
     val x : Float = 0f,
     val y : Float = 0f,
     val type: LocationType,
-    val scenes: List<LocationSceneModel>
+    val scenes: List<LocationSceneModel>,
+    val templateId: String,
+    val imageKey: String
 )

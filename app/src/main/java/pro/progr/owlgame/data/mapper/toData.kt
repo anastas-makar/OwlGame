@@ -121,10 +121,7 @@ fun DomainStreetDirection.toData() : DbStreetDirection =
 
 
 
-fun AnimalModel.toData(
-    templateId: String? = null,
-    imageKey: String? = null
-): Animal =
+fun AnimalModel.toData(): Animal =
     Animal(
         id = id,
         kind = kind,
@@ -136,11 +133,7 @@ fun AnimalModel.toData(
         imageKey = imageKey
     )
 
-fun GardenModel.toData(
-    buildingId: String,
-    templateId: String? = null,
-    imageKey: String? = null
-): Garden =
+fun GardenModel.toData(buildingId: String): Garden =
     Garden(
         id = id,
         name = name,
@@ -152,11 +145,7 @@ fun GardenModel.toData(
         imageKey = imageKey
     )
 
-fun RoomModel.toData(
-    buildingId: String,
-    templateId: String? = null,
-    imageKey: String? = null
-): RoomEntity =
+fun RoomModel.toData(buildingId: String): RoomEntity =
     RoomEntity(
         id = id,
         name = name,
@@ -167,10 +156,7 @@ fun RoomModel.toData(
         imageKey = imageKey
     )
 
-fun BuildingModel.toData(
-    templateId: String? = null,
-    imageKey: String? = null
-): Building =
+fun BuildingModel.toData(): Building =
     Building(
         id = id,
         name = name,
@@ -185,10 +171,7 @@ fun BuildingModel.toData(
         imageKey = imageKey
     )
 
-fun SupplyModel.toData(
-    templateId: String? = null,
-    imageKey: String? = null
-): Supply =
+fun SupplyModel.toData(): Supply =
     Supply(
         id = id,
         imageUrl = imageUrl,
@@ -201,10 +184,7 @@ fun SupplyModel.toData(
         imageKey = imageKey
     )
 
-fun FurnitureModel.toData(
-    templateId: String? = null,
-    imageKey: String? = null
-): Furniture =
+fun FurnitureModel.toData(): Furniture =
     Furniture(
         id = id,
         name = name,
@@ -221,10 +201,7 @@ fun FurnitureModel.toData(
     )
 
 
-fun GardenItemModel.toData(
-    templateId: String? = null,
-    imageKey: String? = null
-): GardenItem =
+fun GardenItemModel.toData(): GardenItem =
     GardenItem(
         id = id,
         name = name,
@@ -242,10 +219,7 @@ fun GardenItemModel.toData(
         templateId = templateId,
         imageKey = imageKey
     )
-fun PlantModel.toData(
-    templateId: String? = null,
-    imageKey: String? = null
-): Plant =
+fun PlantModel.toData(): Plant =
     Plant(
         id = id,
         name = name,
@@ -263,10 +237,7 @@ fun PlantModel.toData(
         imageKey = imageKey
     )
 
-fun ExpeditionMedalModel.toData(
-    templateId: String? = null,
-    imageKey: String? = null
-) =
+fun ExpeditionMedalModel.toData() =
     ExpeditionMedal(
         id = id,
         animalId = animalId,
@@ -279,11 +250,7 @@ fun ExpeditionMedalModel.toData(
         imageKey = imageKey
     )
 
-fun LocationWithScenesModel.toEntity(
-    mapId: String?,
-    templateId: String? = null,
-    imageKey: String? = null
-) =
+fun LocationWithScenesModel.toEntity(mapId: String?) =
     Location(
         id = id,
         name = name,
@@ -298,11 +265,7 @@ fun LocationWithScenesModel.toEntity(
         imageKey = imageKey
     )
 
-fun LocationSceneModel.toData(
-    locationId: String,
-    templateId: String? = null,
-    imageKey: String? = null
-) =
+fun LocationSceneModel.toData(locationId: String) =
     LocationScene(
         id = id,
         name = name,
