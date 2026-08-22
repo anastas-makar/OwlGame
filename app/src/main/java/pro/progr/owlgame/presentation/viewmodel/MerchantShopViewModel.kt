@@ -20,8 +20,7 @@ import javax.inject.Inject
 class MerchantShopViewModel @Inject constructor(
     private val getMerchantShopUseCase: GetMerchantShopUseCase,
     private val buyMerchantItemUseCase: BuyMerchantItemUseCase,
-    private val diamondsProvider: GetDiamondsCountInterface,
-    private val baseUrl: String
+    private val diamondsProvider: GetDiamondsCountInterface
 ) : ViewModel() {
 
     private val _ui = MutableStateFlow(
@@ -131,9 +130,7 @@ class MerchantShopViewModel @Inject constructor(
                 title = shop.title,
                 description = shop.description,
                 currentPrice = shop.pricePolicy.priceForPurchaseCount(purchaseCount),
-                sections = shop.items.toMerchantSections(
-                    baseUrl = baseUrl
-                ),
+                sections = shop.items.toMerchantSections(),
                 isLoading = isLoading,
                 isBuying = isBuying,
                 errorMessage = null
