@@ -70,7 +70,9 @@ fun LocationGalleryDialog(
                     locationId = location.id,
                     sceneNumber = -1,
                     questId = null,
-                    questButtonText = null
+                    questButtonText = null,
+                    templateId = location.templateId,
+                    imageKey = location.imageKey
                 )
             )
             addAll(scenes)

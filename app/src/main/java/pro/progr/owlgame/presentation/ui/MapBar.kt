@@ -14,7 +14,10 @@ import pro.progr.owlgame.domain.model.MapWithDataModel
 @Composable
 fun MapBar(navController: NavHostController, mapViewModel: MapViewModel) {
 
-    val mapState = mapViewModel.map.collectAsState(initial = MapWithDataModel("", "", "", MapType.FREE))
+    val mapState = mapViewModel.map.collectAsState(initial = MapWithDataModel(
+        "",
+        "", "" +
+                "",  MapType.FREE, templateId = "", imageKey = ""))
 
     TopAppBar(
         title = {

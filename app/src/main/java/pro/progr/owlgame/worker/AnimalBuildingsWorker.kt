@@ -38,8 +38,7 @@ suspend fun doAnimalBuildingsWork(
     val animalDao = db.animalDao()
 
     val imagesRepository = ImageRepositoryImpl(
-        context = applicationContext,
-        baseUrl = BuildConfig.API_BASE_URL
+        context = applicationContext
     )
 
     val animalRepository = AnimalsRepositoryImpl(

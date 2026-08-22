@@ -61,7 +61,9 @@ class AnimalViewModel @Inject constructor(
                     imageUrl = mapWithData.imageUrl,
                     type = mapWithData.type,
                     mayorAnimalId = mapWithData.mayorAnimalId,
-                    buildings = freeBuildings
+                    buildings = freeBuildings,
+                    templateId = mapWithData.templateId,
+                    imageKey = mapWithData.imageKey
                 )
             }
         }

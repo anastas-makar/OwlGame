@@ -51,7 +51,8 @@ class MapViewModel @Inject constructor(
     val map: StateFlow<MapWithDataModel> = mapsRepository.getMapById(mapId)
         .flatMapLatest { mapWithData ->
             if (mapWithData == null) {
-                flowOf(MapWithDataModel("", "", "", MapType.LOADING))
+                flowOf(MapWithDataModel("", "", "",
+                    MapType.LOADING, templateId = "", imageKey = ""))
             } else {
 
                 val buildingsFlow =
@@ -103,7 +104,9 @@ class MapViewModel @Inject constructor(
                             streets = streets
                         ),
                         locations = sortedLocations,
-                        expedition = expeditionWithData
+                        expedition = expeditionWithData,
+                        templateId = mapWithData.templateId,
+                        imageKey = mapWithData.imageKey
                     )
                 }
             }
@@ -111,7 +114,8 @@ class MapViewModel @Inject constructor(
         .stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(5000),
-            initialValue = MapWithDataModel("", "", "", MapType.LOADING)
+            initialValue = MapWithDataModel("", "", "",
+                MapType.LOADING, templateId = "", imageKey = "")
         )
 
     private fun buildStreetSections(

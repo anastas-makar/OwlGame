@@ -20,7 +20,8 @@ fun MapScreen(
     diamondDao: PurchaseInterface,
     component: OwlGameComponent,
     mapViewModel: MapViewModel) {
-    val map = mapViewModel.map.collectAsState(initial = MapWithDataModel("", "", "", MapType.LOADING))
+    val map = mapViewModel.map.collectAsState(initial = MapWithDataModel("", "", "",
+        MapType.LOADING, templateId = "", imageKey = ""))
 
     when(map.value.type) {
         MapType.FREE -> FreeMapScreen(
