@@ -18,7 +18,7 @@ class SaveBuildingsUseCase @Inject constructor(private val buildingsRepository: 
                     room.copy(
                         imageUrl = imageRepository.saveImageLocally(
                             imageUrl = room.imageUrl,
-                            imageKey = building.imageKey)
+                            imageKey = room.imageKey)
                     )
                 },
                 gardens = building.gardens.map { garden ->
