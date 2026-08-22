@@ -12,7 +12,9 @@ class SaveFurnitureUseCase @Inject constructor(
     suspend operator fun invoke(furnitureInPouch: List<FurnitureModel>): List<FurnitureModel> {
         val furnitureConverted = furnitureInPouch.map { furniture ->
             furniture.copy(
-                imageUrl = imageRepository.saveImageLocally(furniture.imageUrl)
+                imageUrl = imageRepository.saveImageLocally(
+                    imageUrl = furniture.imageUrl,
+                    imageKey = furniture.imageKey)
             )
         }
 

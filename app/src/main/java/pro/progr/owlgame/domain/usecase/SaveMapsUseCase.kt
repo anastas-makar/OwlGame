@@ -12,23 +12,33 @@ class SaveMapsUseCase @Inject constructor(
     suspend operator fun invoke(maps: List<MapWithDataModel>): List<MapWithDataModel> {
         val convertedMaps = maps.map { model ->
             model.copy(
-                imageUrl = imageRepository.saveImageLocally(model.imageUrl),
+                imageUrl = imageRepository.saveImageLocally(
+                    imageUrl = model.imageUrl,
+                    imageKey = model.imageKey),
                 expedition = model.expedition?.copy(
                     enemies = model.expedition.enemies.map {
                         it.copy(
-                            imageUrl = imageRepository.saveImageLocally(it.imageUrl)
+                            imageUrl = imageRepository.saveImageLocally(
+                                imageUrl = it.imageUrl,
+                                imageKey = it.imageKey)
                         )
                     },
                     medal = model.expedition.medal.copy(
-                        imageUrl = imageRepository.saveImageLocally(model.expedition.medal.imageUrl)
+                        imageUrl = imageRepository.saveImageLocally(
+                            imageUrl = model.expedition.medal.imageUrl,
+                            imageKey = model.expedition.medal.imageKey)
                     )
                 ),
                 locations = model.locations.map { location ->
                     location.copy(
-                        imageUrl = imageRepository.saveImageLocally(location.imageUrl),
+                        imageUrl = imageRepository.saveImageLocally(
+                            imageUrl = location.imageUrl,
+                            imageKey = location.imageKey),
                         scenes = location.scenes.map { scene ->
                             scene.copy(
-                                imageUrl = imageRepository.saveImageLocally(scene.imageUrl)
+                                imageUrl = imageRepository.saveImageLocally(
+                                    imageUrl = scene.imageUrl,
+                                    imageKey = scene.imageKey)
                             )
                         }
                     )

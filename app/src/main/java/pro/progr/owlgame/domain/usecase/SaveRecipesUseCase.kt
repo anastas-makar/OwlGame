@@ -11,13 +11,17 @@ class SaveRecipesUseCase @Inject constructor(private val supplyToRecipeRepositor
     suspend operator fun invoke(recipes: List<RecipeWithSuppliesModel>): List<RecipeWithSuppliesModel> {
         val savedRecipes = recipes.map { recipe ->
             val resultSupplyImageUrl = imageRepository
-                .saveImageLocally(recipe.resultSupply.imageUrl)
+                .saveImageLocally(
+                    imageUrl = recipe.resultSupply.imageUrl,
+                    imageKey = recipe.resultSupply.imageKey)
             recipe.copy(
                 resultImageUrl = resultSupplyImageUrl,
                 resultSupply = recipe.resultSupply.copy(imageUrl = resultSupplyImageUrl),
                 ingredients = recipe.ingredients.map { ing -> ing.copy(
                     supplyModel = ing.supplyModel.copy(
-                        imageUrl = imageRepository.saveImageLocally(ing.supplyModel.imageUrl)
+                        imageUrl = imageRepository.saveImageLocally(
+                            imageUrl = ing.supplyModel.imageUrl,
+                            imageKey = ing.supplyModel.imageKey)
                     )
                 ) }
 

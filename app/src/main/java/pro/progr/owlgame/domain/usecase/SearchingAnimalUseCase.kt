@@ -22,7 +22,9 @@ class SearchingAnimalUseCase @Inject constructor(
 
             animalsRepository.getApiAnimal()?.let {
                 val savedAnimal = it.copy(
-                    imagePath = imageRepository.saveImageLocally(it.imagePath))
+                    imagePath = imageRepository.saveImageLocally(
+                        imageUrl = it.imagePath,
+                        imageKey = it.imageKey))
                 animalsRepository.saveAnimal(savedAnimal)
 
                 return savedAnimal

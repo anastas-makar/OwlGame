@@ -9,22 +9,31 @@ import pro.progr.owlgame.domain.repository.ImageRepository
 import java.io.File
 import java.io.OutputStream
 import javax.inject.Inject
-import javax.inject.Named
 
 class ImageRepositoryImpl @Inject constructor(
-    private val context: Context,
-    @Named("baseUrl") private val baseUrl: String
+    private val context: Context
 ) : ImageRepository {
-    override suspend fun saveImageLocally(imageUrl: String): String {
-        val fileName = imageUrl.substringAfterLast("/")
-        val file = File(context.filesDir, fileName)
+    override suspend fun saveImageLocally(
+        imageUrl: String,
+        imageKey: String
+    ): String {
+        require(imageUrl.startsWith("http://") || imageUrl.startsWith("https://")) {
+            "Expected absolute image URL, got: $imageUrl"
+        }
 
-        val remoteUrl = baseUrl + imageUrl
+        require(!imageKey.startsWith("/") && ".." !in imageKey) {
+            "Invalid imageKey: $imageKey"
+        }
+
+        val imagesDir = File(context.filesDir, "images")
+        val file = File(imagesDir, imageKey)
+
+        file.parentFile?.mkdirs()
 
         if (!file.exists()) {
             try {
                 val request = ImageRequest.Builder(context)
-                    .data(remoteUrl)
+                    .data(imageUrl)
                     .build()
 
                 // Выполняем запрос через imageLoader
@@ -43,7 +52,7 @@ class ImageRepositoryImpl @Inject constructor(
                     bitmap.compress(Bitmap.CompressFormat.WEBP, 100, outputStream)
                 }
             } catch (e: Exception) {
-                throw Exception("Failed to load image: $remoteUrl; ${e.message}")
+                throw Exception("Failed to load image: imageUrl=$imageUrl, imageKey=$imageKey; ${e.message}")
             }
         }
 

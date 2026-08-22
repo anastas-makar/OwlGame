@@ -10,10 +10,14 @@ class SaveLocationsUseCase @Inject constructor(private val locationsRepository: 
     suspend operator fun invoke(locationsInPouch: List<LocationWithScenesModel>): List<LocationWithScenesModel> {
         val locationsConverted = locationsInPouch.map {
             it.copy(
-                imageUrl = imageRepository.saveImageLocally(it.imageUrl),
+                imageUrl = imageRepository.saveImageLocally(
+                    imageUrl = it.imageUrl,
+                    imageKey = it.imageKey),
                 scenes = it.scenes.map { scene ->
                     scene.copy(
-                        imageUrl = imageRepository.saveImageLocally(scene.imageUrl)
+                        imageUrl = imageRepository.saveImageLocally(
+                            imageUrl = scene.imageUrl,
+                            imageKey = scene.imageKey)
                     )
                 }
             )

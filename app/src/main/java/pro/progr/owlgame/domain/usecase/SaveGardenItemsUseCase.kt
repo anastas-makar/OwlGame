@@ -13,9 +13,13 @@ class SaveGardenItemsUseCase @Inject constructor(private val gardenItemsReposito
     suspend operator fun invoke(gardenItemsInPouch: List<GardenItemWithSupplyModel>): List<GardenItemWithSupplyModel> {
         val gardenItemsConverted : List<GardenItemWithSupplyModel> = gardenItemsInPouch.map {
             it.copy(
-                imageUrl = imageRepository.saveImageLocally(it.imageUrl),
+                imageUrl = imageRepository.saveImageLocally(
+                    imageUrl = it.imageUrl,
+                    imageKey = it.imageKey),
                 supply = it.supply.copy(
-                    imageUrl = imageRepository.saveImageLocally(it.supply.imageUrl)
+                    imageUrl = imageRepository.saveImageLocally(
+                        imageUrl = it.supply.imageUrl,
+                        imageKey = it.supply.imageKey)
                 )
             )
         }
