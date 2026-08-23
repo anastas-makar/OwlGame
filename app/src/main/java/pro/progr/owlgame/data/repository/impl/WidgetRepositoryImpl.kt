@@ -39,8 +39,22 @@ class WidgetRepositoryImpl @Inject constructor(
     }
 
     override fun isPouchAvailable(): Boolean {
+        val today = LocalDate.now(clock).toEpochDay()
         val lastPouchDay = preferences.getLastPouchOpenDay()
-        return lastPouchDay < LocalDate.now(clock).toEpochDay()
+
+        if (lastPouchDay == NO_DAY) {
+            return true
+        }
+
+        if (lastPouchDay > today) {
+            // Часы устройства когда-то были выставлены в будущее.
+            // Не оставляем пользователя без мешочков на месяцы/годы,
+            // но и не выдаём дополнительный мешочек прямо сейчас.
+            preferences.setLastPouchOpenDay(today)
+            return false
+        }
+
+        return lastPouchDay < today
     }
 
     override fun getUri(res : Int) : Uri {
