@@ -12,10 +12,12 @@ import pro.progr.owlgame.data.mapper.toData
 import pro.progr.owlgame.data.mapper.toDomain
 import pro.progr.owlgame.data.mapper.toEntity
 import pro.progr.owlgame.domain.model.LocationWithScenesModel
+import pro.progr.owlgame.domain.repository.ImageRepository
 import pro.progr.owlgame.domain.repository.LocationsRepository
 import javax.inject.Inject
 
 class LocationsRepositoryImpl @Inject constructor(
+    val imageRepository: ImageRepository,
     val locationsDao: LocationsDao,
     val locationScenesDao: LocationScenesDao,
     val database: OwlGameDatabase
@@ -82,9 +84,14 @@ class LocationsRepositoryImpl @Inject constructor(
         imageKey: String,
         description: String
     ) {
-        locationScenesDao.applyQuestResult (
-            sceneId = locationSceneId,
+        val localImagePath = imageRepository.saveImageLocally(
             imageUrl = imageUrl,
+            imageKey = imageKey
+        )
+
+        locationScenesDao.applyQuestResult(
+            sceneId = locationSceneId,
+            imageUrl = localImagePath,
             imageKey = imageKey,
             description = description
         )
