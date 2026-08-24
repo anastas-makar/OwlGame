@@ -26,6 +26,7 @@ interface LocationsRepository {
     suspend fun applyQuestResult(
         locationSceneId: String,
         imageUrl: String,
+        imageKey: String,
         description: String
     )
 }

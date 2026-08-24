@@ -16,6 +16,7 @@ interface LocationScenesDao {
         UPDATE location_scenes
         SET imageUrl = :imageUrl,
             description = :description,
+            imageKey = :imageKey,
             questId = NULL,
             questButtonText = NULL
         WHERE id = :sceneId
@@ -24,6 +25,7 @@ interface LocationScenesDao {
     suspend fun applyQuestResult(
         sceneId: String,
         imageUrl: String,
+        imageKey: String,
         description: String
     )
 }

@@ -79,11 +79,13 @@ class LocationsRepositoryImpl @Inject constructor(
     override suspend fun applyQuestResult(
         locationSceneId: String,
         imageUrl: String,
+        imageKey: String,
         description: String
     ) {
         locationScenesDao.applyQuestResult (
             sceneId = locationSceneId,
             imageUrl = imageUrl,
+            imageKey = imageKey,
             description = description
         )
     }

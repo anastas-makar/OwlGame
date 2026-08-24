@@ -121,6 +121,7 @@ class QuestViewModel @Inject constructor(
                     locationsRepository.applyQuestResult(
                         locationSceneId = locationSceneId,
                         imageUrl = scenePatch.imageUrl,
+                        imageKey = scenePatch.imageKey,
                         description = scenePatch.description
                     )
                 }
