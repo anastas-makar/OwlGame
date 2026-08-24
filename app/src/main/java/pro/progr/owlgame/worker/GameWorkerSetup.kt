@@ -11,25 +11,55 @@ import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
 import java.util.concurrent.TimeUnit
 
-object GameWorkerSetup {
-    inline fun <reified T> enqueueBackgroundSync(context: Context) where T : ListenableWorker {
+@PublishedApi
+internal const val ANIMAL_ARRIVAL_WORK_NAME = "AnimalArrivalCheckWork"
 
+@PublishedApi
+internal const val LEGACY_ANIMAL_WORK_NAME = "CheckBuildingsWork"
+
+@PublishedApi
+internal const val GAME_SYNC_WORK_NAME = "GameSyncWork"
+
+object GameWorkerSetup {
+
+    /**
+     * Periodically checks whether a free building can attract a new animal.
+     * The concrete worker is responsible for checking authorization again before network access.
+     */
+    inline fun <reified T> enqueuePeriodicAnimalArrivalCheck(
+        context: Context
+    ) where T : ListenableWorker {
         val constraints = Constraints.Builder()
             .setRequiredNetworkType(NetworkType.CONNECTED)
             .build()
 
-        val dailyRequest = PeriodicWorkRequestBuilder<T>(6, TimeUnit.HOURS)
+        val request = PeriodicWorkRequestBuilder<T>(6, TimeUnit.HOURS)
             .setConstraints(constraints)
             .build()
 
-        WorkManager.getInstance(context).enqueueUniquePeriodicWork(
-            "CheckBuildingsWork",
+        val workManager = WorkManager.getInstance(context)
+        workManager.cancelUniqueWork(LEGACY_ANIMAL_WORK_NAME)
+
+        workManager.enqueueUniquePeriodicWork(
+            ANIMAL_ARRIVAL_WORK_NAME,
             ExistingPeriodicWorkPolicy.KEEP,
-            dailyRequest
+            request
         )
     }
 
-    inline fun <reified T> enqueueOneTimeGameSync(context: Context) where T : ListenableWorker {
+    fun cancelPeriodicAnimalArrivalCheck(context: Context) {
+        val workManager = WorkManager.getInstance(context)
+        workManager.cancelUniqueWork(ANIMAL_ARRIVAL_WORK_NAME)
+        workManager.cancelUniqueWork(LEGACY_ANIMAL_WORK_NAME)
+    }
+
+    /**
+     * Runs one backup/restore pass when the app leaves the foreground.
+     * KEEP prevents several lifecycle events from queuing duplicate syncs.
+     */
+    inline fun <reified T> enqueueOneTimeGameSync(
+        context: Context
+    ) where T : ListenableWorker {
         val constraints = Constraints.Builder()
             .setRequiredNetworkType(NetworkType.CONNECTED)
             .build()
@@ -39,10 +69,13 @@ object GameWorkerSetup {
             .build()
 
         WorkManager.getInstance(context).enqueueUniqueWork(
-            "GameSyncWork",
-            ExistingWorkPolicy.REPLACE,
+            GAME_SYNC_WORK_NAME,
+            ExistingWorkPolicy.KEEP,
             request
         )
     }
 
+    fun cancelOneTimeGameSync(context: Context) {
+        WorkManager.getInstance(context).cancelUniqueWork(GAME_SYNC_WORK_NAME)
+    }
 }

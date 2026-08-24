@@ -10,6 +10,7 @@ import android.util.Log
 import androidx.core.app.NotificationCompat
 import androidx.core.net.toUri
 import androidx.work.ListenableWorker
+import kotlinx.coroutines.CancellationException
 import pro.progr.authapi.AuthInterface
 import pro.progr.owlgame.BuildConfig
 import pro.progr.owlgame.R
@@ -27,7 +28,7 @@ import java.time.LocalTime
 
 private const val ANIMAL_CHANNEL_ID = "animal_channel_id"
 
-suspend fun doAnimalBuildingsWork(
+suspend fun doAnimalArrivalCheckWork(
     applicationContext: Context,
     auth: AuthInterface
 ): ListenableWorker.Result = try {
@@ -108,8 +109,10 @@ suspend fun doAnimalBuildingsWork(
 
 
     ListenableWorker.Result.success()
+} catch (e: CancellationException) {
+    throw e
 } catch (e: Exception) {
-    Log.e("doAnimalBuildingsWork", "${e.message}")
+    Log.e("AnimalArrivalWork", "${e.message}")
     ListenableWorker.Result.failure()
 }
 
