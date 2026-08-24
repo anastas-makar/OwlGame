@@ -10,6 +10,7 @@ import pro.progr.owlgame.data.repository.impl.ExpeditionMedalRepositoryImpl
 import pro.progr.owlgame.data.repository.impl.ExpeditionsRepositoryImpl
 import pro.progr.owlgame.data.repository.impl.FurnitureRepositoryImpl
 import pro.progr.owlgame.data.repository.impl.GardenItemsRepositoryImpl
+import pro.progr.owlgame.data.repository.impl.GameSyncRepositoryImpl
 import pro.progr.owlgame.data.repository.impl.GrowthRepositoryImpl
 import pro.progr.owlgame.data.repository.impl.ImageRepositoryImpl
 import pro.progr.owlgame.data.repository.impl.LocationsRepositoryImpl
@@ -32,6 +33,7 @@ import pro.progr.owlgame.domain.repository.ExpeditionMedalRepository
 import pro.progr.owlgame.domain.repository.ExpeditionsRepository
 import pro.progr.owlgame.domain.repository.FurnitureRepository
 import pro.progr.owlgame.domain.repository.GardenItemsRepository
+import pro.progr.owlgame.domain.repository.GameSyncRepository
 import pro.progr.owlgame.domain.repository.GrowthRepository
 import pro.progr.owlgame.domain.repository.ImageRepository
 import pro.progr.owlgame.domain.repository.LocationsRepository
@@ -50,6 +52,10 @@ import javax.inject.Singleton
 
 @Module
 interface RepositoryBindingsModule {
+
+    @Binds
+    @Singleton
+    fun bindGameSyncRepository(impl: GameSyncRepositoryImpl): GameSyncRepository
 
     @Binds
     @Singleton

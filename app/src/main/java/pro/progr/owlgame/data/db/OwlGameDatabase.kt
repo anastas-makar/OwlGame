@@ -4,7 +4,11 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.sqlite.db.SupportSQLiteDatabase
 import pro.progr.owlgame.data.db.dao.AnimalDao
+import pro.progr.owlgame.data.db.dao.AppMetaDao
+import pro.progr.owlgame.data.db.dao.GameSyncDao
+import pro.progr.owlgame.data.db.dao.OutboxDao
 import pro.progr.owlgame.data.db.dao.BuildingWithAnimalDao
 import pro.progr.owlgame.data.db.dao.BuildingWithDataDao
 import pro.progr.owlgame.data.db.dao.BuildingsDao
@@ -27,6 +31,8 @@ import pro.progr.owlgame.data.db.dao.StreetsDao
 import pro.progr.owlgame.data.db.dao.SuppliesDao
 import pro.progr.owlgame.data.db.dao.SupplyToRecipeDao
 import pro.progr.owlgame.data.db.entity.Animal
+import pro.progr.owlgame.data.db.entity.AppMeta
+import pro.progr.owlgame.data.db.entity.Outbox
 import pro.progr.owlgame.data.db.entity.ExpeditionMedal
 import pro.progr.owlgame.data.db.entity.Building
 import pro.progr.owlgame.data.db.entity.Country
@@ -44,6 +50,7 @@ import pro.progr.owlgame.data.db.entity.RoomEntity
 import pro.progr.owlgame.data.db.entity.Street
 import pro.progr.owlgame.data.db.entity.Supply
 import pro.progr.owlgame.data.db.entity.SupplyToRecipe
+import java.util.UUID
 
 @Database(entities = [
     Building::class,
@@ -63,7 +70,9 @@ import pro.progr.owlgame.data.db.entity.SupplyToRecipe
     SupplyToRecipe::class,
     Location::class,
     LocationScene::class,
-    Country::class],
+    Country::class,
+    Outbox::class,
+    AppMeta::class],
     version = 1, exportSchema = false)
 abstract class OwlGameDatabase : RoomDatabase() {
 
@@ -110,7 +119,58 @@ abstract class OwlGameDatabase : RoomDatabase() {
 
     abstract fun countriesDao(): CountriesDao
 
+    abstract fun outboxDao(): OutboxDao
+
+    abstract fun appMetaDao(): AppMetaDao
+
+    abstract fun gameSyncDao(): GameSyncDao
+
     companion object {
+
+        private val SYNC_TABLES = listOf(
+            "animals",
+            "buildings",
+            "countries",
+            "enemies",
+            "expeditions",
+            "expedition_medals",
+            "furniture",
+            "gardens",
+            "garden_items",
+            "locations",
+            "location_scenes",
+            "maps",
+            "plants",
+            "recipes",
+            "rooms",
+            "streets",
+            "supplies",
+            "supply_to_recipe"
+        )
+
+        private fun createOutboxTriggers(db: SupportSQLiteDatabase) {
+            SYNC_TABLES.forEach { table ->
+                db.execSQL(
+                    """
+                    CREATE TRIGGER IF NOT EXISTS trg_${table}_ins_outbox
+                    AFTER INSERT ON `$table` BEGIN
+                        INSERT INTO outbox(table_name, row_id)
+                        VALUES('$table', NEW.id);
+                    END;
+                    """.trimIndent()
+                )
+
+                db.execSQL(
+                    """
+                    CREATE TRIGGER IF NOT EXISTS trg_${table}_upd_outbox
+                    AFTER UPDATE ON `$table` BEGIN
+                        INSERT INTO outbox(table_name, row_id)
+                        VALUES('$table', NEW.id);
+                    END;
+                    """.trimIndent()
+                )
+            }
+        }
 
         @Volatile
         private var INSTANCE: OwlGameDatabase? = null
@@ -121,7 +181,35 @@ abstract class OwlGameDatabase : RoomDatabase() {
                     context.applicationContext,
                     OwlGameDatabase::class.java,
                     "owl_game_database"
-                ).build()
+                )
+                    .addCallback(object : RoomDatabase.Callback() {
+                        override fun onCreate(db: SupportSQLiteDatabase) {
+                            super.onCreate(db)
+                            db.execSQL(
+                                "INSERT OR IGNORE INTO app_meta(`key`, value) VALUES('device_id', ?)",
+                                arrayOf(UUID.randomUUID().toString())
+                            )
+                            db.execSQL(
+                                "INSERT OR IGNORE INTO app_meta(`key`, value) VALUES('initial_restore_completed', '0')"
+                            )
+                        }
+
+                        override fun onOpen(db: SupportSQLiteDatabase) {
+                            super.onOpen(db)
+
+                            // Страховка на случай ручной правки/старой dev-базы.
+                            db.execSQL(
+                                "INSERT OR IGNORE INTO app_meta(`key`, value) VALUES('device_id', ?)",
+                                arrayOf(UUID.randomUUID().toString())
+                            )
+                            db.execSQL(
+                                "INSERT OR IGNORE INTO app_meta(`key`, value) VALUES('initial_restore_completed', '0')"
+                            )
+
+                            createOutboxTriggers(db)
+                        }
+                    })
+                    .build()
                 INSTANCE = instance
                 instance
             }

@@ -9,6 +9,7 @@ import pro.progr.owlgame.data.web.LootApiService
 import pro.progr.owlgame.data.web.MapApiService
 import pro.progr.owlgame.data.web.QuestApiService
 import pro.progr.owlgame.data.web.RetrofitProvider
+import pro.progr.owlgame.data.web.sync.GameSyncApiService
 import retrofit2.Retrofit
 import javax.inject.Named
 import javax.inject.Singleton
@@ -56,4 +57,10 @@ class NetworkModule {
     fun provideAnimalApiService(retrofit: Retrofit): AnimalApiService {
         return retrofit.create(AnimalApiService::class.java)
     }
+    @Provides
+    @Singleton
+    fun provideGameSyncApiService(retrofit: Retrofit): GameSyncApiService {
+        return retrofit.create(GameSyncApiService::class.java)
+    }
+
 }

@@ -4,6 +4,9 @@ import android.content.Context
 import dagger.Module
 import dagger.Provides
 import pro.progr.owlgame.data.db.dao.AnimalDao
+import pro.progr.owlgame.data.db.dao.AppMetaDao
+import pro.progr.owlgame.data.db.dao.GameSyncDao
+import pro.progr.owlgame.data.db.dao.OutboxDao
 import pro.progr.owlgame.data.db.dao.BuildingWithAnimalDao
 import pro.progr.owlgame.data.db.dao.BuildingWithDataDao
 import pro.progr.owlgame.data.db.dao.BuildingsDao
@@ -146,4 +149,13 @@ object DatabaseModule {
     fun provideCountriesDao(database: OwlGameDatabase): CountriesDao {
         return database.countriesDao()
     }
+    @Provides
+    fun provideOutboxDao(database: OwlGameDatabase): OutboxDao = database.outboxDao()
+
+    @Provides
+    fun provideAppMetaDao(database: OwlGameDatabase): AppMetaDao = database.appMetaDao()
+
+    @Provides
+    fun provideGameSyncDao(database: OwlGameDatabase): GameSyncDao = database.gameSyncDao()
+
 }
