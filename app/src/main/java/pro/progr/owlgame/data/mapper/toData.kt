@@ -101,7 +101,7 @@ fun DomainMapType.toData(): DbMapType =
 
 fun DomainLocationType.toData(): DbLocationType =
     when (this) {
-        DomainLocationType.WATER_ANOMALY -> DbLocationType.WATER_ANOMALY
+        DomainLocationType.WATER_LOCATION -> DbLocationType.WATER_LOCATION
         DomainLocationType.FOUNTAIN -> DbLocationType.FOUNTAIN
         DomainLocationType.WATERFALL -> DbLocationType.WATERFALL
         DomainLocationType.LANDMARK -> DbLocationType.LANDMARK

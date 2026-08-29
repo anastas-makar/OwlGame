@@ -25,7 +25,7 @@ fun gardenItemIconRes(type: ItemType): Int = when (type) {
 
 @DrawableRes
 fun locationIconRes(type: LocationType): Int = when (type) {
-    LocationType.WATER_ANOMALY -> R.drawable.ic_water_anomaly
+    LocationType.WATER_LOCATION -> R.drawable.ic_water_anomaly
     LocationType.FOUNTAIN -> R.drawable.ic_fountain
     LocationType.WATERFALL -> R.drawable.ic_waterfall
     LocationType.LANDMARK -> R.drawable.ic_landmark

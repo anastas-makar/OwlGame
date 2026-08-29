@@ -10,5 +10,5 @@ enum class LocationType {
     RESORT,
     WATERFALL,
     RUINS,
-    WATER_ANOMALY
+    WATER_LOCATION
 }

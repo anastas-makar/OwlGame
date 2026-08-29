@@ -129,7 +129,7 @@ fun DbItemType.toDomain(): DomainItemType =
 
 fun DbLocationType.toDomain(): DomainLocationType =
     when (this) {
-        DbLocationType.WATER_ANOMALY -> DomainLocationType.WATER_ANOMALY
+        DbLocationType.WATER_LOCATION -> DomainLocationType.WATER_LOCATION
         DbLocationType.FOUNTAIN -> DomainLocationType.FOUNTAIN
         DbLocationType.WATERFALL -> DomainLocationType.WATERFALL
         DbLocationType.LANDMARK -> DomainLocationType.LANDMARK

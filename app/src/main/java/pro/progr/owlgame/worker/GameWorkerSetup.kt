@@ -33,7 +33,7 @@ object GameWorkerSetup {
             .setRequiredNetworkType(NetworkType.CONNECTED)
             .build()
 
-        val request = PeriodicWorkRequestBuilder<T>(6, TimeUnit.HOURS)
+        val request = PeriodicWorkRequestBuilder<T>(16, TimeUnit.MINUTES)
             .setConstraints(constraints)
             .build()
 
@@ -42,7 +42,7 @@ object GameWorkerSetup {
 
         workManager.enqueueUniquePeriodicWork(
             ANIMAL_ARRIVAL_WORK_NAME,
-            ExistingPeriodicWorkPolicy.KEEP,
+            ExistingPeriodicWorkPolicy.REPLACE,
             request
         )
     }
