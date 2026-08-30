@@ -186,7 +186,7 @@ abstract class OwlGameDatabase : RoomDatabase() {
                         override fun onCreate(db: SupportSQLiteDatabase) {
                             super.onCreate(db)
                             db.execSQL(
-                                "INSERT OR IGNORE INTO app_meta(`key`, value) VALUES('device_id', ?)",
+                                "INSERT OR IGNORE INTO app_meta(`key`, value) VALUES('game_instance_id', ?)",
                                 arrayOf(UUID.randomUUID().toString())
                             )
                             db.execSQL(
@@ -199,7 +199,7 @@ abstract class OwlGameDatabase : RoomDatabase() {
 
                             // Страховка на случай ручной правки/старой dev-базы.
                             db.execSQL(
-                                "INSERT OR IGNORE INTO app_meta(`key`, value) VALUES('device_id', ?)",
+                                "INSERT OR IGNORE INTO app_meta(`key`, value) VALUES('game_instance_id', ?)",
                                 arrayOf(UUID.randomUUID().toString())
                             )
                             db.execSQL(

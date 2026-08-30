@@ -12,7 +12,7 @@ import pro.progr.owlgame.data.model.ExpeditionStatus
 import pro.progr.owlgame.data.model.LocationType
 
 data class GameSyncMetaData(
-    val deviceId: String,
+    val gameInstanceId: String,
     val dbVersion: Int
 )
 

@@ -5,9 +5,9 @@ import retrofit2.http.Body
 import retrofit2.http.POST
 
 interface GameSyncApiService {
-    @POST("sync/game/backup")
+    @POST("sync/backup")
     suspend fun backup(@Body request: GameBackupRequest): Response<GameBackupResponse>
 
-    @POST("sync/game/restore")
+    @POST("sync/restore")
     suspend fun restore(@Body request: GameRestoreRequest): Response<GameRestoreResponse>
 }

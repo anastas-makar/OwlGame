@@ -23,7 +23,7 @@ import pro.progr.owlgame.domain.repository.GameSyncRepository
 import pro.progr.owlgame.domain.repository.ImageRepository
 import javax.inject.Inject
 
-private const val META_DEVICE_ID = "device_id"
+private const val META_GAME_INSTANCE_ID = "game_instance_id"
 private const val META_INITIAL_RESTORE_COMPLETED = "initial_restore_completed"
 
 class GameSyncRepositoryImpl @Inject constructor(
@@ -141,8 +141,8 @@ class GameSyncRepositoryImpl @Inject constructor(
     }
 
     private suspend fun metaData(): GameSyncMetaData = GameSyncMetaData(
-        deviceId = requireNotNull(appMetaDao.getValue(META_DEVICE_ID)) {
-            "Game database has no device_id"
+        gameInstanceId = requireNotNull(appMetaDao.getValue(META_GAME_INSTANCE_ID)) {
+            "Game database has no game_instance_id"
         },
         dbVersion = db.openHelper.readableDatabase.version
     )
