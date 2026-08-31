@@ -8,6 +8,9 @@ import okhttp3.Request
 import pro.progr.owlgame.domain.repository.ImageRepository
 import java.io.File
 import javax.inject.Inject
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
+import java.util.concurrent.ConcurrentHashMap
 
 class ImageRepositoryImpl @Inject constructor(
     private val context: Context
@@ -16,8 +19,7 @@ class ImageRepositoryImpl @Inject constructor(
     override suspend fun saveImageLocally(
         imageUrl: String,
         imageKey: String
-    ): String = withContext(Dispatchers.IO) {
-
+    ): String {
         require(
             imageUrl.startsWith("http://") ||
                     imageUrl.startsWith("https://")
@@ -34,22 +36,55 @@ class ImageRepositoryImpl @Inject constructor(
             "Invalid imageKey: $imageKey"
         }
 
-        val imagesDir = File(context.filesDir, "images")
-        val file = File(imagesDir, imageKey)
-
-        file.parentFile?.let { parent ->
-            check(parent.exists() || parent.mkdirs()) {
-                "Failed to create image directory: ${parent.absolutePath}"
-            }
+        val mutex = imageMutexes.getOrPut(imageKey) {
+            Mutex()
         }
 
-        if (file.exists()) {
+        return mutex.withLock {
+            saveImageLocallyLocked(
+                imageUrl = imageUrl,
+                imageKey = imageKey
+            )
+        }
+    }
+
+    private suspend fun saveImageLocallyLocked(
+        imageUrl: String,
+        imageKey: String
+    ): String = withContext(Dispatchers.IO) {
+
+        val imagesDir = File(
+            context.filesDir,
+            "images"
+        )
+
+        val file = File(
+            imagesDir,
+            imageKey
+        )
+
+        val parent = checkNotNull(file.parentFile) {
+            "Image has no parent directory: $imageKey"
+        }
+
+        // mkdirs() может вернуть false, если другую директорию
+        // уже создали параллельно. Поэтому проверяем итоговое состояние.
+        parent.mkdirs()
+
+        check(parent.isDirectory) {
+            "Failed to create image directory: ${parent.absolutePath}"
+        }
+
+        // Пока мы держим mutex конкретного imageKey,
+        // второй поток не сможет одновременно качать тот же файл.
+        if (file.isFile) {
             return@withContext file.absolutePath
         }
 
-        val tempFile = File(
-            file.parentFile,
-            "${file.name}.part"
+        val tempFile = File.createTempFile(
+            "${file.name}.",
+            ".part",
+            parent
         )
 
         try {
@@ -58,24 +93,30 @@ class ImageRepositoryImpl @Inject constructor(
                 .get()
                 .build()
 
-            httpClient.newCall(request).execute().use { response ->
-                check(response.isSuccessful) {
-                    "HTTP ${response.code} while loading $imageUrl"
-                }
+            httpClient
+                .newCall(request)
+                .execute()
+                .use { response ->
 
-                val body = checkNotNull(response.body) {
-                    "Empty response body while loading $imageUrl"
-                }
+                    check(response.isSuccessful) {
+                        "HTTP ${response.code} while loading $imageUrl"
+                    }
 
-                body.byteStream().use { input ->
-                    tempFile.outputStream().use { output ->
-                        input.copyTo(output)
+                    val body = checkNotNull(response.body) {
+                        "Empty response body while loading $imageUrl"
+                    }
+
+                    body.byteStream().use { input ->
+                        tempFile.outputStream().use { output ->
+                            input.copyTo(output)
+                        }
                     }
                 }
-            }
 
             check(tempFile.renameTo(file)) {
-                "Failed to move downloaded image to ${file.absolutePath}"
+                "Failed to move downloaded image " +
+                        "from ${tempFile.absolutePath} " +
+                        "to ${file.absolutePath}"
             }
 
             file.absolutePath
@@ -85,13 +126,19 @@ class ImageRepositoryImpl @Inject constructor(
 
             throw Exception(
                 "Failed to load image: " +
-                        "imageUrl=$imageUrl, imageKey=$imageKey; ${e.message}",
+                        "imageUrl=$imageUrl, " +
+                        "imageKey=$imageKey; " +
+                        "${e.message}",
                 e
             )
         }
     }
 
     companion object {
+
         private val httpClient = OkHttpClient()
+
+        private val imageMutexes =
+            ConcurrentHashMap<String, Mutex>()
     }
 }
