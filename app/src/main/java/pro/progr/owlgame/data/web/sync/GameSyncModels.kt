@@ -31,7 +31,7 @@ data class GameRestoreRequest(
 
 data class GameRestoreResponse(
     val hasBackup: Boolean,
-    val sourceDeviceId: String? = null,
+    val sourceGameInstanceId: String? = null,
     val data: GameSyncData = GameSyncData()
 )
 
