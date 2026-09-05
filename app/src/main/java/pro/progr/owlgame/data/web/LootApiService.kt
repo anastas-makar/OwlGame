@@ -2,30 +2,33 @@ package pro.progr.owlgame.data.web
 
 import pro.progr.owlgame.data.web.merchant.MerchantShopApiModel
 import pro.progr.owlgame.data.web.pouchitems.PouchItemsDto
+import pro.progr.owlgame.data.web.quest.QuestLootRequest
 import retrofit2.Response
 import retrofit2.http.GET
-import retrofit2.http.Query
+import retrofit2.http.POST
+import retrofit2.http.Path
+import retrofit2.http.Body
 
 interface LootApiService {
     @GET("pouches")
-    suspend fun getPouches(): Response<List<String>>
+    suspend fun getPouchOffer(): Response<PouchOffer>
 
-    @GET("inPouch")
+    @POST("pouches/{pouchId}/open")
     suspend fun getInPouch(
-        @Query("pouchId") pouchId: String
+        @Path("pouchId") pouchId: String
     ): Response<PouchItemsDto>
 
-    @GET("loot")
+    @POST("expeditions/{expeditionId}/loot")
     suspend fun getLoot(
-        @Query("expeditionId") expeditionId: String
+        @Path("expeditionId") expeditionId: String
     ): Response<PouchItemsDto>
 
-    @GET("loot")
+    @POST("quests/{questId}/loot")
     suspend fun getQuestLoot(
-        @Query("questId") questId: String,
-        @Query("endingId") endingId: String
+        @Path("questId") questId: String,
+        @Body request: QuestLootRequest
     ): Response<PouchItemsDto>
 
-    @GET("merchantShop")
+    @GET("merchant-shop")
     suspend fun getMerchantShop(): Response<MerchantShopApiModel>
 }

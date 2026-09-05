@@ -4,6 +4,7 @@ import dagger.Module
 import dagger.Provides
 import pro.progr.authapi.AuthInterface
 import pro.progr.owlgame.BuildConfig
+import pro.progr.owlgame.data.db.dao.AppMetaDao
 import pro.progr.owlgame.data.web.AnimalApiService
 import pro.progr.owlgame.data.web.LootApiService
 import pro.progr.owlgame.data.web.MapApiService
@@ -30,8 +31,9 @@ class NetworkModule {
     @Provides
     @Singleton
     fun provideRetrofit(@Named("baseUrl") baseUrl: String,
-                        auth: AuthInterface): Retrofit {
-        return RetrofitProvider.provideRetrofit(baseUrl, auth)
+                        auth: AuthInterface,
+                        appMetaDao: AppMetaDao): Retrofit {
+        return RetrofitProvider.provideRetrofit(baseUrl, auth, appMetaDao)
     }
 
     @Provides

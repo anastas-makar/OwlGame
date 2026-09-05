@@ -24,7 +24,8 @@ suspend fun runGameSync(
     val db = OwlGameDatabase.getDatabase(applicationContext)
     val api = RetrofitProvider.provideRetrofit(
         BuildConfig.API_BASE_URL,
-        auth
+        auth,
+        db.appMetaDao()
     ).create(GameSyncApiService::class.java)
 
     val syncRepository = GameSyncRepositoryImpl(

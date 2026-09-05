@@ -2,6 +2,7 @@ package pro.progr.owlgame.data.repository.impl
 
 import pro.progr.owlgame.data.mapper.toDomain
 import pro.progr.owlgame.data.web.LootApiService
+import pro.progr.owlgame.data.web.quest.QuestLootRequest
 import pro.progr.owlgame.domain.model.PouchItemsModel
 import pro.progr.owlgame.domain.repository.LootRepository
 import javax.inject.Inject
@@ -30,7 +31,7 @@ class LootRepositoryImpl @Inject constructor(
         return try {
             val response = apiService.getQuestLoot(
                 questId = questId,
-                endingId = endingId
+                request = QuestLootRequest(endingId = endingId)
             )
 
             if (response.isSuccessful) {

@@ -46,7 +46,8 @@ suspend fun doAnimalArrivalCheckWork(
         db.animalDao(),
         RetrofitProvider.provideRetrofit(
             BuildConfig.API_BASE_URL,
-            auth
+            auth,
+            db.appMetaDao()
         ).create(AnimalApiService::class.java),
         Clock.systemDefaultZone()
     )

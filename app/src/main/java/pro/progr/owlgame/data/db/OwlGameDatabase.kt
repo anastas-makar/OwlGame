@@ -186,11 +186,11 @@ abstract class OwlGameDatabase : RoomDatabase() {
                         override fun onCreate(db: SupportSQLiteDatabase) {
                             super.onCreate(db)
                             db.execSQL(
-                                "INSERT OR IGNORE INTO app_meta(`key`, value) VALUES('game_instance_id', ?)",
+                                "INSERT OR IGNORE INTO app_meta(`key`, value) VALUES('$GAME_INSTANCE_ID_META_KEY', ?)",
                                 arrayOf(UUID.randomUUID().toString())
                             )
                             db.execSQL(
-                                "INSERT OR IGNORE INTO app_meta(`key`, value) VALUES('initial_restore_completed', '0')"
+                                "INSERT OR IGNORE INTO app_meta(`key`, value) VALUES('$INITIAL_RESTORE_COMPLETED_META_KEY', '0')"
                             )
                         }
 
@@ -199,11 +199,11 @@ abstract class OwlGameDatabase : RoomDatabase() {
 
                             // Страховка на случай ручной правки/старой dev-базы.
                             db.execSQL(
-                                "INSERT OR IGNORE INTO app_meta(`key`, value) VALUES('game_instance_id', ?)",
+                                "INSERT OR IGNORE INTO app_meta(`key`, value) VALUES('$GAME_INSTANCE_ID_META_KEY', ?)",
                                 arrayOf(UUID.randomUUID().toString())
                             )
                             db.execSQL(
-                                "INSERT OR IGNORE INTO app_meta(`key`, value) VALUES('initial_restore_completed', '0')"
+                                "INSERT OR IGNORE INTO app_meta(`key`, value) VALUES('$INITIAL_RESTORE_COMPLETED_META_KEY', '0')"
                             )
 
                             createOutboxTriggers(db)

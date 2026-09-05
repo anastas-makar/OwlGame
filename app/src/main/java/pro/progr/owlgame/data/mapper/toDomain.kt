@@ -20,7 +20,7 @@ import pro.progr.owlgame.data.db.entity.Plant
 import pro.progr.owlgame.data.db.entity.RoomEntity
 import pro.progr.owlgame.data.db.entity.Street
 import pro.progr.owlgame.data.db.entity.Supply
-import pro.progr.owlgame.data.web.Pouch
+import pro.progr.owlgame.data.web.PouchOffer
 import pro.progr.owlgame.domain.model.AnimalModel
 import pro.progr.owlgame.domain.model.BuildingModel
 import pro.progr.owlgame.domain.model.BuildingWithAnimalModel
@@ -39,7 +39,7 @@ import pro.progr.owlgame.domain.model.LocationWithScenesModel
 import pro.progr.owlgame.domain.model.MapModel
 import pro.progr.owlgame.domain.model.MapWithBuildingsModel
 import pro.progr.owlgame.domain.model.PlantModel
-import pro.progr.owlgame.domain.model.PouchModel
+import pro.progr.owlgame.domain.model.PouchOfferModel
 import pro.progr.owlgame.domain.model.RoomModel
 import pro.progr.owlgame.domain.model.StreetModel
 import pro.progr.owlgame.domain.model.SupplyModel
@@ -393,10 +393,10 @@ fun Plant.toDomain(): PlantModel =
         imageKey = imageKey
     )
 
-fun Pouch.toDomain() : PouchModel =
-    PouchModel(
-        id = id,
-        imageUrl = imageUrl
+fun PouchOffer.toDomain() : PouchOfferModel =
+    PouchOfferModel(
+        pouchId = pouchId,
+        imageUrls = imageUrls
     )
 
 fun Street.toDomain() : StreetModel =

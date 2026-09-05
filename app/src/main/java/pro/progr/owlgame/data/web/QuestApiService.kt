@@ -7,7 +7,7 @@ import retrofit2.http.Path
 
 interface QuestApiService {
 
-    @GET("quests/{questId}/")
+    @GET("quests/{questId}")
     suspend fun getQuest(
         @Path("questId") questId: String
     ): Response<QuestApiModel>

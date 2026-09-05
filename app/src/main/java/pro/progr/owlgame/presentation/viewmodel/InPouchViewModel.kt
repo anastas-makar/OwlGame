@@ -36,11 +36,8 @@ class InPouchViewModel @Inject constructor(
                 pouchesRepository.getInPouch(pouchId).getOrNull()
             } ?: return@launch
 
-            viewModelScope.launch {
-                val newPouch = savePouchUseCase(webPouch, diamondDao)
-                inPouch.value = newPouch
-            }
-
+            val newPouch = savePouchUseCase(webPouch, diamondDao)
+            inPouch.value = newPouch
             lastLoadedPouchId = pouchId
         }
     }

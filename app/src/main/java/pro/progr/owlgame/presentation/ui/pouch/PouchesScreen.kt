@@ -24,7 +24,6 @@ import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import kotlinx.coroutines.delay
 import pro.progr.diamondapi.PurchaseInterface
-import pro.progr.owlgame.domain.model.PouchModel
 import pro.progr.owlgame.presentation.ui.PouchesBar
 import pro.progr.owlgame.presentation.ui.PouchesList
 import pro.progr.owlgame.presentation.viewmodel.InPouchViewModel
@@ -42,16 +41,16 @@ fun PouchesScreen(
         pouchesViewModel.loadPouches()
     }
 
-    val pouches = pouchesViewModel.pouches.value
-    if (pouches.isEmpty()) return
+    val offer = pouchesViewModel.pouchOffer.value ?: return
+    val pouches = offer.imageUrls
 
     val isSelected = pouchesViewModel.isPouchSelected.value
-    val selectedPouch = pouchesViewModel.selectedPouch.value
+    val selectedImageUrl = pouchesViewModel.selectedImageUrl.value
 
-    // грузим только когда реально выбран мешочек
-    LaunchedEffect(isSelected, selectedPouch?.id) {
+    // Все изображения относятся к одному предложению и одному pouchId.
+    LaunchedEffect(isSelected, offer.pouchId) {
         if (isSelected) {
-            selectedPouch?.id?.let { inPouchViewModel.loadInPouch(it, diamondDao) }
+            inPouchViewModel.loadInPouch(offer.pouchId, diamondDao)
         }
     }
 
@@ -71,8 +70,8 @@ fun PouchesScreen(
         },
         content = { innerPadding ->
             if (isSelected) {
-                selectedPouch?.let { p ->
-                    InPouchContent(navController, inPouchViewModel, p)
+                selectedImageUrl?.let { imageUrl ->
+                    InPouchContent(navController, inPouchViewModel, imageUrl)
                 }
             } else {
                 Row(
@@ -99,7 +98,7 @@ enum class Direction { UP, DOWN }
 @Composable
 fun AnimatedPouchesColumn(
     modifier: Modifier = Modifier,
-    pouches: List<PouchModel>,
+    pouches: List<String>,
     direction: Direction,
     pouchesViewModel: PouchesViewModel
 ) {
@@ -123,21 +122,21 @@ fun AnimatedPouchesColumn(
         modifier = modifier,
         reverseLayout = direction == Direction.DOWN // Обратное направление для DOWN
     ) {
-        itemsIndexed(pouches) { _, pouch ->
+        itemsIndexed(pouches) { _, imageUrl ->
             Box(
                 modifier = Modifier
                     .padding(8.dp)
                     .fillMaxWidth()
             ) {
                 AsyncImage(
-                    model = pouch.imageUrl,
+                    model = imageUrl,
                     contentDescription = null,
                     contentScale = ContentScale.Crop,
                     modifier = Modifier
                         .fillMaxWidth()
                         .aspectRatio(1f) // Квадратные изображения
                         .clickable {
-                            pouchesViewModel.selectedPouch.value = pouch
+                            pouchesViewModel.selectedImageUrl.value = imageUrl
                             pouchesViewModel.isPouchSelected.value = true
                         }
                 )

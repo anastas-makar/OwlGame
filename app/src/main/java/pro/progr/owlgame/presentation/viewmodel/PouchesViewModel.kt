@@ -6,24 +6,24 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import pro.progr.owlgame.domain.repository.PouchesRepository
-import pro.progr.owlgame.domain.model.PouchModel
+import pro.progr.owlgame.domain.model.PouchOfferModel
 import javax.inject.Inject
 
 class PouchesViewModel @Inject constructor(
     private val pouchesRepository: PouchesRepository
 ) : ViewModel() {
 
-    var pouches = mutableStateOf<List<PouchModel>>(emptyList())
+    val pouchOffer = mutableStateOf<PouchOfferModel?>(null)
 
     val isPouchSelected = mutableStateOf(false)
-    var selectedPouch = mutableStateOf<PouchModel?>(null)
+    val selectedImageUrl = mutableStateOf<String?>(null)
 
     fun loadPouches() {
         viewModelScope.launch {
-            val result = pouchesRepository.getPouches()
+            val result = pouchesRepository.getPouchOffer()
 
-            result.onSuccess { pouchesList ->
-                pouches.value = pouchesList
+            result.onSuccess { offer ->
+                pouchOffer.value = offer
             }.onFailure {
                 Log.e("PouchesViewModel", "Failed to load pouches. ERROR RESULT: $it")
             }

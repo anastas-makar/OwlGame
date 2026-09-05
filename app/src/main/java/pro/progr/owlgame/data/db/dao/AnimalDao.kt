@@ -18,6 +18,9 @@ interface AnimalDao {
     @Query("SELECT * FROM animals WHERE status='SEARCHING' LIMIT 1")
     fun getSearchingAnimal(): Animal?
 
+    @Query("SELECT * FROM animals WHERE status='SEARCHING' LIMIT 1")
+    fun observeSearchingAnimal(): Flow<Animal?>
+
     @Query("UPDATE animals SET status='PET' WHERE id=:animalId")
     fun setPet(animalId: String)
 

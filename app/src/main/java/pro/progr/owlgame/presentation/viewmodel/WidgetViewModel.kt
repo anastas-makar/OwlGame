@@ -1,60 +1,85 @@
 package pro.progr.owlgame.presentation.viewmodel
 
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import pro.progr.owlgame.R
-import pro.progr.owlgame.domain.model.AnimalStatus
+import pro.progr.owlgame.domain.model.AnimalModel
 import pro.progr.owlgame.domain.repository.WidgetRepository
 import pro.progr.owlgame.presentation.resources.StringProvider
 import pro.progr.owlgame.presentation.ui.model.OwlMenuModel
+import pro.progr.owlgame.presentation.ui.model.WidgetMenuUiState
 
 class WidgetViewModel(
     private val widgetRepository: WidgetRepository,
     private val stringProvider: StringProvider
 ) : ViewModel() {
 
-    val menuItems = mutableStateOf(emptyList<OwlMenuModel>())
+    val uiState = mutableStateOf(WidgetMenuUiState())
+    val isLoading = derivedStateOf { uiState.value.isLoading }
+    val menuItems = derivedStateOf { uiState.value.menuItems }
+    private val refresh = MutableStateFlow(0L)
+
+    init {
+        viewModelScope.launch {
+            combine(
+                widgetRepository.observeInitialRestoreCompleted(),
+                widgetRepository.observeSearchingAnimal(),
+                refresh
+            ) { restoreCompleted, searchingAnimal, _ ->
+                restoreCompleted to searchingAnimal
+            }.collect { (restoreCompleted, searchingAnimal) ->
+                if (!restoreCompleted) {
+                    uiState.value = WidgetMenuUiState(isLoading = true)
+                    return@collect
+                }
+
+                val items = withContext(Dispatchers.IO) {
+                    MenuListWrapper(
+                        widgetRepository = widgetRepository,
+                        stringProvider = stringProvider,
+                        searchingAnimal = searchingAnimal
+                    ).menuItems
+                }
+
+                uiState.value = WidgetMenuUiState(
+                    isLoading = false,
+                    menuItems = items
+                )
+            }
+        }
+    }
 
     fun updateMenuList() {
-        viewModelScope.launch {
-            val items = withContext(Dispatchers.IO) {
-                MenuListWrapper(
-                    widgetRepository = widgetRepository,
-                    stringProvider = stringProvider
-                ).menuItems
-            }
-
-            menuItems.value = items
-        }
+        refresh.update { it + 1L }
     }
 
     class MenuListWrapper(
         private val widgetRepository: WidgetRepository,
-        private val stringProvider: StringProvider
+        private val stringProvider: StringProvider,
+        private val searchingAnimal: AnimalModel?
     ) {
         val menuItems: ArrayList<OwlMenuModel>
             get() {
                 return ArrayList<OwlMenuModel>()
-                    .withAnimalSearching()
+                    .withAnimalSearching(searchingAnimal)
                     .withMerchant()
                     .withPouch()
                     .withMaps()
                     .withInventory()
             }
 
-        private fun ArrayList<OwlMenuModel>.withAnimalSearching(): ArrayList<OwlMenuModel> {
-            val animal = widgetRepository.getAnimal()
-
+        private fun ArrayList<OwlMenuModel>.withAnimalSearching(
+            animal: AnimalModel?
+        ): ArrayList<OwlMenuModel> {
             if (animal != null) {
-                if (animal.status != AnimalStatus.SEARCHING) {
-                    widgetRepository.clearAnimalDayAndId()
-                    return this
-                }
-
                 add(
                     OwlMenuModel(
                         text = stringProvider.getString(

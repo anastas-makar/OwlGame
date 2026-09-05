@@ -9,6 +9,8 @@ import kotlinx.coroutines.sync.Semaphore
 import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.sync.withPermit
 import pro.progr.owlgame.data.db.OwlGameDatabase
+import pro.progr.owlgame.data.db.GAME_INSTANCE_ID_META_KEY
+import pro.progr.owlgame.data.db.INITIAL_RESTORE_COMPLETED_META_KEY
 import pro.progr.owlgame.data.db.dao.AppMetaDao
 import pro.progr.owlgame.data.db.dao.GameSyncDao
 import pro.progr.owlgame.data.db.dao.OutboxDao
@@ -22,9 +24,6 @@ import pro.progr.owlgame.domain.model.GameSyncResult
 import pro.progr.owlgame.domain.repository.GameSyncRepository
 import pro.progr.owlgame.domain.repository.ImageRepository
 import javax.inject.Inject
-
-private const val META_GAME_INSTANCE_ID = "game_instance_id"
-private const val META_INITIAL_RESTORE_COMPLETED = "initial_restore_completed"
 
 class GameSyncRepositoryImpl @Inject constructor(
     private val db: OwlGameDatabase,
@@ -82,7 +81,7 @@ class GameSyncRepositoryImpl @Inject constructor(
             // INSERT-триггеры во время restore создадут outbox. Эти записи уже есть
             // на сервере в snapshot, поэтому отправлять их обратно не надо.
             outboxDao.clearAll()
-            appMetaDao.setValue(META_INITIAL_RESTORE_COMPLETED, "1")
+            appMetaDao.setValue(INITIAL_RESTORE_COMPLETED_META_KEY, "1")
         }
 
         return GameSyncResult.RESTORED
@@ -141,14 +140,14 @@ class GameSyncRepositoryImpl @Inject constructor(
     }
 
     private suspend fun metaData(): GameSyncMetaData = GameSyncMetaData(
-        gameInstanceId = requireNotNull(appMetaDao.getValue(META_GAME_INSTANCE_ID)) {
+        gameInstanceId = requireNotNull(appMetaDao.getValue(GAME_INSTANCE_ID_META_KEY)) {
             "Game database has no game_instance_id"
         },
         dbVersion = db.openHelper.readableDatabase.version
     )
 
     private suspend fun isInitialRestoreCompleted(): Boolean =
-        appMetaDao.getValue(META_INITIAL_RESTORE_COMPLETED) == "1"
+        appMetaDao.getValue(INITIAL_RESTORE_COMPLETED_META_KEY) == "1"
 
     private suspend fun <T> rows(
         byTable: Map<String, List<String>>,

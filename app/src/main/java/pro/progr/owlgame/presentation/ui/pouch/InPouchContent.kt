@@ -16,7 +16,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
-import pro.progr.owlgame.domain.model.PouchModel
 import pro.progr.owlgame.presentation.mapper.toLootHints
 import pro.progr.owlgame.presentation.mapper.toLootItems
 import pro.progr.owlgame.presentation.ui.model.InPouchDescription
@@ -29,7 +28,7 @@ import pro.progr.owlgame.R
 fun InPouchContent(
     navController: NavHostController,
     inPouchViewModel: InPouchViewModel,
-    pouch: PouchModel
+    pouchImageUrl: String
 ) {
     inPouchViewModel.inPouch.value?.let { inPouch ->
         val resources = LocalContext.current.resources
@@ -52,7 +51,7 @@ fun InPouchContent(
         ) {
             item {
                 InPouchHeader(
-                    pouch = pouch,
+                    imageUrl = pouchImageUrl,
                     description = InPouchDescription(inPouch).compile()
                 )
             }

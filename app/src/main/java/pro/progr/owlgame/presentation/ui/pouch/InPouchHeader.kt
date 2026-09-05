@@ -21,13 +21,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
-import pro.progr.owlgame.domain.model.PouchModel
 import androidx.compose.ui.res.stringResource
 import pro.progr.owlgame.R
 
 @Composable
 fun InPouchHeader(
-    pouch: PouchModel,
+    imageUrl: String,
     description: String
 ) {
     Card(
@@ -42,7 +41,7 @@ fun InPouchHeader(
             verticalAlignment = Alignment.CenterVertically
         ) {
             AsyncImage(
-                model = pouch.imageUrl,
+                model = imageUrl,
                 contentDescription = stringResource(R.string.in_pouch_image_content_description),
                 contentScale = ContentScale.Fit,
                 modifier = Modifier

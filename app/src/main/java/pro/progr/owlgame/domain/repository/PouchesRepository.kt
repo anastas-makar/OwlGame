@@ -1,12 +1,16 @@
 package pro.progr.owlgame.domain.repository
 
 import pro.progr.owlgame.domain.model.PouchItemsModel
-import pro.progr.owlgame.domain.model.PouchModel
+import pro.progr.owlgame.domain.model.PouchOfferModel
 
 interface PouchesRepository {
 
-    suspend fun getPouches(): Result<List<PouchModel>>
+    /**
+     * Returns one opening id and all images used by its animation.
+     * The caller must retain pouchId and reuse it when retrying an ambiguous open request.
+     */
+    suspend fun getPouchOffer(): Result<PouchOfferModel>
 
+    /** Repeating this call with the same pouchId returns the same server-side reward. */
     suspend fun getInPouch(pouchId: String): Result<PouchItemsModel>
 }
-

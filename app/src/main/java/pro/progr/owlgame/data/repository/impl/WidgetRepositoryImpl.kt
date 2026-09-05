@@ -2,7 +2,12 @@ package pro.progr.owlgame.data.repository.impl
 
 import android.content.Context
 import android.net.Uri
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.map
+import pro.progr.owlgame.data.db.INITIAL_RESTORE_COMPLETED_META_KEY
 import pro.progr.owlgame.data.db.dao.AnimalDao
+import pro.progr.owlgame.data.db.dao.AppMetaDao
 import pro.progr.owlgame.data.db.dao.MapDao
 import pro.progr.owlgame.data.mapper.toDomain
 import pro.progr.owlgame.data.preferences.OwlPreferences
@@ -21,6 +26,7 @@ private const val MISSED_DAYS_LIMIT = 2L
 class WidgetRepositoryImpl @Inject constructor(
     private val preferences: OwlPreferences,
     private val animalDao: AnimalDao,
+    private val appMetaDao: AppMetaDao,
     private val mapDao: MapDao,
     private val context: Context,
     private val clock: Clock
@@ -29,14 +35,15 @@ class WidgetRepositoryImpl @Inject constructor(
         return mapDao.getRandomMap()?.toDomain()
     }
 
-    override fun getAnimal(): AnimalModel? {
-        val animalId = preferences.getAnimalId()
-        if (animalId != null) {
-            return animalDao.getAnimalById(animalId)?.toDomain()
-        }
+    override fun observeSearchingAnimal(): Flow<AnimalModel?> =
+        animalDao.observeSearchingAnimal()
+            .map { it?.toDomain() }
+            .distinctUntilChanged()
 
-        return null
-    }
+    override fun observeInitialRestoreCompleted(): Flow<Boolean> =
+        appMetaDao.observeValue(INITIAL_RESTORE_COMPLETED_META_KEY)
+            .map { it == "1" }
+            .distinctUntilChanged()
 
     override fun isPouchAvailable(): Boolean {
         val today = LocalDate.now(clock).toEpochDay()
@@ -59,10 +66,6 @@ class WidgetRepositoryImpl @Inject constructor(
 
     override fun getUri(res : Int) : Uri {
         return UriWrapper(res, context).uri
-    }
-
-    override fun clearAnimalDayAndId() {
-        preferences.clearAnimalDayAndId()
     }
 
     override fun getUri(path : String) : Uri {
