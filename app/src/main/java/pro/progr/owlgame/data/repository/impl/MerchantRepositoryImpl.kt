@@ -7,8 +7,17 @@ import pro.progr.owlgame.domain.repository.MerchantRepository
 import javax.inject.Inject
 
 class MerchantRepositoryImpl @Inject constructor(private val apiService: LootApiService) : MerchantRepository {
-    override suspend fun getMerchantShop(): MerchantShopModel? {
+    override suspend fun getMerchantShop(): MerchantShopModel {
+        val response = apiService.getMerchantShop()
 
-        return apiService.getMerchantShop().body()?.toDomain()
+        if (!response.isSuccessful) {
+            val errorBody = response.errorBody()?.string()
+            throw IllegalStateException(
+                "Failed to load merchant shop: HTTP ${response.code()}: $errorBody"
+            )
+        }
+
+        return response.body()?.toDomain()
+            ?: throw IllegalStateException("Merchant shop response body is empty")
     }
 }

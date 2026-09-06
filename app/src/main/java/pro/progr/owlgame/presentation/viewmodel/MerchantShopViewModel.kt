@@ -50,9 +50,9 @@ class MerchantShopViewModel @Inject constructor(
             }.onSuccess { shop ->
                 currentShop = shop
                 purchaseCount = 0
-                shop?.let {
-                    updateUiFromShop(shop, isLoading = false)
-                }
+
+                updateUiFromShop(shop, isLoading = false)
+
             }.onFailure { error ->
                 _ui.update {
                     it.copy(

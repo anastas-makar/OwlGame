@@ -9,12 +9,10 @@ class GetMerchantShopUseCase @Inject constructor(
     private val merchantRepository: MerchantRepository,
     private val widgetRepository: WidgetRepository
 ) {
-    suspend operator fun invoke(): MerchantShopModel? {
+    suspend operator fun invoke(): MerchantShopModel {
         val shop = merchantRepository.getMerchantShop()
 
-        if (shop != null) {
-            widgetRepository.markMerchantOpened()
-        }
+        widgetRepository.markMerchantOpened()
 
         return shop
     }
