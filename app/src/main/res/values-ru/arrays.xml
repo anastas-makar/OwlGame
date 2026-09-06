@@ -3,7 +3,7 @@
     <string name="hint_diamonds_title">Зачем нужны бриллианты</string>
     <string-array name="hint_diamonds_paragraphs">
         <item>Бриллианты нужны, чтобы строить здания и устанавливать мебель.</item>
-        <item>Ещё за них можно купить бомбочки и чешуйки. Они дают атаку и защиту в экспедиции.</item>
+        <item>Ещё за бриллианты можно купить бомбочки и чешуйки, которые дают атаку и защиту в экспедиции.</item>
     </string-array>
 
     <string name="hint_house_title">Для чего нужен домик</string>
