@@ -29,7 +29,7 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
-        version = "0.0.1-alpha"
+        version = "0.0.2-alpha"
     }
 
     buildTypes {
@@ -101,6 +101,7 @@ dependencies {
 
     implementation("pro.progr:diamond-api:3.0.0-alpha")
     implementation("pro.progr:auth-api:0.0.3-alpha")
+    implementation("pro.progr:personal-crypto:0.0.1-alpha")
 }
 
 publishing {
@@ -110,7 +111,7 @@ publishing {
 
             groupId = "pro.progr"
             artifactId = "owlgame"
-            version = "0.0.1-alpha"
+            version = "0.0.2-alpha"
         }
     }
     repositories {

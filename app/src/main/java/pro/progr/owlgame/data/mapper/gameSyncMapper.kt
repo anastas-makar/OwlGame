@@ -2,16 +2,17 @@ package pro.progr.owlgame.data.mapper
 
 import pro.progr.owlgame.data.db.entity.*
 import pro.progr.owlgame.data.web.sync.*
+import pro.progr.personalcrypto.PersonalCrypto
 
-fun Animal.toSyncDto() = AnimalSyncDto(
-    id, kind, name, initialDisplayName, status, statusExpiresAt,
+fun Animal.toSyncDto(personalCrypto: PersonalCrypto) = AnimalSyncDto(
+    id, kind, name?.let { personalCrypto.encryptGameValue(it) }, initialDisplayName, status, statusExpiresAt,
     templateId, imageKey
 )
 
-fun AnimalSyncDto.toEntity(localImagePath: String) = Animal(
+fun AnimalSyncDto.toEntity(localImagePath: String, personalCrypto: PersonalCrypto) = Animal(
     id = id,
     kind = kind,
-    name = name,
+    name = name?.let { personalCrypto.decryptGameValue(it) },
     initialDisplayName = initialDisplayName,
     imagePath = localImagePath,
     status = status,
@@ -40,8 +41,11 @@ fun BuildingSyncDto.toEntity(localImagePath: String) = Building(
     imageKey = imageKey
 )
 
-fun Country.toSyncDto() = CountrySyncDto(id, name, rulerAnimalId, deleted)
-fun CountrySyncDto.toEntity() = Country(id, name, rulerAnimalId, deleted)
+fun Country.toSyncDto(personalCrypto: PersonalCrypto) =
+    CountrySyncDto(id, personalCrypto.encryptGameValue(name), rulerAnimalId, deleted)
+
+fun CountrySyncDto.toEntity(personalCrypto: PersonalCrypto) =
+    Country(id, personalCrypto.decryptGameValue(name), rulerAnimalId, deleted)
 
 fun Enemy.toSyncDto() = EnemySyncDto(
     id, expeditionId, name, description, healAmount, damageAmount,
@@ -184,13 +188,13 @@ fun LocationSceneSyncDto.toEntity(localImagePath: String) = LocationScene(
     imageKey = imageKey
 )
 
-fun MapEntity.toSyncDto() = MapSyncDto(
-    id, name, type, countryId, mayorAnimalId, templateId, imageKey
+fun MapEntity.toSyncDto(personalCrypto: PersonalCrypto) = MapSyncDto(
+    id, personalCrypto.encryptGameValue(name), type, countryId, mayorAnimalId, templateId, imageKey
 )
 
-fun MapSyncDto.toEntity(localImagePath: String) = MapEntity(
+fun MapSyncDto.toEntity(localImagePath: String, personalCrypto: PersonalCrypto) = MapEntity(
     id = id,
-    name = name,
+    name = personalCrypto.decryptGameValue(name),
     imagePath = localImagePath,
     type = type,
     countryId = countryId,
@@ -238,8 +242,11 @@ fun RoomSyncDto.toEntity(localImagePath: String) = RoomEntity(
     imageKey = imageKey
 )
 
-fun Street.toSyncDto() = StreetSyncDto(id, mapId, name, direction, deleted)
-fun StreetSyncDto.toEntity() = Street(id, mapId, name, direction, deleted)
+fun Street.toSyncDto(personalCrypto: PersonalCrypto) =
+    StreetSyncDto(id, mapId, personalCrypto.encryptGameValue(name), direction, deleted)
+
+fun StreetSyncDto.toEntity(personalCrypto: PersonalCrypto) =
+    Street(id, mapId, personalCrypto.decryptGameValue(name), direction, deleted)
 
 fun Supply.toSyncDto() = SupplySyncDto(
     id, name, description, amount, effectType, effectAmount, templateId, imageKey

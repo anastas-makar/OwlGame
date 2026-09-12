@@ -5,6 +5,7 @@ import dagger.BindsInstance
 import dagger.Component
 import pro.progr.authapi.AuthInterface
 import pro.progr.diamondapi.PurchaseInterface
+import pro.progr.personalcrypto.PersonalCrypto
 import pro.progr.owlgame.data.dagger.DatabaseModule
 import pro.progr.owlgame.data.dagger.NetworkModule
 import pro.progr.owlgame.data.dagger.RepositoryBindingsModule
@@ -86,6 +87,9 @@ interface OwlGameComponent {
 
         @BindsInstance
         fun auth(auth: AuthInterface): Builder
+
+        @BindsInstance
+        fun personalCrypto(personalCrypto: PersonalCrypto): Builder
 
         @BindsInstance
         fun purchaseInterface(purchaseInterface: PurchaseInterface): Builder

@@ -24,6 +24,7 @@ import pro.progr.owlgame.domain.model.GameSyncResult
 import pro.progr.owlgame.domain.repository.GameSyncRepository
 import pro.progr.owlgame.domain.repository.ImageRepository
 import javax.inject.Inject
+import pro.progr.personalcrypto.PersonalCrypto
 
 class GameSyncRepositoryImpl @Inject constructor(
     private val db: OwlGameDatabase,
@@ -31,7 +32,8 @@ class GameSyncRepositoryImpl @Inject constructor(
     private val outboxDao: OutboxDao,
     private val appMetaDao: AppMetaDao,
     private val apiService: GameSyncApiService,
-    private val imageRepository: ImageRepository
+    private val imageRepository: ImageRepository,
+    private val personalCrypto: PersonalCrypto
 ) : GameSyncRepository {
 
     override suspend fun sync(): GameSyncResult = syncMutex.withLock {
@@ -59,10 +61,14 @@ class GameSyncRepositoryImpl @Inject constructor(
 
         db.withTransaction {
             // Порядок важен из-за foreign keys.
-            syncDao.insertCountries(data.countries.map { it.toEntity() })
-            syncDao.insertAnimals(data.animals.map { it.toEntity(localImages.getValue(it.imageKey)) })
-            syncDao.insertMaps(data.maps.map { it.toEntity(localImages.getValue(it.imageKey)) })
-            syncDao.insertStreets(data.streets.map { it.toEntity() })
+            syncDao.insertCountries(data.countries.map { it.toEntity(personalCrypto) })
+            syncDao.insertAnimals(data.animals.map {
+                it.toEntity(localImages.getValue(it.imageKey), personalCrypto)
+            })
+            syncDao.insertMaps(data.maps.map {
+                it.toEntity(localImages.getValue(it.imageKey), personalCrypto)
+            })
+            syncDao.insertStreets(data.streets.map { it.toEntity(personalCrypto) })
             syncDao.insertBuildings(data.buildings.map { it.toEntity(localImages.getValue(it.imageKey)) })
             syncDao.insertRooms(data.rooms.map { it.toEntity(localImages.getValue(it.imageKey)) })
             syncDao.insertGardens(data.gardens.map { it.toEntity(localImages.getValue(it.imageKey)) })
@@ -98,9 +104,13 @@ class GameSyncRepositoryImpl @Inject constructor(
             .mapValues { (_, rows) -> rows.map { it.rowId }.distinct() }
 
         val data = GameSyncData(
-            animals = rows(byTable, "animals") { syncDao.getAnimals(it) }.map { it.toSyncDto() },
+            animals = rows(byTable, "animals") { syncDao.getAnimals(it) }.map {
+                it.toSyncDto(personalCrypto)
+            },
             buildings = rows(byTable, "buildings") { syncDao.getBuildings(it) }.map { it.toSyncDto() },
-            countries = rows(byTable, "countries") { syncDao.getCountries(it) }.map { it.toSyncDto() },
+            countries = rows(byTable, "countries") { syncDao.getCountries(it) }.map {
+                it.toSyncDto(personalCrypto)
+            },
             enemies = rows(byTable, "enemies") { syncDao.getEnemies(it) }.map { it.toSyncDto() },
             expeditions = rows(byTable, "expeditions") { syncDao.getExpeditions(it) }.map { it.toSyncDto() },
             expeditionMedals = rows(byTable, "expedition_medals") { syncDao.getExpeditionMedals(it) }.map { it.toSyncDto() },
@@ -109,11 +119,15 @@ class GameSyncRepositoryImpl @Inject constructor(
             gardenItems = rows(byTable, "garden_items") { syncDao.getGardenItems(it) }.map { it.toSyncDto() },
             locations = rows(byTable, "locations") { syncDao.getLocations(it) }.map { it.toSyncDto() },
             locationScenes = rows(byTable, "location_scenes") { syncDao.getLocationScenes(it) }.map { it.toSyncDto() },
-            maps = rows(byTable, "maps") { syncDao.getMaps(it) }.map { it.toSyncDto() },
+            maps = rows(byTable, "maps") { syncDao.getMaps(it) }.map {
+                it.toSyncDto(personalCrypto)
+            },
             plants = rows(byTable, "plants") { syncDao.getPlants(it) }.map { it.toSyncDto() },
             recipes = rows(byTable, "recipes") { syncDao.getRecipes(it) }.map { it.toSyncDto() },
             rooms = rows(byTable, "rooms") { syncDao.getRooms(it) }.map { it.toSyncDto() },
-            streets = rows(byTable, "streets") { syncDao.getStreets(it) }.map { it.toSyncDto() },
+            streets = rows(byTable, "streets") { syncDao.getStreets(it) }.map {
+                it.toSyncDto(personalCrypto)
+            },
             supplies = rows(byTable, "supplies") { syncDao.getSupplies(it) }.map { it.toSyncDto() },
             supplyToRecipes = rows(byTable, "supply_to_recipe") { syncDao.getSupplyToRecipes(it) }.map { it.toSyncDto() }
         )
