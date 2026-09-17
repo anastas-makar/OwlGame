@@ -12,8 +12,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.flow.Flow
+import pro.progr.owlgame.R
 import pro.progr.owlgame.domain.model.PlantModel
 import pro.progr.owlgame.domain.model.SupplyModel
 
@@ -26,12 +28,12 @@ fun HarvestPlantDialog(
     onDismiss: () -> Unit
 ) {
     val supply = supplyFlow.collectAsState(initial = null).value
-    val supplyName = supply?.name ?: "Припас"
+    val supplyName = supply?.name ?: stringResource(R.string.default_supply_name)
 
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text("Собрать урожай") },
-        text = { Text("Выберите, что собрать. Можно выбрать только одно.") },
+        title = { Text(stringResource(R.string.harvest_title)) },
+        text = { Text(stringResource(R.string.choose_harvest_message)) },
         buttons = {
             Column(
                 modifier = Modifier
@@ -40,7 +42,7 @@ fun HarvestPlantDialog(
             ) {
                 HarvestOptionButton(
                     imageUrl = plant.imageUrl,
-                    title = "Семена",
+                    title = stringResource(R.string.seeds),
                     subtitle = plant.name,
                     amountText = "+${plant.seedAmount}",
                     onClick = onHarvestSeeds,
@@ -53,7 +55,7 @@ fun HarvestPlantDialog(
                 HarvestOptionButton(
                     imageUrl = supply?.imageUrl,
                     title = supplyName,
-                    subtitle = "Припасы",
+                    subtitle = stringResource(R.string.supplies),
                     amountText = "+${plant.supplyAmount}",
                     onClick = onHarvestSupply,
                     enabled = plant.supplyAmount > 0,
@@ -65,7 +67,7 @@ fun HarvestPlantDialog(
                 TextButton(
                     onClick = onDismiss,
                     modifier = Modifier.align(Alignment.End)
-                ) { Text("Отмена") }
+                ) { Text(stringResource(R.string.cancel)) }
             }
         }
     )

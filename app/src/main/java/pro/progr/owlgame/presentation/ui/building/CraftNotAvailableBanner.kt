@@ -11,7 +11,9 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import pro.progr.owlgame.R
 
 @Composable
 fun CraftNotAvailableBanner(
@@ -28,7 +30,7 @@ fun CraftNotAvailableBanner(
             modifier = Modifier.padding(12.dp)
         ) {
             Text(
-                text = "🍰 Здесь временно нельзя готовить",
+                text = stringResource(R.string.craft_unavailable_title),
                 style = MaterialTheme.typography.subtitle1
             )
 

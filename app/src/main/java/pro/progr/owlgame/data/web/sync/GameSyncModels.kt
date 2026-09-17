@@ -26,7 +26,8 @@ data class GameBackupResponse(
 )
 
 data class GameRestoreRequest(
-    val syncMetaData: GameSyncMetaData
+    val syncMetaData: GameSyncMetaData,
+    val locale: String
 )
 
 data class GameRestoreResponse(

@@ -37,7 +37,10 @@ fun InventoryScreen(
             },
             navigationIcon = {
                 IconButton(onClick = { backToMain() }) {
-                    Icon(Icons.AutoMirrored.Filled.ExitToApp, contentDescription = "Назад")
+                    Icon(
+                        Icons.AutoMirrored.Filled.ExitToApp,
+                        contentDescription = stringResource(R.string.back)
+                    )
                 }
             },
             backgroundColor = Color.Transparent,

@@ -31,9 +31,11 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
+import pro.progr.owlgame.R
 import pro.progr.owlgame.dagger.OwlGameComponent
 import pro.progr.owlgame.domain.model.GardenModel
 import pro.progr.owlgame.domain.model.PlantModel
@@ -77,7 +79,7 @@ fun KitchenGardenItems(
 
     fabViewModel.fabActions.value = listOf(
         FabAction(
-            text = "Посадить растение",
+            text = stringResource(R.string.plant_a_plant),
             color = Color.DarkGray,
             onClick = {
                 vm.selectPlantState.value = true
@@ -159,7 +161,7 @@ private fun PlantCard(
                 ) {
                     Text(item.name, modifier = Modifier.weight(1f))
                     Text(
-                        text = if (ready) "Готово" else "$pct%",
+                        text = if (ready) stringResource(R.string.ready) else "$pct%",
                         fontWeight = if (ready) FontWeight.Bold else FontWeight.Normal,
                         color = if (ready) Color(0xFF2E7D32) else Color.Gray
                     )

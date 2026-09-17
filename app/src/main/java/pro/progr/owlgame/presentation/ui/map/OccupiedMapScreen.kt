@@ -33,6 +33,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import pro.progr.diamondapi.PurchaseInterface
@@ -42,6 +43,7 @@ import pro.progr.owlgame.presentation.ui.fab.FabAction
 import pro.progr.owlgame.presentation.ui.mapicon.FixedImageOverlay
 import pro.progr.owlgame.presentation.ui.mapicon.enemyIconRes
 import pro.progr.owlgame.domain.model.MapWithDataModel
+import pro.progr.owlgame.R
 import pro.progr.owlgame.presentation.ui.mapicon.locationIconRes
 import pro.progr.owlgame.presentation.ui.model.mapitem.EnemyMapItem
 import pro.progr.owlgame.presentation.ui.model.mapitem.OccupiedMapLocationItem
@@ -121,7 +123,7 @@ fun OccupiedMapScreen(
                     onExpandedChange = { fabExpanded = it },
                     actions = if (prepState.canChooseAnotherPet) listOf(
                         FabAction(
-                            text = "Начать экспедицию",
+                            text = stringResource(R.string.start_expedition),
                             color = Color.Red,
                             onClick = {
                                 fabExpanded = false
@@ -129,7 +131,7 @@ fun OccupiedMapScreen(
                             }
                         ),
                         FabAction(
-                            text = "Выбрать другое животное",
+                            text = stringResource(R.string.choose_another_animal),
                             color = Color.DarkGray,
                             onClick = {
                                 fabExpanded = false
@@ -138,7 +140,7 @@ fun OccupiedMapScreen(
                         )
                     ) else listOf(
                         FabAction(
-                            text = "Начать экспедицию",
+                            text = stringResource(R.string.start_expedition),
                             color = Color.Red,
                             onClick = {
                                 fabExpanded = false

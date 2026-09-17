@@ -14,12 +14,14 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import coil.compose.AsyncImage
 import pro.progr.owlgame.domain.model.AnimalModel
 import pro.progr.owlgame.domain.model.EnemyModel
+import pro.progr.owlgame.R
 import pro.progr.owlgame.presentation.ui.model.ExpeditionFailureReason
 
 @Composable
@@ -39,8 +41,8 @@ fun ExpeditionFailedDialog(
             Column(Modifier.padding(16.dp)) {
                 Text(
                     text = when (reason) {
-                        ExpeditionFailureReason.ESCAPE -> "Бегство!"
-                        ExpeditionFailureReason.DEFEAT -> "Поражение!"
+                        ExpeditionFailureReason.ESCAPE -> stringResource(R.string.escape_title)
+                        ExpeditionFailureReason.DEFEAT -> stringResource(R.string.defeat_title)
                     },
                     style = MaterialTheme.typography.h6
                 )
@@ -49,10 +51,16 @@ fun ExpeditionFailedDialog(
 
                 Text(
                     text = when (reason) {
-                        ExpeditionFailureReason.ESCAPE ->
-                            "Вы помогли ${animal.kind} ${animal.name} бежать."
-                        ExpeditionFailureReason.DEFEAT ->
-                            "${animal.kind} ${animal.name} терпит поражение и скрывается."
+                        ExpeditionFailureReason.ESCAPE -> stringResource(
+                            R.string.escape_result,
+                            animal.kind,
+                            animal.name.orEmpty()
+                        )
+                        ExpeditionFailureReason.DEFEAT -> stringResource(
+                            R.string.defeat_result,
+                            animal.kind,
+                            animal.name.orEmpty()
+                        )
                     }
                 )
 
@@ -85,7 +93,7 @@ fun ExpeditionFailedDialog(
                 if (enemy != null) {
                     Spacer(Modifier.height(8.dp))
                     Text(
-                        text = "Победитель: ${enemy.name}",
+                        text = stringResource(R.string.winner, enemy.name),
                         style = MaterialTheme.typography.subtitle2
                     )
                 }
@@ -97,7 +105,15 @@ fun ExpeditionFailedDialog(
                     enabled = !isLoading,
                     modifier = Modifier.fillMaxWidth()
                 ) {
-                    Text(if (isLoading) "Враги перегруппировываются…" else "Враги перегруппировались")
+                    Text(
+                        stringResource(
+                            if (isLoading) {
+                                R.string.enemies_regrouping
+                            } else {
+                                R.string.enemies_regrouped
+                            }
+                        )
+                    )
                 }
             }
         }

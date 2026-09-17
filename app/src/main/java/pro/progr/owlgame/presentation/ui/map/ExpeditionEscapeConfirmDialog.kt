@@ -15,12 +15,14 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import coil.compose.AsyncImage
 import pro.progr.owlgame.domain.model.AnimalModel
+import pro.progr.owlgame.R
 
 @Composable
 fun ExpeditionEscapeConfirmDialog(
@@ -39,14 +41,18 @@ fun ExpeditionEscapeConfirmDialog(
         ) {
             Column(Modifier.padding(16.dp)) {
                 Text(
-                    text = "Помочь бежать?",
+                    text = stringResource(R.string.escape_confirm_title),
                     style = MaterialTheme.typography.h6
                 )
 
                 Spacer(Modifier.height(8.dp))
 
                 Text(
-                    text = "${animal.kind.replaceFirstChar { it.uppercase() }} ${animal.name} может бежать. Экспедиция будет проиграна, враги перегруппируются, но животное останется в строю."
+                    text = stringResource(
+                        R.string.escape_confirm_message,
+                        animal.kind.replaceFirstChar { it.uppercase() },
+                        animal.name.orEmpty()
+                    )
                 )
 
                 Spacer(Modifier.height(12.dp))
@@ -68,7 +74,7 @@ fun ExpeditionEscapeConfirmDialog(
                         enabled = !isLoading,
                         modifier = Modifier.weight(1f)
                     ) {
-                        Text("Передумать")
+                        Text(stringResource(R.string.change_mind))
                     }
 
                     Button(
@@ -80,7 +86,11 @@ fun ExpeditionEscapeConfirmDialog(
                             contentColor = Color.White
                         )
                     ) {
-                        Text(if (isLoading) "Бежим…" else "Бежать")
+                        Text(
+                            stringResource(
+                                if (isLoading) R.string.escaping else R.string.escape
+                            )
+                        )
                     }
                 }
             }

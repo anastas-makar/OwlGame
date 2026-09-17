@@ -35,6 +35,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
@@ -55,6 +56,8 @@ fun SelectFurnitureScreen(roomViewModel: RoomViewModel,
                       snackbarHostState: SnackbarHostState,
                       availableFurniture:  State<List<FurnitureModel>>
 ) {
+    val notEnoughDiamondsMessage = stringResource(R.string.not_enough_diamonds)
+    val diamondContentDescription = stringResource(R.string.diamond_content_description)
     fabViewModel.showFab.value = false
     val density = LocalDensity.current
     var bgSizePx by remember { mutableStateOf(IntSize.Zero) }
@@ -90,7 +93,7 @@ fun SelectFurnitureScreen(roomViewModel: RoomViewModel,
                                 roomViewModel.setFurnitureItem(furniture, diamondDao)
                             } else {
                                 scope.launch {
-                                    snackbarHostState.showSnackbar("Недостаточно бриллиантов")
+                                    snackbarHostState.showSnackbar(notEnoughDiamondsMessage)
                                 }
                             }
                         }.background(color = Color.Transparent, shape = RoundedCornerShape(2.dp))
@@ -129,12 +132,12 @@ fun SelectFurnitureScreen(roomViewModel: RoomViewModel,
                                 .align(Alignment.BottomCenter)
                         ) {
                             Text(
-                                text = " ◆ ${furniture.price} ",
+                                text = stringResource(R.string.diamond_price, furniture.price),
                                 style = MaterialTheme.typography.body1
                             )
                             Icon(
                                 painter = painterResource(id = R.drawable.ic_diamond_bright),
-                                contentDescription = "Diamond",
+                                contentDescription = diamondContentDescription,
                                 tint = if (diamondBalance.value < furniture.price) Color.DarkGray
                                 else Color.Unspecified,
                                 modifier = Modifier.height(12.dp)

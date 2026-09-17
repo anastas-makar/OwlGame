@@ -28,12 +28,14 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
+import pro.progr.owlgame.R
 import pro.progr.owlgame.domain.model.BuildingWithAnimalModel
 import pro.progr.owlgame.domain.model.StreetWithBuildingsModel
 import kotlin.math.min
@@ -65,7 +67,7 @@ fun MoveBuildingDialog(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Text(
-                    text = "Перенести дом",
+                    text = stringResource(R.string.move_house),
                     style = MaterialTheme.typography.h6,
                     textAlign = TextAlign.Center,
                     modifier = Modifier.fillMaxWidth()
@@ -110,7 +112,11 @@ fun MoveBuildingDialog(
                 building.animal?.let {
                     Spacer(Modifier.height(4.dp))
                     Text(
-                        text = "Живёт ${it.kind} ${it.name}",
+                        text = stringResource(
+                            R.string.animal_lives_here,
+                            it.kind,
+                            it.name.orEmpty()
+                        ),
                         style = MaterialTheme.typography.caption,
                         color = Color.Gray,
                         textAlign = TextAlign.Center
@@ -120,7 +126,7 @@ fun MoveBuildingDialog(
                 Spacer(Modifier.height(16.dp))
 
                 Text(
-                    text = "Куда перенести:",
+                    text = stringResource(R.string.move_destination),
                     style = MaterialTheme.typography.subtitle2,
                     modifier = Modifier.fillMaxWidth()
                 )
@@ -134,7 +140,13 @@ fun MoveBuildingDialog(
                             onClick = { onMove(street.id) },
                             modifier = Modifier.fillMaxWidth()
                         ) {
-                            Text(street.name)
+                            Text(
+                                if (street.isMain) {
+                                    stringResource(R.string.main_street_name)
+                                } else {
+                                    street.name
+                                }
+                            )
                         }
                     }
 
@@ -148,7 +160,7 @@ fun MoveBuildingDialog(
                         onClick = onDismiss,
                         colors = ButtonDefaults.textButtonColors(contentColor = Color.Gray)
                     ) {
-                        Text("Отмена")
+                        Text(stringResource(R.string.cancel))
                     }
                 }
             }

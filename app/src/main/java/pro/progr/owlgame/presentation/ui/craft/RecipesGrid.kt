@@ -13,9 +13,11 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import pro.progr.owlgame.domain.model.RecipeModel
 import pro.progr.owlgame.domain.model.SupplyModel
+import pro.progr.owlgame.R
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -35,7 +37,7 @@ fun CraftGrid(
             span = { GridItemSpan(maxLineSpan) }
         ) {
             Text(
-                text = "Рецепты:",
+                text = stringResource(R.string.recipes_label),
                 style = MaterialTheme.typography.h6,
                 modifier = Modifier.padding(top = 4.dp, bottom = 4.dp)
             )
@@ -63,7 +65,7 @@ fun CraftGrid(
             span = { GridItemSpan(maxLineSpan) }
         ) {
             Text(
-                text = "Припасы в наличии:",
+                text = stringResource(R.string.available_supplies_label),
                 style = MaterialTheme.typography.h6,
                 modifier = Modifier.padding(top = 8.dp, bottom = 4.dp)
             )
@@ -74,7 +76,7 @@ fun CraftGrid(
                 span = { GridItemSpan(maxLineSpan) }
             ) {
                 Text(
-                    text = "Пока ничего нет.",
+                    text = stringResource(R.string.nothing_available_yet),
                     style = MaterialTheme.typography.body2,
                     color = MaterialTheme.colors.onSurface.copy(alpha = 0.6f),
                     modifier = Modifier.padding(vertical = 8.dp)

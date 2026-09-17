@@ -14,8 +14,10 @@ import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
+import pro.progr.owlgame.R
 import pro.progr.owlgame.domain.model.SupplyModel
 
 @Composable
@@ -57,14 +59,14 @@ fun SupplyDialog(
                 Spacer(Modifier.height(12.dp))
 
                 Text(
-                    text = "Количество: ${supply.amount}",
+                    text = stringResource(R.string.supply_amount, supply.amount),
                     style = MaterialTheme.typography.body2
                 )
             }
         },
         confirmButton = {
             TextButton(onClick = onDismiss) {
-                Text("Закрыть")
+                Text(stringResource(R.string.close))
             }
         }
     )

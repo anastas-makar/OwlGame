@@ -9,6 +9,7 @@ import pro.progr.personalcrypto.PersonalCrypto
 import pro.progr.owlgame.data.dagger.DatabaseModule
 import pro.progr.owlgame.data.dagger.NetworkModule
 import pro.progr.owlgame.data.dagger.RepositoryBindingsModule
+import pro.progr.owlgame.domain.model.GameLocale
 import pro.progr.owlgame.presentation.viewmodel.dagger.AnimalViewModelFactory
 import pro.progr.owlgame.presentation.viewmodel.dagger.BuildingFacadeViewModelFactory
 import pro.progr.owlgame.presentation.viewmodel.dagger.BuildingViewModelFactory
@@ -90,6 +91,9 @@ interface OwlGameComponent {
 
         @BindsInstance
         fun personalCrypto(personalCrypto: PersonalCrypto): Builder
+
+        @BindsInstance
+        fun gameLocale(gameLocale: GameLocale): Builder
 
         @BindsInstance
         fun purchaseInterface(purchaseInterface: PurchaseInterface): Builder

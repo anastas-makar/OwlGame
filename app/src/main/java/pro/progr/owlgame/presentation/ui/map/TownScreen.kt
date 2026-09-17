@@ -35,9 +35,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import pro.progr.diamondapi.PurchaseInterface
+import pro.progr.owlgame.R
 import pro.progr.owlgame.domain.model.BuildingType
 import pro.progr.owlgame.domain.model.LocationWithScenesModel
 import pro.progr.owlgame.domain.model.MapWithDataModel
@@ -77,7 +79,7 @@ fun TownScreen(
             listOf(
                 StreetWithBuildingsModel(
                     id = null,
-                    name = "Улица Главная",
+                    name = "",
                     direction = StreetDirection.WEST_TO_EAST,
                     isMain = true,
                     buildings = emptyList()
@@ -141,22 +143,22 @@ fun TownScreen(
                     onExpandedChange = { fabExpanded = it },
                     actions = listOf(
                         FabAction(
-                            text = "Построить дом",
+                            text = stringResource(R.string.build_house),
                             color = Color.DarkGray,
                             onClick = { mapViewModel.selectHouseState.value = true }
                         ),
                         FabAction(
-                            text = "Построить замок",
+                            text = stringResource(R.string.build_castle),
                             color = Color.DarkGray,
                             onClick = { mapViewModel.selectFortressState.value = true }
                         ),
                         FabAction(
-                            text = "Создать улицу",
+                            text = stringResource(R.string.create_street),
                             color = Color.DarkGray,
                             onClick = { showCreateStreetDialog = true }
                         ),
                         FabAction(
-                            text = "Добавить достопримечательность",
+                            text = stringResource(R.string.add_location),
                             color = Color.DarkGray,
                             onClick = { mapViewModel.selectLocationState.value = true }
                         )
@@ -179,7 +181,7 @@ fun TownScreen(
                 // 1) Хедер
                 item {
                     when {
-                        map.value.id.isEmpty() -> Text("Загрузка…")
+                        map.value.id.isEmpty() -> Text(stringResource(R.string.loading))
                         else -> {
                             // Раньше тут были кнопки Дом/Замок — теперь ничего
                             Spacer(Modifier.height(0.dp))
@@ -288,7 +290,7 @@ fun TownScreen(
                     if (street.buildings.isEmpty()) {
                         item {
                             Text(
-                                text = "Здесь пока нет домов. Перенесите сюда дома из меню домика.",
+                                text = stringResource(R.string.street_has_no_houses),
                                 modifier = Modifier.padding(vertical = 8.dp)
                             )
                         }

@@ -5,6 +5,8 @@ import androidx.compose.material.Button
 import androidx.compose.material.Text
 import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.res.stringResource
+import pro.progr.owlgame.R
 
 @Composable
 fun SendAnimalAwayDialog(
@@ -17,17 +19,17 @@ fun SendAnimalAwayDialog(
             if (!isBusy) onDismiss()
         },
         title = {
-            Text("Прогнать животное?")
+            Text(stringResource(R.string.send_animal_away_title))
         },
         text = {
-            Text("Животное уйдёт и больше не будет искать дом.")
+            Text(stringResource(R.string.send_animal_away_message))
         },
         confirmButton = {
             Button(
                 onClick = onConfirm,
                 enabled = !isBusy
             ) {
-                Text("Прогнать")
+                Text(stringResource(R.string.send_animal_away_short))
             }
         },
         dismissButton = {
@@ -35,7 +37,7 @@ fun SendAnimalAwayDialog(
                 onClick = onDismiss,
                 enabled = !isBusy
             ) {
-                Text("Отмена")
+                Text(stringResource(R.string.cancel))
             }
         }
     )

@@ -11,11 +11,13 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
+import pro.progr.owlgame.R
 
 @Composable
 fun BattleParticipantCard(
@@ -54,7 +56,7 @@ fun BattleParticipantCard(
                 && maxHeal != null && maxDamage != null) {
                 Spacer(Modifier.height(8.dp))
                 BattleStatBar(
-                    label = "Защита",
+                    label = stringResource(R.string.defense),
                     current = heal,
                     max = maxHeal,
                     color = Color(0xFF4CAF50)
@@ -63,7 +65,7 @@ fun BattleParticipantCard(
                 Spacer(modifier = Modifier.height(8.dp))
 
                 BattleStatBar(
-                    label = "Атака",
+                    label = stringResource(R.string.attack),
                     current = damage,
                     max = maxDamage,
                     color = Color(0xFFE53935)

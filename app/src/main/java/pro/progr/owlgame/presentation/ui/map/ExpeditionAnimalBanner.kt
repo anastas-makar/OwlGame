@@ -15,9 +15,11 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
+import pro.progr.owlgame.R
 import pro.progr.owlgame.domain.model.AnimalModel
 
 @Composable
@@ -41,7 +43,7 @@ fun ExpeditionAnimalBanner(
         when {
             !hasAnyPets -> {
                 Text(
-                    text = "У вас нет животных, которых можно послать в экспедицию",
+                    text = stringResource(R.string.no_animals_for_expedition),
                     modifier = Modifier.padding(12.dp),
                     style = MaterialTheme.typography.body1
                 )
@@ -49,7 +51,7 @@ fun ExpeditionAnimalBanner(
 
             selectedAnimal == null -> {
                 Text(
-                    text = "Животное для экспедиции не выбрано",
+                    text = stringResource(R.string.expedition_animal_not_selected),
                     modifier = Modifier.padding(12.dp),
                     style = MaterialTheme.typography.body1
                 )
@@ -70,14 +72,18 @@ fun ExpeditionAnimalBanner(
 
                     Column {
                         Text(
-                            text = "${selectedAnimal.kind} ${selectedAnimal.name} готовится к высадке",
+                            text = stringResource(
+                                R.string.animal_prepares_for_expedition,
+                                selectedAnimal.kind,
+                                selectedAnimal.name.orEmpty()
+                            ),
                             style = MaterialTheme.typography.subtitle1
                         )
 
                         if (canChooseAnotherPet) {
                             Spacer(modifier = Modifier.height(4.dp))
                             Text(
-                                text = "Нажмите, чтобы выбрать другое животное",
+                                text = stringResource(R.string.choose_another_animal_hint),
                                 style = MaterialTheme.typography.body2
                             )
                         }

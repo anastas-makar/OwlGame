@@ -23,6 +23,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import pro.progr.owlgame.domain.model.EnemyStatus
@@ -32,6 +33,7 @@ import pro.progr.owlgame.presentation.ui.fab.FabAction
 import pro.progr.owlgame.presentation.ui.mapicon.FixedImageOverlay
 import pro.progr.owlgame.presentation.ui.mapicon.enemyIconRes
 import pro.progr.owlgame.domain.model.MapWithDataModel
+import pro.progr.owlgame.R
 import pro.progr.owlgame.presentation.ui.mapicon.locationIconRes
 import pro.progr.owlgame.presentation.ui.model.ExpeditionCreatureDetails
 import pro.progr.owlgame.presentation.ui.model.mapitem.EnemyMapItem
@@ -92,7 +94,7 @@ fun ExpeditionScreen(
                 onExpandedChange = { fabExpanded = it },
                 actions = listOf(
                     FabAction(
-                        text = "Бежать!",
+                        text = stringResource(R.string.escape_title),
                         color = Color.Red,
                         onClick = {
                             showEscapeDialog = true

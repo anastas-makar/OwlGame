@@ -16,9 +16,11 @@ import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import coil.compose.AsyncImage
+import pro.progr.owlgame.R
 import pro.progr.owlgame.domain.model.AnimalModel
 import pro.progr.owlgame.domain.model.ExpeditionWithDataModel
 
@@ -37,12 +39,24 @@ fun ExpeditionVictoryDialog(
             shape = RoundedCornerShape(16.dp)
         ) {
             Column(modifier = Modifier.padding(16.dp)) {
-                Text("Победа!", style = MaterialTheme.typography.h6)
+                Text(stringResource(R.string.victory), style = MaterialTheme.typography.h6)
 
                 Spacer(Modifier.height(8.dp))
 
-                Text("${animal.kind} ${animal.name} освобождает местность.")
-                Text("${animal.kind} ${animal.name} получает медаль!")
+                Text(
+                    stringResource(
+                        R.string.animal_frees_land,
+                        animal.kind,
+                        animal.name.orEmpty()
+                    )
+                )
+                Text(
+                    stringResource(
+                        R.string.animal_receives_medal,
+                        animal.kind,
+                        animal.name.orEmpty()
+                    )
+                )
 
                 Spacer(Modifier.height(12.dp))
 
@@ -78,7 +92,15 @@ fun ExpeditionVictoryDialog(
                     enabled = !isLoading,
                     modifier = Modifier.fillMaxWidth()
                 ) {
-                    Text(if (isLoading) "Идём в подземелья…" else "Обшарить подземелья")
+                    Text(
+                        stringResource(
+                            if (isLoading) {
+                                R.string.entering_dungeons
+                            } else {
+                                R.string.search_dungeons
+                            }
+                        )
+                    )
                 }
 
                 if (!isLoading) {
@@ -90,7 +112,7 @@ fun ExpeditionVictoryDialog(
                         enabled = true,
                         modifier = Modifier.fillMaxWidth()
                     ) {
-                        Text("Не обшаривать")
+                        Text(stringResource(R.string.skip_dungeons))
                     }
                 }
             }

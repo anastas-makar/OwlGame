@@ -33,8 +33,6 @@ import pro.progr.owlgame.domain.repository.SlotsRepository
 import pro.progr.owlgame.domain.repository.StreetsRepository
 import javax.inject.Inject
 
-private const val MAIN_STREET_NAME = "Улица Главная"
-
 private val MAIN_STREET_DIRECTION = StreetDirection.WEST_TO_EAST
 
 class MapViewModel @Inject constructor(
@@ -130,7 +128,7 @@ class MapViewModel @Inject constructor(
             listOf(
                 StreetWithBuildingsModel(
                     id = null,
-                    name = MAIN_STREET_NAME,
+                    name = "",
                     direction = MAIN_STREET_DIRECTION,
                     isMain = true,
                     buildings = sortBuildings(mainBuildings, MAIN_STREET_DIRECTION)

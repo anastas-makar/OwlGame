@@ -12,7 +12,9 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import pro.progr.owlgame.R
 import pro.progr.owlgame.domain.model.AnimalModel
 import pro.progr.owlgame.domain.model.BuildingWithAnimalModel
 import pro.progr.owlgame.domain.model.MapWithDataModel
@@ -47,7 +49,7 @@ fun AnimalHomeSelectionContent(
             span = { GridItemSpan(maxLineSpan) }
         ) {
             Text(
-                text = "Выберите дом:",
+                text = stringResource(R.string.choose_animal_home),
                 style = MaterialTheme.typography.h6
             )
         }

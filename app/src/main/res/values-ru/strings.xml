@@ -1,4 +1,173 @@
 <resources>
+    <string name="maps_list_title">Мои владения</string>
+    <string name="diamond_content_description">Бриллиант</string>
+    <string name="diamond_price">◆ %1$d</string>
+    <string name="not_enough_diamonds">Недостаточно бриллиантов</string>
+
+    <string name="animal_already_has_home">%1$s %2$s уже живёт в своём доме</string>
+    <string name="choose_animal_home">Выберите дом:</string>
+    <string name="animal_image_content_description">Изображение %1$s</string>
+    <string name="animal_image_with_kind_content_description">Изображение %1$s, %2$s</string>
+    <string name="building_image_content_description">Дом %1$s</string>
+    <string name="town_map_content_description">Карта города %1$s</string>
+    <string name="animal_searching_home_status">Ищет дом</string>
+    <string name="send_animal_away_short">Уходи</string>
+    <string name="send_animal_away_title">Прогнать животное?</string>
+    <string name="send_animal_away_message">Животное уйдёт и больше не будет искать дом.</string>
+    <string name="go_to_main_screen">На главную</string>
+
+    <string name="main_street_name">Улица Главная</string>
+    <string name="main_street_info_content_description">Что это за улица</string>
+    <string name="street_menu_content_description">Меню улицы</string>
+    <string name="delete_street">Удалить улицу</string>
+    <string name="main_street_description">Улица Главная — временная улица для домов без выбранной улицы. Она исчезнет, когда вы перенесёте отсюда все дома.</string>
+    <string name="understood">Понятно</string>
+    <string name="delete_street_title">Удалить улицу?</string>
+    <string name="delete_empty_street_message">Удалить улицу «%1$s»?</string>
+    <string name="delete_street_with_houses_message">Удалить улицу «%1$s»? Дома с этой улицы будут перенесены на Улицу Главную.</string>
+
+    <string name="building_resident_title">Здесь живёт</string>
+    <string name="building_has_no_resident">Здесь никто не живёт</string>
+    <string name="building_can_settle_later">Можно поселить животное позже</string>
+    <string name="building_resident">Здесь живёт %1$s %2$s</string>
+    <string name="animal_currently_in_expedition">Сейчас в экспедиции</string>
+    <string name="animal_temporarily_fugitive">Временно в бегах</string>
+    <string name="animal_has_awards">%1$s %2$s имеет награды</string>
+
+    <string name="craft_available_title">🍰 Здесь можно готовить</string>
+    <string name="craft_available_message">В комнате есть холодильник. %1$s %2$s может здесь готовить.</string>
+    <string name="open_recipes">Открыть рецепты</string>
+    <string name="craft_unavailable_title">🍰 Здесь временно нельзя готовить</string>
+    <string name="craft_unavailable_animal_fugitive">%1$s %2$s в бегах.</string>
+    <string name="craft_unavailable_animal_expedition">%1$s %2$s в экспедиции.</string>
+    <string name="craft_unavailable_animal_unknown">%1$s %2$s недоступен.</string>
+    <string name="craft_unavailable_no_resident">В этом доме никто не живёт, поэтому никто не может готовить.</string>
+    <string name="place_furniture">Поставить мебель</string>
+
+    <string name="plant">Посадить</string>
+    <string name="plant_a_plant">Посадить растение</string>
+    <string name="ready">Готово</string>
+    <string name="default_supply_name">Припас</string>
+    <string name="harvest_title">Собрать урожай</string>
+    <string name="harvest_garden_item_message">После сбора урожая %1$s останется</string>
+    <string name="choose_harvest_message">Выберите, что собрать. Можно выбрать только одно.</string>
+    <string name="seeds">Семена</string>
+    <string name="supplies">Припасы</string>
+
+    <string name="craft_screen_title">Приготовление</string>
+    <string name="not_enough_ingredients">Не хватает ингредиентов</string>
+    <string name="ingredients">Ингредиенты</string>
+    <string name="missing_ingredients">Не хватает: %1$s</string>
+    <string name="craft">Приготовить</string>
+    <string name="recipes_label">Рецепты:</string>
+    <string name="available_supplies_label">Припасы в наличии:</string>
+    <string name="nothing_available_yet">Пока ничего нет.</string>
+    <string name="supply_amount">Количество: %1$d</string>
+    <string name="defense_effect">Защита: +%1$d</string>
+    <string name="attack_effect">Атака: +%1$d</string>
+
+    <string name="new_street">Новая улица</string>
+    <string name="street_name">Название улицы</string>
+    <string name="street_direction">Направление улицы</string>
+    <string name="street_west_to_east">С запада на восток</string>
+    <string name="street_north_to_south">С севера на юг</string>
+    <string name="image_content_description">Изображение %1$s</string>
+    <string name="amount">Количество</string>
+    <string name="found_town">Основать город</string>
+    <string name="loading">Загрузка…</string>
+    <string name="town_name">Название города</string>
+    <string name="save">Сохранить</string>
+    <string name="free">Бесплатно</string>
+    <string name="locations_title">Достопримечательности</string>
+    <string name="move_house">Перенести дом</string>
+    <string name="animal_lives_here">Живёт %1$s %2$s</string>
+    <string name="move_destination">Куда перенести:</string>
+    <string name="choose_location">Выберите достопримечательность</string>
+    <string name="building_menu_content_description">Меню домика</string>
+    <string name="move_to_street">Перенести на улицу</string>
+    <string name="build_house">Построить дом</string>
+    <string name="build_castle">Построить замок</string>
+    <string name="create_street">Создать улицу</string>
+    <string name="add_location">Добавить достопримечательность</string>
+    <string name="street_has_no_houses">Здесь пока нет домов. Перенесите сюда дома из меню домика.</string>
+
+    <plurals name="location_scene_count">
+        <item quantity="one">%d сцена</item>
+        <item quantity="few">%d сцены</item>
+        <item quantity="many">%d сцен</item>
+        <item quantity="other">%d сцены</item>
+    </plurals>
+    <plurals name="location_price_diamonds">
+        <item quantity="one">Цена: %d бриллиант</item>
+        <item quantity="few">Цена: %d бриллианта</item>
+        <item quantity="many">Цена: %d бриллиантов</item>
+        <item quantity="other">Цена: %d бриллианта</item>
+    </plurals>
+
+    <string name="choose_animal">Выберите животное</string>
+    <string name="animal_selected">Выбрано</string>
+    <string name="animal">Животное</string>
+    <string name="your_fighter">Ваш боец</string>
+    <string name="active_enemy">Активный враг</string>
+    <string name="defense">Защита</string>
+    <string name="attack">Атака</string>
+    <string name="enemy_status_fighting">В бою</string>
+    <string name="enemy_status_defeated">Повержен</string>
+    <string name="enemy_status_waiting">Ждёт очереди</string>
+    <string name="enemy_status_active">Активный</string>
+    <string name="enemy_status_untouched">Не тронут</string>
+    <string name="stat_defense">Защита: %1$d</string>
+    <string name="stat_attack">Атака: %1$d</string>
+    <string name="no_animals_for_expedition">У вас нет животных, которых можно послать в экспедицию</string>
+    <string name="expedition_animal_not_selected">Животное для экспедиции не выбрано</string>
+    <string name="animal_prepares_for_expedition">%1$s %2$s готовится к высадке</string>
+    <string name="choose_another_animal_hint">Нажмите, чтобы выбрать другое животное</string>
+    <string name="status_in_expedition">Статус: в экспедиции</string>
+    <string name="status_value">Статус: %1$s</string>
+
+    <string name="escape_confirm_title">Помочь бежать?</string>
+    <string name="escape_confirm_message">%1$s %2$s может бежать. Экспедиция будет проиграна, враги перегруппируются, но животное останется в строю.</string>
+    <string name="change_mind">Передумать</string>
+    <string name="escaping">Бежим…</string>
+    <string name="escape">Бежать</string>
+    <string name="escape_title">Бегство!</string>
+    <string name="defeat_title">Поражение!</string>
+    <string name="escape_result">Вы помогли %1$s %2$s бежать.</string>
+    <string name="defeat_result">%1$s %2$s терпит поражение и скрывается.</string>
+    <string name="winner">Победитель: %1$s</string>
+    <string name="enemies_regrouping">Враги перегруппировываются…</string>
+    <string name="enemies_regrouped">Враги перегруппировались</string>
+
+    <string name="expedition_preparation">Подготовка к экспедиции</string>
+    <string name="scales">Чешуйки</string>
+    <string name="scales_description">1 чешуйка = 1 защиты, цена 1 бриллиант</string>
+    <string name="bombs">Бомбочки</string>
+    <string name="bombs_description">1 бомбочка = 1 атаки, цена 1 бриллиант</string>
+    <string name="total_defense">Итого защита: %1$d</string>
+    <string name="total_attack">Итого атака: %1$d</string>
+    <string name="start">Начать</string>
+    <string name="start_expedition">Начать экспедицию</string>
+    <string name="choose_another_animal">Выбрать другое животное</string>
+
+    <plurals name="diamonds_available">
+        <item quantity="one">Есть: %d бриллиант</item>
+        <item quantity="few">Есть: %d бриллианта</item>
+        <item quantity="many">Есть: %d бриллиантов</item>
+        <item quantity="other">Есть: %d бриллианта</item>
+    </plurals>
+
+    <string name="victory">Победа!</string>
+    <string name="animal_frees_land">%1$s %2$s освобождает местность.</string>
+    <string name="animal_receives_medal">%1$s %2$s получает медаль!</string>
+    <string name="entering_dungeons">Идём в подземелья…</string>
+    <string name="search_dungeons">Обшарить подземелья</string>
+    <string name="skip_dungeons">Не обшаривать</string>
+
+    <string name="effect_defense">Защита +%1$d</string>
+    <string name="effect_attack">Атака +%1$d</string>
+    <string name="no_effect">Без эффекта</string>
+    <string name="supply_available">В наличии: %1$d</string>
+
     <string name="quest_completed_title">Квест завершён</string>
     <string name="quest_completed_with_loot_message">Вы завершили квест. Здесь нашлась награда.</string>
     <string name="quest_completed_without_loot_message">Вы завершили квест. Это место изменилось.</string>

@@ -7,10 +7,12 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import pro.progr.owlgame.domain.model.AnimalModel
 import pro.progr.owlgame.domain.model.EnemyModel
 import pro.progr.owlgame.domain.model.ExpeditionWithDataModel
+import pro.progr.owlgame.R
 
 @Composable
 fun BattleHeaderRow(
@@ -28,13 +30,14 @@ fun BattleHeaderRow(
     ) {
         BattleParticipantCard(
             modifier = Modifier.weight(1f),
-            title = animal?.let { "${it.kind} ${it.name}" } ?: "Животное",
+            title = animal?.let { "${it.kind} ${it.name}" }
+                ?: stringResource(R.string.animal),
             imageUrl = animal?.imagePath,
             heal = expedition?.healAmount,
             maxHeal = expedition?.maxHealAmount,
             damage = expedition?.damageAmount,
             maxDamage = expedition?.maxDamageAmount,
-            subtitle = "Ваш боец",
+            subtitle = stringResource(R.string.your_fighter),
             dimmed = false,
             onClick = onAnimalClick
         )
@@ -48,7 +51,7 @@ fun BattleHeaderRow(
                 maxHeal = enemy.maxHealAmount,
                 damage = enemy.damageAmount,
                 maxDamage = enemy.maxDamageAmount,
-                subtitle = "Активный враг",
+                subtitle = stringResource(R.string.active_enemy),
                 dimmed = false,
                 onClick = onActiveEnemyClick
             )

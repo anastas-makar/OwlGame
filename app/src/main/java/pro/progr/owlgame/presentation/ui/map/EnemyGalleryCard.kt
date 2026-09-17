@@ -12,6 +12,7 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
@@ -19,6 +20,7 @@ import androidx.compose.ui.graphics.ColorMatrix
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
+import pro.progr.owlgame.R
 import pro.progr.owlgame.domain.model.EnemyModel
 import pro.progr.owlgame.domain.model.EnemyStatus
 
@@ -61,9 +63,9 @@ fun EnemyGalleryCard(
             )
 
             val statusText = when (enemy.status) {
-                EnemyStatus.ACTIVE -> "В бою"
-                EnemyStatus.DEFEATED -> "Повержен"
-                EnemyStatus.UNTOUCHED -> "Ждёт очереди"
+                EnemyStatus.ACTIVE -> stringResource(R.string.enemy_status_fighting)
+                EnemyStatus.DEFEATED -> stringResource(R.string.enemy_status_defeated)
+                EnemyStatus.UNTOUCHED -> stringResource(R.string.enemy_status_waiting)
             }
 
             Text(
@@ -73,8 +75,8 @@ fun EnemyGalleryCard(
 
             if (isActive) {
                 Spacer(Modifier.height(6.dp))
-                Text("Защита: ${enemy.healAmount}")
-                Text("Атака: ${enemy.damageAmount}")
+                Text(stringResource(R.string.stat_defense, enemy.healAmount))
+                Text(stringResource(R.string.stat_attack, enemy.damageAmount))
             }
         }
     }

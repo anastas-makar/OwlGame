@@ -11,8 +11,10 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
+import pro.progr.owlgame.R
 import pro.progr.owlgame.domain.model.SupplyModel
 
 @Composable
@@ -55,7 +57,7 @@ fun SupplyCard(
             Spacer(Modifier.height(4.dp))
 
             Text(
-                text = "Количество: ${supply.amount}",
+                text = stringResource(R.string.supply_amount, supply.amount),
                 style = MaterialTheme.typography.body2
             )
         }

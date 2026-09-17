@@ -12,6 +12,7 @@ import pro.progr.owlgame.data.repository.impl.ImageRepositoryImpl
 import pro.progr.owlgame.data.web.RetrofitProvider
 import pro.progr.owlgame.data.web.sync.GameSyncApiService
 import pro.progr.owlgame.domain.model.GameSyncResult
+import pro.progr.owlgame.domain.model.GameLocale
 import pro.progr.personalcrypto.PersonalCrypto
 
 /**
@@ -21,7 +22,8 @@ import pro.progr.personalcrypto.PersonalCrypto
 suspend fun runGameSync(
     applicationContext: Context,
     auth: AuthInterface,
-    personalCrypto: PersonalCrypto
+    personalCrypto: PersonalCrypto,
+    gameLocale: GameLocale
 ): GameSyncResult {
     val db = OwlGameDatabase.getDatabase(applicationContext)
     val api = RetrofitProvider.provideRetrofit(
@@ -37,7 +39,8 @@ suspend fun runGameSync(
         appMetaDao = db.appMetaDao(),
         apiService = api,
         imageRepository = ImageRepositoryImpl(applicationContext),
-        personalCrypto = personalCrypto
+        personalCrypto = personalCrypto,
+        gameLocale = gameLocale
     )
 
     return syncRepository.sync()
@@ -46,9 +49,10 @@ suspend fun runGameSync(
 suspend fun doGameSyncWork(
     applicationContext: Context,
     auth: AuthInterface,
-    personalCrypto: PersonalCrypto
+    personalCrypto: PersonalCrypto,
+    gameLocale: GameLocale
 ): ListenableWorker.Result = try {
-    val result = runGameSync(applicationContext, auth, personalCrypto)
+    val result = runGameSync(applicationContext, auth, personalCrypto, gameLocale)
     Log.d("GameSync", "Sync result: $result")
     ListenableWorker.Result.success()
 } catch (e: CancellationException) {

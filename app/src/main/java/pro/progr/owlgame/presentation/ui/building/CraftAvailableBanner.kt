@@ -12,7 +12,9 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import pro.progr.owlgame.R
 
 @Composable
 fun CraftAvailableBanner(
@@ -32,21 +34,25 @@ fun CraftAvailableBanner(
             modifier = Modifier.padding(12.dp)
         ) {
             Text(
-                text = "🍰 Здесь можно готовить",
+                text = stringResource(R.string.craft_available_title),
                 style = MaterialTheme.typography.subtitle1
             )
 
             Spacer(modifier = Modifier.height(4.dp))
 
             Text(
-                text = "В комнате есть холодильник. $animalKind $animalName может здесь готовить.",
+                text = stringResource(
+                    R.string.craft_available_message,
+                    animalKind,
+                    animalName
+                ),
                 style = MaterialTheme.typography.body2
             )
 
             Spacer(modifier = Modifier.height(6.dp))
 
             Text(
-                text = "Открыть рецепты",
+                text = stringResource(R.string.open_recipes),
                 style = MaterialTheme.typography.body2,
                 color = MaterialTheme.colors.primary
             )

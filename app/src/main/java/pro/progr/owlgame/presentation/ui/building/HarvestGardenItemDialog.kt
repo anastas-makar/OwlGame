@@ -12,8 +12,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.flow.Flow
+import pro.progr.owlgame.R
 import pro.progr.owlgame.domain.model.GardenItemModel
 import pro.progr.owlgame.domain.model.SupplyModel
 
@@ -25,12 +27,14 @@ fun HarvestGardenItemDialog(
     onDismiss: () -> Unit
 ) {
     val supply = supplyFlow.collectAsState(initial = null).value
-    val supplyName = supply?.name ?: "Припас"
+    val supplyName = supply?.name ?: stringResource(R.string.default_supply_name)
 
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text("Собрать урожай") },
-        text = { Text("После сбора урожая ${gardenItem.name} останется") },
+        title = { Text(stringResource(R.string.harvest_title)) },
+        text = {
+            Text(stringResource(R.string.harvest_garden_item_message, gardenItem.name))
+        },
         buttons = {
             Column(
                 modifier = Modifier
@@ -52,7 +56,7 @@ fun HarvestGardenItemDialog(
                 TextButton(
                     onClick = onDismiss,
                     modifier = Modifier.align(Alignment.End)
-                ) { Text("Отмена") }
+                ) { Text(stringResource(R.string.cancel)) }
             }
         }
     )

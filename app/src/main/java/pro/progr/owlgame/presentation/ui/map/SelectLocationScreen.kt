@@ -23,8 +23,10 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
+import pro.progr.owlgame.R
 
 @Composable
 fun SelectLocationScreen(
@@ -35,6 +37,7 @@ fun SelectLocationScreen(
     snackbarHostState: SnackbarHostState,
     onDismiss: () -> Unit
 ) {
+    val notEnoughDiamondsMessage = stringResource(R.string.not_enough_diamonds)
     val locations = mapViewModel.getAvailableLocations()
         .collectAsState(initial = emptyList())
 
@@ -59,13 +62,13 @@ fun SelectLocationScreen(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Text(
-                        text = "Выберите достопримечательность",
+                        text = stringResource(R.string.choose_location),
                         style = MaterialTheme.typography.h6,
                         modifier = Modifier.weight(1f)
                     )
 
                     TextButton(onClick = onDismiss) {
-                        Text("Закрыть")
+                        Text(stringResource(R.string.close))
                     }
                 }
             }
@@ -79,7 +82,7 @@ fun SelectLocationScreen(
                             mapViewModel.purchaseLocation(diamondDao, location)
                         } else {
                             scope.launch {
-                                snackbarHostState.showSnackbar("Не хватает бриллиантов")
+                                snackbarHostState.showSnackbar(notEnoughDiamondsMessage)
                             }
                         }
                     }

@@ -21,6 +21,7 @@ import pro.progr.owlgame.data.web.sync.GameSyncApiService
 import pro.progr.owlgame.data.web.sync.GameSyncData
 import pro.progr.owlgame.data.web.sync.GameSyncMetaData
 import pro.progr.owlgame.domain.model.GameSyncResult
+import pro.progr.owlgame.domain.model.GameLocale
 import pro.progr.owlgame.domain.repository.GameSyncRepository
 import pro.progr.owlgame.domain.repository.ImageRepository
 import javax.inject.Inject
@@ -33,7 +34,8 @@ class GameSyncRepositoryImpl @Inject constructor(
     private val appMetaDao: AppMetaDao,
     private val apiService: GameSyncApiService,
     private val imageRepository: ImageRepository,
-    private val personalCrypto: PersonalCrypto
+    private val personalCrypto: PersonalCrypto,
+    private val gameLocale: GameLocale
 ) : GameSyncRepository {
 
     override suspend fun sync(): GameSyncResult = syncMutex.withLock {
@@ -46,7 +48,10 @@ class GameSyncRepositoryImpl @Inject constructor(
 
     private suspend fun restoreInitialSnapshot(): GameSyncResult {
         val response = apiService.restore(
-            GameRestoreRequest(syncMetaData = metaData())
+            GameRestoreRequest(
+                syncMetaData = metaData(),
+                locale = gameLocale.apiValue
+            )
         )
 
         if (!response.isSuccessful) {

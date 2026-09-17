@@ -10,9 +10,11 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
+import pro.progr.owlgame.R
 import pro.progr.owlgame.domain.model.BuildingWithAnimalModel
 
 @Composable
@@ -33,7 +35,10 @@ fun BuildingCard(
         Column {
             AsyncImage(
                 model = building.imageUrl,
-                contentDescription = "Дом ${building.name}",
+                contentDescription = stringResource(
+                    R.string.building_image_content_description,
+                    building.name
+                ),
                 modifier = Modifier
                     .fillMaxWidth()
                     .aspectRatio(1f)

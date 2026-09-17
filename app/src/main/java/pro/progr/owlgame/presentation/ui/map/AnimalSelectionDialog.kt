@@ -17,9 +17,11 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import coil.compose.AsyncImage
+import pro.progr.owlgame.R
 import pro.progr.owlgame.domain.model.AnimalModel
 
 @Composable
@@ -37,7 +39,7 @@ fun AnimalSelectionDialog(
         ) {
             Column(modifier = Modifier.padding(16.dp)) {
                 Text(
-                    text = "Выберите животное",
+                    text = stringResource(R.string.choose_animal),
                     style = MaterialTheme.typography.h6
                 )
 
@@ -69,7 +71,7 @@ fun AnimalSelectionDialog(
 
                                 if (animal.id == selectedAnimalId) {
                                     Text(
-                                        text = "Выбрано",
+                                        text = stringResource(R.string.animal_selected),
                                         style = MaterialTheme.typography.caption
                                     )
                                 }

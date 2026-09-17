@@ -27,6 +27,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
@@ -69,7 +70,11 @@ fun TownBuildingCard(
 
                 building.animal?.let {
                     Text(
-                        text = "Живёт ${it.kind} ${it.name}",
+                        text = stringResource(
+                            R.string.animal_lives_here,
+                            it.kind,
+                            it.name.orEmpty()
+                        ),
                         modifier = Modifier.padding(horizontal = 5.dp, vertical = 4.dp)
                     )
                 }
@@ -90,7 +95,9 @@ fun TownBuildingCard(
                 ) {
                     Icon(
                         painter = painterResource(id = R.drawable.ic_menu),
-                        contentDescription = "Меню домика",
+                        contentDescription = stringResource(
+                            R.string.building_menu_content_description
+                        ),
                         tint = MaterialTheme.colors.onSurface.copy(alpha = 0.55f),
                         modifier = Modifier.size(20.dp)
                     )
@@ -108,7 +115,7 @@ fun TownBuildingCard(
                                 moveDialogVisible = true
                             }
                         ) {
-                            Text("Перенести на улицу")
+                            Text(stringResource(R.string.move_to_street))
                         }
                     }
                     DropdownMenuItem(
@@ -117,7 +124,7 @@ fun TownBuildingCard(
                             enterBuilding()
                         }
                     ) {
-                        Text("Войти")
+                        Text(stringResource(R.string.enter))
                     }
                 }
             }

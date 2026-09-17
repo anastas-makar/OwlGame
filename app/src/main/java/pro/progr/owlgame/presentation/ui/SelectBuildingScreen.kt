@@ -28,6 +28,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import kotlinx.coroutines.CoroutineScope
@@ -46,6 +47,8 @@ fun SelectBuildingScreen(mapViewModel: MapViewModel,
                          snackbarHostState: SnackbarHostState,
                          buildingType: BuildingType
 ) {
+    val notEnoughDiamondsMessage = stringResource(R.string.not_enough_diamonds)
+    val diamondContentDescription = stringResource(R.string.diamond_content_description)
     val buildingsState = mapViewModel.getAvailableBuildings().collectAsState(initial = emptyList())
 
     Box(
@@ -77,7 +80,7 @@ fun SelectBuildingScreen(mapViewModel: MapViewModel,
                                 mapViewModel.purchase(diamondDao, building)
                             } else {
                                 scope.launch {
-                                    snackbarHostState.showSnackbar("Недостаточно бриллиантов")
+                                    snackbarHostState.showSnackbar(notEnoughDiamondsMessage)
                                 }
                             }
                         }.background(color = Color.White, shape = RoundedCornerShape(2.dp))
@@ -100,12 +103,12 @@ fun SelectBuildingScreen(mapViewModel: MapViewModel,
                                 .align(Alignment.CenterHorizontally)
                         ) {
                             Text(
-                                text = " ◆ ${building.price} ",
+                                text = stringResource(R.string.diamond_price, building.price),
                                 style = MaterialTheme.typography.body1
                             )
                             Icon(
                                 painter = painterResource(id = R.drawable.ic_diamond_bright),
-                                contentDescription = "Diamond",
+                                contentDescription = diamondContentDescription,
                                 tint = if (diamondBalance.value < building.price) Color.DarkGray
                                 else Color.Unspecified,
                                 modifier = Modifier.height(12.dp)

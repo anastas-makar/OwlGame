@@ -20,6 +20,8 @@ import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
 import pro.progr.owlgame.R
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.pluralStringResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import pro.progr.owlgame.presentation.ui.model.ExpeditionPreparationUiState
@@ -47,7 +49,7 @@ fun ExpeditionPreparationDialog(
                     .verticalScroll(rememberScrollState())
             ) {
                 Text(
-                    text = "Подготовка к экспедиции",
+                    text = stringResource(R.string.expedition_preparation),
                     style = MaterialTheme.typography.h6
                 )
 
@@ -65,8 +67,8 @@ fun ExpeditionPreparationDialog(
                 Divider(modifier = Modifier.padding(vertical = 8.dp))
 
                 DiamondManualRow(
-                    title = "Чешуйки",
-                    subtitle = "1 чешуйка = 1 защиты, цена 1 бриллиант",
+                    title = stringResource(R.string.scales),
+                    subtitle = stringResource(R.string.scales_description),
                     imageResource = R.drawable.ic_scale,
                     value = state.extraHealText,
                     onValueChange = onExtraHealChange
@@ -75,8 +77,8 @@ fun ExpeditionPreparationDialog(
                 Spacer(Modifier.height(8.dp))
 
                 DiamondManualRow(
-                    title = "Бомбочки",
-                    subtitle = "1 бомбочка = 1 атаки, цена 1 бриллиант",
+                    title = stringResource(R.string.bombs),
+                    subtitle = stringResource(R.string.bombs_description),
                     imageResource = R.drawable.ic_bomb,
                     value = state.extraDamageText,
                     onValueChange = onExtraDamageChange
@@ -84,10 +86,22 @@ fun ExpeditionPreparationDialog(
 
                 Spacer(Modifier.height(16.dp))
 
-                Text("Итого защита: ${state.totalHeal}")
-                Text("Итого атака: ${state.totalDamage}")
-                Text("Цена: ${state.diamondsCost} бриллиантов")
-                Text("Есть: $diamondsAvailable")
+                Text(stringResource(R.string.total_defense, state.totalHeal))
+                Text(stringResource(R.string.total_attack, state.totalDamage))
+                Text(
+                    pluralStringResource(
+                        R.plurals.location_price_diamonds,
+                        state.diamondsCost,
+                        state.diamondsCost
+                    )
+                )
+                Text(
+                    pluralStringResource(
+                        R.plurals.diamonds_available,
+                        diamondsAvailable,
+                        diamondsAvailable
+                    )
+                )
 
                 Spacer(Modifier.height(16.dp))
 
@@ -96,7 +110,7 @@ fun ExpeditionPreparationDialog(
                     horizontalArrangement = Arrangement.End
                 ) {
                     TextButton(onClick = onDismiss) {
-                        Text("Отмена")
+                        Text(stringResource(R.string.cancel))
                     }
 
                     Spacer(Modifier.width(8.dp))
@@ -108,7 +122,7 @@ fun ExpeditionPreparationDialog(
                                     diamondsAvailable >= state.diamondsCost &&
                                     (state.totalHeal > 0 || state.totalDamage > 0)
                     ) {
-                        Text("Начать")
+                        Text(stringResource(R.string.start))
                     }
                 }
             }

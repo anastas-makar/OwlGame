@@ -38,11 +38,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import pro.progr.diamondapi.PurchaseInterface
 import pro.progr.owlgame.domain.model.LocationWithScenesModel
 import pro.progr.owlgame.domain.model.MapWithDataModel
+import pro.progr.owlgame.R
 import pro.progr.owlgame.presentation.ui.MapBar
 import pro.progr.owlgame.presentation.ui.fab.ExpandableFloatingActionButton
 import pro.progr.owlgame.presentation.ui.fab.FabAction
@@ -131,7 +133,7 @@ fun FreeMapScreen(
                 actions = listOf(
 
                     FabAction(
-                        text = "Основать город",
+                        text = stringResource(R.string.found_town),
                         color = Color.DarkGray,
                         onClick = { mapViewModel.startToFoundTown() }
                     )
@@ -153,7 +155,7 @@ fun FreeMapScreen(
                 // 1) Хедер
                 item {
                     when {
-                        map.value.id.isEmpty() -> Text("Загрузка…")
+                        map.value.id.isEmpty() -> Text(stringResource(R.string.loading))
                         else -> {
                             // Раньше тут были кнопки Дом/Замок — теперь ничего
                             Spacer(Modifier.height(0.dp))
@@ -232,7 +234,7 @@ fun FreeMapScreen(
                             onValueChange = { cityName.value = it },
                             label = {
                                 Text(
-                                    text = "Название города",
+                                    text = stringResource(R.string.town_name),
                                     color = Color.Gray,
                                     modifier = Modifier
                                         .background(Color.White)
@@ -253,7 +255,7 @@ fun FreeMapScreen(
                                 backgroundColor = Color.DarkGray, contentColor = Color.White
                             ),
                             onClick = { mapViewModel.foundTown(map.value, cityName.value) }
-                        ) { Text("Сохранить") }
+                        ) { Text(stringResource(R.string.save)) }
                     }
                 }
             }

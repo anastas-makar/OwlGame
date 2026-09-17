@@ -18,10 +18,12 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import pro.progr.owlgame.R
 
 @Composable
 fun DiamondManualRow(
@@ -41,7 +43,7 @@ fun DiamondManualRow(
         ) {
             Image(
                 painter = painterResource(imageResource),
-                contentDescription = "Изображение $title",
+                contentDescription = stringResource(R.string.image_content_description, title),
                 modifier = Modifier
                     .size(64.dp)
                     .background(Color.Transparent, RoundedCornerShape(8.dp))
@@ -56,7 +58,7 @@ fun DiamondManualRow(
                 OutlinedTextField(
                     value = value,
                     onValueChange = onValueChange,
-                    label = { Text("Количество") },
+                    label = { Text(stringResource(R.string.amount)) },
                     singleLine = true,
                     keyboardOptions = KeyboardOptions(
                         keyboardType = KeyboardType.Number

@@ -11,9 +11,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import pro.progr.diamondapi.PurchaseInterface
 import pro.progr.owlgame.dagger.OwlGameComponent
+import pro.progr.owlgame.R
 import pro.progr.owlgame.domain.model.AnimalModel
 import pro.progr.owlgame.domain.model.AnimalStatus
 import pro.progr.owlgame.domain.model.FurnitureType
@@ -43,7 +45,7 @@ fun InRoom(
 
     fabViewModel.fabActions.value = listOf(
         FabAction(
-            text = "Поставить мебель",
+            text = stringResource(R.string.place_furniture),
             color = Color.DarkGray,
             onClick = {
                 roomViewModel.selectFurnitureItemState.value = true
@@ -94,18 +96,21 @@ fun InRoom(
         }
 
         if (craftBlocked) {
+            val reasonRes = when (animal.status) {
+                AnimalStatus.FUGITIVE -> R.string.craft_unavailable_animal_fugitive
+                AnimalStatus.EXPEDITION -> R.string.craft_unavailable_animal_expedition
+                else -> R.string.craft_unavailable_animal_unknown
+            }
             CraftNotAvailableBanner(
-                "${animal.kind} ${animal.name} " +
-                        when (animal.status) {
-                            AnimalStatus.FUGITIVE -> "в бегах."
-                            AnimalStatus.EXPEDITION -> "в экспедиции."
-                            else -> "не уточнён"
-                        }
+                stringResource(reasonRes, animal.kind, animal.name.orEmpty())
             )
         }
 
-        if (hasRefrigeratorButNoAnimal) CraftNotAvailableBanner(
-            "В этом доме никто не живёт, поэтому никто не может готовить")
+        if (hasRefrigeratorButNoAnimal) {
+            CraftNotAvailableBanner(
+                stringResource(R.string.craft_unavailable_no_resident)
+            )
+        }
     }
 
     if (roomViewModel.selectFurnitureItemState.value) {

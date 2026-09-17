@@ -9,8 +9,10 @@ import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Text
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import pro.progr.owlgame.R
 import pro.progr.owlgame.domain.model.LocationWithScenesModel
 
 fun LazyListScope.locationsSection(
@@ -21,7 +23,7 @@ fun LazyListScope.locationsSection(
 
     item {
         Text(
-            text = "Достопримечательности",
+            text = stringResource(R.string.locations_title),
             modifier = Modifier.padding(top = 12.dp, bottom = 12.dp),
             fontWeight = FontWeight.Bold
         )

@@ -11,9 +11,11 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
+import pro.progr.owlgame.R
 import pro.progr.owlgame.domain.model.RecipeModel
 
 @Composable
@@ -68,7 +70,7 @@ fun RecipeCard(
             if (!recipe.craftable) {
                 Spacer(Modifier.height(8.dp))
                 Text(
-                    text = "Не хватает ингредиентов",
+                    text = stringResource(R.string.not_enough_ingredients),
                     style = MaterialTheme.typography.caption
                 )
             }

@@ -3,8 +3,10 @@ package pro.progr.owlgame.presentation.ui.map
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavHostController
 import pro.progr.diamondapi.PurchaseInterface
+import pro.progr.owlgame.R
 import pro.progr.owlgame.dagger.OwlGameComponent
 import pro.progr.owlgame.domain.model.MapWithDataModel
 import pro.progr.owlgame.domain.model.MapType
@@ -47,6 +49,6 @@ fun MapScreen(
             mapViewModel,
             DaggerExpeditionScreenViewModel(component, map.value.id),
             map)
-        MapType.LOADING -> Text("Загрузка")
+        MapType.LOADING -> Text(stringResource(R.string.loading))
     }
 }

@@ -16,10 +16,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import coil.compose.AsyncImage
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.min
 import pro.progr.owlgame.domain.model.AnimalModel
 import pro.progr.owlgame.domain.model.AnimalStatus
+import pro.progr.owlgame.R
 import kotlin.math.min
 
 @Composable
@@ -49,7 +51,7 @@ fun AnimalProfileDialog(
             ) {
                 // Заголовок — внутри контента, поэтому никогда не окажется “за картинкой”
                 Text(
-                    text = "Здесь живёт",
+                    text = stringResource(R.string.building_resident_title),
                     style = MaterialTheme.typography.h6,
                     textAlign = TextAlign.Center,
                     modifier = Modifier.fillMaxWidth()
@@ -97,8 +99,8 @@ fun AnimalProfileDialog(
 
                 // (опционально) статус
                 val statusLine = when (animal.status) {
-                    AnimalStatus.EXPEDITION -> "Сейчас в экспедиции"
-                    AnimalStatus.FUGITIVE -> "Временно в бегах"
+                    AnimalStatus.EXPEDITION -> stringResource(R.string.animal_currently_in_expedition)
+                    AnimalStatus.FUGITIVE -> stringResource(R.string.animal_temporarily_fugitive)
                     else -> null
                 }
                 if (statusLine != null) {
@@ -120,7 +122,7 @@ fun AnimalProfileDialog(
                 ) {
                     TextButton(onClick = onDismiss,
                         colors = ButtonDefaults.textButtonColors(contentColor = Color.Gray)) {
-                        Text("Закрыть")
+                        Text(stringResource(R.string.close))
                     }
                 }
             }

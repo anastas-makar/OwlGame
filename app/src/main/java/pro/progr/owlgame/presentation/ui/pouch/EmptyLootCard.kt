@@ -8,7 +8,9 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import pro.progr.owlgame.R
 
 @Composable
 fun EmptyLootCard() {
@@ -18,7 +20,7 @@ fun EmptyLootCard() {
         shape = RoundedCornerShape(16.dp)
     ) {
         Text(
-            text = "В подземельях ничего не нашлось.",
+            text = stringResource(R.string.loot_received_dialog_empty),
             modifier = Modifier.padding(16.dp),
             style = MaterialTheme.typography.body1
         )

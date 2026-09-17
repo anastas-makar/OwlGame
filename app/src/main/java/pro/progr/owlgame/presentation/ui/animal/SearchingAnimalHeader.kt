@@ -16,10 +16,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
+import pro.progr.owlgame.R
 import pro.progr.owlgame.domain.model.AnimalModel
 
 @Composable
@@ -40,7 +42,11 @@ fun SearchingAnimalHeader(
         ) {
             AsyncImage(
                 model = animal.imagePath,
-                contentDescription = "Изображение ${animal.name} ${animal.kind}",
+                contentDescription = stringResource(
+                    R.string.animal_image_with_kind_content_description,
+                    animal.name.orEmpty(),
+                    animal.kind
+                ),
                 contentScale = ContentScale.Fit,
                 modifier = Modifier
                     .fillMaxWidth()
@@ -60,7 +66,7 @@ fun SearchingAnimalHeader(
             Spacer(modifier = Modifier.height(4.dp))
 
             Text(
-                text = "Ищет дом",
+                text = stringResource(R.string.animal_searching_home_status),
                 style = MaterialTheme.typography.body2,
                 textAlign = TextAlign.Center
             )
@@ -72,7 +78,7 @@ fun SearchingAnimalHeader(
                 enabled = !isBusy,
                 modifier = Modifier.align(Alignment.End)
             ) {
-                Text("Уходи")
+                Text(stringResource(R.string.send_animal_away_short))
             }
         }
     }

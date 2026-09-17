@@ -13,9 +13,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
+import pro.progr.owlgame.R
 import pro.progr.owlgame.domain.model.MapWithDataModel
 
 @Composable
@@ -30,7 +32,10 @@ fun CityHeader(
     ) {
         AsyncImage(
             model = mapData.imageUrl,
-            contentDescription = "Карта города ${mapData.name}",
+            contentDescription = stringResource(
+                R.string.town_map_content_description,
+                mapData.name
+            ),
             modifier = Modifier
                 .size(40.dp)
                 .clip(RoundedCornerShape(6.dp))

@@ -17,9 +17,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
+import pro.progr.owlgame.R
 import pro.progr.owlgame.domain.model.EffectType
 import pro.progr.owlgame.presentation.ui.model.SupplySelectionUi
 
@@ -39,7 +41,10 @@ fun SupplyCatalogRow(
         ) {
             AsyncImage(
                 model = item.supply.imageUrl,
-                contentDescription = "Изображение ${item.supply.name}",
+                contentDescription = stringResource(
+                    R.string.image_content_description,
+                    item.supply.name
+                ),
                 modifier = Modifier
                     .size(64.dp)
                         .background(Color.Transparent, RoundedCornerShape(8.dp))
@@ -52,13 +57,22 @@ fun SupplyCatalogRow(
                 Text(item.supply.description, style = MaterialTheme.typography.body2)
 
                 val effectText = when (item.supply.effectType) {
-                    EffectType.HEAL -> "Защита +${item.supply.effectAmount}"
-                    EffectType.DAMAGE -> "Атака +${item.supply.effectAmount}"
-                    EffectType.NO_EFFECT -> "Без эффекта"
+                    EffectType.HEAL -> stringResource(
+                        R.string.effect_defense,
+                        item.supply.effectAmount
+                    )
+                    EffectType.DAMAGE -> stringResource(
+                        R.string.effect_attack,
+                        item.supply.effectAmount
+                    )
+                    EffectType.NO_EFFECT -> stringResource(R.string.no_effect)
                 }
 
                 Text(effectText, style = MaterialTheme.typography.caption)
-                Text("В наличии: ${item.supply.amount}", style = MaterialTheme.typography.caption)
+                Text(
+                    stringResource(R.string.supply_available, item.supply.amount),
+                    style = MaterialTheme.typography.caption
+                )
             }
 
             Row(verticalAlignment = Alignment.CenterVertically) {

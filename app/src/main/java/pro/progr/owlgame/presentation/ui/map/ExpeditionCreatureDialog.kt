@@ -11,6 +11,7 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
@@ -19,6 +20,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import coil.compose.AsyncImage
+import pro.progr.owlgame.R
 import pro.progr.owlgame.domain.model.EnemyStatus
 import pro.progr.owlgame.presentation.ui.model.ExpeditionCreatureDetails
 
@@ -51,11 +53,11 @@ fun ExpeditionCreatureDialog(
                             "${target.animal.kind} ${target.animal.name}",
                             style = MaterialTheme.typography.h6
                         )
-                        Text("Статус: в экспедиции")
+                        Text(stringResource(R.string.status_in_expedition))
                         Spacer(Modifier.height(8.dp))
                         Spacer(Modifier.height(8.dp))
                         BattleStatBar(
-                            label = "Защита",
+                            label = stringResource(R.string.defense),
                             current = target.expedition.healAmount,
                             max = target.expedition.maxHealAmount,
                             color = Color(0xFF4CAF50)
@@ -64,7 +66,7 @@ fun ExpeditionCreatureDialog(
                         Spacer(modifier = Modifier.height(8.dp))
 
                         BattleStatBar(
-                            label = "Атака",
+                            label = stringResource(R.string.attack),
                             current = target.expedition.damageAmount,
                             max = target.expedition.maxDamageAmount,
                             color = Color(0xFFE53935)
@@ -94,19 +96,19 @@ fun ExpeditionCreatureDialog(
                         Text(enemy.name, style = MaterialTheme.typography.h6)
 
                         val statusText = when (enemy.status) {
-                            EnemyStatus.ACTIVE -> "Активный"
-                            EnemyStatus.DEFEATED -> "Повержен"
-                            EnemyStatus.UNTOUCHED -> "Не тронут"
+                            EnemyStatus.ACTIVE -> stringResource(R.string.enemy_status_active)
+                            EnemyStatus.DEFEATED -> stringResource(R.string.enemy_status_defeated)
+                            EnemyStatus.UNTOUCHED -> stringResource(R.string.enemy_status_untouched)
                         }
 
-                        Text("Статус: $statusText")
+                        Text(stringResource(R.string.status_value, statusText))
                         Spacer(Modifier.height(8.dp))
                         Text(enemy.description)
 
                         if (enemy.status == EnemyStatus.ACTIVE) {
                             Spacer(Modifier.height(8.dp))
                             BattleStatBar(
-                                label = "Защита",
+                                label = stringResource(R.string.defense),
                                 current = target.enemy.healAmount,
                                 max = target.enemy.maxHealAmount,
                                 color = Color(0xFF4CAF50)
@@ -115,7 +117,7 @@ fun ExpeditionCreatureDialog(
                             Spacer(modifier = Modifier.height(8.dp))
 
                             BattleStatBar(
-                                label = "Атака",
+                                label = stringResource(R.string.attack),
                                 current = target.enemy.damageAmount,
                                 max = target.enemy.maxDamageAmount,
                                 color = Color(0xFFE53935)

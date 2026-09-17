@@ -16,8 +16,10 @@ import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
+import pro.progr.owlgame.R
 import pro.progr.owlgame.domain.model.IngredientModel
 import pro.progr.owlgame.domain.model.RecipeModel
 
@@ -54,7 +56,10 @@ fun RecipeDialog(
                     Spacer(Modifier.height(8.dp))
                 }
 
-                Text("Ингредиенты", style = MaterialTheme.typography.subtitle2)
+                Text(
+                    stringResource(R.string.ingredients),
+                    style = MaterialTheme.typography.subtitle2
+                )
                 Spacer(Modifier.height(8.dp))
 
                 recipe.ingredients.forEach { ing ->
@@ -65,7 +70,10 @@ fun RecipeDialog(
                 if (missing.isNotEmpty()) {
                     Spacer(Modifier.height(12.dp))
                     Text(
-                        text = "Не хватает: " + missing.joinToString { it.name },
+                        text = stringResource(
+                            R.string.missing_ingredients,
+                            missing.joinToString { it.name }
+                        ),
                         style = MaterialTheme.typography.caption,
                         color = MaterialTheme.colors.error
                     )
@@ -76,10 +84,10 @@ fun RecipeDialog(
             Button(
                 onClick = onCraft,
                 enabled = recipe.craftable
-            ) { Text("Приготовить") }
+            ) { Text(stringResource(R.string.craft)) }
         },
         dismissButton = {
-            TextButton(onClick = onDismiss) { Text("Закрыть") }
+            TextButton(onClick = onDismiss) { Text(stringResource(R.string.close)) }
         }
     )
 }

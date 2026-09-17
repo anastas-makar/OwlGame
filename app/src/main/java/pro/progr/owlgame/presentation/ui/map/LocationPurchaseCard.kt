@@ -21,6 +21,8 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.pluralStringResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.clipToBounds
 import androidx.compose.ui.graphics.Color
@@ -31,6 +33,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
+import pro.progr.owlgame.R
 import coil.request.ImageRequest
 import pro.progr.owlgame.domain.model.LocationType
 import pro.progr.owlgame.domain.model.LocationWithScenesModel
@@ -111,7 +114,11 @@ fun LocationPurchaseCard(
                 Spacer(Modifier.height(6.dp))
 
                 Text(
-                    text = "Сцен: ${location.scenes.size}",
+                    text = pluralStringResource(
+                        R.plurals.location_scene_count,
+                        location.scenes.size,
+                        location.scenes.size
+                    ),
                     style = MaterialTheme.typography.caption,
                     color = Color.Gray
                 )
@@ -120,9 +127,13 @@ fun LocationPurchaseCard(
 
                 Text(
                     text = if (location.price > 0) {
-                        "Цена: ${location.price} бриллиантов"
+                        pluralStringResource(
+                            R.plurals.location_price_diamonds,
+                            location.price,
+                            location.price
+                        )
                     } else {
-                        "Бесплатно"
+                        stringResource(R.string.free)
                     },
                     style = MaterialTheme.typography.body2,
                     fontWeight = FontWeight.Bold,

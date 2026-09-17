@@ -31,9 +31,11 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
+import pro.progr.owlgame.R
 import pro.progr.owlgame.dagger.OwlGameComponent
 import pro.progr.owlgame.domain.model.GardenItemModel
 import pro.progr.owlgame.domain.model.GardenModel
@@ -58,7 +60,7 @@ fun GardenItems(
     val availableItems = vm.availableGardenItems.collectAsState(initial = emptyList())
     fabViewModel.fabActions.value = listOf(
         FabAction(
-            text = "Посадить",
+            text = stringResource(R.string.plant),
             color = Color.DarkGray,
             onClick = {
                 vm.selectGardenItemsState.value = true
@@ -154,7 +156,7 @@ private fun GardenItemCard(item: GardenItemModel,
 
                     if (ready) {
                         Text(
-                            text = "Готово",
+                            text = stringResource(R.string.ready),
                             fontWeight = FontWeight.Bold,
                             color = Color(0xFF2E7D32) // зелёный
                         )

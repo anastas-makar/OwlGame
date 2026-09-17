@@ -30,10 +30,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import coil.compose.AsyncImage
+import pro.progr.owlgame.R
 import pro.progr.owlgame.domain.model.AnimalModel
 import pro.progr.owlgame.domain.model.AnimalStatus
 import pro.progr.owlgame.domain.model.BuildingWithDataModel
@@ -118,21 +120,28 @@ private fun BuildingResidentCard(
 
             Column(Modifier.weight(1f)) {
                 if (animal == null) {
-                    Text("Здесь никто не живёт", style = MaterialTheme.typography.body1)
                     Text(
-                        "Можно поселить животное позже",
+                        stringResource(R.string.building_has_no_resident),
+                        style = MaterialTheme.typography.body1
+                    )
+                    Text(
+                        stringResource(R.string.building_can_settle_later),
                         style = MaterialTheme.typography.caption,
                         color = Color.Gray
                     )
                 } else {
                     Text(
-                        text = "Здесь живёт ${animal.kind} ${animal.name}",
+                        text = stringResource(
+                            R.string.building_resident,
+                            animal.kind,
+                            animal.name.orEmpty()
+                        ),
                         style = MaterialTheme.typography.body1
                     )
 
                     val statusLine: String? = when (animal.status) {
-                        AnimalStatus.EXPEDITION -> "Сейчас в экспедиции"
-                        AnimalStatus.FUGITIVE -> "Временно в бегах"
+                        AnimalStatus.EXPEDITION -> stringResource(R.string.animal_currently_in_expedition)
+                        AnimalStatus.FUGITIVE -> stringResource(R.string.animal_temporarily_fugitive)
                         AnimalStatus.PET -> null
                         AnimalStatus.SEARCHING -> null // на всякий случай
                         AnimalStatus.GONE -> null // на всякий случай
@@ -167,7 +176,11 @@ private fun MedalsRow(
 
     Column(modifier = modifier.padding(top = 10.dp)) {
         Text(
-            text = "${animal.kind.replaceFirstChar { it.uppercase() }} ${animal.name} имеет награды",
+            text = stringResource(
+                R.string.animal_has_awards,
+                animal.kind.replaceFirstChar { it.uppercase() },
+                animal.name.orEmpty()
+            ),
             style = MaterialTheme.typography.subtitle2
         )
 

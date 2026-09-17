@@ -232,7 +232,7 @@ fun LocationGalleryDialog(
                         onClick = onDismiss,
                         colors = ButtonDefaults.textButtonColors(contentColor = Color.Gray)
                     ) {
-                        Text("Закрыть")
+                        Text(stringResource(R.string.close))
                     }
                 }
             }

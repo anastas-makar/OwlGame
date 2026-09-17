@@ -16,8 +16,10 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import pro.progr.owlgame.domain.model.StreetDirection
+import pro.progr.owlgame.R
 
 @Composable
 fun CreateStreetDialog(
@@ -29,26 +31,26 @@ fun CreateStreetDialog(
 
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text("Новая улица") },
+        title = { Text(stringResource(R.string.new_street)) },
         text = {
             Column {
                 OutlinedTextField(
                     value = name,
                     onValueChange = { name = it },
-                    label = { Text("Название улицы") },
+                    label = { Text(stringResource(R.string.street_name)) },
                     singleLine = true
                 )
 
                 Spacer(Modifier.height(12.dp))
 
-                Text("Направление улицы")
+                Text(stringResource(R.string.street_direction))
 
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     RadioButton(
                         selected = direction == StreetDirection.WEST_TO_EAST,
                         onClick = { direction = StreetDirection.WEST_TO_EAST }
                     )
-                    Text("С запада на восток")
+                    Text(stringResource(R.string.street_west_to_east))
                 }
 
                 Row(verticalAlignment = Alignment.CenterVertically) {
@@ -56,7 +58,7 @@ fun CreateStreetDialog(
                         selected = direction == StreetDirection.NORTH_TO_SOUTH,
                         onClick = { direction = StreetDirection.NORTH_TO_SOUTH }
                     )
-                    Text("С севера на юг")
+                    Text(stringResource(R.string.street_north_to_south))
                 }
             }
         },
@@ -67,12 +69,12 @@ fun CreateStreetDialog(
                     onCreate(name.trim(), direction)
                 }
             ) {
-                Text("Создать")
+                Text(stringResource(R.string.create))
             }
         },
         dismissButton = {
             TextButton(onClick = onDismiss) {
-                Text("Отмена")
+                Text(stringResource(R.string.cancel))
             }
         }
     )

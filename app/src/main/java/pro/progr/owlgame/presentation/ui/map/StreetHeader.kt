@@ -20,8 +20,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import pro.progr.owlgame.R
 import pro.progr.owlgame.domain.model.StreetWithBuildingsModel
 
 @Composable
@@ -40,7 +42,11 @@ fun StreetHeader(
         verticalAlignment = Alignment.CenterVertically
     ) {
         Text(
-            text = street.name,
+            text = if (street.isMain) {
+                stringResource(R.string.main_street_name)
+            } else {
+                street.name
+            },
             modifier = Modifier.weight(1f),
             fontWeight = FontWeight.Bold
         )
@@ -49,14 +55,16 @@ fun StreetHeader(
             IconButton(onClick = { showInfo = true }) {
                 Icon(
                     imageVector = Icons.Default.Info,
-                    contentDescription = "Что это за улица"
+                    contentDescription = stringResource(
+                        R.string.main_street_info_content_description
+                    )
                 )
             }
         } else {
             IconButton(onClick = { menuExpanded = true }) {
                 Icon(
                     imageVector = Icons.Default.MoreVert,
-                    contentDescription = "Меню улицы"
+                    contentDescription = stringResource(R.string.street_menu_content_description)
                 )
             }
 
@@ -70,7 +78,7 @@ fun StreetHeader(
                         showDeleteConfirm = true
                     }
                 ) {
-                    Text("Удалить улицу")
+                    Text(stringResource(R.string.delete_street))
                 }
             }
         }
@@ -79,13 +87,13 @@ fun StreetHeader(
     if (showInfo) {
         AlertDialog(
             onDismissRequest = { showInfo = false },
-            title = { Text("Улица Главная") },
+            title = { Text(stringResource(R.string.main_street_name)) },
             text = {
-                Text("Улица Главная — временная улица для домов без выбранной улицы. Она исчезнет, когда вы перенесёте отсюда все дома.")
+                Text(stringResource(R.string.main_street_description))
             },
             confirmButton = {
                 TextButton(onClick = { showInfo = false }) {
-                    Text("Понятно")
+                    Text(stringResource(R.string.understood))
                 }
             }
         )
@@ -94,12 +102,12 @@ fun StreetHeader(
     if (showDeleteConfirm) {
         AlertDialog(
             onDismissRequest = { showDeleteConfirm = false },
-            title = { Text("Удалить улицу?") },
+            title = { Text(stringResource(R.string.delete_street_title)) },
             text = {
                 val message = if (street.buildings.isEmpty()) {
-                    "Удалить улицу «${street.name}»?"
+                    stringResource(R.string.delete_empty_street_message, street.name)
                 } else {
-                    "Удалить улицу «${street.name}»? Дома с этой улицы будут перенесены на Улицу Главную."
+                    stringResource(R.string.delete_street_with_houses_message, street.name)
                 }
 
                 Text(message)
@@ -111,12 +119,12 @@ fun StreetHeader(
                         onDeleteStreet()
                     }
                 ) {
-                    Text("Удалить")
+                    Text(stringResource(R.string.delete))
                 }
             },
             dismissButton = {
                 TextButton(onClick = { showDeleteConfirm = false }) {
-                    Text("Отмена")
+                    Text(stringResource(R.string.cancel))
                 }
             }
         )

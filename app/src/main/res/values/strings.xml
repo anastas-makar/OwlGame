@@ -1,4 +1,167 @@
 <resources>
+    <string name="maps_list_title">My lands</string>
+    <string name="diamond_content_description">Diamond</string>
+    <string name="diamond_price">◆ %1$d</string>
+    <string name="not_enough_diamonds">Not enough diamonds</string>
+
+    <string name="animal_already_has_home">%1$s %2$s already lives in a home</string>
+    <string name="choose_animal_home">Choose a home:</string>
+    <string name="animal_image_content_description">Image of %1$s</string>
+    <string name="animal_image_with_kind_content_description">Image of %1$s, %2$s</string>
+    <string name="building_image_content_description">House %1$s</string>
+    <string name="town_map_content_description">Map of %1$s</string>
+    <string name="animal_searching_home_status">Looking for a home</string>
+    <string name="send_animal_away_short">Send away</string>
+    <string name="send_animal_away_title">Send the animal away?</string>
+    <string name="send_animal_away_message">The animal will leave and will no longer look for a home.</string>
+    <string name="go_to_main_screen">Go to main screen</string>
+
+    <string name="main_street_name">Main Street</string>
+    <string name="main_street_info_content_description">About Main Street</string>
+    <string name="street_menu_content_description">Street menu</string>
+    <string name="delete_street">Delete street</string>
+    <string name="main_street_description">Main Street is a temporary street for houses without a selected street. It will disappear when you move all the houses elsewhere.</string>
+    <string name="understood">Got it</string>
+    <string name="delete_street_title">Delete street?</string>
+    <string name="delete_empty_street_message">Delete “%1$s”?</string>
+    <string name="delete_street_with_houses_message">Delete “%1$s”? Houses from this street will be moved to Main Street.</string>
+
+    <string name="building_resident_title">Resident</string>
+    <string name="building_has_no_resident">No one lives here</string>
+    <string name="building_can_settle_later">You can move an animal in later</string>
+    <string name="building_resident">%1$s %2$s lives here</string>
+    <string name="animal_currently_in_expedition">Currently in an expedition</string>
+    <string name="animal_temporarily_fugitive">Temporarily a fugitive</string>
+    <string name="animal_has_awards">%1$s %2$s has awards</string>
+
+    <string name="craft_available_title">🍰 You can cook here</string>
+    <string name="craft_available_message">There is a fridge in the room. %1$s %2$s can cook here.</string>
+    <string name="open_recipes">Open recipes</string>
+    <string name="craft_unavailable_title">🍰 Cooking is temporarily unavailable here</string>
+    <string name="craft_unavailable_animal_fugitive">%1$s %2$s is a fugitive.</string>
+    <string name="craft_unavailable_animal_expedition">%1$s %2$s is in an expedition.</string>
+    <string name="craft_unavailable_animal_unknown">%1$s %2$s is unavailable.</string>
+    <string name="craft_unavailable_no_resident">No one lives in this house, so there is no one who can cook.</string>
+    <string name="place_furniture">Place furniture</string>
+
+    <string name="plant">Plant</string>
+    <string name="plant_a_plant">Plant a plant</string>
+    <string name="ready">Ready</string>
+    <string name="default_supply_name">Supply</string>
+    <string name="harvest_title">Harvest</string>
+    <string name="harvest_garden_item_message">%1$s will remain after harvesting</string>
+    <string name="choose_harvest_message">Choose what to harvest. You can choose only one.</string>
+    <string name="seeds">Seeds</string>
+    <string name="supplies">Supplies</string>
+
+    <string name="craft_screen_title">Cooking</string>
+    <string name="not_enough_ingredients">Not enough ingredients</string>
+    <string name="ingredients">Ingredients</string>
+    <string name="missing_ingredients">Missing: %1$s</string>
+    <string name="craft">Cook</string>
+    <string name="recipes_label">Recipes:</string>
+    <string name="available_supplies_label">Available supplies:</string>
+    <string name="nothing_available_yet">There is nothing here yet.</string>
+    <string name="supply_amount">Amount: %1$d</string>
+    <string name="defense_effect">Defense: +%1$d</string>
+    <string name="attack_effect">Attack: +%1$d</string>
+
+    <string name="new_street">New street</string>
+    <string name="street_name">Street name</string>
+    <string name="street_direction">Street direction</string>
+    <string name="street_west_to_east">West to east</string>
+    <string name="street_north_to_south">North to south</string>
+    <string name="image_content_description">Image of %1$s</string>
+    <string name="amount">Amount</string>
+    <string name="found_town">Found a town</string>
+    <string name="loading">Loading…</string>
+    <string name="town_name">Town name</string>
+    <string name="save">Save</string>
+    <string name="free">Free</string>
+    <string name="locations_title">Landmarks</string>
+    <string name="move_house">Move house</string>
+    <string name="animal_lives_here">Resident: %1$s %2$s</string>
+    <string name="move_destination">Move to:</string>
+    <string name="choose_location">Choose a landmark</string>
+    <string name="building_menu_content_description">House menu</string>
+    <string name="move_to_street">Move to a street</string>
+    <string name="build_house">Build a house</string>
+    <string name="build_castle">Build a castle</string>
+    <string name="create_street">Create a street</string>
+    <string name="add_location">Add a landmark</string>
+    <string name="street_has_no_houses">There are no houses here yet. Move houses here from the house menu.</string>
+
+    <plurals name="location_scene_count">
+        <item quantity="one">%d scene</item>
+        <item quantity="other">%d scenes</item>
+    </plurals>
+    <plurals name="location_price_diamonds">
+        <item quantity="one">Price: %d diamond</item>
+        <item quantity="other">Price: %d diamonds</item>
+    </plurals>
+
+    <string name="choose_animal">Choose an animal</string>
+    <string name="animal_selected">Selected</string>
+    <string name="animal">Animal</string>
+    <string name="your_fighter">Your fighter</string>
+    <string name="active_enemy">Active enemy</string>
+    <string name="defense">Defense</string>
+    <string name="attack">Attack</string>
+    <string name="enemy_status_fighting">In battle</string>
+    <string name="enemy_status_defeated">Defeated</string>
+    <string name="enemy_status_waiting">Waiting</string>
+    <string name="enemy_status_active">Active</string>
+    <string name="enemy_status_untouched">Untouched</string>
+    <string name="stat_defense">Defense: %1$d</string>
+    <string name="stat_attack">Attack: %1$d</string>
+    <string name="no_animals_for_expedition">You have no animals available for an expedition</string>
+    <string name="expedition_animal_not_selected">No animal selected for the expedition</string>
+    <string name="animal_prepares_for_expedition">%1$s %2$s is preparing to set out</string>
+    <string name="choose_another_animal_hint">Tap to choose another animal</string>
+    <string name="status_in_expedition">Status: in expedition</string>
+    <string name="status_value">Status: %1$s</string>
+
+    <string name="escape_confirm_title">Help the animal escape?</string>
+    <string name="escape_confirm_message">%1$s %2$s can escape. The expedition will be lost and the enemies will regroup, but the animal will remain available.</string>
+    <string name="change_mind">Go back</string>
+    <string name="escaping">Escaping…</string>
+    <string name="escape">Escape</string>
+    <string name="escape_title">Escape!</string>
+    <string name="defeat_title">Defeat!</string>
+    <string name="escape_result">You helped %1$s %2$s escape.</string>
+    <string name="defeat_result">%1$s %2$s is defeated and goes into hiding.</string>
+    <string name="winner">Winner: %1$s</string>
+    <string name="enemies_regrouping">Enemies are regrouping…</string>
+    <string name="enemies_regrouped">Enemies have regrouped</string>
+
+    <string name="expedition_preparation">Expedition preparation</string>
+    <string name="scales">Scales</string>
+    <string name="scales_description">1 scale = 1 defense, price: 1 diamond</string>
+    <string name="bombs">Bombs</string>
+    <string name="bombs_description">1 bomb = 1 attack, price: 1 diamond</string>
+    <string name="total_defense">Total defense: %1$d</string>
+    <string name="total_attack">Total attack: %1$d</string>
+    <string name="start">Start</string>
+    <string name="start_expedition">Start expedition</string>
+    <string name="choose_another_animal">Choose another animal</string>
+
+    <plurals name="diamonds_available">
+        <item quantity="one">Available: %d diamond</item>
+        <item quantity="other">Available: %d diamonds</item>
+    </plurals>
+
+    <string name="victory">Victory!</string>
+    <string name="animal_frees_land">%1$s %2$s frees the land.</string>
+    <string name="animal_receives_medal">%1$s %2$s receives a medal!</string>
+    <string name="entering_dungeons">Entering the dungeons…</string>
+    <string name="search_dungeons">Search the dungeons</string>
+    <string name="skip_dungeons">Do not search</string>
+
+    <string name="effect_defense">Defense +%1$d</string>
+    <string name="effect_attack">Attack +%1$d</string>
+    <string name="no_effect">No effect</string>
+    <string name="supply_available">Available: %1$d</string>
+
     <string name="quest_completed_title">Quest completed</string>
     <string name="quest_completed_with_loot_message">You completed the quest. A reward was found here.</string>
     <string name="quest_completed_without_loot_message">You completed the quest. This place has changed.</string>
