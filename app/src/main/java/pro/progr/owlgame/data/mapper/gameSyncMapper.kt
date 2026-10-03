@@ -2,6 +2,7 @@ package pro.progr.owlgame.data.mapper
 
 import pro.progr.owlgame.data.db.entity.*
 import pro.progr.owlgame.data.web.sync.*
+import pro.progr.owlgame.data.db.model.MapType
 import pro.progr.personalcrypto.PersonalCrypto
 
 fun Animal.toSyncDto(personalCrypto: PersonalCrypto) = AnimalSyncDto(
@@ -189,12 +190,17 @@ fun LocationSceneSyncDto.toEntity(localImagePath: String) = LocationScene(
 )
 
 fun MapEntity.toSyncDto(personalCrypto: PersonalCrypto) = MapSyncDto(
-    id, personalCrypto.encryptGameValue(name), type, countryId, mayorAnimalId, templateId, imageKey
+    id,
+    name = if (type == MapType.TOWN) {
+        personalCrypto.encryptGameValue(name)
+    } else {
+        name
+    }, type, countryId, mayorAnimalId, templateId, imageKey
 )
 
 fun MapSyncDto.toEntity(localImagePath: String, personalCrypto: PersonalCrypto) = MapEntity(
     id = id,
-    name = personalCrypto.decryptGameValue(name),
+    name = if (type ==  MapType.TOWN) personalCrypto.decryptGameValue(name) else name,
     imagePath = localImagePath,
     type = type,
     countryId = countryId,
