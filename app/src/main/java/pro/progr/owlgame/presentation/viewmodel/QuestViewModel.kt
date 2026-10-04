@@ -102,27 +102,24 @@ class QuestViewModel @Inject constructor(
             return
         }
 
-        val scenePatch = page.scenePatch
-
-        if (scenePatch == null) {
-            _uiState.update {
-                it.copy(errorMessage = "Quest ending has no scene patch")
-            }
-            return
-        }
-
         viewModelScope.launch {
             _uiState.update {
                 it.copy(isCompleting = true, errorMessage = null)
             }
 
             try {
-                withContext(Dispatchers.IO) {
-                    locationsRepository.applyQuestResult(
+                val scenePatch = page.scenePatch
+
+                if (scenePatch != null) {
+                    locationsRepository.completeQuestWithScenePatch(
                         locationSceneId = locationSceneId,
                         imageUrl = scenePatch.imageUrl,
                         imageKey = scenePatch.imageKey,
                         description = scenePatch.description
+                    )
+                } else {
+                    locationsRepository.completeQuestWithoutScenePatch(
+                        locationSceneId = locationSceneId
                     )
                 }
 

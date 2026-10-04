@@ -22,10 +22,20 @@ interface LocationScenesDao {
         WHERE id = :sceneId
         """
     )
-    suspend fun applyQuestResult(
+    suspend fun completeQuestWithScenePatch(
         sceneId: String,
         imageUrl: String,
         imageKey: String,
         description: String
     )
+
+    @Query(
+        """
+    UPDATE location_scenes
+    SET questId = NULL,
+        questButtonText = NULL
+    WHERE id = :sceneId
+    """
+    )
+    suspend fun completeQuestWithoutScenePatch(sceneId: String)
 }

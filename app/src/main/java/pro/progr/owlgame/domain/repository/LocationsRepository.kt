@@ -23,10 +23,12 @@ interface LocationsRepository {
         y: Float
     )
 
-    suspend fun applyQuestResult(
+    suspend fun completeQuestWithScenePatch(
         locationSceneId: String,
         imageUrl: String,
         imageKey: String,
         description: String
     )
+
+    suspend fun completeQuestWithoutScenePatch(locationSceneId: String)
 }

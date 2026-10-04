@@ -3,9 +3,9 @@ package pro.progr.owlgame.presentation.ui.quest
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -52,9 +52,9 @@ fun QuestPageContent(
                 modifier = Modifier
                     .fillMaxWidth()
                     .heightIn(max = 320.dp)
+                    .aspectRatio(1f)
                     .clip(RoundedCornerShape(16.dp))
                     .background(Color.Black.copy(alpha = 0.06f))
-                    .padding(8.dp)
             )
         }
 

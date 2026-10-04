@@ -78,7 +78,7 @@ class LocationsRepositoryImpl @Inject constructor(
         )
     }
 
-    override suspend fun applyQuestResult(
+    override suspend fun completeQuestWithScenePatch(
         locationSceneId: String,
         imageUrl: String,
         imageKey: String,
@@ -89,12 +89,16 @@ class LocationsRepositoryImpl @Inject constructor(
             imageKey = imageKey
         )
 
-        locationScenesDao.applyQuestResult(
+        locationScenesDao.completeQuestWithScenePatch(
             sceneId = locationSceneId,
             imageUrl = localImagePath,
             imageKey = imageKey,
             description = description
         )
+    }
+
+    override suspend fun completeQuestWithoutScenePatch(locationSceneId: String) {
+        locationScenesDao.completeQuestWithoutScenePatch(locationSceneId)
     }
 
 }
