@@ -13,7 +13,7 @@ import pro.progr.owlgame.data.model.LocationType
 
 data class GameSyncMetaData(
     val gameInstanceId: String,
-    val dbVersion: Int
+    val syncProtocolVersion: Int
 )
 
 data class GameBackupRequest(

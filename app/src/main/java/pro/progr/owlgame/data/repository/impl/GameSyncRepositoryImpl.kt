@@ -15,6 +15,7 @@ import pro.progr.owlgame.data.db.dao.AppMetaDao
 import pro.progr.owlgame.data.db.dao.GameSyncDao
 import pro.progr.owlgame.data.db.dao.OutboxDao
 import pro.progr.owlgame.data.mapper.*
+import pro.progr.owlgame.data.web.GameApiContract
 import pro.progr.owlgame.data.web.sync.GameBackupRequest
 import pro.progr.owlgame.data.web.sync.GameRestoreRequest
 import pro.progr.owlgame.data.web.sync.GameSyncApiService
@@ -162,7 +163,7 @@ class GameSyncRepositoryImpl @Inject constructor(
         gameInstanceId = requireNotNull(appMetaDao.getValue(GAME_INSTANCE_ID_META_KEY)) {
             "Game database has no game_instance_id"
         },
-        dbVersion = db.openHelper.readableDatabase.version
+        syncProtocolVersion = GameApiContract.VERSION
     )
 
     private suspend fun isInitialRestoreCompleted(): Boolean =
