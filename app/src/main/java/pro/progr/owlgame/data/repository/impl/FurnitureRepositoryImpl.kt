@@ -32,4 +32,8 @@ class FurnitureRepositoryImpl @Inject constructor(
     override fun setFurniture(itemId: String, roomId: String) {
         furnitureDao.setToRoom(itemId, roomId)
     }
+
+    override fun removeFromRoom(itemId: String) {
+        furnitureDao.removeFromRoom(itemId)
+    }
 }

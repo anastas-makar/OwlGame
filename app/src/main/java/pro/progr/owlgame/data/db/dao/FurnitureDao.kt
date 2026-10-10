@@ -24,4 +24,7 @@ public interface FurnitureDao {
 
     @Query("SELECT * FROM furniture WHERE roomId=:roomId")
     fun observeByRoomId(roomId : String) : Flow<List<Furniture>>
+
+    @Query("UPDATE furniture SET roomId = NULL, price = 0 WHERE id = :itemId")
+    fun removeFromRoom(itemId: String): Int
 }

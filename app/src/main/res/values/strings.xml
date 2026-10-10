@@ -1,4 +1,7 @@
 <resources>
+    <string name="remove_from_room">Remove from room</string>
+    <string name="furniture_reinstall_free">Reinstalling this furniture will be free.</string>
+
     <string name="maps_list_title">My lands</string>
     <string name="diamond_content_description">Diamond</string>
     <string name="diamond_price">◆ %1$d</string>

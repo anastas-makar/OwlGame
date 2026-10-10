@@ -1,4 +1,7 @@
 <resources>
+    <string name="remove_from_room">Убрать из комнаты</string>
+    <string name="furniture_reinstall_free">Повторная установка этой мебели будет бесплатной.</string>
+
     <string name="maps_list_title">Мои владения</string>
     <string name="diamond_content_description">Бриллиант</string>
     <string name="diamond_price">◆ %1$d</string>

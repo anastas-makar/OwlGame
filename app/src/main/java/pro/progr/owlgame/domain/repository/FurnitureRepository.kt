@@ -14,4 +14,6 @@ interface FurnitureRepository {
     fun updatePos(id: String, x: Float, y: Float)
 
     fun setFurniture(itemId: String, roomId: String)
+
+    fun removeFromRoom(itemId: String)
 }

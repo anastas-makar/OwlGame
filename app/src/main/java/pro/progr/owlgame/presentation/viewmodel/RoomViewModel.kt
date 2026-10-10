@@ -41,4 +41,10 @@ class RoomViewModel @Inject constructor(
         }
         selectFurnitureItemState.value = false
     }
+
+    fun removeFurnitureFromRoom(id: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            furnitureRepository.removeFromRoom(id)
+        }
+    }
 }
