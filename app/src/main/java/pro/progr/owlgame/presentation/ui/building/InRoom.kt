@@ -129,40 +129,14 @@ fun InRoom(
     }
 
     selectedFurniture?.let { item ->
-        AlertDialog(
-            onDismissRequest = { selectedFurniture = null },
-            title = { Text(item.name) },
-            text = {
-                Column {
-                    AsyncImage(
-                        model = item.imageUrl,
-                        contentDescription = item.name,
-                        contentScale = ContentScale.Fit,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(180.dp)
-                    )
-
-                    Text(
-                        text = stringResource(R.string.furniture_reinstall_free),
-                        modifier = Modifier.padding(top = 12.dp)
-                    )
-                }
+        FurnitureDialog(
+            furniture = item,
+            onRemove = {
+                roomViewModel.removeFurnitureFromRoom(item.id)
+                selectedFurniture = null
             },
-            confirmButton = {
-                TextButton(
-                    onClick = {
-                        roomViewModel.removeFurnitureFromRoom(item.id)
-                        selectedFurniture = null
-                    }
-                ) {
-                    Text(stringResource(R.string.remove_from_room))
-                }
-            },
-            dismissButton = {
-                TextButton(onClick = { selectedFurniture = null }) {
-                    Text(stringResource(R.string.cancel))
-                }
+            onDismiss = {
+                selectedFurniture = null
             }
         )
     }
