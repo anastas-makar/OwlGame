@@ -53,7 +53,10 @@ fun PouchItemsModel.toMerchantSections(
                             key = MerchantItemKey.Location(location.id),
                             title = location.name,
                             description = location.description,
-                            imageUrl = location.imageUrl
+                            imageUrl = location.imageUrl,
+                            extraInfo = if (location.price > 0 )
+                                MerchantItemExtraInfo.BuildingCost(location.price)
+                            else null
                         )
                     }
                 )
