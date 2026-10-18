@@ -309,7 +309,7 @@
     <string name="inventory_description_locations">Достопримечательности, которые можно разместить в городе.</string>
     <string name="inventory_description_furniture">Мебель, которую можно поставить в комнатах.</string>
     <string name="inventory_description_plants">Растения, которые можно посадить в огороде.</string>
-    <string name="inventory_description_garden_items">Полезные находки для огорода, сада и пруда.</string>
+    <string name="inventory_description_garden_items">Полезные находки для сада и пруда.</string>
     <string name="inventory_description_recipes">Рецепты для готовки припасов в комнате с холодильником.</string>
     <string name="inventory_description_supplies">Припасы для экспедиций и рецептов.</string>
 

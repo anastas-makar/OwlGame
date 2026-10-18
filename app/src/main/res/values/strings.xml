@@ -303,7 +303,7 @@
     <string name="inventory_description_locations">Landmarks that can be placed in a town.</string>
     <string name="inventory_description_furniture">Furniture that can be placed in rooms.</string>
     <string name="inventory_description_plants">Plants that can be planted in garden beds.</string>
-    <string name="inventory_description_garden_items">Useful objects for the garden bed, garden, and pond.</string>
+    <string name="inventory_description_garden_items">Useful objects for garden and pond.</string>
     <string name="inventory_description_recipes">Recipes for cooking supplies in a room with a fridge.</string>
     <string name="inventory_description_supplies">Supplies for expeditions and recipes.</string>
 
