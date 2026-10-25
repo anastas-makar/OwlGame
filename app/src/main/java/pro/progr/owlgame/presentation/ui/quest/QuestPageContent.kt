@@ -2,10 +2,12 @@ package pro.progr.owlgame.presentation.ui.quest
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -43,19 +45,27 @@ fun QuestPageContent(
         verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
         item {
-            AsyncImage(
-                model = ImageRequest.Builder(LocalContext.current)
-                    .data(page.imageUrl)
-                    .build(),
-                contentDescription = page.name,
-                contentScale = ContentScale.Fit,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .heightIn(max = 320.dp)
-                    .aspectRatio(1f)
-                    .clip(RoundedCornerShape(16.dp))
-                    .background(Color.Black.copy(alpha = 0.06f))
-            )
+            BoxWithConstraints(modifier = Modifier.fillMaxWidth()) {
+                val imageShape = RoundedCornerShape(16.dp)
+                val imageHeight = maxWidth.coerceAtMost(320.dp)
+
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(imageHeight)
+                        .clip(imageShape)
+                        .background(Color.Black.copy(alpha = 0.06f))
+                ) {
+                    AsyncImage(
+                        model = ImageRequest.Builder(LocalContext.current)
+                            .data(page.imageUrl)
+                            .build(),
+                        contentDescription = page.name,
+                        contentScale = ContentScale.Crop,
+                        modifier = Modifier.fillMaxSize()
+                    )
+                }
+            }
         }
 
         page.name?.let { title ->
