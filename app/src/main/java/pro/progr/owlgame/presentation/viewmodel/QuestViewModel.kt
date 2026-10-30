@@ -2,6 +2,7 @@ package pro.progr.owlgame.presentation.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -9,6 +10,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import pro.progr.diagnostics.Diagnostics
 import pro.progr.diamondapi.PurchaseInterface
 import pro.progr.owlgame.domain.model.QuestOptionModel
 import pro.progr.owlgame.domain.model.QuestPageModel
@@ -16,6 +18,7 @@ import pro.progr.owlgame.domain.repository.LocationsRepository
 import pro.progr.owlgame.domain.repository.LootRepository
 import pro.progr.owlgame.domain.repository.QuestsRepository
 import pro.progr.owlgame.domain.usecase.SavePouchUseCase
+import pro.progr.owlgame.diagnostics.reportOwlGameFailure
 import pro.progr.owlgame.presentation.ui.model.QuestRewardPrompt
 import pro.progr.owlgame.presentation.ui.model.QuestUiState
 import javax.inject.Inject
@@ -25,6 +28,7 @@ class QuestViewModel @Inject constructor(
     private val lootRepository: LootRepository,
     private val locationsRepository: LocationsRepository,
     private val savePouchUseCase: SavePouchUseCase,
+    private val diagnostics: Diagnostics,
     private val questId: String,
     private val locationSceneId: String
 ) : ViewModel() {
@@ -138,7 +142,10 @@ class QuestViewModel @Inject constructor(
                         }
                     )
                 }
+            } catch (e: CancellationException) {
+                throw e
             } catch (e: Exception) {
+                diagnostics.reportOwlGameFailure("owl_game_quest_completion_failure", e)
                 _uiState.update {
                     it.copy(
                         isCompleting = false,
@@ -181,6 +188,13 @@ class QuestViewModel @Inject constructor(
                         claimedLoot = savedLoot,
                         rewardPrompt = null
                     )
+                }
+            } catch (e: CancellationException) {
+                throw e
+            } catch (e: Exception) {
+                diagnostics.reportOwlGameFailure("owl_game_quest_loot_claim_failure", e)
+                _uiState.update {
+                    it.copy(errorMessage = e.message ?: "Не удалось получить лут")
                 }
             } finally {
                 _uiState.update {

@@ -1,25 +1,34 @@
 package pro.progr.owlgame.data.repository.impl
 
+import kotlinx.coroutines.CancellationException
+import pro.progr.diagnostics.Diagnostics
 import pro.progr.owlgame.data.mapper.toDomain
 import pro.progr.owlgame.data.web.LootApiService
 import pro.progr.owlgame.data.web.quest.QuestLootRequest
+import pro.progr.owlgame.diagnostics.OwlGameApiException
 import pro.progr.owlgame.domain.model.PouchItemsModel
 import pro.progr.owlgame.domain.repository.LootRepository
+import pro.progr.owlgame.diagnostics.reportOwlGameFailure
 import javax.inject.Inject
 
 class LootRepositoryImpl @Inject constructor(
-    private val apiService: LootApiService
+    private val apiService: LootApiService,
+    private val diagnostics: Diagnostics
 ) : LootRepository {
     override suspend fun claimExpeditionLoot(expeditionId: String): Result<PouchItemsModel> {
         return try {
             val response = apiService.getLoot(expeditionId)
-            if (response.isSuccessful) {
+            val result = if (response.isSuccessful) {
                 val inPouch = response.body()?.toDomain() ?: PouchItemsModel()
                 Result.success(inPouch)
             } else {
-                Result.failure(Exception("Failed to load loot: ${response.errorBody()?.string()}"))
+                Result.failure(OwlGameApiException("expedition_loot", response.code()))
             }
+            result.reportOwlGameFailure(diagnostics, "owl_game_expedition_loot_failure")
+        } catch (e: CancellationException) {
+            throw e
         } catch (e: Exception) {
+            diagnostics.reportOwlGameFailure("owl_game_expedition_loot_failure", e)
             Result.failure(e)
         }
     }
@@ -34,15 +43,19 @@ class LootRepositoryImpl @Inject constructor(
                 request = QuestLootRequest(endingId = endingId)
             )
 
-            if (response.isSuccessful) {
+            val result = if (response.isSuccessful) {
                 val inPouch = response.body()?.toDomain() ?: PouchItemsModel()
                 Result.success(inPouch)
             } else {
                 Result.failure(
-                    Exception("Failed to load quest loot: ${response.errorBody()?.string()}")
+                    OwlGameApiException("quest_loot", response.code())
                 )
             }
+            result.reportOwlGameFailure(diagnostics, "owl_game_quest_loot_failure")
+        } catch (e: CancellationException) {
+            throw e
         } catch (e: Exception) {
+            diagnostics.reportOwlGameFailure("owl_game_quest_loot_failure", e)
             Result.failure(e)
         }
     }

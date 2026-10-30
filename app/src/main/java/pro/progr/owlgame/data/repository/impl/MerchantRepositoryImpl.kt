@@ -4,6 +4,7 @@ import pro.progr.owlgame.data.mapper.toDomain
 import pro.progr.owlgame.data.web.LootApiService
 import pro.progr.owlgame.domain.model.MerchantShopModel
 import pro.progr.owlgame.domain.repository.MerchantRepository
+import pro.progr.owlgame.diagnostics.OwlGameApiException
 import javax.inject.Inject
 
 class MerchantRepositoryImpl @Inject constructor(private val apiService: LootApiService) : MerchantRepository {
@@ -11,13 +12,10 @@ class MerchantRepositoryImpl @Inject constructor(private val apiService: LootApi
         val response = apiService.getMerchantShop()
 
         if (!response.isSuccessful) {
-            val errorBody = response.errorBody()?.string()
-            throw IllegalStateException(
-                "Failed to load merchant shop: HTTP ${response.code()}: $errorBody"
-            )
+            throw OwlGameApiException("merchant_shop", response.code())
         }
 
         return response.body()?.toDomain()
-            ?: throw IllegalStateException("Merchant shop response body is empty")
+            ?: throw OwlGameApiException("merchant_shop_empty_response")
     }
 }

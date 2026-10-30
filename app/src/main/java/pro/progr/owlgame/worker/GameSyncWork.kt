@@ -4,6 +4,8 @@ import android.content.Context
 import android.util.Log
 import androidx.work.ListenableWorker
 import kotlinx.coroutines.CancellationException
+import pro.progr.diagnostics.Diagnostics
+import pro.progr.diagnostics.NoOpDiagnostics
 import pro.progr.authapi.AuthInterface
 import pro.progr.owlgame.BuildConfig
 import pro.progr.owlgame.data.db.OwlGameDatabase
@@ -24,6 +26,20 @@ suspend fun runGameSync(
     auth: AuthInterface,
     personalCrypto: PersonalCrypto,
     gameLocale: GameLocale
+): GameSyncResult = runGameSync(
+    applicationContext = applicationContext,
+    auth = auth,
+    personalCrypto = personalCrypto,
+    gameLocale = gameLocale,
+    diagnostics = NoOpDiagnostics
+)
+
+suspend fun runGameSync(
+    applicationContext: Context,
+    auth: AuthInterface,
+    personalCrypto: PersonalCrypto,
+    gameLocale: GameLocale,
+    diagnostics: Diagnostics
 ): GameSyncResult {
     val db = OwlGameDatabase.getDatabase(applicationContext)
     val api = RetrofitProvider.provideRetrofit(
@@ -40,7 +56,8 @@ suspend fun runGameSync(
         apiService = api,
         imageRepository = ImageRepositoryImpl(applicationContext),
         personalCrypto = personalCrypto,
-        gameLocale = gameLocale
+        gameLocale = gameLocale,
+        diagnostics = diagnostics
     )
 
     return syncRepository.sync()
@@ -51,8 +68,22 @@ suspend fun doGameSyncWork(
     auth: AuthInterface,
     personalCrypto: PersonalCrypto,
     gameLocale: GameLocale
+): ListenableWorker.Result = doGameSyncWork(
+    applicationContext = applicationContext,
+    auth = auth,
+    personalCrypto = personalCrypto,
+    gameLocale = gameLocale,
+    diagnostics = NoOpDiagnostics
+)
+
+suspend fun doGameSyncWork(
+    applicationContext: Context,
+    auth: AuthInterface,
+    personalCrypto: PersonalCrypto,
+    gameLocale: GameLocale,
+    diagnostics: Diagnostics
 ): ListenableWorker.Result = try {
-    val result = runGameSync(applicationContext, auth, personalCrypto, gameLocale)
+    val result = runGameSync(applicationContext, auth, personalCrypto, gameLocale, diagnostics)
     Log.d("GameSync", "Sync result: $result")
     ListenableWorker.Result.success()
 } catch (e: CancellationException) {

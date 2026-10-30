@@ -7,11 +7,13 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import pro.progr.diagnostics.Diagnostics
 import pro.progr.diamondapi.GetDiamondsCountInterface
 import pro.progr.owlgame.domain.model.MerchantShopModel
 import pro.progr.owlgame.domain.model.PouchItemsModel
 import pro.progr.owlgame.domain.usecase.BuyMerchantItemUseCase
 import pro.progr.owlgame.domain.usecase.GetMerchantShopUseCase
+import pro.progr.owlgame.diagnostics.reportOwlGameFailure
 import pro.progr.owlgame.presentation.mapper.toMerchantSections
 import pro.progr.owlgame.presentation.ui.model.merchant.MerchantItemKey
 import pro.progr.owlgame.presentation.ui.model.merchant.MerchantShopUiState
@@ -20,7 +22,8 @@ import javax.inject.Inject
 class MerchantShopViewModel @Inject constructor(
     private val getMerchantShopUseCase: GetMerchantShopUseCase,
     private val buyMerchantItemUseCase: BuyMerchantItemUseCase,
-    private val diamondsProvider: GetDiamondsCountInterface
+    private val diamondsProvider: GetDiamondsCountInterface,
+    private val diagnostics: Diagnostics
 ) : ViewModel() {
 
     private val _ui = MutableStateFlow(
@@ -47,7 +50,8 @@ class MerchantShopViewModel @Inject constructor(
 
             runCatching {
                 getMerchantShopUseCase()
-            }.onSuccess { shop ->
+            }.reportOwlGameFailure(diagnostics, "owl_game_merchant_load_failure")
+                .onSuccess { shop ->
                 currentShop = shop
                 purchaseCount = 0
 
@@ -87,7 +91,8 @@ class MerchantShopViewModel @Inject constructor(
                     item = itemToBuy,
                     price = price
                 )
-            }.onSuccess {
+            }.reportOwlGameFailure(diagnostics, "owl_game_merchant_purchase_failure")
+                .onSuccess {
                 val updatedItems = shop.items.removeItem(key)
                 val updatedShop = shop.copy(items = updatedItems)
 

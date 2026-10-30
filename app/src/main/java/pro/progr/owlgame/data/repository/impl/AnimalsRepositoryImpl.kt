@@ -2,6 +2,7 @@ package pro.progr.owlgame.data.repository.impl
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import pro.progr.diagnostics.Diagnostics
 import pro.progr.owlgame.data.db.dao.AnimalDao
 import pro.progr.owlgame.data.mapper.toData
 import pro.progr.owlgame.data.mapper.toDomain
@@ -16,7 +17,8 @@ import javax.inject.Inject
 class AnimalsRepositoryImpl @Inject constructor(
     private val animalDao: AnimalDao,
     private val animalApiService: AnimalApiService,
-    private val clock: Clock
+    private val clock: Clock,
+    private val diagnostics: Diagnostics
 ) : AnimalsRepository {
     override fun countAnimalsSearching() : Long {
         return animalDao.countSearching()
@@ -29,6 +31,13 @@ class AnimalsRepositoryImpl @Inject constructor(
             return response.body()?.toDomain()
         }
 
+        diagnostics.breadcrumb("animal_api: http_error status=${response.code()}")
+        if (response.code() >= 500) {
+            diagnostics.reportNonFatal(
+                IllegalStateException("animal_api_http_${response.code()}"),
+                issueKey = "owl_game_animal_api_server_error"
+            )
+        }
         return null
     }
 

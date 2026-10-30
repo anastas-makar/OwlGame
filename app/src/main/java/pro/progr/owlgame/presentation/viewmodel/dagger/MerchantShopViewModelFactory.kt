@@ -2,6 +2,7 @@ package pro.progr.owlgame.presentation.viewmodel.dagger
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import pro.progr.diagnostics.Diagnostics
 import pro.progr.diamondapi.PurchaseInterface
 import pro.progr.owlgame.domain.usecase.BuyMerchantItemUseCase
 import pro.progr.owlgame.domain.usecase.GetMerchantShopUseCase
@@ -11,13 +12,16 @@ import javax.inject.Inject
 class MerchantShopViewModelFactory @Inject constructor(
     private val getMerchantShopUseCase: GetMerchantShopUseCase,
     private val buyMerchantItemUseCase: BuyMerchantItemUseCase,
-    private val diamondsProvider: PurchaseInterface): ViewModelProvider.Factory {
+    private val diamondsProvider: PurchaseInterface,
+    private val diagnostics: Diagnostics
+): ViewModelProvider.Factory {
 
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(MerchantShopViewModel::class.java)) {
             return MerchantShopViewModel(getMerchantShopUseCase,
                 buyMerchantItemUseCase,
-                diamondsProvider) as T
+                diamondsProvider,
+                diagnostics) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }

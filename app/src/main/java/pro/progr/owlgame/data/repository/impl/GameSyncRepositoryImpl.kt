@@ -1,5 +1,6 @@
 package pro.progr.owlgame.data.repository.impl
 
+import kotlinx.coroutines.CancellationException
 import androidx.room.withTransaction
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
@@ -27,6 +28,11 @@ import pro.progr.owlgame.domain.repository.GameSyncRepository
 import pro.progr.owlgame.domain.repository.ImageRepository
 import javax.inject.Inject
 import pro.progr.personalcrypto.PersonalCrypto
+import pro.progr.diagnostics.Diagnostics
+import java.io.IOException
+
+private class GameSyncHttpException(val statusCode: Int) :
+    IllegalStateException("game_sync_http_$statusCode")
 
 class GameSyncRepositoryImpl @Inject constructor(
     private val db: OwlGameDatabase,
@@ -36,18 +42,37 @@ class GameSyncRepositoryImpl @Inject constructor(
     private val apiService: GameSyncApiService,
     private val imageRepository: ImageRepository,
     private val personalCrypto: PersonalCrypto,
-    private val gameLocale: GameLocale
+    private val gameLocale: GameLocale,
+    private val diagnostics: Diagnostics
 ) : GameSyncRepository {
 
     override suspend fun sync(): GameSyncResult = syncMutex.withLock {
-        if (!isInitialRestoreCompleted()) {
-            restoreInitialSnapshot()
-        } else {
-            backupChanges()
+        diagnostics.breadcrumb("game_sync: started")
+        try {
+            val result = if (!isInitialRestoreCompleted()) {
+                restoreInitialSnapshot()
+            } else {
+                backupChanges()
+            }
+            diagnostics.breadcrumb("game_sync: completed result=${result.name}")
+            result
+        } catch (e: CancellationException) {
+            diagnostics.breadcrumb("game_sync: cancelled")
+            throw e
+        } catch (e: Exception) {
+            diagnostics.breadcrumb("game_sync: failed type=${e.javaClass.simpleName}")
+            val issueKey = when (e) {
+                is GameSyncHttpException -> "owl_game_sync_http_${e.statusCode}"
+                is IOException -> "owl_game_sync_network_failure"
+                else -> "owl_game_sync_unexpected"
+            }
+            diagnostics.reportNonFatal(e, issueKey = issueKey)
+            throw e
         }
     }
 
     private suspend fun restoreInitialSnapshot(): GameSyncResult {
+        diagnostics.breadcrumb("game_sync: initial_restore_started")
         val response = apiService.restore(
             GameRestoreRequest(
                 syncMetaData = metaData(),
@@ -56,7 +81,7 @@ class GameSyncRepositoryImpl @Inject constructor(
         )
 
         if (!response.isSuccessful) {
-            error("Restore HTTP ${response.code()}: ${response.errorBody()?.string().orEmpty()}")
+            throw GameSyncHttpException(response.code())
         }
 
         val restore = response.body() ?: error("Empty restore body")
@@ -96,14 +121,19 @@ class GameSyncRepositoryImpl @Inject constructor(
             appMetaDao.setValue(INITIAL_RESTORE_COMPLETED_META_KEY, "1")
         }
 
+        diagnostics.breadcrumb("game_sync: initial_restore_applied")
         return GameSyncResult.RESTORED
     }
 
     private suspend fun backupChanges(): GameSyncResult {
+        diagnostics.breadcrumb("game_sync: backup_started")
         // Фиксируем именно тот набор outbox, который будем подтверждать после HTTP 200.
         // Новые записи, появившиеся во время запроса, останутся в таблице.
         val outboxes = outboxDao.getSync()
-        if (outboxes.isEmpty()) return GameSyncResult.NOTHING_TO_BACKUP
+        if (outboxes.isEmpty()) {
+            diagnostics.breadcrumb("game_sync: no_changes")
+            return GameSyncResult.NOTHING_TO_BACKUP
+        }
 
         val byTable = outboxes
             .groupBy { it.tableName }
@@ -146,7 +176,7 @@ class GameSyncRepositoryImpl @Inject constructor(
         )
 
         if (!response.isSuccessful) {
-            error("Backup HTTP ${response.code()}: ${response.errorBody()?.string().orEmpty()}")
+            throw GameSyncHttpException(response.code())
         }
 
         val result = response.body() ?: error("Empty backup body")
@@ -156,6 +186,7 @@ class GameSyncRepositoryImpl @Inject constructor(
             outboxDao.clearSync(outboxes)
         }
 
+        diagnostics.breadcrumb("game_sync: backup_applied")
         return GameSyncResult.BACKED_UP
     }
 

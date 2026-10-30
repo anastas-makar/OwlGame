@@ -11,6 +11,8 @@ import androidx.core.app.NotificationCompat
 import androidx.core.net.toUri
 import androidx.work.ListenableWorker
 import kotlinx.coroutines.CancellationException
+import pro.progr.diagnostics.Diagnostics
+import pro.progr.diagnostics.NoOpDiagnostics
 import pro.progr.authapi.AuthInterface
 import pro.progr.owlgame.BuildConfig
 import pro.progr.owlgame.R
@@ -31,7 +33,19 @@ private const val ANIMAL_CHANNEL_ID = "animal_channel_id"
 suspend fun doAnimalArrivalCheckWork(
     applicationContext: Context,
     auth: AuthInterface
+): ListenableWorker.Result = doAnimalArrivalCheckWork(
+    applicationContext = applicationContext,
+    auth = auth,
+    diagnostics = NoOpDiagnostics
+)
+
+suspend fun doAnimalArrivalCheckWork(
+    applicationContext: Context,
+    auth: AuthInterface,
+    diagnostics: Diagnostics
 ): ListenableWorker.Result = try {
+
+    diagnostics.breadcrumb("animal_arrival_check: started")
 
     val prefs = OwlPreferences(applicationContext)
 
@@ -49,7 +63,8 @@ suspend fun doAnimalArrivalCheckWork(
             auth,
             db.appMetaDao()
         ).create(AnimalApiService::class.java),
-        Clock.systemDefaultZone()
+        Clock.systemDefaultZone(),
+        diagnostics
     )
 
     Log.d("AnimalDao count searching: ", animalRepository.countAnimalsSearching().toString())
@@ -109,10 +124,14 @@ suspend fun doAnimalArrivalCheckWork(
         ?: prefs.clearAnimalDayAndId() //на всякий случай, чтобы несуществующее животное не застряло в prefs
 
 
+    diagnostics.breadcrumb("animal_arrival_check: completed")
     ListenableWorker.Result.success()
 } catch (e: CancellationException) {
+    diagnostics.breadcrumb("animal_arrival_check: cancelled")
     throw e
 } catch (e: Exception) {
+    diagnostics.breadcrumb("animal_arrival_check: failed type=${e.javaClass.simpleName}")
+    diagnostics.reportNonFatal(e, issueKey = "owl_game_animal_arrival_check_failure")
     Log.e("AnimalArrivalWork", "${e.message}")
     ListenableWorker.Result.failure()
 }

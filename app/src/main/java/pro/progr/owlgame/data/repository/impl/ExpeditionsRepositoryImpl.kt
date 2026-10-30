@@ -6,6 +6,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import pro.progr.diamondapi.PurchaseInterface
+import pro.progr.diagnostics.Diagnostics
 import pro.progr.owlgame.data.db.OwlGameDatabase
 import pro.progr.owlgame.data.db.dao.AnimalDao
 import pro.progr.owlgame.data.db.dao.EnemyDao
@@ -26,6 +27,8 @@ import pro.progr.owlgame.domain.model.ExpeditionModel
 import pro.progr.owlgame.domain.model.ExpeditionWithDataModel
 import pro.progr.owlgame.domain.model.StartExpeditionRequest
 import pro.progr.owlgame.domain.repository.ExpeditionsRepository
+import pro.progr.owlgame.diagnostics.reportOwlGameFailure
+import pro.progr.owlgame.diagnostics.OwlGameApiException
 import java.time.Clock
 import javax.inject.Inject
 
@@ -45,7 +48,8 @@ class ExpeditionsRepositoryImpl @Inject constructor(
     private val expeditionMedalDao: ExpeditionMedalDao,
     private val resolveBattle: BattleResolver,
     private val clock: Clock,
-    private val mapApiService: MapApiService
+    private val mapApiService: MapApiService,
+    private val diagnostics: Diagnostics
 ) : ExpeditionsRepository {
 
     private val mutex = Mutex()
@@ -158,7 +162,7 @@ class ExpeditionsRepositoryImpl @Inject constructor(
 
                 Unit
             }
-        }
+        }.reportOwlGameFailure(diagnostics, "owl_game_expedition_start_failure")
     }
 
     override suspend fun getById(expeditionId: String) : ExpeditionModel? {
@@ -249,7 +253,7 @@ class ExpeditionsRepositoryImpl @Inject constructor(
 
                 Unit
             }
-        }
+        }.reportOwlGameFailure(diagnostics, "owl_game_expedition_progress_failure")
     }
 
     private suspend fun applyAnimalStatus(
@@ -308,7 +312,7 @@ class ExpeditionsRepositoryImpl @Inject constructor(
                 newStatus = ExpeditionStatus.WON
             )
             check(rows == 1) { "Не удалось закрыть награду экспедиции" }
-        }
+        }.reportOwlGameFailure(diagnostics, "owl_game_expedition_claim_failure")
 
     override fun getLatestLostExpedition(mapId: String): Flow<ExpeditionWithDataModel?> {
         return expeditionsDao.getLatestLostExpedition(mapId).map {
@@ -323,7 +327,7 @@ class ExpeditionsRepositoryImpl @Inject constructor(
             val response = mapApiService.getNewExpedition(mapId)
 
             if (!response.isSuccessful) {
-                error("Не удалось загрузить новую экспедицию: ${response.errorBody()?.string()}")
+                throw OwlGameApiException("regroup_expedition", response.code())
             }
 
             val expedition = response.body()
@@ -354,7 +358,7 @@ class ExpeditionsRepositoryImpl @Inject constructor(
 
                 Unit
             }
-        }
+        }.reportOwlGameFailure(diagnostics, "owl_game_expedition_regroup_failure")
     }
 
     override suspend fun escapeExpedition(
@@ -374,7 +378,7 @@ class ExpeditionsRepositoryImpl @Inject constructor(
             val response = mapApiService.getNewExpedition(oldExpedition.mapId)
 
             if (!response.isSuccessful) {
-                error("Не удалось загрузить новую экспедицию: ${response.errorBody()?.string()}")
+                throw OwlGameApiException("escape_expedition", response.code())
             }
 
             val newExpedition = response.body()
@@ -417,7 +421,7 @@ class ExpeditionsRepositoryImpl @Inject constructor(
 
                 Unit
             }
-        }
+        }.reportOwlGameFailure(diagnostics, "owl_game_expedition_escape_failure")
     }
 
 }
